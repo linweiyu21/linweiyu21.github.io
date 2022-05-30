@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Micronaut,Groovy,Gradle,Java,文档,中文">
+    <meta name="description" content="Micronaut Groovy Gradle Java 文档 中文">
+    <meta name="author" content="林威羽">
+    
+    <title>
+        
+            Gradle Writing Build Scripts |
+        
+        林威羽的笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(153,153,0)","avatar":"/images/avatar.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"400px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":null,"description":"def contains🚀 = ['Micronaut', 'Groovy', 'Gradle', 'etc']"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                林威羽的笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+    <a target="_blank" rel="noopener" href="https://github.com/linweiyu21/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80"
+        viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+        aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path
+          d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+          fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path
+          d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+          fill="currentColor" class="octo-body"></path>
+      </svg></a>
+    <style>
+      .github-corner:hover .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+      }
+
+      @keyframes octocat-wave {
+
+        0%,
+        100% {
+          transform: rotate(0)
+        }
+
+        20%,
+        60% {
+          transform: rotate(-25deg)
+        }
+
+        40%,
+        80% {
+          transform: rotate(10deg)
+        }
+      }
+
+      @media (max-width:500px) {
+        .github-corner:hover .octo-arm {
+          animation: none
+        }
+
+        .github-corner .octo-arm {
+          animation: octocat-wave 560ms ease-in-out
+        }
+      }
+    </style>
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Gradle Writing Build Scripts</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">林威羽</span>
+                        
+                            <span class="author-label">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-05-05 11:33:02</span>
+        <span class="mobile">2022-05-05 11:33</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Gradle-User-Guides/">Gradle - User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Gradle/">Gradle</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/User-Guides/">User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <!-- TOC -->
+
+<ul>
+<li><a href="#gradle-writing-build-scripts">Gradle Writing Build Scripts</a><ul>
+<li><a href="#the-project-api">The Project API</a><ul>
+<li><a href="#standard-project-properties">Standard project properties</a></li>
+</ul>
+</li>
+<li><a href="#the-script-api">The script API</a></li>
+<li><a href="#declaring-variables">Declaring variables</a><ul>
+<li><a href="#extra-properties">Extra properties</a></li>
+</ul>
+</li>
+<li><a href="#configuring-arbitrary-objects">Configuring arbitrary objects</a></li>
+<li><a href="#configuring-arbitrary-objects-using-an-external-script">Configuring arbitrary objects using an external script</a></li>
+<li><a href="#some-groovy-basics">Some Groovy basics</a><ul>
+<li><a href="#closure-delegate">Closure delegate</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="Gradle-Writing-Build-Scripts"><a href="#Gradle-Writing-Build-Scripts" class="headerlink" title="Gradle Writing Build Scripts"></a>Gradle Writing Build Scripts</h1><h2 id="The-Project-API"><a href="#The-Project-API" class="headerlink" title="The Project API"></a>The Project API</h2><p>在构建脚本中几乎所有的顶层属性和代码块都是 <code>Project</code> API 的一部分</p>
+<p>Example - <code>build.gradle</code>:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">println</span> name</span><br><span class="line"><span class="keyword">println</span> <span class="keyword">project</span>.name</span><br></pre></td></tr></table></figure>
+
+<p>运行结果:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">╭─daisy at thinkpad <span class="keyword">in</span> ~/Desktop/Gradle_test_3</span><br><span class="line">╰─○ gradle -q <span class="built_in">help</span></span><br><span class="line">Gradle_test_3</span><br><span class="line">Gradle_test_3</span><br></pre></td></tr></table></figure>
+
+<h3 id="Standard-project-properties"><a href="#Standard-project-properties" class="headerlink" title="Standard project properties"></a>Standard project properties</h3><table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Default Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>project</code></td>
+<td align="left"><code>Project</code></td>
+<td align="left">The <code>Project</code> instance</td>
+</tr>
+<tr>
+<td align="left"><code>name</code></td>
+<td align="left"><code>String</code></td>
+<td align="left">The name of the project directory</td>
+</tr>
+<tr>
+<td align="left"><code>path</code></td>
+<td align="left"><code>String</code></td>
+<td align="left">The absolute path of the project</td>
+</tr>
+<tr>
+<td align="left"><code>description</code></td>
+<td align="left"><code>String</code></td>
+<td align="left">A description of the project</td>
+</tr>
+<tr>
+<td align="left"><code>projectDir</code></td>
+<td align="left"><code>File</code></td>
+<td align="left">The directory containing the build script</td>
+</tr>
+<tr>
+<td align="left"><code>buildDir</code></td>
+<td align="left"><code>File</code></td>
+<td align="left">projectDir&#x2F;build</td>
+</tr>
+<tr>
+<td align="left"><code>group</code></td>
+<td align="left"><code>Object</code></td>
+<td align="left">unspecified</td>
+</tr>
+<tr>
+<td align="left"><code>version</code></td>
+<td align="left"><code>Object</code></td>
+<td align="left">unspecified</td>
+</tr>
+<tr>
+<td align="left"><code>ant</code></td>
+<td align="left"><code>AntBuilder</code></td>
+<td align="left">An <code>AntBuilder</code> instance</td>
+</tr>
+</tbody></table>
+<p>Example - <code>build.gradle</code>:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">println</span> <span class="string">&quot;path: [$&#123;path&#125;]&quot;</span></span><br><span class="line"><span class="keyword">println</span> <span class="string">&quot;projectDir: [$projectDir]&quot;</span></span><br><span class="line"><span class="keyword">println</span> <span class="string">&quot;buildDir: [$buildDir]&quot;</span></span><br><span class="line"><span class="keyword">println</span> <span class="string">&quot;group: [$group]&quot;</span></span><br><span class="line"><span class="keyword">println</span> <span class="string">&quot;version: [$version]&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>运行结果:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">╭─daisy at thinkpad <span class="keyword">in</span> ~/Desktop/Gradle_test_3</span><br><span class="line">╰─○ gradle -q <span class="built_in">help</span></span><br><span class="line">path: [:]</span><br><span class="line">projectDir: [/Users/daisy/Desktop/Gradle_test_3]</span><br><span class="line">buildDir: [/Users/daisy/Desktop/Gradle_test_3/build]</span><br><span class="line">group: []</span><br><span class="line">version: [unspecified]</span><br></pre></td></tr></table></figure>
+
+<h2 id="The-script-API"><a href="#The-script-API" class="headerlink" title="The script API"></a>The script API</h2><p>当 Gradle 执行一个 Groovy 构建脚本时, Gradle 将构建脚本编译成一个实现了 <code>Script</code> 的类; 所有在 <code>Script</code> 中声明的属性和方法都可以在你的构建脚本中使用</p>
+<h2 id="Declaring-variables"><a href="#Declaring-variables" class="headerlink" title="Declaring variables"></a>Declaring variables</h2><p>在一个构建脚本中可以定义两种类型的变量:</p>
+<ul>
+<li>本地变量</li>
+<li>额外属性(extra properties)</li>
+</ul>
+<p>Groovy 中使用 <code>def</code> 关键字定义本地变量</p>
+<p>Kotlin 中使用 <code>val</code> 关键字定义本地变量</p>
+<h3 id="Extra-properties"><a href="#Extra-properties" class="headerlink" title="Extra properties"></a>Extra properties</h3><p>所有增强的 Gradle 领域模型对象都可以持有额外的用户定义的属性. 包括但不限于 <code>project</code>, <code>tasks</code>, <code>source set</code></p>
+<p>通过对象的 <code>ext</code> 属性, 可以增加, 读取和设置 <code>extra properties</code>;或者, 使用 <code>ext</code> 代码块来同时增加多个属性</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">&#x27;java-library&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 ext 代码块添加两个额外属性给 project 对象</span></span><br><span class="line">ext &#123;</span><br><span class="line">    springVersion = <span class="string">&quot;3.1.0.RELEASE&quot;</span></span><br><span class="line">    emailNotification = <span class="string">&quot;build@master.org&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 ext 属性添加一个 purpose 额外属性给每个 source set</span></span><br><span class="line"><span class="comment">// 一旦额外属性被添加, 它们可以像预定义的属性一样被读取或者设置</span></span><br><span class="line"><span class="keyword">sourceSets</span>.all &#123; ext.purpose = <span class="keyword">null</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">sourceSets</span> &#123;</span><br><span class="line">    main &#123;</span><br><span class="line">        purpose = <span class="string">&quot;production&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    test &#123;</span><br><span class="line">        purpose = <span class="string">&quot;test&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    plugin &#123;</span><br><span class="line">        purpose = <span class="string">&quot;production&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;printProperties&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">doLast</span> &#123;</span><br><span class="line">        <span class="keyword">println</span> <span class="string">&quot;springVersion: [$&#123;springVersion&#125;]&quot;</span></span><br><span class="line">        <span class="keyword">println</span> <span class="string">&quot;emailNotification: [$&#123;emailNotification&#125;]&quot;</span></span><br><span class="line">        <span class="keyword">sourceSets</span>.matching &#123; it.purpose == <span class="string">&quot;production&quot;</span> &#125;.<span class="keyword">each</span> &#123; <span class="keyword">println</span> it.name &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">╭─daisy at thinkpad <span class="keyword">in</span> ~/Desktop/Gradle_test_3</span><br><span class="line">╰─○ gradle -q printProperties</span><br><span class="line">springVersion: [3.1.0.RELEASE]</span><br><span class="line">emailNotification: [build@master.org]</span><br><span class="line">main</span><br><span class="line">plugin</span><br></pre></td></tr></table></figure>
+
+<p><code>extra properties</code> 的访问范围等于拥有它们的对象的访问范围, 这使得它们有比本地变量更大的作用范围</p>
+<p>一个 <code>project</code> 上的 <code>extra properties</code> 可以在 <code>project</code> 的子项目中可见</p>
+<h2 id="Configuring-arbitrary-objects"><a href="#Configuring-arbitrary-objects" class="headerlink" title="Configuring arbitrary objects"></a>Configuring arbitrary objects</h2><p>Example - Configuring arbitrary objects:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.text.FieldPosition</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;configure&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">doLast</span> &#123;</span><br><span class="line">        <span class="keyword">def</span> pos = configure(<span class="keyword">new</span> FieldPosition(<span class="number">10</span>)) &#123;</span><br><span class="line">            beginIndex = <span class="number">1</span></span><br><span class="line">            endIndex = <span class="number">5</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">println</span> pos.beginIndex</span><br><span class="line">        <span class="keyword">println</span> pos.endIndex</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Configuring-arbitrary-objects-using-an-external-script"><a href="#Configuring-arbitrary-objects-using-an-external-script" class="headerlink" title="Configuring arbitrary objects using an external script"></a>Configuring arbitrary objects using an external script</h2><p>Example - <code>build.gradle</code>:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;configure&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">doLast</span> &#123;</span><br><span class="line">        <span class="keyword">def</span> pos = <span class="keyword">new</span> java.text.FieldPosition(<span class="number">10</span>)</span><br><span class="line">        apply <span class="keyword">from</span>: <span class="string">&#x27;other.gradle&#x27;</span>, to: pos</span><br><span class="line">        <span class="keyword">println</span> pos.beginIndex</span><br><span class="line">        <span class="keyword">println</span> pos.endIndex</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - <code>other.gradle</code>:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Set properties</span></span><br><span class="line">beginIndex = <span class="number">1</span></span><br><span class="line">endIndex = <span class="number">5</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Some-Groovy-basics"><a href="#Some-Groovy-basics" class="headerlink" title="Some Groovy basics"></a>Some Groovy basics</h2><h3 id="Closure-delegate"><a href="#Closure-delegate" class="headerlink" title="Closure delegate"></a>Closure delegate</h3><p>Each closure has a <code>delegate</code> object, which Groovy uses to look up variable and method references which are not local variables or parameters of the closure</p>
+<p>Gradle uses this for configuration closures, where the <code>delegate</code> object is set to the object to be configured</p>
+<p>Example:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    assert delegate == <span class="keyword">project</span>.<span class="keyword">dependencies</span></span><br><span class="line">    testImplementation(<span class="string">&#x27;junit:junit:4.13&#x27;</span>)</span><br><span class="line">    delegate.testImplementation(<span class="string">&#x27;junit:junit:4.13&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Gradle Writing Build Scripts</li>
+        <li>本文作者：林威羽</li>
+        <li>创建时间：2022-05-05 11:33:02</li>
+        <li>
+            本文链接：https://linweiyu21.github.io/gradle/gradle-writing-build-scripts/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/Gradle/">#Gradle</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/User-Guides/">#User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/gradle/gradle-working-with-files/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Working With Files</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/gradle/gradle-authoring-tasks/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Gradle Authoring Tasks</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '8xWQ0WFbKUNN4h8ixIO12etk-gzGzoHsz',
+                    appKey: '7cLjTvkIsF6aIuIVSd0um89m',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请开始你的表演',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = '林威羽';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">林威羽</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Gradle-Writing-Build-Scripts"><span class="nav-number">1.</span> <span class="nav-text">Gradle Writing Build Scripts</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Project-API"><span class="nav-number">1.1.</span> <span class="nav-text">The Project API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Standard-project-properties"><span class="nav-number">1.1.1.</span> <span class="nav-text">Standard project properties</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-script-API"><span class="nav-number">1.2.</span> <span class="nav-text">The script API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Declaring-variables"><span class="nav-number">1.3.</span> <span class="nav-text">Declaring variables</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Extra-properties"><span class="nav-number">1.3.1.</span> <span class="nav-text">Extra properties</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configuring-arbitrary-objects"><span class="nav-number">1.4.</span> <span class="nav-text">Configuring arbitrary objects</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configuring-arbitrary-objects-using-an-external-script"><span class="nav-number">1.5.</span> <span class="nav-text">Configuring arbitrary objects using an external script</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Some-Groovy-basics"><span class="nav-number">1.6.</span> <span class="nav-text">Some Groovy basics</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Closure-delegate"><span class="nav-number">1.6.1.</span> <span class="nav-text">Closure delegate</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

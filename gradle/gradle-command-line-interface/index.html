@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Micronaut,Groovy,Gradle,Java,文档,中文">
+    <meta name="description" content="Micronaut Groovy Gradle Java 文档 中文">
+    <meta name="author" content="林威羽">
+    
+    <title>
+        
+            Command-Line Interface |
+        
+        林威羽的笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(153,153,0)","avatar":"/images/avatar.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"400px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":null,"description":"def contains🚀 = ['Micronaut', 'Groovy', 'Gradle', 'etc']"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                林威羽的笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+    <a target="_blank" rel="noopener" href="https://github.com/linweiyu21/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80"
+        viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+        aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path
+          d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+          fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path
+          d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+          fill="currentColor" class="octo-body"></path>
+      </svg></a>
+    <style>
+      .github-corner:hover .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+      }
+
+      @keyframes octocat-wave {
+
+        0%,
+        100% {
+          transform: rotate(0)
+        }
+
+        20%,
+        60% {
+          transform: rotate(-25deg)
+        }
+
+        40%,
+        80% {
+          transform: rotate(10deg)
+        }
+      }
+
+      @media (max-width:500px) {
+        .github-corner:hover .octo-arm {
+          animation: none
+        }
+
+        .github-corner .octo-arm {
+          animation: octocat-wave 560ms ease-in-out
+        }
+      }
+    </style>
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Command-Line Interface</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">林威羽</span>
+                        
+                            <span class="author-label">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-05-05 14:11:19</span>
+        <span class="mobile">2022-05-05 14:11</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Gradle-User-Guides/">Gradle - User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Gradle/">Gradle</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/User-Guides/">User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <!-- TOC -->
+
+<ul>
+<li><a href="#command-line-interface">Command-Line Interface</a><ul>
+<li><a href="#executing-tasks">Executing tasks</a><ul>
+<li><a href="#executing-tasks-in-multi-project-builds">Executing tasks in multi-project builds</a></li>
+<li><a href="#executing-multiple-tasks">Executing multiple tasks</a></li>
+<li><a href="#excluding-tasks-from-execution">Excluding tasks from execution</a></li>
+<li><a href="#forcing-tasks-to-execute">Forcing tasks to execute</a></li>
+<li><a href="#continuing-the-build-when-a-failure-occurs">Continuing the build when a failure occurs</a></li>
+<li><a href="#name-abbreviation">Name abbreviation</a></li>
+</ul>
+</li>
+<li><a href="#common-tasks">Common tasks</a><ul>
+<li><a href="#computing-all-outputs">Computing all outputs</a></li>
+<li><a href="#running-applications">Running applications</a></li>
+<li><a href="#running-all-checks">Running all checks</a></li>
+<li><a href="#cleaning-outputs">Cleaning outputs</a></li>
+</ul>
+</li>
+<li><a href="#project-reporting">Project reporting</a><ul>
+<li><a href="#listing-projects">Listing projects</a></li>
+<li><a href="#listing-tasks">Listing tasks</a></li>
+<li><a href="#show-task-usage-details">Show task usage details</a></li>
+<li><a href="#reporting-dependencies">Reporting dependencies</a></li>
+<li><a href="#listing-project-dependencies">Listing project dependencies</a></li>
+<li><a href="#listing-project-properties">Listing project properties</a></li>
+</ul>
+</li>
+<li><a href="#command-line-completion">Command-line completion</a></li>
+<li><a href="#debugging-options">Debugging options</a></li>
+<li><a href="#performance-options">Performance options</a></li>
+<li><a href="#gradle-daemon-options">Gradle daemon options</a></li>
+<li><a href="#logging-options">Logging options</a><ul>
+<li><a href="#setting-log-level">Setting log level</a></li>
+<li><a href="#customizing-log-format">Customizing log format</a></li>
+<li><a href="#showing-or-hiding-warnings">Showing or hiding warnings</a></li>
+</ul>
+</li>
+<li><a href="#execution-options">Execution options</a></li>
+<li><a href="#environment-options">Environment options</a></li>
+<li><a href="#bootstrapping-new-projects">Bootstrapping new projects</a><ul>
+<li><a href="#creating-new-gradle-builds">Creating new Gradle builds</a></li>
+<li><a href="#standardize-and-provision-gradle">Standardize and provision Gradle</a></li>
+</ul>
+</li>
+<li><a href="#continuous-build">Continuous Build</a><ul>
+<li><a href="#terminating-continuous-build">Terminating Continuous Build</a></li>
+<li><a href="#limitations-and-quirks">Limitations and quirks</a><ul>
+<li><a href="#build-cycles">Build cycles</a></li>
+<li><a href="#restrictions-with-java-9">Restrictions with Java 9</a></li>
+<li><a href="#performance-and-stability">Performance and stability</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="Command-Line-Interface"><a href="#Command-Line-Interface" class="headerlink" title="Command-Line Interface"></a>Command-Line Interface</h1><h2 id="Executing-tasks"><a href="#Executing-tasks" class="headerlink" title="Executing tasks"></a>Executing tasks</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle :myTask</span><br></pre></td></tr></table></figure>
+
+<h3 id="Executing-tasks-in-multi-project-builds"><a href="#Executing-tasks-in-multi-project-builds" class="headerlink" title="Executing tasks in multi-project builds"></a>Executing tasks in multi-project builds</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gradle :my-subproject:taskName</span><br><span class="line">gradle my-subproject:taskName</span><br></pre></td></tr></table></figure>
+
+<h3 id="Executing-multiple-tasks"><a href="#Executing-multiple-tasks" class="headerlink" title="Executing multiple tasks"></a>Executing multiple tasks</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle <span class="built_in">test</span> deploy</span><br></pre></td></tr></table></figure>
+
+<p>按声明的顺序依次执行 <code>test task</code> <code>deploy task</code>, 包括它们各自依赖的 <code>task</code></p>
+<h3 id="Excluding-tasks-from-execution"><a href="#Excluding-tasks-from-execution" class="headerlink" title="Excluding tasks from execution"></a>Excluding tasks from execution</h3><p>使用 <code>-x</code> 或 <code>--exclude-task</code> 命令行参数来排除要执行的 <code>task</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle dist --exclude-task <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Forcing-tasks-to-execute"><a href="#Forcing-tasks-to-execute" class="headerlink" title="Forcing tasks to execute"></a>Forcing tasks to execute</h3><p>可以使用 <code>--rerun-tasks</code> 命令行参数强制 Gradle 忽略 up-to-date 检查来执行所有 <code>task</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle <span class="built_in">test</span> --rerun-tasks</span><br></pre></td></tr></table></figure>
+
+<h3 id="Continuing-the-build-when-a-failure-occurs"><a href="#Continuing-the-build-when-a-failure-occurs" class="headerlink" title="Continuing the build when a failure occurs"></a>Continuing the build when a failure occurs</h3><p>默认情况下,  Gradle 会在遇到 <code>task</code> 执行失败时马上停止往下构建</p>
+<p>使用 <code>--continue</code> 命令行参数来告诉 Gradle 在遇到 <code>task</code> 失败时尽可能地继续执行其他 <code>task</code>, 以便在一个构建中获取更多的构建失败信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle <span class="built_in">test</span> --<span class="built_in">continue</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Name-abbreviation"><a href="#Name-abbreviation" class="headerlink" title="Name abbreviation"></a>Name abbreviation</h3><p>名字缩写</p>
+<p>可以在命令行参数中使用 名字缩写 来代替 <code>task</code> 的全民, 只要这个 名字缩写 可以唯一标识这个 <code>task</code></p>
+<p>例如, <code>gradle che</code> 足以让 Gradle 标识 <code>check task</code></p>
+<p>同样的规则适用于 项目名字, 例如, <code>gradle lib:che</code> 相当于 <code>gradle library:check</code></p>
+<p>还可以使用 <code>foBa</code>&#x2F;<code>fB</code> 来代替 <code>fooBar</code> 和 <code>foo-bar</code></p>
+<p>可以使用 <code>gradle mAL:cT</code> 来代替 <code>gradle my-awesome-library:compileTest</code></p>
+<h2 id="Common-tasks"><a href="#Common-tasks" class="headerlink" title="Common tasks"></a>Common tasks</h2><h3 id="Computing-all-outputs"><a href="#Computing-all-outputs" class="headerlink" title="Computing all outputs"></a>Computing all outputs</h3><p>在 Gradle 的 <code>build task</code> 中, 指定 组装所有输出 和 运行所有检查是很常见的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle build</span><br></pre></td></tr></table></figure>
+
+<h3 id="Running-applications"><a href="#Running-applications" class="headerlink" title="Running applications"></a>Running applications</h3><p>应用程序通过 <code>run task</code> 来运行是很常见的, 这个任务组装应用程序并执行一些脚本或二进制文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle run</span><br></pre></td></tr></table></figure>
+
+<h3 id="Running-all-checks"><a href="#Running-all-checks" class="headerlink" title="Running all checks"></a>Running all checks</h3><p>使用 <code>check task</code> 执行所有验证任务(包括测试和检测)是很常见的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle check</span><br></pre></td></tr></table></figure>
+
+<h3 id="Cleaning-outputs"><a href="#Cleaning-outputs" class="headerlink" title="Cleaning outputs"></a>Cleaning outputs</h3><p>可以使用 <code>clean task</code> 来删除 build 目录的内容, 将会导致之前计算好的 outputs 丢失</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle clean</span><br></pre></td></tr></table></figure>
+
+<h2 id="Project-reporting"><a href="#Project-reporting" class="headerlink" title="Project reporting"></a>Project reporting</h2><p>Gradle 提供了一些内置的 <code>task</code> 来展示你的构建的具体细节</p>
+<h3 id="Listing-projects"><a href="#Listing-projects" class="headerlink" title="Listing projects"></a>Listing projects</h3><p>显示所有的子项目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle projects</span><br></pre></td></tr></table></figure>
+
+<h3 id="Listing-tasks"><a href="#Listing-tasks" class="headerlink" title="Listing tasks"></a>Listing tasks</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle tasks</span><br></pre></td></tr></table></figure>
+
+<p>Example - 展示所有的 <code>task</code>, 包括没有声明到 <code>task group</code> 的 <code>task</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle tasks --all</span><br></pre></td></tr></table></figure>
+
+<p>Example - 展示指定组中的 <code>task</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle tasks --group=<span class="string">&quot;build setup&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Show-task-usage-details"><a href="#Show-task-usage-details" class="headerlink" title="Show task usage details"></a>Show task usage details</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle <span class="built_in">help</span> --task someTask</span><br></pre></td></tr></table></figure>
+
+<p>Example:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle -q <span class="built_in">help</span> --task libs</span><br></pre></td></tr></table></figure>
+
+<h3 id="Reporting-dependencies"><a href="#Reporting-dependencies" class="headerlink" title="Reporting dependencies"></a>Reporting dependencies</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle myTask --scan</span><br></pre></td></tr></table></figure>
+
+<h3 id="Listing-project-dependencies"><a href="#Listing-project-dependencies" class="headerlink" title="Listing project dependencies"></a>Listing project dependencies</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle dependencies</span><br></pre></td></tr></table></figure>
+
+<p>Example - 显示构建脚本的依赖:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle buildEnvironment</span><br></pre></td></tr></table></figure>
+
+<p>Example - 了解 与指定输入匹配 的特定依赖项:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle dependencyInsight [--configuration]</span><br></pre></td></tr></table></figure>
+
+<h3 id="Listing-project-properties"><a href="#Listing-project-properties" class="headerlink" title="Listing project properties"></a>Listing project properties</h3><p>Example - 列出 api 项目的所有属性</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle -q api:properties</span><br></pre></td></tr></table></figure>
+
+<h2 id="Command-line-completion"><a href="#Command-line-completion" class="headerlink" title="Command-line completion"></a>Command-line completion</h2><p>Gradle 提供了 bash 和 zsh 的命令行补全</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/gradle/gradle-completion" >gradle-completion<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="Debugging-options"><a href="#Debugging-options" class="headerlink" title="Debugging options"></a>Debugging options</h2><table>
+<thead>
+<tr>
+<th align="left">名称</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>-S</code>, <code>--full-stacktrace</code></td>
+<td align="left">打印异常所有的堆栈信息</td>
+</tr>
+<tr>
+<td align="left"><code>-s</code>, <code>--stacktrace</code></td>
+<td align="left">打印用户的异常的堆栈信息</td>
+</tr>
+<tr>
+<td align="left"><code>--scan</code></td>
+<td align="left">创建一个 build scan</td>
+</tr>
+<tr>
+<td align="left"><code>-Dorg.gradle.debug=true</code></td>
+<td align="left">开启 Gradle 调试客户端进程, Gradle 默认会监听 <code>localhost:5005</code> 端口, 等待调试器的连接</td>
+</tr>
+<tr>
+<td align="left"><code>-Dorg.gradle-daemon.debug=true</code></td>
+<td align="left">调试 Gradle 守护进程</td>
+</tr>
+</tbody></table>
+<h2 id="Performance-options"><a href="#Performance-options" class="headerlink" title="Performance options"></a>Performance options</h2><p>使用这些选项过来优化构建性能</p>
+<p>大多数这些选项可能在 <code>gradle.properties</code> 文件中声明</p>
+<table>
+<thead>
+<tr>
+<th align="left">名称</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>--build-cache</code>, <code>--no-build-cache</code></td>
+<td align="left">默认为关闭; 是否开启 Gradle 的构建缓存, Gradle 会尝试重用之前的构建的 outputs</td>
+</tr>
+<tr>
+<td align="left"><code>--configure-on-demand</code>, <code>--no-configure-on-demand</code></td>
+<td align="left">默认为关闭; 是否开启按需配置; 只有相关的项目会在这次构建中被配置</td>
+</tr>
+<tr>
+<td align="left"><code>--max-workers</code></td>
+<td align="left">默认为处理器的数量; 设置 Gradle 可以使用的最大 worker 数量</td>
+</tr>
+<tr>
+<td align="left"><code>--parallel</code>, <code>--no-parallel</code></td>
+<td align="left">默认为关闭; 是否并行地构建项目</td>
+</tr>
+<tr>
+<td align="left"><code>--priority</code></td>
+<td align="left">默认为 <code>normal</code>; 指定 Gradle 守护进程及其启动的所有进程的调度优先级; 可选值为 <code>normal</code> 和 <code>low</code></td>
+</tr>
+<tr>
+<td align="left"><code>--profile</code></td>
+<td align="left">在 <code>$buildDir/reports/profile</code> 文件夹中生成更高级的性能报告. 推荐使用 <code>--scan</code></td>
+</tr>
+<tr>
+<td align="left"><code>--scan</code></td>
+<td align="left">生成一个详细的性能诊断构建扫描</td>
+</tr>
+<tr>
+<td align="left"><code>--watch-fs</code>, <code>--no-watch-fs</code></td>
+<td align="left">在支持 Gradle 这个特性的平台上默认开启; 是否观察文件系统; 当开启时 Gradle 会在不同构建中重用它收集到的文件系统信息</td>
+</tr>
+</tbody></table>
+<h2 id="Gradle-daemon-options"><a href="#Gradle-daemon-options" class="headerlink" title="Gradle daemon options"></a>Gradle daemon options</h2><table>
+<thead>
+<tr>
+<th align="left">名称</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>--daemon</code>, <code>--no-daemon</code></td>
+<td align="left">默认开启; 使用 Gradle 守护进程来运行构建</td>
+</tr>
+<tr>
+<td align="left"><code>--foreground</code></td>
+<td align="left">在前台启动 Gradle 守护进程</td>
+</tr>
+<tr>
+<td align="left"><code>--status</code>(Standalone command)</td>
+<td align="left">运行 <code>gradle --status</code> 来列出正在运行的和最近停止的 Gradle 守护进程. 只显示同一个版本的 Gradle 的守护进程</td>
+</tr>
+<tr>
+<td align="left"><code>--stop</code>(Standalone command)</td>
+<td align="left">运行 <code>gradle --stop</code> 来停止同一个 Gradle 版本的所有守护进程</td>
+</tr>
+<tr>
+<td align="left"><code>-Dorg.gradle.daemon.idletimeout=(number of milliseconds)</code></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<h2 id="Logging-options"><a href="#Logging-options" class="headerlink" title="Logging options"></a>Logging options</h2><h3 id="Setting-log-level"><a href="#Setting-log-level" class="headerlink" title="Setting log level"></a>Setting log level</h3><table>
+<thead>
+<tr>
+<th align="left">名称</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>-Dorg.gradle.logging.level=(quiet, warn, lifecycle, info, debug)</code></td>
+<td align="left">通过 Gradle 属性设置日志级别</td>
+</tr>
+<tr>
+<td align="left"><code>-q</code>, <code>--quiet</code></td>
+<td align="left">只打印异常日志</td>
+</tr>
+<tr>
+<td align="left"><code>-w</code>, <code>--warn</code></td>
+<td align="left">设置日志级别为 <code>warn</code></td>
+</tr>
+<tr>
+<td align="left"><code>-i</code>, <code>--info</code></td>
+<td align="left">设置日志级别为 <code>info</code></td>
+</tr>
+<tr>
+<td align="left"><code>-d</code>, <code>--debug</code></td>
+<td align="left">设置日志级别为 <code>debug</code>(包含正常对账信息)</td>
+</tr>
+</tbody></table>
+<p><code>lifecycle</code> 是默认的日志级别</p>
+<h3 id="Customizing-log-format"><a href="#Customizing-log-format" class="headerlink" title="Customizing log format"></a>Customizing log format</h3><p>通过指定 <code>console</code> 模式来控制输出的颜色和字体</p>
+<table>
+<thead>
+<tr>
+<th align="left">名称</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>-Dorg.gradle.console=(auto, plain, rich, verbose)</code></td>
+<td align="left">通过 Gradle 属性指定 console 的模式</td>
+</tr>
+<tr>
+<td align="left"><code>--console=(auto, plain, rich, verbose)</code></td>
+<td align="left">指定生成什么类型的 console</td>
+</tr>
+<tr>
+<td align="left"><code>plain</code></td>
+<td align="left">只生成普通文本. 这个选项禁用所有颜色和其他富文本 console 输出. 在 Gradle 连接到一个终端时默认是这个模式</td>
+</tr>
+<tr>
+<td align="left"><code>rich</code></td>
+<td align="left">开启颜色和其他富文本 console 输出</td>
+</tr>
+<tr>
+<td align="left"><code>verbose</code></td>
+<td align="left">和 <code>rich</code> 一样, 但额外在 <code>lifecycle</code> 日志级别输出 task 名称. 在 Gradle 3.5 或更早之前的版本这个模式是默认的</td>
+</tr>
+</tbody></table>
+<h3 id="Showing-or-hiding-warnings"><a href="#Showing-or-hiding-warnings" class="headerlink" title="Showing or hiding warnings"></a>Showing or hiding warnings</h3><p>默认情况下, Gradle 不会显示所有的警告(例如, deprecation warnings)</p>
+<p>相反, Gradle 会收集它们并在构建的结尾渲染一个总结</p>
+<table>
+<thead>
+<tr>
+<th align="left">名称</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>-Dorg.gradle.warning.mode=(all, fail, none, summary)</code></td>
+<td align="left">通过 Gradle 属性配置不同的模式</td>
+</tr>
+<tr>
+<td align="left"><code>--warning-mode=(all, fail, none, summary)</code></td>
+<td align="left">指定怎样打印警告日志. 默认是 <code>summary</code></td>
+</tr>
+<tr>
+<td align="left"><code>all</code></td>
+<td align="left">打印所有的警告日志</td>
+</tr>
+<tr>
+<td align="left"><code>fail</code></td>
+<td align="left">打印所有警告日志, 并在出现任何警告时使构建失败</td>
+</tr>
+<tr>
+<td align="left"><code>summary</code></td>
+<td align="left">不打印警告日志, 在构建的结尾打印一个总结</td>
+</tr>
+<tr>
+<td align="left"><code>none</code></td>
+<td align="left">不打印所有警告日志, 在构建的结果也不打印总结</td>
+</tr>
+</tbody></table>
+<h2 id="Execution-options"><a href="#Execution-options" class="headerlink" title="Execution options"></a>Execution options</h2><table>
+<thead>
+<tr>
+<th align="left">名称</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>--include-build</code></td>
+<td align="left">以组合(composite)的形式运行构建, 包含指定的构建</td>
+</tr>
+<tr>
+<td align="left"><code>--offline</code></td>
+<td align="left">指明构建要在不访问网络资源的情况下进行</td>
+</tr>
+<tr>
+<td align="left"><code>--refresh-dependencies</code></td>
+<td align="left">刷新依赖的状态(state)</td>
+</tr>
+<tr>
+<td align="left"><code>--dry-run</code></td>
+<td align="left">在停止执行所有 <code>task</code> 的 action 的情况下运行 Gradle; 主要用来显示哪个 <code>task</code> 会执行</td>
+</tr>
+<tr>
+<td align="left"><code>--wirte-locks</code></td>
+<td align="left">指定所有可锁定的已解析的配置都应该保持其锁定状态</td>
+</tr>
+<tr>
+<td align="left"><code>--update-locks &lt;group:name&gt;[,&lt;group:name&gt;]*</code></td>
+<td align="left">表示指定模块的版本必须在 lock file 文件中更新</td>
+</tr>
+<tr>
+<td align="left"><code>--no-rebuild</code></td>
+<td align="left">不要重建项目依赖. 在调试和微调 <code>buildSrc</code> 时很有用, 但可能会导致错误结果, 谨慎使用</td>
+</tr>
+</tbody></table>
+<h2 id="Environment-options"><a href="#Environment-options" class="headerlink" title="Environment options"></a>Environment options</h2><table>
+<thead>
+<tr>
+<th align="left">名称</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>-b</code>, <code>--build-file</code></td>
+<td align="left">已过时; 指定构建文件, 默认是 <code>build.gradle</code></td>
+</tr>
+<tr>
+<td align="left"><code>-c</code>, <code>--settings-file</code></td>
+<td align="left">已过时; 执行 settings 文件, 默认是 <code>settings.gradle</code></td>
+</tr>
+<tr>
+<td align="left"><code>-g</code>, <code>--gradle-user-home</code></td>
+<td align="left">执行 Gradle 的用户家目录. 默认是用户家目录的 <code>.gradle</code> 目录</td>
+</tr>
+<tr>
+<td align="left"><code>-p</code>, <code>--project-dir</code></td>
+<td align="left">指定 Gradle 的工作起始目录. 默认是当前目录</td>
+</tr>
+<tr>
+<td align="left"><code>--project-cache-dir</code></td>
+<td align="left">指定特定项目的缓存目录. 默认是在根目录中的 <code>.gradle</code> 目录</td>
+</tr>
+<tr>
+<td align="left"><code>-D</code>, <code>--system-prop</code></td>
+<td align="left">设置 JVM 的系统属性. 例如, <code>-Dmyprop=myvalue</code></td>
+</tr>
+<tr>
+<td align="left"><code>-I</code>, <code>--init-script</code></td>
+<td align="left">指定一个初始化脚本</td>
+</tr>
+<tr>
+<td align="left"><code>-P</code>, <code>--project-prop</code></td>
+<td align="left">这是根目录的项目属性. 例如, <code>-Pmyprop=myvalue</code></td>
+</tr>
+<tr>
+<td align="left"><code>-Dorg.gradle.jvmargs</code></td>
+<td align="left">设置 JVM 参数</td>
+</tr>
+<tr>
+<td align="left"><code>-Dorg.gradle.java.home</code></td>
+<td align="left">设置 JDK 家目录</td>
+</tr>
+</tbody></table>
+<h2 id="Bootstrapping-new-projects"><a href="#Bootstrapping-new-projects" class="headerlink" title="Bootstrapping new projects"></a>Bootstrapping new projects</h2><h3 id="Creating-new-Gradle-builds"><a href="#Creating-new-Gradle-builds" class="headerlink" title="Creating new Gradle builds"></a>Creating new Gradle builds</h3><p>使用内置的 <code>gradle init</code> <code>task</code> 来创建一个新的 Gradle 构建, 在一个新的或已存在的项目上</p>
+<p>使用 <code>init task</code> 的时候可以指定一个项目类型, 查看 <code>init plugin</code> 获得更多细节:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle init --<span class="built_in">type</span> java-library</span><br></pre></td></tr></table></figure>
+
+<h3 id="Standardize-and-provision-Gradle"><a href="#Standardize-and-provision-Gradle" class="headerlink" title="Standardize and provision Gradle"></a>Standardize and provision Gradle</h3><p>内置的 <code>gradle wrapper</code> <code>task</code> 生成一个脚本 <code>gradlew</code>, 这个脚本调用了一个指定版本的 Gradle, 会在使用这个指定版本的 Gradle 之前下载它</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle wrapper --gradle-version=4.4</span><br></pre></td></tr></table></figure>
+
+<p>除了 <code>--gradle-version</code>, 还可以指定 <code>--distribution-type=(bin|all)</code>, <code>--gradle-distribution-url</code>, <code>--gradle-distribution-sha256-sum</code></p>
+<h2 id="Continuous-Build"><a href="#Continuous-Build" class="headerlink" title="Continuous Build"></a>Continuous Build</h2><p>持续构建允许你自动重新执行要求的 <code>task</code>, 在 <code>task</code> 的 inputs 改变的时候</p>
+<p>Example - continuously run the <code>test task</code> and all dependent tasks by running:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle <span class="built_in">test</span> --continuous</span><br></pre></td></tr></table></figure>
+
+<p>Gradle 的行为就像你在修改源代码或者修改有助于测试的 <code>task</code>之后运行 <code>gradle test</code>一样</p>
+<p>这意味着不相关的变更(例如修改构建脚本)不会出发一个重新构建</p>
+<p>为了包含构建逻辑修改, 持续构建必须手动重新启动</p>
+<h3 id="Terminating-Continuous-Build"><a href="#Terminating-Continuous-Build" class="headerlink" title="Terminating Continuous Build"></a>Terminating Continuous Build</h3><p>如果 Gradle 是附加(attached)到一个交互式的 input source, 例如一个中断, 那么持续构建可以通过 <code>CTRL-D</code> 来退出</p>
+<p>如果 Gradle 不是 attached 到一个交互式的 input source, 例如作为一个脚本的一部分来运行, 持续构建必须被中断, 使用类似 <code>kill</code> 的命令</p>
+<p>如果构建是通过 Tooling API 运行的, 那么通过 Tooling API 的取消机制来停止运行</p>
+<h3 id="Limitations-and-quirks"><a href="#Limitations-and-quirks" class="headerlink" title="Limitations and quirks"></a>Limitations and quirks</h3><h4 id="Build-cycles"><a href="#Build-cycles" class="headerlink" title="Build cycles"></a>Build cycles</h4><p>如果 Gradle 检测到一个 <code>task</code> 的 inputs 修改了的时候就会触发一个构建, 但是在触发一个构建的过程中, inputs 再次改变了, Gradle 就会再次触发一个构建</p>
+<h4 id="Restrictions-with-Java-9"><a href="#Restrictions-with-Java-9" class="headerlink" title="Restrictions with Java 9"></a>Restrictions with Java 9</h4><p>因为 Java 9 中的类访问限制, Gradle 不能设置一些操作系统指定的选项:</p>
+<ul>
+<li>在 macOS, Gradle 将会每 10 秒轮询文件修改, 而不是每 2 秒</li>
+<li>在 Windows, Gradle 必须使用单独的文件观察, 将会导致持续构建在一个非常大的项目上不再工作</li>
+</ul>
+<h4 id="Performance-and-stability"><a href="#Performance-and-stability" class="headerlink" title="Performance and stability"></a>Performance and stability</h4><p>在各个平台上面都有各种问题, 建议不使用持续构建</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Command-Line Interface</li>
+        <li>本文作者：林威羽</li>
+        <li>创建时间：2022-05-05 14:11:19</li>
+        <li>
+            本文链接：https://linweiyu21.github.io/gradle/gradle-command-line-interface/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/Gradle/">#Gradle</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/User-Guides/">#User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/gradle/gradle-the-gradle-wrapper/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">The Gradle Wrapper</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/gradle/gradle-user-guide-conclusion/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">User Guide 小结</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '8xWQ0WFbKUNN4h8ixIO12etk-gzGzoHsz',
+                    appKey: '7cLjTvkIsF6aIuIVSd0um89m',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请开始你的表演',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = '林威羽';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">林威羽</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Command-Line-Interface"><span class="nav-number">1.</span> <span class="nav-text">Command-Line Interface</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Executing-tasks"><span class="nav-number">1.1.</span> <span class="nav-text">Executing tasks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Executing-tasks-in-multi-project-builds"><span class="nav-number">1.1.1.</span> <span class="nav-text">Executing tasks in multi-project builds</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Executing-multiple-tasks"><span class="nav-number">1.1.2.</span> <span class="nav-text">Executing multiple tasks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Excluding-tasks-from-execution"><span class="nav-number">1.1.3.</span> <span class="nav-text">Excluding tasks from execution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Forcing-tasks-to-execute"><span class="nav-number">1.1.4.</span> <span class="nav-text">Forcing tasks to execute</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Continuing-the-build-when-a-failure-occurs"><span class="nav-number">1.1.5.</span> <span class="nav-text">Continuing the build when a failure occurs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Name-abbreviation"><span class="nav-number">1.1.6.</span> <span class="nav-text">Name abbreviation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Common-tasks"><span class="nav-number">1.2.</span> <span class="nav-text">Common tasks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Computing-all-outputs"><span class="nav-number">1.2.1.</span> <span class="nav-text">Computing all outputs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Running-applications"><span class="nav-number">1.2.2.</span> <span class="nav-text">Running applications</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Running-all-checks"><span class="nav-number">1.2.3.</span> <span class="nav-text">Running all checks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cleaning-outputs"><span class="nav-number">1.2.4.</span> <span class="nav-text">Cleaning outputs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Project-reporting"><span class="nav-number">1.3.</span> <span class="nav-text">Project reporting</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Listing-projects"><span class="nav-number">1.3.1.</span> <span class="nav-text">Listing projects</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Listing-tasks"><span class="nav-number">1.3.2.</span> <span class="nav-text">Listing tasks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Show-task-usage-details"><span class="nav-number">1.3.3.</span> <span class="nav-text">Show task usage details</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reporting-dependencies"><span class="nav-number">1.3.4.</span> <span class="nav-text">Reporting dependencies</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Listing-project-dependencies"><span class="nav-number">1.3.5.</span> <span class="nav-text">Listing project dependencies</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Listing-project-properties"><span class="nav-number">1.3.6.</span> <span class="nav-text">Listing project properties</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Command-line-completion"><span class="nav-number">1.4.</span> <span class="nav-text">Command-line completion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Debugging-options"><span class="nav-number">1.5.</span> <span class="nav-text">Debugging options</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Performance-options"><span class="nav-number">1.6.</span> <span class="nav-text">Performance options</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradle-daemon-options"><span class="nav-number">1.7.</span> <span class="nav-text">Gradle daemon options</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Logging-options"><span class="nav-number">1.8.</span> <span class="nav-text">Logging options</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Setting-log-level"><span class="nav-number">1.8.1.</span> <span class="nav-text">Setting log level</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Customizing-log-format"><span class="nav-number">1.8.2.</span> <span class="nav-text">Customizing log format</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Showing-or-hiding-warnings"><span class="nav-number">1.8.3.</span> <span class="nav-text">Showing or hiding warnings</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Execution-options"><span class="nav-number">1.9.</span> <span class="nav-text">Execution options</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Environment-options"><span class="nav-number">1.10.</span> <span class="nav-text">Environment options</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bootstrapping-new-projects"><span class="nav-number">1.11.</span> <span class="nav-text">Bootstrapping new projects</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Creating-new-Gradle-builds"><span class="nav-number">1.11.1.</span> <span class="nav-text">Creating new Gradle builds</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Standardize-and-provision-Gradle"><span class="nav-number">1.11.2.</span> <span class="nav-text">Standardize and provision Gradle</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Continuous-Build"><span class="nav-number">1.12.</span> <span class="nav-text">Continuous Build</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Terminating-Continuous-Build"><span class="nav-number">1.12.1.</span> <span class="nav-text">Terminating Continuous Build</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Limitations-and-quirks"><span class="nav-number">1.12.2.</span> <span class="nav-text">Limitations and quirks</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Build-cycles"><span class="nav-number">1.12.2.1.</span> <span class="nav-text">Build cycles</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Restrictions-with-Java-9"><span class="nav-number">1.12.2.2.</span> <span class="nav-text">Restrictions with Java 9</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Performance-and-stability"><span class="nav-number">1.12.2.3.</span> <span class="nav-text">Performance and stability</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

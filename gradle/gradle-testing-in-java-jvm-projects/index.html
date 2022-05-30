@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Micronaut,Groovy,Gradle,Java,文档,中文">
+    <meta name="description" content="Micronaut Groovy Gradle Java 文档 中文">
+    <meta name="author" content="林威羽">
+    
+    <title>
+        
+            Testing in Java &amp; JVM projects |
+        
+        林威羽的笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(153,153,0)","avatar":"/images/avatar.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"400px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":null,"description":"def contains🚀 = ['Micronaut', 'Groovy', 'Gradle', 'etc']"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                林威羽的笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+    <a target="_blank" rel="noopener" href="https://github.com/linweiyu21/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80"
+        viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+        aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path
+          d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+          fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path
+          d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+          fill="currentColor" class="octo-body"></path>
+      </svg></a>
+    <style>
+      .github-corner:hover .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+      }
+
+      @keyframes octocat-wave {
+
+        0%,
+        100% {
+          transform: rotate(0)
+        }
+
+        20%,
+        60% {
+          transform: rotate(-25deg)
+        }
+
+        40%,
+        80% {
+          transform: rotate(10deg)
+        }
+      }
+
+      @media (max-width:500px) {
+        .github-corner:hover .octo-arm {
+          animation: none
+        }
+
+        .github-corner .octo-arm {
+          animation: octocat-wave 560ms ease-in-out
+        }
+      }
+    </style>
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Testing in Java &amp; JVM projects</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">林威羽</span>
+                        
+                            <span class="author-label">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-05-05 11:49:16</span>
+        <span class="mobile">2022-05-05 11:49</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Gradle-User-Guides/">Gradle - User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Gradle/">Gradle</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/User-Guides/">User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <!-- TOC -->
+
+<ul>
+<li><a href="#testing-in-java--jvm-projects">Testing in Java &amp; JVM projects</a><ul>
+<li><a href="#the-basics">The basics</a></li>
+<li><a href="#test-execution">Test execution</a></li>
+<li><a href="#test-filtering">Test filtering</a><ul>
+<li><a href="#simple-name-pattern">Simple name pattern</a></li>
+<li><a href="#full-qualified-name-pattern">Full-qualified name pattern</a></li>
+</ul>
+</li>
+<li><a href="#test-reporting">Test reporting</a><ul>
+<li><a href="#communicating-test-results-to-ci-servers-and-other-tools-via-xml-files">Communicating test results to CI servers and other tools via XML files</a><ul>
+<li><a href="#configuration-options">Configuration options</a></li>
+</ul>
+</li>
+<li><a href="#outputpertestcase">outputPerTestCase</a></li>
+<li><a href="#mergereruns">mergeReruns</a></li>
+</ul>
+</li>
+<li><a href="#test-detection">Test detection</a></li>
+<li><a href="#test-grouping">Test grouping</a></li>
+<li><a href="#using-junit-5">Using JUnit 5</a><ul>
+<li><a href="#compiling-and-executing-junit-jupiter-tests">Compiling and executing JUnit Jupiter tests</a></li>
+<li><a href="#executing-legacy-tests-with-junit-vintage">Executing legacy tests with JUnit Vintage</a></li>
+<li><a href="#filtering-test-engine">Filtering test engine</a></li>
+</ul>
+</li>
+<li><a href="#configuring-integration-tests">Configuring integration tests</a></li>
+<li><a href="#skipping-the-tests">Skipping the tests</a></li>
+<li><a href="#forcing-tests-to-run">Forcing tests to run</a></li>
+<li><a href="#debugging-when-running-tests">Debugging when running tests</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="Testing-in-Java-amp-JVM-projects"><a href="#Testing-in-Java-amp-JVM-projects" class="headerlink" title="Testing in Java &amp; JVM projects"></a>Testing in Java &amp; JVM projects</h1><table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>Test execution</code></td>
+<td align="left">控制测试怎样执行的方法</td>
+</tr>
+<tr>
+<td align="left"><code>Test filtering</code></td>
+<td align="left">怎样选择特定的测试去执行, 如果影响这个过程</td>
+</tr>
+<tr>
+<td align="left"><code>Test detection</code></td>
+<td align="left">Gradle 怎样找到测试去执行</td>
+</tr>
+<tr>
+<td align="left"><code>Test grouping</code></td>
+<td align="left">怎样使用框架的机制来将测试组合在一起</td>
+</tr>
+</tbody></table>
+<p>一个新的用于建模测试执行阶段的配置 DSL 可以通过孵化中的 JVM Test Suite 插件来使用</p>
+<h2 id="The-basics"><a href="#The-basics" class="headerlink" title="The basics"></a>The basics</h2><p>所有的 JVM 测试都围绕着一种任务类型: <code>Test</code></p>
+<p><code>Test</code> 使用任何支持的测试框架执行测试, 例如 JUnit, JUnit Platform, TestNG, 然后整理执行结果</p>
+<p>可以通过使用 <code>TestReport</code> 类型的 <code>task</code> 来将执行结果转换为一个报告</p>
+<p><code>Test</code> 类型的 <code>task</code> 需要两个信息来开始执行:</p>
+<ul>
+<li>在哪里搜索编译好的测试类文件(属性: <code>Test.getTestClassesDirs()</code>)</li>
+<li>执行的类路径, 类路径应该包含测试类文件和测试框架库文件(属性: <code>Test.getClasspath()</code>)</li>
+</ul>
+<p>如果已经使用了 JVM 语言的插件, 例如 <code>Java Plugin</code>, 将会自动获得:</p>
+<ul>
+<li>一个专用于单元测试的 <code>test</code> source set</li>
+<li>一个用来运行单元测试的 <code>Test</code> 类型的 <code>test task</code></li>
+</ul>
+<p>JVM 语言插件使用 source set 来配置 <code>task</code>, 使其有正确的执行类路径和包含编译好的类文件的目录, 另外, 还将 <code>test task</code> 关联到 <code>check lifecycle task</code> 上</p>
+<p><code>test</code> source set 自动创建了相关的依赖配置, 最常用的是 <code>testImplementation</code> 和 <code>testRuntimeOnly</code> 这两个配置, 插件会将这两个配置上的依赖绑定到 <code>test task</code> 的类路径中</p>
+<p>在大部分情况下, 你需要做的是配置好相关的编译时和运行时依赖, 添加任何必须的配置到 <code>test task</code> 中</p>
+<p>Example - A basic configuration for the ‘test’ task:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    testImplementation <span class="string">&#x27;junit:junit:4.13&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test &#123;</span><br><span class="line">    useJUnit()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 配置测试的 JVM 堆内存最大为 1G</span></span><br><span class="line">    maxHeapSize = <span class="string">&#x27;1G&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看更多的配置选项:</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://docs.gradle.org/7.3.3/javadoc/org/gradle/api/tasks/testing/junit/JUnitOptions.html" >JUnitOptions<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://docs.gradle.org/7.3.3/javadoc/org/gradle/api/tasks/testing/junitplatform/JUnitPlatformOptions.html" >JUnitPlatformOptions<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://docs.gradle.org/7.3.3/javadoc/org/gradle/api/tasks/testing/testng/TestNGOptions.html" >TestNGOptions<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="Test-execution"><a href="#Test-execution" class="headerlink" title="Test execution"></a>Test execution</h2><p>Gradle 在 不同的(forked) JVM 中执行测试, 独立于主构建进程</p>
+<p>这样就避免了构建进程的 classpath 污染和内存消耗</p>
+<p>还可以使用不同于构建进程的 JVM 参数来执行测试</p>
+<p>通过多个 <code>Test task</code> 的属性来控制测试进程怎样启动:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Default</th>
+<th align="left">Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>maxParallelForks</code></td>
+<td align="left">1</td>
+<td align="left">执行测试的最大进程数; 要确保测试是互相隔离的; 使用 <code>org.gradle.test.worker</code> 属性来区别并行测试进程, 这个属性是每个进程唯一的</td>
+</tr>
+<tr>
+<td align="left"><code>forkEvery</code></td>
+<td align="left">0(no maximum)</td>
+<td align="left">这个属性执行了 Gradle 应该在一个测试进程中运行的测试类的最大数量, 在这个测试进程被丢弃或创建一个新的之前</td>
+</tr>
+<tr>
+<td align="left"><code>ignoreFailures</code></td>
+<td align="left">false</td>
+<td align="left">是否在有测试失败的时候继续运行构建; 默认情况下, <code>Test task</code> 执行所有关联的测试, 不管这个配置</td>
+</tr>
+<tr>
+<td align="left"><code>failFast</code></td>
+<td align="left">false</td>
+<td align="left">如果有一个测试失败就结束整个构建; 用于快速失败; 可以通过命令行参数 <code>--fail-fast</code> 来开启</td>
+</tr>
+<tr>
+<td align="left"><code>testLogging</code></td>
+<td align="left">not set</td>
+<td align="left">指明什么测试事件和事件级别要进行日志记录; 查看 <a class="link"   target="_blank" rel="noopener" href="https://docs.gradle.org/7.3.3/javadoc/org/gradle/api/tasks/testing/logging/TestLoggingContainer.html" >TestLoggingContainer<i class="fas fa-external-link-alt"></i></a></td>
+</tr>
+</tbody></table>
+<p>如果配置不正确, 测试进程会意外地退出</p>
+<h2 id="Test-filtering"><a href="#Test-filtering" class="headerlink" title="Test filtering"></a>Test filtering</h2><ul>
+<li>Filtering(建议使用此方式)</li>
+<li>Test inclusion&#x2F;exclusion</li>
+</ul>
+<p>Gradle 的测试过滤基于以下规则:</p>
+<ul>
+<li>一个全限定类型名或一个方法全限定名, e.g: <code>org.gradle.SomeTest</code>, <code>org.gradle.SomeTest.someMethod</code></li>
+<li>一个类的简单名称或一个方法名称, 以大写字母开头, e.g: <code>SomeTest</code>, <code>SomeTest.someMethod</code></li>
+<li><code>*</code> 通配符匹配</li>
+</ul>
+<p>可以在构建脚本上开启过滤, 或者使用 <code>--tests</code> 命令行参数来进行过滤</p>
+<p>Example - Filtering tests in the build script:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">test &#123;</span><br><span class="line">    filter &#123;</span><br><span class="line">        <span class="comment">// include specific method in any of the tests</span></span><br><span class="line">        <span class="comment">// 包含任何类中匹配的测试方法</span></span><br><span class="line">        includeTestsMatching <span class="string">&quot;*UiCheck&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// include all tests from package</span></span><br><span class="line">        <span class="comment">// 包含包中所有的测试</span></span><br><span class="line">        includeTestsMatching <span class="string">&quot;org.gradle.internal.*&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// include all integration tests</span></span><br><span class="line">        <span class="comment">// 包含匹配名称的类</span></span><br><span class="line">        includeTestsMatching <span class="string">&quot;*IntegTest&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用命令行参数来执行单独一个测试方法是很有用的</p>
+<p>当你使用 <code>--tests</code> 时, 同时在构建脚本中包含声明也是同时生效的</p>
+<p>可以同时提供多个 <code>--tests</code> 选项来进行多个指定</p>
+<h3 id="Simple-name-pattern"><a href="#Simple-name-pattern" class="headerlink" title="Simple name pattern"></a>Simple name pattern</h3><p>从 4.7 版本开始, Gradle 将以大写字母开头的模板(pattern)看作是一个简单的类名, 或者类名加方法名</p>
+<p>Example - 执行 <code>SomeTestClass</code> 测试用例中的所有或执行一个测试, 不考虑这个类在哪个包中:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Executes all tests in SomeTestClass</span></span><br><span class="line">gradle <span class="built_in">test</span> --tests SomeTestClass</span><br><span class="line"></span><br><span class="line"><span class="comment"># Executes a single specified test in SomeTestClass</span></span><br><span class="line">gradle <span class="built_in">test</span> --tests SomeTestClass.someSpecificMethod</span><br><span class="line"></span><br><span class="line">gradle <span class="built_in">test</span> --tests SomeTestClass.*someMethod*</span><br></pre></td></tr></table></figure>
+
+<h3 id="Full-qualified-name-pattern"><a href="#Full-qualified-name-pattern" class="headerlink" title="Full-qualified name pattern"></a>Full-qualified name pattern</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># specific class</span></span><br><span class="line">gradle <span class="built_in">test</span> --tests org.gradle.SomeTestClass</span><br><span class="line"></span><br><span class="line"><span class="comment"># specific class and method</span></span><br><span class="line">gradle <span class="built_in">test</span> --tests org.gradle.SomeTestClass.someSpecificMethod</span><br><span class="line"></span><br><span class="line"><span class="comment"># method name containing spaces</span></span><br><span class="line">gradle <span class="built_in">test</span> --tests <span class="string">&quot;org.gradle.SomeTestClass.some method containing spaces&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># all classes at specific package(recursively)</span></span><br><span class="line">gradle <span class="built_in">test</span> --tests <span class="string">&#x27;all.in.specific.package*&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># specific method at specific package(recursively)</span></span><br><span class="line">gradle <span class="built_in">test</span> --tests <span class="string">&#x27;all.in.specific.package*.someSpecificMethod&#x27;</span></span><br><span class="line"></span><br><span class="line">gradle <span class="built_in">test</span> --tests <span class="string">&#x27;*IntegTest&#x27;</span></span><br><span class="line"></span><br><span class="line">gradle <span class="built_in">test</span> --tests <span class="string">&#x27;*IntegTest*ui*&#x27;</span></span><br><span class="line"></span><br><span class="line">gradle <span class="built_in">test</span> --tests <span class="string">&#x27;*ParameterizedTest.foo*&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># the second iteration of a parametrized test</span></span><br><span class="line">gradle <span class="built_in">test</span> --tests <span class="string">&#x27;*ParameterizedTest.*[2]&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>通配符 <code>*</code> 不会理会包分隔符 <code>.</code></p>
+<p>通配符 <code>*</code> 是纯粹基于字符的, <code>--tests *.SomeTestClass</code> 将会匹配任何包, 忽略它的深度(depth)</p>
+<p>你还可以在命令行中将过滤器和 <code>continuous build</code> 相结合, 以便在产品或测试源文件的每次更改之后立即重新执行测试子集</p>
+<p>Example -当一个更改触发时, 执行 <code>com.mypackage.foo</code> 包中或其子包中的所有测试:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle <span class="built_in">test</span> --continuous --tests <span class="string">&quot;com.mypackage.foo.*&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Test-reporting"><a href="#Test-reporting" class="headerlink" title="Test reporting"></a>Test reporting</h2><p><code>Test task</code> 默认生成如下结果:</p>
+<ul>
+<li>一个 HTML 报告</li>
+<li>格式兼容 Ant JUnit report task 的 XML 测试报告, 这个格式可以被很多工具支持, 例如 CI 服务</li>
+<li>一个高效的二进制格式的结果, 被 <code>Test task</code> 用来生成其他格式的 results</li>
+</ul>
+<p>Example - Changing the default test report and results directories:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">reporting.baseDir = <span class="string">&quot;my-reports&quot;</span></span><br><span class="line">testResultsDirName = <span class="string">&quot;$buildDir/my-test-results&quot;</span></span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;showDirs&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">doLast</span> &#123;</span><br><span class="line">        logger.quiet(rootDir.toPath().relativize(<span class="keyword">project</span>.reportsDir.toPath()).toString())</span><br><span class="line">        logger.quiet(rootDir.toPath().relativize(<span class="keyword">project</span>.testResultsDir.toPath()).toString())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>TestReport</code> 类型的 <code>task</code> 可以用来生成自定义 HTML 测试报告. 只需要指定一个 <code>destinationDir</code> 和你想要包含在测试报告中的测试结果</p>
+<h3 id="Communicating-test-results-to-CI-servers-and-other-tools-via-XML-files"><a href="#Communicating-test-results-to-CI-servers-and-other-tools-via-XML-files" class="headerlink" title="Communicating test results to CI servers and other tools via XML files"></a>Communicating test results to CI servers and other tools via XML files</h3><p>默认情况下, 每一个测试类一个测试结果文件, 保存到 <code>$buildDir/test-results/$testTaskName</code> 中</p>
+<p>Example - Changing JUnit XML results location for all test tasks:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">testResultsDirName = <span class="string">&quot;$buildDir/junit-xml&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>经过这样的配置, XML 文件将会被写到 <code>$buildDir/junit-xml/$testTaskName</code> 中</p>
+<p>Example - Changing JUnit XML results location for a particular test task:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">test &#123;</span><br><span class="line">    reports &#123;</span><br><span class="line">        junitXml.outputLocation.set(layout.buildDirectory.dir(<span class="string">&quot;test-junit-xml&quot;</span>))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>经过这样的配置, <code>test task</code> 的 XML 文件将会被写到 <code>$buildDir/test-junit-xml</code> 中</p>
+<h4 id="Configuration-options"><a href="#Configuration-options" class="headerlink" title="Configuration options"></a>Configuration options</h4><p>XML 文件的内容也可以配置, 用来传输不同的结果</p>
+<p>配置 <a class="link"   target="_blank" rel="noopener" href="https://docs.gradle.org/7.3.3/javadoc/org/gradle/api/tasks/testing/JUnitXmlReport.html" >JUnitXmlReport<i class="fas fa-external-link-alt"></i></a> 选项</p>
+<p>Example - Configuring how the results are conveyed(传输,传递,表达):</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">test &#123;</span><br><span class="line">    reports &#123;</span><br><span class="line">        junitXml &#123;</span><br><span class="line">            outputPerTestCase = <span class="keyword">true</span> <span class="comment">// defaults to false</span></span><br><span class="line">            mergeReruns = <span class="keyword">true</span> <span class="comment">// defaults to false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="outputPerTestCase"><a href="#outputPerTestCase" class="headerlink" title="outputPerTestCase"></a>outputPerTestCase</h3><p><code>outputPerTestCase</code> 选项, 开启时, 将测试用例期间生成的任何输出日志与结果中的测试用例关联起来</p>
+<p>当关闭时(默认是关闭), 输出是与 整个测试用例 相关联, 而不是与 产生日志输出的单个测试用例 相关联</p>
+<p>大多数观察 JUnit XML 文件的现代工具都支持 “每个测试用例的输出” 的格式</p>
+<h3 id="mergeReruns"><a href="#mergeReruns" class="headerlink" title="mergeReruns"></a>mergeReruns</h3><p>当 <code>mergeReruns</code> 开启时, 如果一个测试失败了但重试后成功了, 它的失败将会在 <code>&lt;testcase&gt;</code> 中被记录为 <code>&lt;flakyFailure&gt;</code> 而不是 <code>&lt;failure&gt;</code></p>
+<p>这实际上是 <code>surefire plugin of Apache Maven</code> 在开启重试时提供的报告</p>
+<p>如果你的 CI 服务器可以识别这个格式, 它将会指明测试是脆弱的</p>
+<p>如果 <code>mergeReruns</code> 关闭时, 它将会忽略 <code>&lt;flakyFailure&gt;</code> 信息</p>
+<p>如果测试在重试之后还是失败了, 它将会指明测试失败了, 无论你的工具是否可以失败这个格式</p>
+<p>如果 <code>mergeReruns</code> 关闭了(默认), 每个测试的执行都会作为一个分开的测试用例列出</p>
+<p>开启 <code>mergetReruns</code> 选项不会添加任何重试&#x2F;重跑功能给测试执行</p>
+<p>重跑可以通过测试执行框架来启用, e.g: JUnit’s <code>@RepeatedTest</code>, 或者通过 <code>Test Retry Gradle Plugin</code></p>
+<h2 id="Test-detection"><a href="#Test-detection" class="headerlink" title="Test detection"></a>Test detection</h2><p>默认情况下, Gradle 将会运行它检测到的所有测试, 这是通过检查已编译的测试类来进行的</p>
+<p>这个检测根据不同的测试框架使用不同的条件</p>
+<p>对于 JUnit, Gradle 扫描 JUnit 3&#x2F;4 的测试类. 一个类被认为是一个 JUnit测试, 如果它是:</p>
+<ul>
+<li>最终继承自 <code>TestCase</code> 或 <code>GroovyTestCase</code></li>
+<li>使用了 <code>@Runwith</code> 注解</li>
+<li>包含了使用 <code>@Test</code> 注解修饰的方法, 或者这个类的父类包含了这样的方法</li>
+</ul>
+<p>对于 TestNG, Gradle 扫描使用了 <code>@Test</code> 修饰的方法</p>
+<p>抽象类不会被执行</p>
+<p>Gradle 会扫描测试 classpath 上 Jar 文件中的继承树. 如果这些 JAR 文件包含了测试类, 这些测试类也会被运行</p>
+<p>可以通过设置 <code>Test</code> 类上的 <code>scanForTestClasses</code> 属性为 <code>false</code> 来关闭测试类的检测. 当这样设置后, <code>test task</code> 只会使用 <code>includes</code> 和 <code>excludes</code> 属性来寻找测试类</p>
+<p>如果 <code>scanForTestClasses</code> 设置为 <code>false</code> 且没有包含和排除的选项指定, Gradle 默认运行任何匹配模式 <code>**/*Tests.class</code> 和 <code>**/*Test.class</code> 的类, 不包括匹配 <code>**/Abstract*.class</code> 的类</p>
+<p>对于 JUnit Platform, 只有 <code>includes</code> 和 <code>excludes</code> 可以用来过滤测试类, <code>scanForTestClasses</code> 没有效果</p>
+<h2 id="Test-grouping"><a href="#Test-grouping" class="headerlink" title="Test grouping"></a>Test grouping</h2><p>JUnit, JUnit Platform 和 TestNG 允许对测试方法进行复杂的分组</p>
+<p>JUnit 4.8 引入了 <code>categories</code> 的概念, 用于分组 JUnit 4 测试的类和方法</p>
+<p><code>Test.useJUnit(org.gradle.api.Action)</code> 允许你指定你想要包含和排除的 JUnit <code>categories</code></p>
+<p>Example - JUnit Categories - includes tests in CategoryA and excludes tests in CategoryB for the test task:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">test &#123;</span><br><span class="line">    useJUnit &#123;</span><br><span class="line">        includeCategories <span class="string">&#x27;org.gradle.junit.CategoryA&#x27;</span></span><br><span class="line">        excludeCategories <span class="string">&#x27;org.gradle.junit.CategoryB&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>JUnit Platform 引入了 <code>tagging</code> 来代替 <code>categories</code>, 你可以通过使用 <code>Test.useJUnitPlatform(org.gradle.api.Action)</code> 来引入&#x2F;排除 tags:</p>
+<p>Example - JUnit Platform Tags:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">test &#123;</span><br><span class="line">    useJUnitPlatform &#123;</span><br><span class="line">        includeTags <span class="string">&#x27;fast&#x27;</span></span><br><span class="line">        excludeTags <span class="string">&#x27;slow&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>TestNG 框架引入了类似的 <code>test groups</code> 的概念, 通过 <code>Test.useTestNG(org.gradle.api.Action)</code> 来为测试执行引入&#x2F;排除 <code>test group</code>:</p>
+<p>Example - Grouping TestNG tests:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">test &#123;</span><br><span class="line">    useTestNG &#123;</span><br><span class="line">        excludeGroups <span class="string">&#x27;integrationTests&#x27;</span></span><br><span class="line">        includeGroups <span class="string">&#x27;unitTests&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Using-JUnit-5"><a href="#Using-JUnit-5" class="headerlink" title="Using JUnit 5"></a>Using JUnit 5</h2><p>JUnit 5 &#x3D; <code>JUnit Platform</code> + <code>JUnit Jupiter</code> + <code>JUnit Vintage</code></p>
+<p><code>JUnit Platform</code> : 提供一个在 JVM 上启动测试框架的基础</p>
+<p><code>JUnit Jupiter</code> : The combination of the new programming model and extension model for writing tests and extensions in JUnit 5</p>
+<p><code>Junit Vintage</code> : 提供一个 <code>TestEngine</code> 来在 <code>JUnit Platform</code>上运行基于 JUnit 3&#x2F;4 的测试</p>
+<p>Example - Enabling JUnit Platform to run your tests:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">test &#123;</span><br><span class="line">    useJUnitPlatform()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看 <a class="link"   target="_blank" rel="noopener" href="https://docs.gradle.org/7.3.3/javadoc/org/gradle/api/tasks/testing/JUnitXmlReport.html" >Test.useJUnitPlatform()<i class="fas fa-external-link-alt"></i></a> 获取更多细节</p>
+<p>Gradle 中的 JUnit 5 的使用还存在一些已知的缺陷</p>
+<h3 id="Compiling-and-executing-JUnit-Jupiter-tests"><a href="#Compiling-and-executing-JUnit-Jupiter-tests" class="headerlink" title="Compiling and executing JUnit Jupiter tests"></a>Compiling and executing JUnit Jupiter tests</h3><p>只需要在依赖中添加 JUnit Jupiter 的依赖, 就可以开启 Gradle 中的 JUnit Jupiter 支持</p>
+<p>Example - JUnit Jupiter dependencies:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    testImplementation <span class="string">&#x27;org.junit.jupiter:junit-jupiter:5.7.1&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将测试类放置到 <code>src/test/java</code> 中, 使用 <code>gradle test</code> 来执行测试</p>
+<h3 id="Executing-legacy-tests-with-JUnit-Vintage"><a href="#Executing-legacy-tests-with-JUnit-Vintage" class="headerlink" title="Executing legacy tests with JUnit Vintage"></a>Executing legacy tests with JUnit Vintage</h3><p>在 JUnit Platform 上运行 JUnit 3&#x2F;4, 或者和 JUnit Jupiter 的测试混合在一起, 需要添加额外的 JUnit Vintage Engine 依赖</p>
+<p>Example - JUnit Vintage dependencies:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    testImplementation <span class="string">&#x27;org.junit.jupiter:junit-jupiter:5.7.1&#x27;</span></span><br><span class="line">    testCompileOnly <span class="string">&#x27;junit:junit:4.13&#x27;</span></span><br><span class="line">    testRuntimeOnly <span class="string">&#x27;org.junit.vintage:junit-vintage-engine&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过这个方法, 可以直接使用 <code>gradle test</code> 直接在 JUnit Platform 上运行 JUnit 3&#x2F;4 的测试, 而不需要重写它们</p>
+<h3 id="Filtering-test-engine"><a href="#Filtering-test-engine" class="headerlink" title="Filtering test engine"></a>Filtering test engine</h3><p>JUnit Platform 允许你使用不同的测试引擎, JUnit 现在只提供了两个实现了 <code>TestEngine</code> 的测试引擎: <code>junit-jupiter-engine</code> 和 <code>junit-vintage-engine</code></p>
+<p>默认情况下, 在测试运行时 classpath 上的所有测试引擎都会被使用, 为了明确指定测试引擎, 在构建脚本中这样配置:</p>
+<p>Example - Filter specific engines:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">test &#123;</span><br><span class="line">    useJUnitPlatform &#123;</span><br><span class="line">        includeEngines <span class="string">&#x27;junit-vintage&#x27;</span></span><br><span class="line">        <span class="comment">// excludeEngines &#x27;junit-jupiter&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Configuring-integration-tests"><a href="#Configuring-integration-tests" class="headerlink" title="Configuring integration tests"></a>Configuring integration tests</h2><p>项目的一个常见需求是以一种或另一种形式合并集成测试</p>
+<p>集成测试的目的是验证项目的各个部分是否正确地一起工作</p>
+<p>这通常意味着相对于单元测试来说, 它们需要特殊的执行设置和依赖</p>
+<p>添加集成测试到构建中最简单的方法是利用孵化中的 JVM Test Suite Plugin</p>
+<p>如果孵化中的解决方案不是你想要的, 可以通过如下步骤来进行:</p>
+<ol>
+<li>为集成测试创建一个新的 source set</li>
+<li>将需要的依赖添加到该 source set 的适当 configurations 中</li>
+<li>为 source set 配置编译时和运行时 classpath</li>
+<li>创建一个 <code>task</code> 来运行集成测试</li>
+</ol>
+<p>Example - Setting up working integration tests:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line"><span class="keyword">sourceSets</span> &#123;</span><br><span class="line">    intTest &#123;</span><br><span class="line">        compileClasspath += <span class="keyword">sourceSets</span>.main.output</span><br><span class="line">        runtimeClasspath += <span class="keyword">sourceSets</span>.main.output</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">configurations</span> &#123;</span><br><span class="line">    intTestImplementation.extendsFrom implementation</span><br><span class="line">    intTestRuntimeOnly.extendsFrom runtimeOnly</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    intTestImplementation <span class="string">&#x27;junit:junit:4.13&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这将会配置一个新的称为 <code>intTest</code> 的 source set, 这个 source set 将会自动创建:</p>
+<ul>
+<li><code>intTestImplementation</code>, <code>intTestCompileOnly</code>, <code>intTestRuntimeOnly</code> 配置(还包括其他不常用的配置)</li>
+<li>一个 <code>compileIntTestJava task</code> 来编译所有在 <code>src/intTest/java</code> 中的源文件</li>
+</ul>
+<p>这个例子还做了如下操作, 但不是所有的集成测试都需要的:</p>
+<ul>
+<li>为集成测试的编译时和运行时 classpath 添加 <code>main</code> source set 中的产品 classes, <code>sourceSets.main.output</code> 是包含已编译产品 classes 和资源的所有目录的文件集合</li>
+<li>让 <code>intTestImplementation</code> 配置继承 <code>implementation</code> 配置, 使得所有产品代码声明的依赖也变成集成测试的依赖</li>
+</ul>
+<p>在集成测试中一般需要将产品代码包括到编译时和运行时 classpath</p>
+<p>但有时候并不需要这样做, 例如你的产品代码打包成了可执行的包, 一个 WEB 应用程序, 这时候你的集成测试是通过 HTTP 和产品代码进行交互</p>
+<p>将单元测试的依赖添加到集成测试的依赖也是可选的, 通过 <code>intTestImplementation.extendsFrom testImplementation</code></p>
+<p>这个例子中还有其他值得注意的地方:</p>
+<ul>
+<li><code>+=</code> 允许你添加路径到 <code>compileClasspath</code> 和 <code>runtimeClasspath</code> 中, 而不是覆盖它们的值</li>
+<li>如果你使用基于约定的配置, 例如 <code>intTestImplementation</code>, 你必须在新的 source set 后面声明依赖</li>
+</ul>
+<p>创建和配置一个 source set 自动配置了编译阶段, 但是它在运行集成测试方面没有任何作用. 所以拼图的最后一块就是自定义 <code>test task</code> 来使用新的 source set 中的信息去配置 <code>task</code> 的运行时 classpath 和 测试类:</p>
+<p>Example - Defining a working integration test task:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">tasks.register(<span class="string">&#x27;integrationTest&#x27;</span>, Test) &#123;</span><br><span class="line">    <span class="keyword">description</span> = <span class="string">&#x27;Runs integration tests.&#x27;</span></span><br><span class="line">    <span class="keyword">group</span> = <span class="string">&#x27;verification&#x27;</span></span><br><span class="line"></span><br><span class="line">    testClassesDirs = <span class="keyword">sourceSets</span>.intTest.output.classesDirs</span><br><span class="line">    <span class="keyword">classpath</span> = <span class="keyword">sourceSets</span>.intTest.runtimeClasspath</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 可以使用 mustRunAfter()</span></span><br><span class="line">    shouldRunAfter test</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">check.dependsOn integrationTest</span><br></pre></td></tr></table></figure>
+
+<p>编译好的测试类 - <code>testClassesDirs</code> 属性</p>
+<p>运行时需要的在 classpath 的类 - <code>classpath</code> 属性</p>
+<h2 id="Skipping-the-tests"><a href="#Skipping-the-tests" class="headerlink" title="Skipping the tests"></a>Skipping the tests</h2><p>在命令行中使用 <code>-x</code> 或 <code>--exclude-task</code> 选项来跳过测试:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle build -x <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+
+<p>将会排除 <code>test task</code>, 和其他独占地依赖 <code>test task</code> 的 <code>task</code></p>
+<p>在构建脚本中跳过一个测试有多个方法</p>
+<p>一个普遍的做法是使用 <code>Task.onlyIf(org.gradle.api.specs.Spec)</code> 方法来让测试执行条件化:</p>
+<p>Example - Skipping the unit tests based on a project project:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">test.onlyIf &#123; !<span class="keyword">project</span>.hasProperty(<span class="string">&#x27;mySkipTest&#x27;</span>) &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中, Gradle 将会标记跳过的测试为 <code>SKIPPED</code>, 而不是将它们从构建中排除</p>
+<h2 id="Forcing-tests-to-run"><a href="#Forcing-tests-to-run" class="headerlink" title="Forcing tests to run"></a>Forcing tests to run</h2><p>你可能遭遇这样一种情况, 测试依赖一个第三方服务和一些可能会改变的但又不能在构建中建模的东西</p>
+<p>你可以强制测试在这种情况下运行, 通过清除相关的 Test task 的 output, 然后重新运行它:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle cleanTest <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+
+<p><code>cleanTest</code> 基于 Base Plugin 提供的 一个 <code>task rule</code>, 你可以将其用于任何 task</p>
+<h2 id="Debugging-when-running-tests"><a href="#Debugging-when-running-tests" class="headerlink" title="Debugging when running tests"></a>Debugging when running tests</h2><p>通过设置 <code>Test.getDebug()</code> 属性为 <code>true</code> 或者使用 <code>--debug-jvm</code> 命令行参数来开启</p>
+<p>当测试的调试开启之后, Gradle 会将测试进程暂停, 然后监听 5005 端口</p>
+<p>你也可以在 DSL 中开启调试功能, 同时还能配置其他参数:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">test &#123;</span><br><span class="line">    debugOptions &#123;</span><br><span class="line">        enabled = <span class="keyword">true</span></span><br><span class="line">        port = <span class="number">4455</span></span><br><span class="line">        server = <span class="keyword">true</span></span><br><span class="line">        suspend = <span class="keyword">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Testing in Java &amp; JVM projects</li>
+        <li>本文作者：林威羽</li>
+        <li>创建时间：2022-05-05 11:49:16</li>
+        <li>
+            本文链接：https://linweiyu21.github.io/gradle/gradle-testing-in-java-jvm-projects/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/Gradle/">#Gradle</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/User-Guides/">#User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/gradle/gradle-managing-dependencies-of-jvm-projects/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Managing Dependencies of JVM Projects</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/gradle/gradle-java-other-jvm-projects/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Java &amp; Other JVM Projects</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '8xWQ0WFbKUNN4h8ixIO12etk-gzGzoHsz',
+                    appKey: '7cLjTvkIsF6aIuIVSd0um89m',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请开始你的表演',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = '林威羽';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">林威羽</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Testing-in-Java-amp-JVM-projects"><span class="nav-number">1.</span> <span class="nav-text">Testing in Java &amp; JVM projects</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-basics"><span class="nav-number">1.1.</span> <span class="nav-text">The basics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Test-execution"><span class="nav-number">1.2.</span> <span class="nav-text">Test execution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Test-filtering"><span class="nav-number">1.3.</span> <span class="nav-text">Test filtering</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Simple-name-pattern"><span class="nav-number">1.3.1.</span> <span class="nav-text">Simple name pattern</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Full-qualified-name-pattern"><span class="nav-number">1.3.2.</span> <span class="nav-text">Full-qualified name pattern</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Test-reporting"><span class="nav-number">1.4.</span> <span class="nav-text">Test reporting</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Communicating-test-results-to-CI-servers-and-other-tools-via-XML-files"><span class="nav-number">1.4.1.</span> <span class="nav-text">Communicating test results to CI servers and other tools via XML files</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Configuration-options"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">Configuration options</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#outputPerTestCase"><span class="nav-number">1.4.2.</span> <span class="nav-text">outputPerTestCase</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mergeReruns"><span class="nav-number">1.4.3.</span> <span class="nav-text">mergeReruns</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Test-detection"><span class="nav-number">1.5.</span> <span class="nav-text">Test detection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Test-grouping"><span class="nav-number">1.6.</span> <span class="nav-text">Test grouping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-JUnit-5"><span class="nav-number">1.7.</span> <span class="nav-text">Using JUnit 5</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Compiling-and-executing-JUnit-Jupiter-tests"><span class="nav-number">1.7.1.</span> <span class="nav-text">Compiling and executing JUnit Jupiter tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Executing-legacy-tests-with-JUnit-Vintage"><span class="nav-number">1.7.2.</span> <span class="nav-text">Executing legacy tests with JUnit Vintage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Filtering-test-engine"><span class="nav-number">1.7.3.</span> <span class="nav-text">Filtering test engine</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configuring-integration-tests"><span class="nav-number">1.8.</span> <span class="nav-text">Configuring integration tests</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Skipping-the-tests"><span class="nav-number">1.9.</span> <span class="nav-text">Skipping the tests</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Forcing-tests-to-run"><span class="nav-number">1.10.</span> <span class="nav-text">Forcing tests to run</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Debugging-when-running-tests"><span class="nav-number">1.11.</span> <span class="nav-text">Debugging when running tests</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

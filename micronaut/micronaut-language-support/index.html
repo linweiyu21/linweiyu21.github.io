@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Micronaut,Groovy,Gradle,Java,文档,中文">
+    <meta name="description" content="Micronaut Groovy Gradle Java 文档 中文">
+    <meta name="author" content="林威羽">
+    
+    <title>
+        
+            Micronaut 中文文档 Language Support |
+        
+        林威羽的笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(153,153,0)","avatar":"/images/avatar.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"400px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":null,"description":"def contains🚀 = ['Micronaut', 'Groovy', 'Gradle', 'etc']"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                林威羽的笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+    <a target="_blank" rel="noopener" href="https://github.com/linweiyu21/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80"
+        viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+        aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path
+          d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+          fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path
+          d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+          fill="currentColor" class="octo-body"></path>
+      </svg></a>
+    <style>
+      .github-corner:hover .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+      }
+
+      @keyframes octocat-wave {
+
+        0%,
+        100% {
+          transform: rotate(0)
+        }
+
+        20%,
+        60% {
+          transform: rotate(-25deg)
+        }
+
+        40%,
+        80% {
+          transform: rotate(10deg)
+        }
+      }
+
+      @media (max-width:500px) {
+        .github-corner:hover .octo-arm {
+          animation: none
+        }
+
+        .github-corner .octo-arm {
+          animation: octocat-wave 560ms ease-in-out
+        }
+      }
+    </style>
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Micronaut 中文文档 Language Support</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">林威羽</span>
+                        
+                            <span class="author-label">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-04-29 09:49:10</span>
+        <span class="mobile">2022-04-29 09:49</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Micronaut-%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3/">Micronaut 中文文档</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Groovy/">Groovy</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Micronaut/">Micronaut</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E4%B8%AD%E6%96%87/">中文</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <!-- TOC -->
+
+<ul>
+<li><a href="#language-support">Language Support</a><ul>
+<li><a href="#micronaut-for-java-%E7%94%A8%E4%BA%8E-java-%E7%9A%84-micronaut">Micronaut for Java (用于 Java 的 Micronaut)</a><ul>
+<li><a href="#using-micronaut-with-java-9-%E5%9C%A8-java-9-%E4%B8%AD%E4%BD%BF%E7%94%A8-micronaut">Using Micronaut with Java 9+ (在 Java 9+ 中使用 Micronaut)</a><ul>
+<li><a href="#the-javaxannotation-package">The javax.annotation package</a></li>
+</ul>
+</li>
+<li><a href="#incremental-annotation-processing-with-gradle-%E4%BD%BF%E7%94%A8-gradle-%E8%BF%9B%E8%A1%8C%E5%A2%9E%E9%87%8F%E6%B3%A8%E8%A7%A3%E5%A4%84%E7%90%86">Incremental Annotation Processing with Gradle (使用 Gradle 进行增量注解处理)</a></li>
+<li><a href="#using-project-lombok-%E4%BD%BF%E7%94%A8-lombok-%E9%A1%B9%E7%9B%AE">Using Project Lombok (使用 Lombok 项目)</a></li>
+<li><a href="#configuring-an-ide-%E9%85%8D%E7%BD%AE-ide">Configuring an IDE (配置 IDE)</a></li>
+<li><a href="#retaining-parameter-names-%E4%BF%9D%E7%95%99%E5%8F%82%E6%95%B0%E5%90%8D%E7%A7%B0">Retaining Parameter Names (保留参数名称)</a></li>
+</ul>
+</li>
+<li><a href="#micronaut-for-groovy-%E7%94%A8%E4%BA%8E-groovy-%E7%9A%84-micronaut">Micronaut for Groovy (用于 Groovy 的 Micronaut)</a><ul>
+<li><a href="#groovy-specific-modules-groovy-%E7%9A%84%E7%89%B9%E6%9C%89%E6%A8%A1%E5%9D%97">Groovy-Specific Modules (Groovy 的特有模块)</a></li>
+<li><a href="#groovy-support-in-the-cli-cli-%E4%B8%AD%E7%9A%84-groovy-%E6%94%AF%E6%8C%81">Groovy Support in the CLI (CLI 中的 Groovy 支持)</a></li>
+<li><a href="#programmatic-routes-with-groovyroutebuilder-%E4%BD%BF%E7%94%A8-groovyroutebuilder-%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%8C%96%E8%B7%AF%E7%94%B1">Programmatic Routes with GroovyRouteBuilder (使用 GroovyRouteBuilder 的程序化路由)</a></li>
+<li><a href="#using-gorm-in-a-groovy-application-%E5%9C%A8%E4%B8%80%E4%B8%AA-groovy-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E4%BD%BF%E7%94%A8-gorm">Using GORM in a Groovy application (在一个 Groovy 应用程序中使用 GORM)</a></li>
+<li><a href="#serverless-functions-with-groovy-%E4%BD%BF%E7%94%A8-groovy-%E7%9A%84%E6%97%A0%E6%9C%8D%E5%8A%A1%E5%87%BD%E6%95%B0">Serverless Functions with Groovy (使用 Groovy 的无服务函数)</a></li>
+</ul>
+</li>
+<li><a href="#micronaut-for-kotlin-%E7%94%A8%E4%BA%8E-kotlin-%E7%9A%84-micronaut">Micronaut for Kotlin (用于 Kotlin 的 Micronaut)</a></li>
+<li><a href="#micronaut-for-graalvm-%E7%94%A8%E4%BA%8E-graalvm-%E7%9A%84-micronaut">Micronaut for GraalVM (用于 GraalVM 的 Micronaut)</a><ul>
+<li><a href="#getting-started-%E5%BC%80%E5%A7%8B">Getting Started (开始)</a></li>
+<li><a href="#microservices-as-graalvm-native-images-%E4%BD%9C%E4%B8%BA-graalvm-%E5%8E%9F%E7%94%9F%E9%95%9C%E5%83%8F%E7%9A%84%E5%BE%AE%E6%9C%8D%E5%8A%A1">Microservices as GraalVM native images (作为 GraalVM 原生镜像的微服务)</a><ul>
+<li><a href="#getting-started-with-micronaut-and-graalvm-micronaut-%E5%92%8C-graalvm-%E5%85%A5%E9%97%A8">Getting Started with Micronaut and GraalVM (Micronaut 和 GraalVM 入门)</a></li>
+<li><a href="#building-a-native-image-using-docker-%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%E4%BD%BF%E7%94%A8-docker-%E7%9A%84%E5%8E%9F%E7%94%9F%E9%95%9C%E5%83%8F">Building a Native Image Using Docker (构建一个使用 Docker 的原生镜像)</a></li>
+<li><a href="#building-a-native-image-without-using-docker-%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%E4%B8%8D%E4%BD%BF%E7%94%A8-docker-%E7%9A%84%E5%8E%9F%E7%94%9F%E9%95%9C%E5%83%8F">Building a Native Image Without Using Docker (构建一个不使用 Docker 的原生镜像)</a></li>
+<li><a href="#understanding-micronaut-and-graalvm-%E7%90%86%E8%A7%A3-micronaut-%E5%92%8C-graalvm">Understanding Micronaut and GraalVM (理解 Micronaut 和 GraalVM)</a></li>
+<li><a href="#adding-additional-classes-for-reflective-access-%E4%B8%BA%E5%8F%8D%E5%B0%84%E8%AE%BF%E9%97%AE%E6%B7%BB%E5%8A%A0%E9%A2%9D%E5%A4%96%E7%9A%84%E7%B1%BB">Adding Additional Classes for Reflective Access (为反射访问添加额外的类)</a></li>
+<li><a href="#generating-native-images-%E7%94%9F%E6%88%90%E5%8E%9F%E7%94%9F%E9%95%9C%E5%83%8F">Generating Native Images (生成原生镜像)</a></li>
+<li><a href="#resource-file-generation-%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6%E7%94%9F%E6%88%90">Resource file generation (资源文件生成)</a></li>
+</ul>
+</li>
+<li><a href="#graalvm-and-micronaut-faq-graalvm-%E5%92%8C-micronaut-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94">GraalVM and Micronaut FAQ (GraalVM 和 Micronaut 常见问题解答)</a><ul>
+<li><a href="#how-does-micronaut-manage-to-run-on-graalvm-micronaut-%E5%A6%82%E4%BD%95%E5%9C%A8-graalvm-%E4%B8%8A%E8%BF%90%E8%A1%8C">How does Micronaut manage to run on GraalVM? (Micronaut 如何在 GraalVM 上运行?)</a></li>
+<li><a href="#how-can-i-make-a-micronaut-application-that-uses-picocli-run-on-graalvm-%E5%A6%82%E4%BD%95%E8%AE%A9%E4%BD%BF%E7%94%A8-picocli-%E7%9A%84-micronaut-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E5%9C%A8-graalvm-%E4%B8%8A">How can I make a Micronaut application that uses picocli run on GraalVM? (如何让使用 Picocli 的 Micronaut 应用程序运行在 GraalVM 上)</a></li>
+<li><a href="#what-about-other-third-party-libraries-%E9%82%A3%E7%AC%AC%E4%B8%89%E6%96%B9%E7%B1%BB%E5%BA%93%E5%91%A2">What about other Third-Party Libraries? (那第三方类库呢)</a></li>
+<li><a href="#i-get-a-class-xxx-is-instantiated-reflectively-exception-what-do-i-do-%E6%88%91%E9%81%87%E5%88%B0%E4%BA%86%E4%B8%80%E4%B8%AA-class-xxx-is-instantiated-reflectively-%E5%BC%82%E5%B8%B8-%E6%88%91%E8%A6%81%E6%80%8E%E4%B9%88%E5%8A%9E">I Get a “Class XXX is instantiated reflectively…” Exception. What do I do? (我遇到了一个 “Class XXX is instantiated reflectively…” 异常. 我要怎么办)</a></li>
+<li><a href="#what-if-i-want-to-set-the-heaps-maximum-size-with--xmx-but-i-get-an-outofmemoryerror-%E5%A6%82%E6%9E%9C%E6%88%91%E6%83%B3%E8%A6%81%E4%BD%BF%E7%94%A8--xmx-%E8%AE%BE%E7%BD%AE%E6%9C%80%E5%A4%A7%E5%A0%86%E5%86%85%E5%AD%98-%E4%BD%86%E6%88%91%E5%BE%97%E5%88%B0%E4%B8%80%E4%B8%AA-outofmemoryerror">What if I want to set the heap’s maximum size with <code>-Xmx</code>, but I get an <code>OutOfMemoryError</code>? (如果我想要使用 <code>-Xmx</code> 设置最大堆内存, 但我得到一个 <code>OutOfMemoryError</code>)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="Language-Support"><a href="#Language-Support" class="headerlink" title="Language Support"></a>Language Support</h1><p><strong>声明</strong>:</p>
+<ul>
+<li>本文由本人翻译自<a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide" >官方文档<i class="fas fa-external-link-alt"></i></a></li>
+<li>部分内容可能会有修改或删减, 一切以官方文档为准.</li>
+<li>本文翻译时 Micronaut 版本为 3.4.2</li>
+</ul>
+<p>Micronaut 支持任何实现了 <a class="link"   target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/package-summary.html" >Java Annotation Processor<i class="fas fa-external-link-alt"></i></a> API 的 JVM 语言</p>
+<p>尽管 Groovy 没有支持这个 API, 但是特别的支持已经通过使用 AST transformations 来构建</p>
+<p>当前支持的语言有: Java, Groovy, Kotlin (通过 <code>kapt</code> 工具)</p>
+<blockquote>
+<p>Theoretically any language that supports a way to analyze the AST at compile time could be supported.</p>
+</blockquote>
+<p>理论上, 任何支持在编译时分析 AST 的语言都可以被支持</p>
+<blockquote>
+<p>The io.micronaut.inject.writer package includes language-neutral classes that build BeanDefinition classes at compile time using the ASM tool.</p>
+</blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/inject/writer/package-summary.html" >io.micronaut.inject.writer<i class="fas fa-external-link-alt"></i></a> 包 包括了与语言无关的类, 这些类在编译时使用 ASM 工具构建 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/inject/BeanDefinition.html" >BeanDefinition<i class="fas fa-external-link-alt"></i></a> 类</p>
+<p>接下来的部分介绍了通过特定语言使用 Micronaut 的功能和注意事项</p>
+<h2 id="Micronaut-for-Java-用于-Java-的-Micronaut"><a href="#Micronaut-for-Java-用于-Java-的-Micronaut" class="headerlink" title="Micronaut for Java (用于 Java 的 Micronaut)"></a>Micronaut for Java (用于 Java 的 Micronaut)</h2><p>对于 Java, Micronaut 使用一个 Java <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/annotation/processing/BeanDefinitionInjectProcessor.html" >BeanDefinitionInjectProcessor<i class="fas fa-external-link-alt"></i></a> 注解处理器来在编译时处理类并生成 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/inject/BeanDefinition.html" >BeanDefinition<i class="fas fa-external-link-alt"></i></a> 类</p>
+<p>这里最大的优点是在编译时付出了少量成本, 当在运行时 Micronaut 基本上是无反射的, 快速的且内存消耗非常少</p>
+<h3 id="Using-Micronaut-with-Java-9-在-Java-9-中使用-Micronaut"><a href="#Using-Micronaut-with-Java-9-在-Java-9-中使用-Micronaut" class="headerlink" title="Using Micronaut with Java 9+ (在 Java 9+ 中使用 Micronaut)"></a>Using Micronaut with Java 9+ (在 Java 9+ 中使用 Micronaut)</h3><p>Micronaut 是使用 Java 8 构建的, 但在 Java 9 和更高版本中也正常运行</p>
+<p>Micronaut 生成的类与同一个包中的现有类 并排 放置, 因此不会违反有关 Java 模块系统的任何内容</p>
+<p>将 Java 9+ 与 Micronaut 一起使用时有一些注意事项</p>
+<h4 id="The-javax-annotation-package"><a href="#The-javax-annotation-package" class="headerlink" title="The javax.annotation package"></a>The javax.annotation package</h4><p>如果你使用 Micronaut CLI 创建项目, 如果你使用 Java 9+, 那么 <code>javax.annotation</code> 依赖会自动添加到你的项目中</p>
+<p><code>javax.annotation</code>, 包含了 <code>@PostConstruct</code>,<code>@PreDestroy</code> 等, 已经从核心 JDK 迁移到一个 module 中了</p>
+<p>一般来说, 应该避免使用这个包中的注解, 应该使用等价的 <code>jakarta.annotation</code> 包</p>
+<h3 id="Incremental-Annotation-Processing-with-Gradle-使用-Gradle-进行增量注解处理"><a href="#Incremental-Annotation-Processing-with-Gradle-使用-Gradle-进行增量注解处理" class="headerlink" title="Incremental Annotation Processing with Gradle (使用 Gradle 进行增量注解处理)"></a>Incremental Annotation Processing with Gradle (使用 Gradle 进行增量注解处理)</h3><p>Micronaut 支持 <a class="link"   target="_blank" rel="noopener" href="https://docs.gradle.org/current/userguide/java_plugin.html#sec:incremental_annotation_processing" >Gradle incremental annotation processing<i class="fas fa-external-link-alt"></i></a>, 这个处理通过只编译修改了的类, 避免完全重编译来提供构建速度</p>
+<blockquote>
+<p>However, the support is disabled by default since Micronaut allows the definition of custom meta-annotations (to for example define custom AOP advice) that need to be configured for processing.</p>
+</blockquote>
+<p>但是, 默认情况下禁用了该支持, 因为 Micronaut 允许定义需要被配置以进行处理的自定义元注解 (例如定义自定义 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#aop" >AOP advice<i class="fas fa-external-link-alt"></i></a>)</p>
+<p>下面的例子展示了如何为你在 <code>com.example</code> 包下的自定义注解开启并配置增量式注解处理:</p>
+<p>Example - Enabling Incremental Annotation Processing:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">tasks.withType(JavaCompile) &#123;</span><br><span class="line">    options.compilerArgs = [</span><br><span class="line">        <span class="string">&#x27;-Amicronaut.processing.incremental=true&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;-Amicronaut.processing.annotations=com.example.*&#x27;</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果你不为你的自定义注解开启处理, Micronaut 将会忽略这些注解, 这将有可能破坏你的应用</p>
+<h3 id="Using-Project-Lombok-使用-Lombok-项目"><a href="#Using-Project-Lombok-使用-Lombok-项目" class="headerlink" title="Using Project Lombok (使用 Lombok 项目)"></a>Using Project Lombok (使用 Lombok 项目)</h3><p><a class="link"   target="_blank" rel="noopener" href="https://projectlombok.org/" >Project Lombok<i class="fas fa-external-link-alt"></i></a> 是一个流行的 Java 库, 通过注解处理器添加了一些有用的 AST transformations 到 Java 语言中</p>
+<p>因为 Micronaut 和 Lombok 都使用了注解处理器, 所以在配置 Lombok 时需要特别小心来确保 Lombok 处理器在 Micronaut 处理器之前运行</p>
+<p>如果使用 Gradle, 添加如下依赖:</p>
+<p>Example - Configuring Lombok in Gradle:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">compileOnly <span class="string">&#x27;org.projectlombok:lombok:1.18.12&#x27;</span></span><br><span class="line">annotationProcessor <span class="string">&#x27;org.projectlombok:lombok:1.18.12&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Micronaut processor defined after Lombok</span></span><br><span class="line">annotationProcessor <span class="string">&#x27;io.micronaut:micronaut-inject-java&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果使用 Maven:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.18.12<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;<span class="name">annotationProcessorPaths</span> <span class="attr">combine.self</span>=<span class="string">&quot;override&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">path</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- must precede micronaut-inject-java --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.18.12<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">path</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">path</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.micronaut<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>micronaut-inject-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;micronaut.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">path</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">path</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.micronaut<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>micronaut-validation<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;micronaut.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">path</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">annotationProcessorPaths</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在所有情况下, Micronaut 处理器必须配置在 Lombok 处理器之后. 反转这个顺序的话声明的依赖将不生效</p>
+<h3 id="Configuring-an-IDE-配置-IDE"><a href="#Configuring-an-IDE-配置-IDE" class="headerlink" title="Configuring an IDE (配置 IDE)"></a>Configuring an IDE (配置 IDE)</h3><p>查看 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#ideSetup" >IDE Setup<i class="fas fa-external-link-alt"></i></a> 获取更多信息</p>
+<h3 id="Retaining-Parameter-Names-保留参数名称"><a href="#Retaining-Parameter-Names-保留参数名称" class="headerlink" title="Retaining Parameter Names (保留参数名称)"></a>Retaining Parameter Names (保留参数名称)</h3><p>Java 的默认情况下, 在编译时方法参数的参数名称数据不会被保留</p>
+<p>如果你没有显式定义参数名称且依赖于已编译的外部 JAR, 这对于 Micronaut 来说可能是一个问题</p>
+<p>考虑如下接口:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">HelloOperations</span> &#123;</span><br><span class="line">    <span class="meta">@Get(&quot;/hello/&#123;name&#125;&quot;)</span></span><br><span class="line">    String <span class="title function_">hello</span><span class="params">(String name)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在编译时, 参数名称 <code>name</code> 丢失, 并在之后编译或通过反射读取时变为 <code>arg0</code></p>
+<p>要避免这个问题, 有两个选择</p>
+<p>你可以显式声明参数名称:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">HelloOperations</span> &#123;</span><br><span class="line">    <span class="meta">@Get(&quot;/hello/&#123;name&#125;&quot;)</span></span><br><span class="line">    String <span class="title function_">hello</span><span class="params">(<span class="meta">@QueryValue(&quot;name&quot;)</span> String name)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者, 使用建议的在编译所有字节码时使用 <code>-parameters</code> 标志到 <code>javac</code> 命令中. 参考 <a class="link"   target="_blank" rel="noopener" href="https://docs.oracle.com/javase/tutorial/reflect/member/methodparameterreflection.html" >Obtaining Names of Method Parameters<i class="fas fa-external-link-alt"></i></a></p>
+<p>例如在 <code>build.gradle</code> 中进行设置:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compileJava.options.compileArgs += <span class="string">&#x27;-parameters&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Micronaut-for-Groovy-用于-Groovy-的-Micronaut"><a href="#Micronaut-for-Groovy-用于-Groovy-的-Micronaut" class="headerlink" title="Micronaut for Groovy (用于 Groovy 的 Micronaut)"></a>Micronaut for Groovy (用于 Groovy 的 Micronaut)</h2><blockquote>
+<p>Groovy has first-class support in Micronaut.</p>
+</blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://groovy-lang.org/" >Groovy<i class="fas fa-external-link-alt"></i></a> 在 Micronaut 中是一级支持</p>
+<h3 id="Groovy-Specific-Modules-Groovy-的特有模块"><a href="#Groovy-Specific-Modules-Groovy-的特有模块" class="headerlink" title="Groovy-Specific Modules (Groovy 的特有模块)"></a>Groovy-Specific Modules (Groovy 的特有模块)</h3><p>有额外的 Groovy 特有模块来改善整体体验</p>
+<p>Table - Groovy-Specific Modules:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Dependency</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">io.micronaut:micronaut-inject-groovy</td>
+<td align="left">Includes AST transformations to generate bean definitions. Should be <code>compileOnly</code> on your classpath</td>
+</tr>
+<tr>
+<td align="left">io.micronaut:micronaut-runtime-groovy</td>
+<td align="left">Adds the ability to specify configuration under <code>src/main/resources</code> in Groovy (i.e. <code>application.groovy</code>)</td>
+</tr>
+<tr>
+<td align="left">io.micronaut:micronaut-function-groovy</td>
+<td align="left">Includes AST transformations that make it easier to write <code>Functions</code> for AWS Lambda</td>
+</tr>
+</tbody></table>
+<p>最常用的模块是 <code>micronaut-inject-groovy</code>, 这个模块为 Groovy 类开启了依赖注入和 AOP</p>
+<h3 id="Groovy-Support-in-the-CLI-CLI-中的-Groovy-支持"><a href="#Groovy-Support-in-the-CLI-CLI-中的-Groovy-支持" class="headerlink" title="Groovy Support in the CLI (CLI 中的 Groovy 支持)"></a>Groovy Support in the CLI (CLI 中的 Groovy 支持)</h3><p>Micronaut <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#cli" >Command Line Interface<i class="fas fa-external-link-alt"></i></a> 包括了对 Groovy 的特殊支持</p>
+<p>要创建一个 Groovy 应用程序, 使用 <code>groovy</code> 语言选项. 例如:</p>
+<p>Example - Create a Micronaut Groovy application:</p>
+<p><code>mn create-app hello-world --lang Groovy</code></p>
+<p>这个命令会创建一个 Groovy 项目, 使用 Gradle 进行构建. 使用 <code>-build maven</code> 标志来创建一个使用 Maven 进行构建的项目</p>
+<p>一旦你使用 <code>groovy</code> 特性创建了应用程序, 像 <code>create-controller</code>,<code>create-client</code> 等等的命令会创建 Groovy 文件而不是 Java 文件</p>
+<p>下面的例子展示了使用 CLI 的交互模式:</p>
+<p>Example - Create a bean:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$mn</span></span><br><span class="line">| Starting interactive mode...</span><br><span class="line">| Enter a <span class="built_in">command</span> name to run. Use TAB <span class="keyword">for</span> completion:</span><br><span class="line">mn&gt;</span><br><span class="line"></span><br><span class="line">create-bean         create-client       create-controller</span><br><span class="line">create-job          <span class="built_in">help</span></span><br><span class="line"></span><br><span class="line">mn&gt; create-bean helloBean</span><br><span class="line">| Rendered template Bean.groovy to destination src/main/groovy/hello/world/HelloBean.groovy</span><br></pre></td></tr></table></figure>
+
+<p>创建的 Groovy bean 是这样子的:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> hello.world</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Singleton</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">HelloBean</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Groovy 自动导入 <code>groovy.lang.Singleton</code>, 这个注解会和 <code>jakarta.inject.Singleton</code> 注解冲突. 确保在定义一个 Micronaut 单例 bean 时使用 <code>jakarta.inject.Singleton</code> 来避免意外的行为</p>
+<p>Example - Create a client:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mn&gt; create-client hello</span><br><span class="line">| Rendered template Client.groovy to destination src/main/groovy/hello/world/HelloClient.groovy</span><br></pre></td></tr></table></figure>
+
+<p>生成的 client 是这样子的:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> hello.world</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.client.annotation.Client</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.annotation.Get</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.HttpStatus</span><br><span class="line"></span><br><span class="line"><span class="meta">@Client</span>(<span class="string">&quot;hello&quot;</span>)</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">HelloClient</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Get</span>(<span class="string">&quot;/&quot;</span>)</span><br><span class="line">    HttpStatus index()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - Create a Controller:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mn&gt; create-controller hello</span><br><span class="line">| Rendered controller to src/main/groovy/hello/world/HelloController.groovy</span><br><span class="line">| Rendered <span class="built_in">test</span> to src/test/groovy/hello/world/HelloControllerSpec.groovy</span><br></pre></td></tr></table></figure>
+
+<p>生成的 Controller 是这样子的:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> hello.world</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.annotation.Controller</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.annotation.Get</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span>(<span class="string">&quot;/hello&quot;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">HelloController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Get</span>(uri=<span class="string">&quot;/&quot;</span>, produces=<span class="string">&quot;text/plain&quot;</span>)</span><br><span class="line">    String index() &#123;</span><br><span class="line">        <span class="string">&quot;Example Response&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>生成的 ControllerSpec 是这样子的:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> hello.world</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.client.annotation.Client</span><br><span class="line"><span class="keyword">import</span> io.micronaut.runtime.server.EmbeddedServer</span><br><span class="line"><span class="keyword">import</span> io.micronaut.test.extensions.spock.annotation.MicronautTest</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.client.HttpClient</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.HttpResponse</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.HttpStatus</span><br><span class="line"><span class="keyword">import</span> spock.lang.AutoCleanup</span><br><span class="line"><span class="keyword">import</span> spock.lang.Specification</span><br><span class="line"><span class="keyword">import</span> spock.lang.Shared</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Inject</span><br><span class="line"></span><br><span class="line"><span class="meta">@MicronautTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">HelloControllerSpec</span> <span class="keyword">extends</span> <span class="title class_">Specification</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Shared</span> <span class="meta">@Inject</span></span><br><span class="line">    EmbeddedServer embeddedServer</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Shared</span> <span class="meta">@AutoCleanup</span> <span class="meta">@Inject</span> <span class="meta">@Client</span>(<span class="string">&quot;/&quot;</span>)</span><br><span class="line">    HttpClient client</span><br><span class="line"></span><br><span class="line">    <span class="type">void</span> <span class="string">&quot;test index&quot;</span>() &#123;</span><br><span class="line">        <span class="symbol">given:</span></span><br><span class="line">        HttpResponse response = client.toBlocking().exchange(<span class="string">&quot;/hello&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="symbol">expect:</span></span><br><span class="line">        response.status == HttpStatus.OK</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Programmatic-Routes-with-GroovyRouteBuilder-使用-GroovyRouteBuilder-的程序化路由"><a href="#Programmatic-Routes-with-GroovyRouteBuilder-使用-GroovyRouteBuilder-的程序化路由" class="headerlink" title="Programmatic Routes with GroovyRouteBuilder (使用 GroovyRouteBuilder 的程序化路由)"></a>Programmatic Routes with GroovyRouteBuilder (使用 GroovyRouteBuilder 的程序化路由)</h3><blockquote>
+<p>If you prefer to build your routes programmatically (similar to Grails UrlMappings), a special io.micronaut.web.router.GroovyRouteBuilder exists that has some enhancements to make the DSL better.</p>
+</blockquote>
+<p>如果你更喜欢以编程方式构建你的路由 (类似 Grails UrlMappings), 那么有一个特殊的 <code>io.micronaut.web.router.GroovyRouteBuilder</code>, 它具有一些增强功能来使 DSL 更加好</p>
+<p>Example - Using GroovyRouteBuilder:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">MyRoutes</span> <span class="keyword">extends</span> <span class="title class_">GroovyRouteBuilder</span> &#123;</span><br><span class="line"></span><br><span class="line">    MyRoutes(ApplicationContext beanContext) &#123;</span><br><span class="line">        <span class="variable language_">super</span>(beanContext)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    <span class="type">void</span> bookResources(BookController bookController, AuthorController authorController) &#123;</span><br><span class="line">        GET(bookController) &#123;</span><br><span class="line">            POST <span class="string">&#x27;/hello&#123;/message&#125;&#x27;</span>, bookController.&amp;hello  <span class="comment">// 1</span></span><br><span class="line">        &#125;</span><br><span class="line">        GET(bookController, ID) &#123;                           <span class="comment">// 2</span></span><br><span class="line">            GET(authorController)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>1</code> : You can use injected controllers to create routes by convention and Groovy method references to create routes to methods</p>
+<p><code>2</code> : The <code>ID</code> property can be used to reference include an <code>&#123;id&#125;</code> URI variable</p>
+<p>上面的例子产生如下路由:</p>
+<ul>
+<li><code>/book</code> 映射到 <code>BookController.index()</code></li>
+<li><code>/book/hello/&#123;message&#125;</code> 映射到 <code>BookController.hello(String)</code></li>
+<li><code>/book/&#123;id&#125;</code> 映射到 <code>BookController.show(String id)</code></li>
+<li><code>/book/&#123;id&#125;/author</code> 映射到 <code>AuthorController.index</code></li>
+</ul>
+<h3 id="Using-GORM-in-a-Groovy-application-在一个-Groovy-应用程序中使用-GORM"><a href="#Using-GORM-in-a-Groovy-application-在一个-Groovy-应用程序中使用-GORM" class="headerlink" title="Using GORM in a Groovy application (在一个 Groovy 应用程序中使用 GORM)"></a>Using GORM in a Groovy application (在一个 Groovy 应用程序中使用 GORM)</h3><p><a class="link"   target="_blank" rel="noopener" href="https://gorm.grails.org/" >GORM<i class="fas fa-external-link-alt"></i></a> 是一个数据访问工具, 一开始是作为 Grails 的一部分创建的</p>
+<p>GORM 支持多种数据库类型</p>
+<p>下面的表格中总结了使用 GORM 需要的模块, 和到文档的链接</p>
+<p>Table - GORM Modules:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Dependency</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">io.micronaut.groovy:micronaut-hibernate-gorm</td>
+<td align="left">Configures <a class="link"   target="_blank" rel="noopener" href="https://gorm.grails.org/latest/hibernate/manual" >GORM for Hibernate<i class="fas fa-external-link-alt"></i></a> for Groovy applications. See the <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#hibernateSupport" >Hibernate Supoort<i class="fas fa-external-link-alt"></i></a> docs</td>
+</tr>
+<tr>
+<td align="left">io.micronaut.groovy:micronaut-mongo-gorm</td>
+<td align="left">Configures <a class="link"   target="_blank" rel="noopener" href="https://gorm.grails.org/latest/mongodb/manual" >GORM for MongoDB<i class="fas fa-external-link-alt"></i></a> for Groovy applications. See the <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#mongoSupport" >Mongo Support<i class="fas fa-external-link-alt"></i></a> docs</td>
+</tr>
+<tr>
+<td align="left">io.micronaut.groovy:micronaut-neo4j-gorm</td>
+<td align="left">Configures <a class="link"   target="_blank" rel="noopener" href="https://gorm.grails.org/latest/neo4j/manual" >GORM for Neo4j<i class="fas fa-external-link-alt"></i></a> for Groovy applications. See the <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#neo4jSupport" >Neo4j Support<i class="fas fa-external-link-alt"></i></a> docs</td>
+</tr>
+</tbody></table>
+<p>一旦你按照上表中的链接的说明配置了 GORM 实现, 你就可以使用 GORM 所有功能</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://gorm.grails.org/latest/hibernate/manual/index.html#dataServices" >GORM Data Services<i class="fas fa-external-link-alt"></i></a> 同样可以参与到依赖注入和生命周期方法:</p>
+<p>Example - GORM Data Service VehicleService.groovy:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span>(Vehicle)</span><br><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">VehicleService</span> &#123;</span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="type">void</span> init() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">abstract</span> Vehicle findVehicle(<span class="meta">@NotBlank</span> String name)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">abstract</span> Vehicle saveVehicle(<span class="meta">@NotBlank</span> String name)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Serverless-Functions-with-Groovy-使用-Groovy-的无服务函数"><a href="#Serverless-Functions-with-Groovy-使用-Groovy-的无服务函数" class="headerlink" title="Serverless Functions with Groovy (使用 Groovy 的无服务函数)"></a>Serverless Functions with Groovy (使用 Groovy 的无服务函数)</h3><p>微服务应用只是使用 Micronaut 的其中一种方式</p>
+<p>还可以将它用于 AWS Lambda 等 Serverless Functions 上</p>
+<blockquote>
+<p>With the function-groovy module, Micronaut features enhanced support for functions written in Groovy.</p>
+</blockquote>
+<p>借助 <code>function-groovy</code> 模块, Micronaut 增强了对用 Groovy 编写的函数的支持</p>
+<p>查看 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#serverlessFunctions" >Serverless Functions<i class="fas fa-external-link-alt"></i></a> 获取更多信息</p>
+<h2 id="Micronaut-for-Kotlin-用于-Kotlin-的-Micronaut"><a href="#Micronaut-for-Kotlin-用于-Kotlin-的-Micronaut" class="headerlink" title="Micronaut for Kotlin (用于 Kotlin 的 Micronaut)"></a>Micronaut for Kotlin (用于 Kotlin 的 Micronaut)</h2><p>略</p>
+<h2 id="Micronaut-for-GraalVM-用于-GraalVM-的-Micronaut"><a href="#Micronaut-for-GraalVM-用于-GraalVM-的-Micronaut" class="headerlink" title="Micronaut for GraalVM (用于 GraalVM 的 Micronaut)"></a>Micronaut for GraalVM (用于 GraalVM 的 Micronaut)</h2><p><a class="link"   target="_blank" rel="noopener" href="https://www.graalvm.org/" >GraalVM<i class="fas fa-external-link-alt"></i></a> 是一个来自 Oracle 的通用虚拟机, 支持跨语言运行时环境, 可以将 Java 应用程序编译成原生机器代码</p>
+<p>所有 Micronaut 应用程序可以使用 GraalVM 来运行, 但是已经向 Micronaut 添加了特殊支持, 以支持使用 <a target="_blank" rel="noopener" href="https://www.graalvm.org/reference-manual/native-image/">GraalVM’s <code>native-image</code> tool</a> 运行 Micronaut 应用程序</p>
+<p>Micronaut 现在支持 22.0.0.2 版本的 GraalVM, 开发团队正在改进每个新版本的支持</p>
+<blockquote>
+<p>Don’t hesitate to <a class="link"   target="_blank" rel="noopener" href="https://github.com/micronaut-projects/micronaut-core/issues" >report issues<i class="fas fa-external-link-alt"></i></a> however if you find any problem.</p>
+</blockquote>
+<p>Micronaut 的许多模块和第三方库已经通过验证可以与 GraalVM 一起使用:</p>
+<ul>
+<li>HTTP server</li>
+<li>HTTP client</li>
+<li>Function support</li>
+<li>Micronaut Data JDBC</li>
+<li>JPA</li>
+<li>Service Discovery</li>
+<li>RabbitMQ</li>
+<li>Views</li>
+<li>Security</li>
+<li>Zipkin</li>
+<li>etc</li>
+</ul>
+<blockquote>
+<p>Support for other modules is evolving and will improve over time.</p>
+</blockquote>
+<p>对其他模块的支持正在发展, 将会持续改进</p>
+<h3 id="Getting-Started-开始"><a href="#Getting-Started-开始" class="headerlink" title="Getting Started (开始)"></a>Getting Started (开始)</h3><p>GraalVM 的 <code>native-image</code> 工具的只支持 Java 和 Kotlin 项目. Groovy 重度依赖反射, 而反射在 GraalVM 中仅有部分的支持</p>
+<p>要开始使用 GraalVM, 请先安装 GraalVM SDK</p>
+<h3 id="Microservices-as-GraalVM-native-images-作为-GraalVM-原生镜像的微服务"><a href="#Microservices-as-GraalVM-native-images-作为-GraalVM-原生镜像的微服务" class="headerlink" title="Microservices as GraalVM native images (作为 GraalVM 原生镜像的微服务)"></a>Microservices as GraalVM native images (作为 GraalVM 原生镜像的微服务)</h3><h4 id="Getting-Started-with-Micronaut-and-GraalVM-Micronaut-和-GraalVM-入门"><a href="#Getting-Started-with-Micronaut-and-GraalVM-Micronaut-和-GraalVM-入门" class="headerlink" title="Getting Started with Micronaut and GraalVM (Micronaut 和 GraalVM 入门)"></a>Getting Started with Micronaut and GraalVM (Micronaut 和 GraalVM 入门)</h4><p>从 Micronaut 2.2 版本开始, 所有 Micronaut 应用程序已经使用 Micronaut Gradle 或 Micronaut Maven 插件构建为原生镜像</p>
+<p>首先, 创建一个新项目:</p>
+<p>Example - Creating a GraalVM Native Microservice:</p>
+<p><code>mn create-app hello-world</code></p>
+<p>可以使用 <code>--build maven</code> 来构建一个 Maven 项目</p>
+<h4 id="Building-a-Native-Image-Using-Docker-构建一个使用-Docker-的原生镜像"><a href="#Building-a-Native-Image-Using-Docker-构建一个使用-Docker-的原生镜像" class="headerlink" title="Building a Native Image Using Docker (构建一个使用 Docker 的原生镜像)"></a>Building a Native Image Using Docker (构建一个使用 Docker 的原生镜像)</h4><p>要使用 Gradle 和 Docker 构建原生镜像, 请运行:</p>
+<p>Example - Building a Native Image with Docker and Gradle:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./gradlew dockerBuildNative</span><br></pre></td></tr></table></figure>
+
+<p>要使用 Maven 和 Docker 构建原生镜像, 请运行:</p>
+<p>Example - Building a Native Image with Docker and Maven:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mvnw package -Dpackaging=docker-native</span><br></pre></td></tr></table></figure>
+
+<h4 id="Building-a-Native-Image-Without-Using-Docker-构建一个不使用-Docker-的原生镜像"><a href="#Building-a-Native-Image-Without-Using-Docker-构建一个不使用-Docker-的原生镜像" class="headerlink" title="Building a Native Image Without Using Docker (构建一个不使用 Docker 的原生镜像)"></a>Building a Native Image Without Using Docker (构建一个不使用 Docker 的原生镜像)</h4><p>要构建不使用 Docker 的原生镜像, 请先安装 GraalVM SDK</p>
+<p>Example - Installing GraalVM 22.0.0.2 with SDKman:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sdk install java 22.0.0.2.rll-grl</span><br><span class="line">sdk use java 22.0.0.2.r11-grl</span><br></pre></td></tr></table></figure>
+
+<p><code>native-image</code> 工具是从基础 GraalVM 发行版中提取的, 可以作为插件使用, 要安装这个工具 ,请运行:</p>
+<p>Exampel - Installing <code>native-imaeg</code> tool:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gu install native-image</span><br></pre></td></tr></table></figure>
+
+<p>现在你可以通过使用 Gradle 运行 <code>nativeCompile</code> task 来构建原生镜像:</p>
+<p>Example - Creating native image with Gradle:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./gradlew nativeCompile</span><br></pre></td></tr></table></figure>
+
+<p>原生镜像将会被构建在 <code>build/native/nativeCompile</code> 目录中</p>
+<p>要使用 Maven 和 Micronaut Maven 插件创建一个原生镜像, 使用 <code>native-image</code> 打包格式:</p>
+<p>Example - Creating native image with Maven:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mvnw package -Dpackaging=native-image</span><br></pre></td></tr></table></figure>
+
+<p>原生镜像将会被构建在 <code>target</code> 目录中</p>
+<p>在 <code>build/native/nativeCompile</code> 或 <code>target</code> 目录中运行原生镜像:</p>
+<p>Example - Run native image:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./hello-world</span><br></pre></td></tr></table></figure>
+
+<h4 id="Understanding-Micronaut-and-GraalVM-理解-Micronaut-和-GraalVM"><a href="#Understanding-Micronaut-and-GraalVM-理解-Micronaut-和-GraalVM" class="headerlink" title="Understanding Micronaut and GraalVM (理解 Micronaut 和 GraalVM)"></a>Understanding Micronaut and GraalVM (理解 Micronaut 和 GraalVM)</h4><p>Micronaut 本身不依赖反射和动态类加载, 所以它可以自动和 GraalVM native 一起使用, 但是 Micronaut 使用的一些第三方库可能需要额外的关于使用反射的额外输入</p>
+<p>Micronaut 包含了一个注解处理器来帮助生成 <code>reflect-config.json</code> 元数据文件, 这个文件会自动被 <code>native-image</code> 工具读取:</p>
+<p><code>annotationProcessor(&quot;io.micronaut:micronaut-graal&quot;)</code></p>
+<p>这个处理器将会生成:</p>
+<ul>
+<li>类构建目录 (build classes directory) 中的 <code>META-INF/native-image</code> 目录中生成一个 <code>reflect-config.json</code> 文件</li>
+</ul>
+<p>类构建目录在 Gradle 中是 <code>build/classes/java/main</code>, 在 Maven 中是 <code>target/classes</code></p>
+<p>例如, 有如下类:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.ReflectiveAccess;</span><br><span class="line"></span><br><span class="line"><span class="meta">@ReflectiveAccess</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Test</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子中将会导致 <code>example.Test</code> 中的 <code>public methods</code>,<code>declared fields</code>,<code>declared constructors</code> 被包含到 <code>reflect-config.json</code> 文件中</p>
+<p>如果你有更进一步的要求, 且希望包含指定的 <code>fields</code> 或 <code>methods</code>, 在任何 <code>constructor</code>,<code>field</code>,<code>method</code> 上使用 <code>@ReflectiveAccess</code> 注解来包含特定的 <code>field</code>,<code>constructor</code>,<code>method</code></p>
+<p>要提供你自己的 <code>reflect.json</code>, 添加一个 <code>src/main/graal/reflect.json</code>, 这个文件将会自动被读取</p>
+<h4 id="Adding-Additional-Classes-for-Reflective-Access-为反射访问添加额外的类"><a href="#Adding-Additional-Classes-for-Reflective-Access-为反射访问添加额外的类" class="headerlink" title="Adding Additional Classes for Reflective Access (为反射访问添加额外的类)"></a>Adding Additional Classes for Reflective Access (为反射访问添加额外的类)</h4><blockquote>
+<p>To inform Micronaut of additional classes to be included in the generated reflect.json file at compile time, either annotate a class with @ReflectiveAccess or @TypeHint.</p>
+</blockquote>
+<p>为了在编译时通知 Micronaut 在生成的 <code>reflect.json</code> 文件中包含额外的类, 请使用 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/core/annotation/ReflectiveAccess.html" >@ReflectiveAccess<i class="fas fa-external-link-alt"></i></a> 或 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/core/annotation/TypeHint.html" >@TypeHint<i class="fas fa-external-link-alt"></i></a></p>
+<blockquote>
+<p>Both allows for reflective access, and the latter is typically used on a module or Application class to include classes that are needed reflectively.</p>
+</blockquote>
+<p>这两个注解都允许反射访问, <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/core/annotation/TypeHint.html" >@TypeHint<i class="fas fa-external-link-alt"></i></a> 通常用于模块或应用程序类以包含反射所需的类</p>
+<p>例如, 下面的例子来自于 Micronaut 的 Jackson 模块:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@TypeHint(</span></span><br><span class="line"><span class="meta">    value = &#123;   // 1</span></span><br><span class="line"><span class="meta">        PropertyNamingStrategy.UpperCamelCaseStrategy.class,</span></span><br><span class="line"><span class="meta">        ArrayList.class,</span></span><br><span class="line"><span class="meta">        LinkedHashMap.class,</span></span><br><span class="line"><span class="meta">        HashSet.class</span></span><br><span class="line"><span class="meta">    &#125;,</span></span><br><span class="line"><span class="meta">    accessType =TypeHint.AccessType.ALL_DECLARED_CONSTRUCTORS   // 2</span></span><br><span class="line"><span class="meta">)</span></span><br></pre></td></tr></table></figure>
+
+<p><code>1</code> : The <code>value</code> memeber specifies which classes require reflection.</p>
+<p><code>2</code> : The <code>accessType</code> member specifies if only classloading access is needed or whether full reflection on all public memebers is needed.</p>
+<h4 id="Generating-Native-Images-生成原生镜像"><a href="#Generating-Native-Images-生成原生镜像" class="headerlink" title="Generating Native Images (生成原生镜像)"></a>Generating Native Images (生成原生镜像)</h4><p>GraalVM 的 <code>native-image</code> 命令生成原生镜像</p>
+<p>你可以使用这个命令手动地生成你的原生镜像, 例如:</p>
+<p>Example - The <code>native-image</code> command:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">native-image --class-path build/libs/hello-world-0.1-all.jar</span><br></pre></td></tr></table></figure>
+
+<p><code>class-path</code> 参数用来引用 Micronaut 的 shaded JAR</p>
+<p>一旦镜像构建好了, 使用原生镜像名称来运行应用程序:</p>
+<p>Example - Running the Native Application:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./hello-world</span><br></pre></td></tr></table></figure>
+
+<p>正如你所看到的, 原生镜像在毫秒内启动, 并且内存消耗不包括 JVM 的内存消耗 (一个原生 Micronaut 应用程序仅需 20mb 内存来运行)</p>
+<h4 id="Resource-file-generation-资源文件生成"><a href="#Resource-file-generation-资源文件生成" class="headerlink" title="Resource file generation (资源文件生成)"></a>Resource file generation (资源文件生成)</h4><p>从 Micronaut 3.0 开始后, <code>resource-config.json</code> 文件的自动生成现在是 Gradle 和 Maven 插件的一部分了</p>
+<h3 id="GraalVM-and-Micronaut-FAQ-GraalVM-和-Micronaut-常见问题解答"><a href="#GraalVM-and-Micronaut-FAQ-GraalVM-和-Micronaut-常见问题解答" class="headerlink" title="GraalVM and Micronaut FAQ (GraalVM 和 Micronaut 常见问题解答)"></a>GraalVM and Micronaut FAQ (GraalVM 和 Micronaut 常见问题解答)</h3><h4 id="How-does-Micronaut-manage-to-run-on-GraalVM-Micronaut-如何在-GraalVM-上运行"><a href="#How-does-Micronaut-manage-to-run-on-GraalVM-Micronaut-如何在-GraalVM-上运行" class="headerlink" title="How does Micronaut manage to run on GraalVM? (Micronaut 如何在 GraalVM 上运行?)"></a>How does Micronaut manage to run on GraalVM? (Micronaut 如何在 GraalVM 上运行?)</h4><p>Micronaut 提供了不使用反射的依赖注入和AOP运行时. 这使得 Micronaut 应用程序更加容易运行在 GraalVM 上, 因为在原生镜像中的<a class="link"   target="_blank" rel="noopener" href="https://github.com/oracle/graal/blob/master/docs/reference-manual/native-image/Reflection.md" >反射<i class="fas fa-external-link-alt"></i></a>有很大的<a class="link"   target="_blank" rel="noopener" href="https://github.com/oracle/graal/blob/master/docs/reference-manual/native-image/Limitations.md" >限制<i class="fas fa-external-link-alt"></i></a></p>
+<h4 id="How-can-I-make-a-Micronaut-application-that-uses-picocli-run-on-GraalVM-如何让使用-Picocli-的-Micronaut-应用程序运行在-GraalVM-上"><a href="#How-can-I-make-a-Micronaut-application-that-uses-picocli-run-on-GraalVM-如何让使用-Picocli-的-Micronaut-应用程序运行在-GraalVM-上" class="headerlink" title="How can I make a Micronaut application that uses picocli run on GraalVM? (如何让使用 Picocli 的 Micronaut 应用程序运行在 GraalVM 上)"></a>How can I make a Micronaut application that uses picocli run on GraalVM? (如何让使用 Picocli 的 Micronaut 应用程序运行在 GraalVM 上)</h4><p>Picocli 提供了一个带有生成 GraalVM 反射配置文件工具的 <code>picocli-codegen</code> 模块</p>
+<p>这个工具可以<a class="link"   target="_blank" rel="noopener" href="https://picocli.info/picocli-on-graalvm.html" >手动<i class="fas fa-external-link-alt"></i></a>运行, 也可以作为构建的一部分自动运行</p>
+<p>这个模块的 <a class="link"   target="_blank" rel="noopener" href="https://github.com/remkop/picocli/tree/master/picocli-codegen" >README<i class="fas fa-external-link-alt"></i></a> 包含代码片段的使用说明, 用于配置 Gradle 和 Maven 以在构建过程中自动生成 <code>cli-reflect.json</code> 文件</p>
+<p>在运行 <code>native-image</code> 工具时添加生成的文件到 <code>-H:ReflectionConfigurationFiles</code> 选项中</p>
+<h4 id="What-about-other-Third-Party-Libraries-那第三方类库呢"><a href="#What-about-other-Third-Party-Libraries-那第三方类库呢" class="headerlink" title="What about other Third-Party Libraries? (那第三方类库呢)"></a>What about other Third-Party Libraries? (那第三方类库呢)</h4><p>Micronaut 不能保证第三方类库可以运行在 GraalVM SubstrateVM 上, 每个类库要自己去实现支持</p>
+<h4 id="I-Get-a-“Class-XXX-is-instantiated-reflectively…”-Exception-What-do-I-do-我遇到了一个-“Class-XXX-is-instantiated-reflectively…”-异常-我要怎么办"><a href="#I-Get-a-“Class-XXX-is-instantiated-reflectively…”-Exception-What-do-I-do-我遇到了一个-“Class-XXX-is-instantiated-reflectively…”-异常-我要怎么办" class="headerlink" title="I Get a “Class XXX is instantiated reflectively…” Exception. What do I do? (我遇到了一个 “Class XXX is instantiated reflectively…” 异常. 我要怎么办)"></a>I Get a “Class XXX is instantiated reflectively…” Exception. What do I do? (我遇到了一个 “Class XXX is instantiated reflectively…” 异常. 我要怎么办)</h4><p>如果你遇到这样的异常:</p>
+<p><code>Class myclass.Foo[] is instantiated reflectively but was never registered. Register the class by using org.graalvm.nativeimage.RuntimeReflection</code></p>
+<p>你需要手动调整生成的 <code>reflect.json</code> 文件. 对于普通类, 你需要添加一个 entry 到 数组中:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;myclass.Foo&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;allDeclaredConstructors&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<p>对于必须使用 Java JVM 内部数组形式的数组的情况, 这样子设置:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;[Lmyclass.foo&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;allDeclaredConstructors&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="What-if-I-want-to-set-the-heap’s-maximum-size-with-Xmx-but-I-get-an-OutOfMemoryError-如果我想要使用-Xmx-设置最大堆内存-但我得到一个-OutOfMemoryError"><a href="#What-if-I-want-to-set-the-heap’s-maximum-size-with-Xmx-but-I-get-an-OutOfMemoryError-如果我想要使用-Xmx-设置最大堆内存-但我得到一个-OutOfMemoryError" class="headerlink" title="What if I want to set the heap’s maximum size with -Xmx, but I get an OutOfMemoryError? (如果我想要使用 -Xmx 设置最大堆内存, 但我得到一个 OutOfMemoryError)"></a>What if I want to set the heap’s maximum size with <code>-Xmx</code>, but I get an <code>OutOfMemoryError</code>? (如果我想要使用 <code>-Xmx</code> 设置最大堆内存, 但我得到一个 <code>OutOfMemoryError</code>)</h4><p>如果你在用来构建原生镜像的 Dockerfile 中设置了最大堆内存, 你很有可能得到一个运行时错误:</p>
+<p><code>java.lang.OutOfMemoryError: Direct buffer memory</code></p>
+<p>这个问题是因为 Netty 尝试使用默认配置 <code>io.netty.allocator.pageSize</code> 和 <code>io.netty.allocator.maxOrder</code> 为每个块分配 16MB 内存:</p>
+<p><code>int defaultChunkSize = DEFAULT_PAGE_SIZE &lt;&lt; DEFAULT_MAX_ORDER; // 8192 &lt;&lt; 11 = 16MB</code></p>
+<p>最简单的解决方案是在你的 Dockerfile 的 entrypoint 中指定 <code>io.netty.allocator.maxOrder</code>. 一个可行的例子是 <code>-Xmx64m</code>:</p>
+<p><code>ENTRYPOINT [&quot;/app/application&quot;, &quot;-Xmx64m&quot;, &quot;-Dio.netty.allocator.maxOrder=8&quot;]</code></p>
+<p>更进一步, 你可以尝试使用 <code>io.netty.allocator.numHeapArenas</code> 或者 <code>io.netty.allocator.numDirectArenas</code>. 你可以在 <a class="link"   target="_blank" rel="noopener" href="https://netty.io/4.1/api/io/netty/buffer/PooledByteBufAllocator.html" >official documentation<i class="fas fa-external-link-alt"></i></a> 中找到更多关于 Netty 的 <code>PooledByteBufAllocator</code> 信息</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Micronaut 中文文档 Language Support</li>
+        <li>本文作者：林威羽</li>
+        <li>创建时间：2022-04-29 09:49:10</li>
+        <li>
+            本文链接：https://linweiyu21.github.io/micronaut/micronaut-language-support/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/Groovy/">#Groovy</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/Micronaut/">#Micronaut</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E4%B8%AD%E6%96%87/">#中文</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/micronaut/micronaut-management-and-monitoring/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Micronaut 中文文档 Management &amp; Monitoring</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/micronaut/micronaut-logging/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Micronaut 中文文档 Logging</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '8xWQ0WFbKUNN4h8ixIO12etk-gzGzoHsz',
+                    appKey: '7cLjTvkIsF6aIuIVSd0um89m',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请开始你的表演',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = '林威羽';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">林威羽</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Language-Support"><span class="nav-number">1.</span> <span class="nav-text">Language Support</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Micronaut-for-Java-%E7%94%A8%E4%BA%8E-Java-%E7%9A%84-Micronaut"><span class="nav-number">1.1.</span> <span class="nav-text">Micronaut for Java (用于 Java 的 Micronaut)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-Micronaut-with-Java-9-%E5%9C%A8-Java-9-%E4%B8%AD%E4%BD%BF%E7%94%A8-Micronaut"><span class="nav-number">1.1.1.</span> <span class="nav-text">Using Micronaut with Java 9+ (在 Java 9+ 中使用 Micronaut)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#The-javax-annotation-package"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">The javax.annotation package</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Incremental-Annotation-Processing-with-Gradle-%E4%BD%BF%E7%94%A8-Gradle-%E8%BF%9B%E8%A1%8C%E5%A2%9E%E9%87%8F%E6%B3%A8%E8%A7%A3%E5%A4%84%E7%90%86"><span class="nav-number">1.1.2.</span> <span class="nav-text">Incremental Annotation Processing with Gradle (使用 Gradle 进行增量注解处理)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-Project-Lombok-%E4%BD%BF%E7%94%A8-Lombok-%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.1.3.</span> <span class="nav-text">Using Project Lombok (使用 Lombok 项目)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configuring-an-IDE-%E9%85%8D%E7%BD%AE-IDE"><span class="nav-number">1.1.4.</span> <span class="nav-text">Configuring an IDE (配置 IDE)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Retaining-Parameter-Names-%E4%BF%9D%E7%95%99%E5%8F%82%E6%95%B0%E5%90%8D%E7%A7%B0"><span class="nav-number">1.1.5.</span> <span class="nav-text">Retaining Parameter Names (保留参数名称)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Micronaut-for-Groovy-%E7%94%A8%E4%BA%8E-Groovy-%E7%9A%84-Micronaut"><span class="nav-number">1.2.</span> <span class="nav-text">Micronaut for Groovy (用于 Groovy 的 Micronaut)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Groovy-Specific-Modules-Groovy-%E7%9A%84%E7%89%B9%E6%9C%89%E6%A8%A1%E5%9D%97"><span class="nav-number">1.2.1.</span> <span class="nav-text">Groovy-Specific Modules (Groovy 的特有模块)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Groovy-Support-in-the-CLI-CLI-%E4%B8%AD%E7%9A%84-Groovy-%E6%94%AF%E6%8C%81"><span class="nav-number">1.2.2.</span> <span class="nav-text">Groovy Support in the CLI (CLI 中的 Groovy 支持)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Programmatic-Routes-with-GroovyRouteBuilder-%E4%BD%BF%E7%94%A8-GroovyRouteBuilder-%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%8C%96%E8%B7%AF%E7%94%B1"><span class="nav-number">1.2.3.</span> <span class="nav-text">Programmatic Routes with GroovyRouteBuilder (使用 GroovyRouteBuilder 的程序化路由)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-GORM-in-a-Groovy-application-%E5%9C%A8%E4%B8%80%E4%B8%AA-Groovy-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E4%BD%BF%E7%94%A8-GORM"><span class="nav-number">1.2.4.</span> <span class="nav-text">Using GORM in a Groovy application (在一个 Groovy 应用程序中使用 GORM)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Serverless-Functions-with-Groovy-%E4%BD%BF%E7%94%A8-Groovy-%E7%9A%84%E6%97%A0%E6%9C%8D%E5%8A%A1%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.5.</span> <span class="nav-text">Serverless Functions with Groovy (使用 Groovy 的无服务函数)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Micronaut-for-Kotlin-%E7%94%A8%E4%BA%8E-Kotlin-%E7%9A%84-Micronaut"><span class="nav-number">1.3.</span> <span class="nav-text">Micronaut for Kotlin (用于 Kotlin 的 Micronaut)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Micronaut-for-GraalVM-%E7%94%A8%E4%BA%8E-GraalVM-%E7%9A%84-Micronaut"><span class="nav-number">1.4.</span> <span class="nav-text">Micronaut for GraalVM (用于 GraalVM 的 Micronaut)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Getting-Started-%E5%BC%80%E5%A7%8B"><span class="nav-number">1.4.1.</span> <span class="nav-text">Getting Started (开始)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Microservices-as-GraalVM-native-images-%E4%BD%9C%E4%B8%BA-GraalVM-%E5%8E%9F%E7%94%9F%E9%95%9C%E5%83%8F%E7%9A%84%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.4.2.</span> <span class="nav-text">Microservices as GraalVM native images (作为 GraalVM 原生镜像的微服务)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Getting-Started-with-Micronaut-and-GraalVM-Micronaut-%E5%92%8C-GraalVM-%E5%85%A5%E9%97%A8"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">Getting Started with Micronaut and GraalVM (Micronaut 和 GraalVM 入门)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Building-a-Native-Image-Using-Docker-%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%E4%BD%BF%E7%94%A8-Docker-%E7%9A%84%E5%8E%9F%E7%94%9F%E9%95%9C%E5%83%8F"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">Building a Native Image Using Docker (构建一个使用 Docker 的原生镜像)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Building-a-Native-Image-Without-Using-Docker-%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%E4%B8%8D%E4%BD%BF%E7%94%A8-Docker-%E7%9A%84%E5%8E%9F%E7%94%9F%E9%95%9C%E5%83%8F"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">Building a Native Image Without Using Docker (构建一个不使用 Docker 的原生镜像)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Understanding-Micronaut-and-GraalVM-%E7%90%86%E8%A7%A3-Micronaut-%E5%92%8C-GraalVM"><span class="nav-number">1.4.2.4.</span> <span class="nav-text">Understanding Micronaut and GraalVM (理解 Micronaut 和 GraalVM)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Adding-Additional-Classes-for-Reflective-Access-%E4%B8%BA%E5%8F%8D%E5%B0%84%E8%AE%BF%E9%97%AE%E6%B7%BB%E5%8A%A0%E9%A2%9D%E5%A4%96%E7%9A%84%E7%B1%BB"><span class="nav-number">1.4.2.5.</span> <span class="nav-text">Adding Additional Classes for Reflective Access (为反射访问添加额外的类)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Generating-Native-Images-%E7%94%9F%E6%88%90%E5%8E%9F%E7%94%9F%E9%95%9C%E5%83%8F"><span class="nav-number">1.4.2.6.</span> <span class="nav-text">Generating Native Images (生成原生镜像)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Resource-file-generation-%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6%E7%94%9F%E6%88%90"><span class="nav-number">1.4.2.7.</span> <span class="nav-text">Resource file generation (资源文件生成)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GraalVM-and-Micronaut-FAQ-GraalVM-%E5%92%8C-Micronaut-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94"><span class="nav-number">1.4.3.</span> <span class="nav-text">GraalVM and Micronaut FAQ (GraalVM 和 Micronaut 常见问题解答)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#How-does-Micronaut-manage-to-run-on-GraalVM-Micronaut-%E5%A6%82%E4%BD%95%E5%9C%A8-GraalVM-%E4%B8%8A%E8%BF%90%E8%A1%8C"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">How does Micronaut manage to run on GraalVM? (Micronaut 如何在 GraalVM 上运行?)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#How-can-I-make-a-Micronaut-application-that-uses-picocli-run-on-GraalVM-%E5%A6%82%E4%BD%95%E8%AE%A9%E4%BD%BF%E7%94%A8-Picocli-%E7%9A%84-Micronaut-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E5%9C%A8-GraalVM-%E4%B8%8A"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">How can I make a Micronaut application that uses picocli run on GraalVM? (如何让使用 Picocli 的 Micronaut 应用程序运行在 GraalVM 上)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#What-about-other-Third-Party-Libraries-%E9%82%A3%E7%AC%AC%E4%B8%89%E6%96%B9%E7%B1%BB%E5%BA%93%E5%91%A2"><span class="nav-number">1.4.3.3.</span> <span class="nav-text">What about other Third-Party Libraries? (那第三方类库呢)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#I-Get-a-%E2%80%9CClass-XXX-is-instantiated-reflectively%E2%80%A6%E2%80%9D-Exception-What-do-I-do-%E6%88%91%E9%81%87%E5%88%B0%E4%BA%86%E4%B8%80%E4%B8%AA-%E2%80%9CClass-XXX-is-instantiated-reflectively%E2%80%A6%E2%80%9D-%E5%BC%82%E5%B8%B8-%E6%88%91%E8%A6%81%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="nav-number">1.4.3.4.</span> <span class="nav-text">I Get a “Class XXX is instantiated reflectively…” Exception. What do I do? (我遇到了一个 “Class XXX is instantiated reflectively…” 异常. 我要怎么办)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#What-if-I-want-to-set-the-heap%E2%80%99s-maximum-size-with-Xmx-but-I-get-an-OutOfMemoryError-%E5%A6%82%E6%9E%9C%E6%88%91%E6%83%B3%E8%A6%81%E4%BD%BF%E7%94%A8-Xmx-%E8%AE%BE%E7%BD%AE%E6%9C%80%E5%A4%A7%E5%A0%86%E5%86%85%E5%AD%98-%E4%BD%86%E6%88%91%E5%BE%97%E5%88%B0%E4%B8%80%E4%B8%AA-OutOfMemoryError"><span class="nav-number">1.4.3.5.</span> <span class="nav-text">What if I want to set the heap’s maximum size with -Xmx, but I get an OutOfMemoryError? (如果我想要使用 -Xmx 设置最大堆内存, 但我得到一个 OutOfMemoryError)</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

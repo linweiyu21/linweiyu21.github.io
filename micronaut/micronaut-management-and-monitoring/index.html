@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Micronaut,Groovy,Gradle,Java,文档,中文">
+    <meta name="description" content="Micronaut Groovy Gradle Java 文档 中文">
+    <meta name="author" content="林威羽">
+    
+    <title>
+        
+            Micronaut 中文文档 Management &amp; Monitoring |
+        
+        林威羽的笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(153,153,0)","avatar":"/images/avatar.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"400px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":null,"description":"def contains🚀 = ['Micronaut', 'Groovy', 'Gradle', 'etc']"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                林威羽的笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+    <a target="_blank" rel="noopener" href="https://github.com/linweiyu21/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80"
+        viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+        aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path
+          d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+          fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path
+          d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+          fill="currentColor" class="octo-body"></path>
+      </svg></a>
+    <style>
+      .github-corner:hover .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+      }
+
+      @keyframes octocat-wave {
+
+        0%,
+        100% {
+          transform: rotate(0)
+        }
+
+        20%,
+        60% {
+          transform: rotate(-25deg)
+        }
+
+        40%,
+        80% {
+          transform: rotate(10deg)
+        }
+      }
+
+      @media (max-width:500px) {
+        .github-corner:hover .octo-arm {
+          animation: none
+        }
+
+        .github-corner .octo-arm {
+          animation: octocat-wave 560ms ease-in-out
+        }
+      }
+    </style>
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Micronaut 中文文档 Management &amp; Monitoring</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">林威羽</span>
+                        
+                            <span class="author-label">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-04-29 09:49:56</span>
+        <span class="mobile">2022-04-29 09:49</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Micronaut-%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3/">Micronaut 中文文档</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Groovy/">Groovy</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Micronaut/">Micronaut</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E4%B8%AD%E6%96%87/">中文</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <!-- TOC -->
+
+<ul>
+<li><a href="#management--monitoring">Management &amp; Monitoring</a><ul>
+<li><a href="#creating-endpoints-%E5%88%9B%E5%BB%BA%E7%AB%AF%E7%82%B9">Creating Endpoints (创建端点)</a><ul>
+<li><a href="#the-endpoints-annotation-%E7%AB%AF%E7%82%B9%E6%B3%A8%E8%A7%A3">The Endpoints Annotation (端点注解)</a><ul>
+<li><a href="#example-of-custom-endpoint-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%AB%AF%E7%82%B9%E7%9A%84%E4%BE%8B%E5%AD%90">Example of custom Endpoint (自定义端点的例子)</a></li>
+</ul>
+</li>
+<li><a href="#endpoint-methods-%E7%AB%AF%E7%82%B9%E6%96%B9%E6%B3%95">Endpoint Methods (端点方法)</a><ul>
+<li><a href="#read-methods-%E8%AF%BB%E6%96%B9%E6%B3%95">Read Methods (读方法)</a></li>
+<li><a href="#write-methods-%E5%86%99%E6%96%B9%E6%B3%95">Write Methods (写方法)</a></li>
+<li><a href="#delete-methods-%E5%88%A0%E9%99%A4%E6%96%B9%E6%B3%95">Delete Methods (删除方法)</a></li>
+</ul>
+</li>
+<li><a href="#endpoint-sensitivity-%E7%AB%AF%E7%82%B9%E6%95%8F%E6%84%9F%E6%80%A7">Endpoint Sensitivity (端点敏感性)</a></li>
+<li><a href="#endpoint-configuration-%E7%AB%AF%E7%82%B9%E9%85%8D%E7%BD%AE">Endpoint Configuration (端点配置)</a></li>
+</ul>
+</li>
+<li><a href="#built-in-endpoints-%E5%86%85%E7%BD%AE%E7%AB%AF%E7%82%B9">Built-In Endpoints (内置端点)</a><ul>
+<li><a href="#management-port-%E7%AE%A1%E7%90%86%E7%AB%AF%E5%8F%A3">Management Port (管理端口)</a></li>
+<li><a href="#jmx-jmx">JMX (JMX)</a></li>
+<li><a href="#the-beans-endpoint-beans-%E7%AB%AF%E7%82%B9">The Beans Endpoint (Beans 端点)</a><ul>
+<li><a href="#configuration-%E9%85%8D%E7%BD%AE">Configuration (配置)</a></li>
+<li><a href="#customization-%E8%87%AA%E5%AE%9A%E4%B9%89">Customization (自定义)</a></li>
+</ul>
+</li>
+<li><a href="#the-info-endpoint-info-%E7%AB%AF%E7%82%B9">The Info Endpoint (Info 端点)</a><ul>
+<li><a href="#configuration-%E9%85%8D%E7%BD%AE-1">Configuration (配置)</a></li>
+<li><a href="#customization-%E8%87%AA%E5%AE%9A%E4%B9%89-1">Customization (自定义)</a></li>
+<li><a href="#provided-info-sources-%E6%8F%90%E4%BE%9B%E7%9A%84-info-%E6%BA%90">Provided Info Sources (提供的 Info 源)</a><ul>
+<li><a href="#configuration-info-source-%E9%85%8D%E7%BD%AE-info-%E6%BA%90">Configuration Info Source (配置 Info 源)</a><ul>
+<li><a href="#configuration-%E9%85%8D%E7%BD%AE-2">Configuration (配置)</a></li>
+</ul>
+</li>
+<li><a href="#git-info-source-git-info-source">Git Info Source (Git Info Source)</a><ul>
+<li><a href="#configuration-%E9%85%8D%E7%BD%AE-3">Configuration (配置)</a></li>
+</ul>
+</li>
+<li><a href="#build-info-source-%E6%9E%84%E5%BB%BA-info-source">Build Info Source (构建 Info Source)</a><ul>
+<li><a href="#configuration-%E9%85%8D%E7%BD%AE-4">Configuration (配置)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#the-health-endpoint-%E5%81%A5%E5%BA%B7%E7%AB%AF%E7%82%B9">The Health Endpoint (健康端点)</a><ul>
+<li><a href="#configuration-%E9%85%8D%E7%BD%AE-5">Configuration (配置)</a></li>
+<li><a href="#customization-%E8%87%AA%E5%AE%9A%E4%B9%89-2">Customization (自定义)</a></li>
+<li><a href="#provided-indicators-%E6%8F%90%E4%BE%9B%E7%9A%84%E6%8C%87%E7%A4%BA%E5%99%A8">Provided Indicators (提供的指示器)</a><ul>
+<li><a href="#disk-space-%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4">Disk Space (磁盘空间)</a></li>
+<li><a href="#jdbc-jdbc">JDBC (JDBC)</a></li>
+<li><a href="#discovery-client-%E5%8F%91%E7%8E%B0%E5%AE%A2%E6%88%B7%E7%AB%AF">Discovery Client (发现客户端)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#the-metrics-endpoint-%E6%8C%87%E6%A0%87%E7%AB%AF%E7%82%B9">The Metrics Endpoint (指标端点)</a></li>
+<li><a href="#the-refresh-endpoint-%E5%88%B7%E6%96%B0%E7%AB%AF%E7%82%B9">The Refresh Endpoint (刷新端点)</a><ul>
+<li><a href="#configuration-%E9%85%8D%E7%BD%AE-6">Configuration (配置)</a></li>
+</ul>
+</li>
+<li><a href="#the-routes-endpoint-%E8%B7%AF%E7%94%B1%E7%AB%AF%E7%82%B9">The Routes Endpoint (路由端点)</a><ul>
+<li><a href="#configuration-%E9%85%8D%E7%BD%AE-7">Configuration (配置)</a></li>
+<li><a href="#customization-%E8%87%AA%E5%AE%9A%E4%B9%89-3">Customization (自定义)</a></li>
+</ul>
+</li>
+<li><a href="#the-loggers-endpoint-%E6%97%A5%E5%BF%97%E7%AB%AF%E7%82%B9">The Loggers Endpoint (日志端点)</a><ul>
+<li><a href="#configuration-%E9%85%8D%E7%BD%AE-8">Configuration (配置)</a></li>
+<li><a href="#customization-%E8%87%AA%E5%AE%9A%E4%B9%89-4">Customization (自定义)</a></li>
+</ul>
+</li>
+<li><a href="#the-caches-endpoint-%E7%BC%93%E5%AD%98%E7%AB%AF%E7%82%B9">The Caches Endpoint (缓存端点)</a></li>
+<li><a href="#the-server-stop-endpoint-%E6%9C%8D%E5%8A%A1%E5%81%9C%E6%AD%A2%E7%AB%AF%E7%82%B9">The Server Stop Endpoint (服务停止端点)</a><ul>
+<li><a href="#configuration-%E9%85%8D%E7%BD%AE-9">Configuration (配置)</a></li>
+</ul>
+</li>
+<li><a href="#the-environment-endpoint-%E7%8E%AF%E5%A2%83%E7%AB%AF%E7%82%B9">The Environment Endpoint (环境端点)</a><ul>
+<li><a href="#configuration-%E9%85%8D%E7%BD%AE-10">Configuration (配置)</a></li>
+<li><a href="#getting-information-about-the-environment-%E8%8E%B7%E5%8F%96%E5%85%B3%E4%BA%8E%E7%8E%AF%E5%A2%83%E7%9A%84%E4%BF%A1%E6%81%AF">Getting information about the environment (获取关于环境的信息)</a></li>
+<li><a href="#getting-information-about-a-particular-propertysource-%E8%8E%B7%E5%8F%96%E7%89%B9%E5%AE%9A%E7%9A%84-propertysource-%E4%BF%A1%E6%81%AF">Getting information about a particular <code>PropertySource</code> (获取特定的 <code>PropertySource</code> 信息)</a></li>
+</ul>
+</li>
+<li><a href="#the-threaddump-endpoint-%E7%BA%BF%E7%A8%8B%E8%BD%AC%E5%82%A8%E7%AB%AF%E7%82%B9">The ThreadDump Endpoint (线程转储端点)</a><ul>
+<li><a href="#configuration-%E9%85%8D%E7%BD%AE-11">Configuration (配置)</a></li>
+<li><a href="#customization-%E8%87%AA%E5%AE%9A%E4%B9%89-5">Customization (自定义)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="Management-amp-Monitoring"><a href="#Management-amp-Monitoring" class="headerlink" title="Management &amp; Monitoring"></a>Management &amp; Monitoring</h1><p><strong>声明</strong>:</p>
+<ul>
+<li>本文由本人翻译自<a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide" >官方文档<i class="fas fa-external-link-alt"></i></a></li>
+<li>部分内容可能会有修改或删减, 一切以官方文档为准.</li>
+<li>本文翻译时 Micronaut 版本为 3.4.2</li>
+</ul>
+<p>如果你使用 Micronaut CLI 创建项目, 使用 <code>management</code> 功能来配置 management endpoints 到你的项目中:</p>
+<p><code>mn create-app my-app --features management</code></p>
+<p>受 Spring Boot 和 Grails 的启发, Micronaut <code>management</code> 依赖添加了对通过 <strong>endpoints</strong> 监控你的应用程序的支持</p>
+<p><strong>endpoints</strong>: 一个特殊的 URIs, 返回关于应用程序的健康和状态细节</p>
+<p><code>management</code> endpoints 同时和 Micronaut 的 <code>security</code> 依赖集成, 允许在你的安全系统中将敏感数据限制于授权的用户 (查看 安全章节中的<a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#management" >Built-in Endpoints Access<i class="fas fa-external-link-alt"></i></a>)</p>
+<p>要使用 <code>management</code> 功能, 添加如下依赖到你的构建中:</p>
+<p><code>implementation(&quot;io.micronaut:micronaut-management&quot;)</code></p>
+<h2 id="Creating-Endpoints-创建端点"><a href="#Creating-Endpoints-创建端点" class="headerlink" title="Creating Endpoints (创建端点)"></a>Creating Endpoints (创建端点)</h2><p>除了 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#providedEndpoints" >内建的 endpoints<i class="fas fa-external-link-alt"></i></a>, <code>management</code> 依赖还提供了自定义 endpoints 的支持</p>
+<p>这可以像内置 endpoints 一样启用和配置, 并可用于检索和返回任何指标或其他应用程序数据</p>
+<h3 id="The-Endpoints-Annotation-端点注解"><a href="#The-Endpoints-Annotation-端点注解" class="headerlink" title="The Endpoints Annotation (端点注解)"></a>The Endpoints Annotation (端点注解)</h3><p>可通过使用 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/annotation/Endpoint.html" >@Endpoint<i class="fas fa-external-link-alt"></i></a> 注解修饰一个类来创建一个 endpoint, 至少要提供一个 endpoint id</p>
+<p>Example - FooEndpoint.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Endpoint(&quot;foo&quot;)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">FooEndpoint</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果提供一个 <code>String</code> 参数给注解, 那么这个 <code>String</code> 就作为 endpoint id</p>
+<p>可以提供额外命名的参数给注解. <code>@Endpoint</code> 其他可能的参数都展示在下表中:</p>
+<p>Table - Endpoint Arguments:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Description</th>
+<th align="left">Endpoint Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">String id</td>
+<td align="left">The endpoint (or name)</td>
+<td align="left">@Endpoint(id &#x3D; “foo”)</td>
+</tr>
+<tr>
+<td align="left">String prefix</td>
+<td align="left">Prefix used for configuring the endpoint (see <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#endpointConfiguration" >Endpoint Configuration<i class="fas fa-external-link-alt"></i></a>)</td>
+<td align="left">@Endpoint(prefix &#x3D; “foo”)</td>
+</tr>
+<tr>
+<td align="left">boolean defaultEnabled</td>
+<td align="left">Sets whether the endpoint is enabled when no configuration is set (see <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#endpointConfiguration" >Endpoint Configuration<i class="fas fa-external-link-alt"></i></a>)</td>
+<td align="left">@Endpoint(defaultEnabled &#x3D; false)</td>
+</tr>
+<tr>
+<td align="left">boolean defaultSensitive</td>
+<td align="left">Sets whether the endpoint is sensitive if no configuration is set (see <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#endpointConfiguration" >Endpoint Configuration<i class="fas fa-external-link-alt"></i></a>)</td>
+<td align="left">@Endpoint(defaultSensitive &#x3D; false)</td>
+</tr>
+</tbody></table>
+<h4 id="Example-of-custom-Endpoint-自定义端点的例子"><a href="#Example-of-custom-Endpoint-自定义端点的例子" class="headerlink" title="Example of custom Endpoint (自定义端点的例子)"></a>Example of custom Endpoint (自定义端点的例子)</h4><p>下面的例子中的 <code>Endpoint</code> 类创建了一个可以在 <code>/date</code> 访问的端点:</p>
+<p>Example - CurrentDateEndpoint:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.management.endpoint.annotation.Endpoint</span><br><span class="line"></span><br><span class="line"><span class="meta">@Endpoint</span>(</span><br><span class="line">    id = <span class="string">&#x27;date&#x27;</span>,</span><br><span class="line">    prefix = <span class="string">&#x27;custom&#x27;</span>,</span><br><span class="line">    defaultEnabled = <span class="literal">true</span>,</span><br><span class="line">    defaultSensitive = <span class="literal">false</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CurrentDateEndpoint</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Endpoint-Methods-端点方法"><a href="#Endpoint-Methods-端点方法" class="headerlink" title="Endpoint Methods (端点方法)"></a>Endpoint Methods (端点方法)</h3><p>Endpoints 响应 <code>GET</code>(读取), <code>POST</code>(写), <code>DELETE</code>(删除) 请求</p>
+<p>要从一个 endpoint 中返回响应, 使用如下注解修饰它的 public 方法:</p>
+<p>Table - Endpoint Method Annotations:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Annotation</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/annotation/Read.html" >@Read<i class="fas fa-external-link-alt"></i></a></td>
+<td align="left">Responds to GET requests</td>
+</tr>
+<tr>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/annotation/Write.html" >@Write<i class="fas fa-external-link-alt"></i></a></td>
+<td align="left">Responds to POST requests</td>
+</tr>
+<tr>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/annotation/Delete.html" >@Delete<i class="fas fa-external-link-alt"></i></a></td>
+<td align="left">Responds to DELETE requests</td>
+</tr>
+</tbody></table>
+<h4 id="Read-Methods-读方法"><a href="#Read-Methods-读方法" class="headerlink" title="Read Methods (读方法)"></a>Read Methods (读方法)</h4><p>使用 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/annotation/Read.html" >@Read<i class="fas fa-external-link-alt"></i></a> 注解修饰一个方法使得这个方法响应 <code>GET</code> 请求</p>
+<p>Example - CurrentDateEndpoint:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.management.endpoint.annotation.Endpoint</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.micronaut.management.endpoint.annotation.Read</span><br><span class="line"></span><br><span class="line"><span class="meta">@Endpoint</span>(id = <span class="string">&#x27;date&#x27;</span>,</span><br><span class="line">          prefix = <span class="string">&#x27;custom&#x27;</span>,</span><br><span class="line">          defaultEnabled = <span class="literal">true</span>,</span><br><span class="line">          defaultSensitive = <span class="literal">false</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CurrentDateEndpoint</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> Date currentDate</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Read</span></span><br><span class="line">    Date currentDate() &#123; currentDate &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的方法响应如下请求:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET localhost:38238/date</span><br><span class="line"></span><br><span class="line">1526085903689</span><br></pre></td></tr></table></figure>
+
+<p><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/annotation/Read.html" >@Read<i class="fas fa-external-link-alt"></i></a> 注解接受一个可选的 <code>produces</code> 参数, 用来设置从方法返回的类型的 media type (默认是 <code>application/json</code>)</p>
+<p>Example - CurrentDateEndpoint:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.management.endpoint.annotation.Endpoint</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.micronaut.management.endpoint.annotation.Read</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.MediaType</span><br><span class="line"><span class="keyword">import</span> io.micronaut.management.endpoint.annotation.Selector</span><br><span class="line"></span><br><span class="line"><span class="meta">@Endpoint</span>(id = <span class="string">&#x27;date&#x27;</span>,</span><br><span class="line">          prefix = <span class="string">&#x27;custom&#x27;</span>,</span><br><span class="line">          defaultEnabled = <span class="literal">true</span>,</span><br><span class="line">          defaultSensitive = <span class="literal">false</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CurrentDateEndpoint</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> Date currentDate</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Read</span>(produces = MediaType.TEXT_PLAIN)</span><br><span class="line">    Date currentDate(<span class="meta">@Selector</span> String prefix) &#123; </span><br><span class="line">        <span class="string">&quot;$prefix: $currentDate&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的方法响应如下的请求:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET localhost:8080/date/the_date_is</span><br><span class="line"></span><br><span class="line">the_date_is: Fri May 11 19:24:21 CDT</span><br></pre></td></tr></table></figure>
+
+<h4 id="Write-Methods-写方法"><a href="#Write-Methods-写方法" class="headerlink" title="Write Methods (写方法)"></a>Write Methods (写方法)</h4><p>使用 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/annotation/Write.html" >@Write<i class="fas fa-external-link-alt"></i></a> 注解修饰一个方法使得这个方法响应 <code>POST</code> 请求</p>
+<p>Example - CurrentDateEndpoint:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.management.endpoint.annotation.Endpoint</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.micronaut.management.endpoint.annotation.Write</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.MediaType</span><br><span class="line"><span class="keyword">import</span> io.micronaut.management.endpoint.annotation.Selector</span><br><span class="line"></span><br><span class="line"><span class="meta">@Endpoint</span>(id = <span class="string">&#x27;date&#x27;</span>,</span><br><span class="line">          prefix = <span class="string">&#x27;custom&#x27;</span>,</span><br><span class="line">          defaultEnabled = <span class="literal">true</span>,</span><br><span class="line">          defaultSensitive = <span class="literal">false</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CurrentDateEndpoint</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Date currentDate</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Write</span></span><br><span class="line">    String reset() &#123;</span><br><span class="line">        currentDate = <span class="keyword">new</span> Date()</span><br><span class="line">        <span class="string">&#x27;Current date reset&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的例如响应如下的请求:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST http://localhost:93284/date</span><br><span class="line"></span><br><span class="line">Current <span class="built_in">date</span> reset</span><br></pre></td></tr></table></figure>
+
+<p><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/annotation/Write.html" >@Write<i class="fas fa-external-link-alt"></i></a> 注解接受一个可选的 <code>consumes</code> 参数来设置这个方法接受的 media type (默认为 <code>application/json</code>)</p>
+<p>Example - MessageEndpoint:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.management.endpoint.annotation.Endpoint</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.micronaut.management.endpoint.annotation.Write</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.MediaType</span><br><span class="line"></span><br><span class="line"><span class="meta">@Endpoint</span>(id = <span class="string">&#x27;message&#x27;</span>,</span><br><span class="line">          defaultSensitive = <span class="literal">false</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MessageEndpoint</span> &#123;</span><br><span class="line"></span><br><span class="line">    String message</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Write</span>(</span><br><span class="line">        consumes = MediaType.APPLICATION_FORM_URLENCODED,</span><br><span class="line">        produces = MediaType.TEXT_PLAIN</span><br><span class="line">    )</span><br><span class="line">    String updateMessage(String newMessage) &#123;</span><br><span class="line">        message = newMessage</span><br><span class="line">        <span class="string">&#x27;Message updated&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的方法响应如下的请求:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST http://localhost:65013/message -H <span class="string">&#x27;Content-Type: application/x-www-form-urlencoded&#x27;</span> -d $<span class="string">&#x27;newMessage=A new message&#x27;</span></span><br><span class="line"></span><br><span class="line">Message updated</span><br></pre></td></tr></table></figure>
+
+<h4 id="Delete-Methods-删除方法"><a href="#Delete-Methods-删除方法" class="headerlink" title="Delete Methods (删除方法)"></a>Delete Methods (删除方法)</h4><p>使用 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/annotation/Delete.html" >@Delete<i class="fas fa-external-link-alt"></i></a> 注解修饰一个方法使得这个方法响应 <code>DELETE</code> 请求</p>
+<p>Example - MessageEndpoint:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.management.endpoint.annotation.Endpoint</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.micronaut.management.endpoint.annotation.Delete</span><br><span class="line"></span><br><span class="line"><span class="meta">@Endpoint</span>(id = <span class="string">&#x27;message&#x27;</span>,</span><br><span class="line">          defaultSensitive = <span class="literal">false</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MessageEndpoint</span> &#123;</span><br><span class="line"></span><br><span class="line">    String message</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Delete</span></span><br><span class="line">    String deleteMessage() &#123;</span><br><span class="line">        message = <span class="literal">null</span></span><br><span class="line">        <span class="string">&#x27;Message deleted&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的方法响应如下的请求:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -X DELETE http://localhost:65013/message</span><br><span class="line"></span><br><span class="line">Message deleted</span><br></pre></td></tr></table></figure>
+
+<h3 id="Endpoint-Sensitivity-端点敏感性"><a href="#Endpoint-Sensitivity-端点敏感性" class="headerlink" title="Endpoint Sensitivity (端点敏感性)"></a>Endpoint Sensitivity (端点敏感性)</h3><p>可以通过 endpoint 注解和配置来控制整个 endpoint 的敏感性</p>
+<p>但是, 单个方法可以独立于整个 endpoint 进行配置</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/annotation/Sensitive.html" >@Sensitive<i class="fas fa-external-link-alt"></i></a> 注解可以应用到方法上来控制方法的敏感性</p>
+<p>Example - AlertsEndpoint:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.microanut.http.MediaType</span><br><span class="line"><span class="keyword">import</span> io.micronaut.management.endpoint.annotation.Delete</span><br><span class="line"><span class="keyword">import</span> io.micronaut.management.endpoint.annotation.Endpoint</span><br><span class="line"><span class="keyword">import</span> io.micronaut.management.endpoint.annotation.Read</span><br><span class="line"><span class="keyword">import</span> io.micronaut.management.endpoint.annotation.Sensitive</span><br><span class="line"><span class="keyword">import</span> io.micronaut.management.endpoint.annotation.Write</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.CopyOnWriteArrayList</span><br><span class="line"></span><br><span class="line"><span class="meta">@Endpoint</span>(id = <span class="string">&#x27;alerts&#x27;</span>, defaultSensitive = <span class="literal">false</span>)  <span class="comment">// 1</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AlertsEndpoint</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;String&gt; alerts = <span class="keyword">new</span> CopyOnWriteArrayList&lt;&gt;()</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Read</span></span><br><span class="line">    List&lt;String&gt; getAlerts() &#123; alerts &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Delete</span></span><br><span class="line">    <span class="meta">@Sensitive</span>(<span class="literal">true</span>)    <span class="comment">// 2</span></span><br><span class="line">    <span class="type">void</span> clearAlerts() &#123; alerts.clear() &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Write</span>(consumes = MediaType.TEXT_PLAIN)</span><br><span class="line">    <span class="meta">@Sensitive</span>(property = <span class="string">&#x27;add.sensitive&#x27;</span>, defaultValue = <span class="literal">true</span>)     <span class="comment">// 3</span></span><br><span class="line">    <span class="type">void</span> addAlerts(String alert) &#123; alerts &lt;&lt; alert &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>1</code> : endpoint 默认为不敏感的, 并且使用默认的前缀 (prefix) <code>endpoints</code></p>
+<p><code>2</code> : 这个方法总是敏感的, 不管其他任何因素</p>
+<p><code>3</code> : <code>property</code> 的值被附加到前缀 (prefix) 和 id 以查找配置值</p>
+<p>如果配置 key <code>endpoints.alerts.add.sensitive</code> 有进行设置, 那这个 key 对应的值将指明 <code>addAlert</code> 方法的敏感性</p>
+<ol>
+<li><code>endpoint</code> 是第一个标记 (token), 因为这是 <code>@Endpoint</code> 注解中默认的前缀值, 并且在这个例子中没有明确指定前缀值</li>
+<li><code>alerts</code> 是第二个标记 (token), 因为这是 endpoint 的 id</li>
+<li><code>add.sensitive</code> 是最后一个标记 (token), 因为这是设置到 <code>@Sensitive</code> 注解的 <code>property</code> 成员的值</li>
+</ol>
+<p>如果配置 key 没有设置, 会使用 <code>defaultValue</code> (默认为 <code>true</code>)</p>
+<h3 id="Endpoint-Configuration-端点配置"><a href="#Endpoint-Configuration-端点配置" class="headerlink" title="Endpoint Configuration (端点配置)"></a>Endpoint Configuration (端点配置)</h3><p>具有 <code>endpoints</code> 前缀的 endpoints 可以通过它们默认的 endpoint id 来进行配置</p>
+<p>如果存在 id 为 <code>foo</code> 的 endpoint, 可以通过 <code>endpoints.foo</code> 进行配置</p>
+<p>除此之外, 可以通过 <code>all</code> 前缀来提供默认值</p>
+<p>Example - FooEndpoint.java:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Endpoint(&quot;foo&quot;)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">FooEndpoint</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>默认情况下, 这个 endpoint 是开启的</p>
+<p>要关闭这个 endpoint, 设置 <code>endpoints.foo.enabled</code> 为 <code>false</code></p>
+<p>如果 <code>endpoints.foo.enabled</code> 没有设置, 但设置了 <code>endpoints.all.enabled</code> 为 <code>false</code>, 那么这个 endpoint 将会是关闭的</p>
+<p>特定 endpoint 的配置会覆盖 <code>all</code> 的配置. 如果 <code>endpoints.foo.enabled</code> 为 <code>true</code> 且 <code>endpoints.all.enabled</code> 为 <code>false</code>, 那么这个 <code>foo</code> endpoint 将会是开启的</p>
+<p>对于所有 endpoints, 可以设置如下配置值:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">endpoints:</span></span><br><span class="line">    <span class="string">&lt;any</span> <span class="string">endpoint</span> <span class="string">id&gt;:</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="string">Boolean</span></span><br><span class="line">        <span class="attr">sensitive:</span> <span class="string">Boolean</span></span><br></pre></td></tr></table></figure>
+
+<p>所有 endpoints 的基础路径默认为 <code>/</code></p>
+<p>如果你想 endpoints 在不同的基础路径下可用, 配置 <code>endpoints.all.path</code></p>
+<p>例如, 如果 <code>endpoints.all.path</code> 设置为 <code>/endpoints</code>, 那么 <code>foo</code> endpoint 将会在 <code>/endpoints/foo</code> 路径下可访问</p>
+<h2 id="Built-In-Endpoints-内置端点"><a href="#Built-In-Endpoints-内置端点" class="headerlink" title="Built-In Endpoints (内置端点)"></a>Built-In Endpoints (内置端点)</h2><p>当 <code>management</code> 依赖添加到了你的项目中, 那么会默认开启如下内置 endpoints:</p>
+<p>Table - Default Endpoints:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Endpoint</th>
+<th align="left">URI</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/beans/BeansEndpoint.html" >BeansEndpoint<i class="fas fa-external-link-alt"></i></a></td>
+<td align="left">&#x2F;beans</td>
+<td align="left">Returns information about the loaded bean definitions in the application (see <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#beansEndpoint" >BeansEndpoint<i class="fas fa-external-link-alt"></i></a>)</td>
+</tr>
+<tr>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/health/HealthEndpoint.html" >HealthEndpoint<i class="fas fa-external-link-alt"></i></a></td>
+<td align="left">&#x2F;health</td>
+<td align="left">Returns information about the “health” of the application (see <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#healthEndpoint" >HealthEndpoint<i class="fas fa-external-link-alt"></i></a>)</td>
+</tr>
+<tr>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/info/InfoEndpoint.html" >InfoEndpoint<i class="fas fa-external-link-alt"></i></a></td>
+<td align="left">&#x2F;info</td>
+<td align="left">Returns static information from the state of the application (see <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#infoEndpoint" >InfoEndpoint<i class="fas fa-external-link-alt"></i></a>)</td>
+</tr>
+<tr>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/loggers/LoggersEndpoint.html" >LoggersEndpoint<i class="fas fa-external-link-alt"></i></a></td>
+<td align="left">&#x2F;loggers</td>
+<td align="left">Returns information about available loggers and permits changing the configured log level (see <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#loggersEndpoint" >LoggersEndpoint<i class="fas fa-external-link-alt"></i></a>)</td>
+</tr>
+<tr>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#metricsEndpoint" >MetricsEndpoint<i class="fas fa-external-link-alt"></i></a></td>
+<td align="left">&#x2F;metrics</td>
+<td align="left">Return the <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#metricsEndpoint" >application metrics<i class="fas fa-external-link-alt"></i></a>. Requires the <code>micrometer-core</code> configuration on the classpath</td>
+</tr>
+<tr>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/refresh/RefreshEndpoint.html" >RefreshEndpoint<i class="fas fa-external-link-alt"></i></a></td>
+<td align="left">&#x2F;refresh</td>
+<td align="left">Refreshes the application state (see <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#refreshEndpoint" >RefreshEndpoint<i class="fas fa-external-link-alt"></i></a>)</td>
+</tr>
+<tr>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/routes/RoutesEndpoint.html" >RoutesEndpoint<i class="fas fa-external-link-alt"></i></a></td>
+<td align="left">&#x2F;routes</td>
+<td align="left">Returns information about URIs available to be called for your application (see <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#routesEndpoint" >RoutesEndpoint<i class="fas fa-external-link-alt"></i></a>)</td>
+</tr>
+<tr>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/threads/ThreadDumpEndpoint.html" >ThreadDumpEndpoint<i class="fas fa-external-link-alt"></i></a></td>
+<td align="left">&#x2F;threaddump</td>
+<td align="left">Returns information about the current threads in the application</td>
+</tr>
+</tbody></table>
+<p>除此之外, <code>management</code> 依赖提供了如下默认不开启的内置 endpoints:</p>
+<p>Table - Disabled Endpoints:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Endpoint</th>
+<th align="left">URI</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/env/EnvironmentEndpoint.html" >EnvironmentEndpoint<i class="fas fa-external-link-alt"></i></a></td>
+<td align="left">&#x2F;env</td>
+<td align="left">Return information about the environment and its property sources (see <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#environmentEndpoint" >EnvironmentEndpoint<i class="fas fa-external-link-alt"></i></a>)</td>
+</tr>
+<tr>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#cachesEndpoint" >CachesEndpoint<i class="fas fa-external-link-alt"></i></a></td>
+<td align="left">&#x2F;caches</td>
+<td align="left">Returns information about the caches and permits invalidating them (see <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#cachesEndpoint" >CachesEndpoint<i class="fas fa-external-link-alt"></i></a>)</td>
+</tr>
+<tr>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/stop/ServerStopEndpoint.html" >ServerStopEndpoint<i class="fas fa-external-link-alt"></i></a></td>
+<td align="left">&#x2F;stop</td>
+<td align="left">Shuts down the application server (see <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#stopEndpoint" >ServerStopEndpoint<i class="fas fa-external-link-alt"></i></a>)</td>
+</tr>
+</tbody></table>
+<p>可通过设置 <code>endpoints.all.sensitive: false</code> 来开启所有端点的不授权访问, 但是这必须非常小心地使用, 因为私有的和敏感的信息会被暴露</p>
+<h3 id="Management-Port-管理端口"><a href="#Management-Port-管理端口" class="headerlink" title="Management Port (管理端口)"></a>Management Port (管理端口)</h3><p>默认情况下, 所有 management endpoints 被暴露到和应用程序相同的端口</p>
+<p>可以通过设置 <code>endpoints.all.port</code> 属性来改变这个行为:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">all:</span></span><br><span class="line">        <span class="attr">port:</span> <span class="number">8085</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面的例子中, management endpoints 只会暴露到端口 8085 上</p>
+<h3 id="JMX-JMX"><a href="#JMX-JMX" class="headerlink" title="JMX (JMX)"></a>JMX (JMX)</h3><p>Micronaut 提供了向 JMX 注册 endpoints 的功能. 查看 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#jmx" >JMX<i class="fas fa-external-link-alt"></i></a> 来开始</p>
+<h3 id="The-Beans-Endpoint-Beans-端点"><a href="#The-Beans-Endpoint-Beans-端点" class="headerlink" title="The Beans Endpoint (Beans 端点)"></a>The Beans Endpoint (Beans 端点)</h3><blockquote>
+<p>The beans endpoint returns information about the loaded bean definitions in the application.</p>
+</blockquote>
+<p>Beans endpoint 返回关于在应用程序中加载的 bean 定义的信息</p>
+<p>默认返回的 bean 数据是一个对象, 其中 key 是 bean 定义类名, value 是一个有关 bean 的属性的对象</p>
+<p>要执行 beans endpoint, 发送一个 GET 请求到 <code>/beans</code></p>
+<p>Example - 返回例子:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;beans&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;io.micronaut.http.server.netty.jackson.$JsonHttpContentSubscriberFactory$Definition&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;dependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="string">&quot;io.micronaut.http.server.HttpServerConfiguration&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;io.micronaut.json.JsonMapper&quot;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;scope&quot;</span><span class="punctuation">:</span> <span class="string">&quot;javax.inject.Singleton&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;io.micronaut.http.server.netty.jackson.JsonHttpContentSubscriberFactory&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Configuration-配置"><a href="#Configuration-配置" class="headerlink" title="Configuration (配置)"></a>Configuration (配置)</h4><p>要配置 beans endpoint, 通过 <code>endpoints.beans</code> 添加配置:</p>
+<p>Example - Beans Endpoint Configuration:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">beans:</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="string">Boolean</span></span><br><span class="line">        <span class="attr">sensitive:</span> <span class="string">Boolean</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Customization-自定义"><a href="#Customization-自定义" class="headerlink" title="Customization (自定义)"></a>Customization (自定义)</h4><blockquote>
+<p>The beans endpoint is composed of a bean definition data collector and a bean data implementation.</p>
+</blockquote>
+<p>beans endpoint 由一个 bean 定义数据收集器和一个 bean 数据实现组成</p>
+<blockquote>
+<p>The bean definition data collector (BeanDefinitionDataCollector) is responsible for returning a publisher that returns the data used in the response.</p>
+</blockquote>
+<p>bean 定义数据收集器 (<a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/beans/BeanDefinitionDataCollector.html" >BeanDefinitionDataCollector<i class="fas fa-external-link-alt"></i></a>) 负责返回一个 publisher, 这个 publisher 返回响应中使用的数据</p>
+<blockquote>
+<p>The bean definition data (BeanDefinitionData) is responsible for returning data about an individual bean definition.</p>
+</blockquote>
+<p>bean 定义数据 (<a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/beans/BeanDefinitionData.html" >BeanDefinitionData<i class="fas fa-external-link-alt"></i></a>) 负责返回关于单个 bean 定义的数据</p>
+<blockquote>
+<p>To override the default behavior for either of the helper classes, either extend the default implementations (DefaultBeanDefinitionDataCollector, DefaultBeanDefinitionData), or implement the relevant interface directly.</p>
+</blockquote>
+<p>要覆盖任一助手类的默认行为, 请扩展默认实现 (<a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/beans/impl/DefaultBeanDefinitionDataCollector.html" >DefaultBeanDefinitionDataCollector<i class="fas fa-external-link-alt"></i></a>, <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/beans/impl/DefaultBeanDefinitionData.html" >DefaultBeanDefinitionData<i class="fas fa-external-link-alt"></i></a>), 或直接实现相关接口</p>
+<blockquote>
+<p>To ensure your implementation is used instead of the default, add the @Replaces annotation to your class with the value being the default implementation.</p>
+</blockquote>
+<p>为确保使用你的实现而不是默认实现, 将 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Replaces.html" >@Replaces<i class="fas fa-external-link-alt"></i></a> 注解添加到你的类上, 并将值作为默认实现</p>
+<h3 id="The-Info-Endpoint-Info-端点"><a href="#The-Info-Endpoint-Info-端点" class="headerlink" title="The Info Endpoint (Info 端点)"></a>The Info Endpoint (Info 端点)</h3><p>info endpoint 返回应用程序状态的静态信息</p>
+<p>被暴露的 info 可以通过多个 “info sources” 提供</p>
+<p>要执行 info endpoint, 发送一个 GET 请求到 <code>/info</code></p>
+<h4 id="Configuration-配置-1"><a href="#Configuration-配置-1" class="headerlink" title="Configuration (配置)"></a>Configuration (配置)</h4><p>要配置 info endpoint, 通过 <code>endpoints.info</code> 提供配置</p>
+<p>Example - Info Endpoint Configuration:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">endpoint:</span></span><br><span class="line">    <span class="attr">info:</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="string">Boolean</span></span><br><span class="line">        <span class="attr">sensitive:</span> <span class="string">Boolean</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Customization-自定义-1"><a href="#Customization-自定义-1" class="headerlink" title="Customization (自定义)"></a>Customization (自定义)</h4><p>info endpoint 包含一个 info 聚合器和多个 “info sources”</p>
+<p>要添加一个 info source, 创建一个实现 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/info/InfoSource.html" >InfoSource<i class="fas fa-external-link-alt"></i></a> 的类</p>
+<p>如果你的 info source 需要从 Java properties 文件获取数据, 那么继承 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/info/source/PropertiesInfoSource.html" >PropertiesInfoSource<i class="fas fa-external-link-alt"></i></a> 接口, 这个接口提供了一个帮助方法来获取数据</p>
+<p>所有的 info source beans 都被集合到 info aggregator 中</p>
+<p>要提供你自己的 info aggregator 实现, 创建一个实现 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/info/InfoAggregator.html" >InfoAggregator<i class="fas fa-external-link-alt"></i></a> 接口并作为一个 bean 的类</p>
+<p>确保你的实现代替了默认的实现, 添加 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Replaces.html" >@Replaces<i class="fas fa-external-link-alt"></i></a> 注解到你的类上, 并且注解上的值是 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/info/impl/ReactiveInfoAggregator.html" >默认实现<i class="fas fa-external-link-alt"></i></a></p>
+<p>默认的 info aggregator 返回一个 map, 这个 map 包含所有 info sources 提供的组合起来的属性</p>
+<p>这个 map 作为 JSON 从 <code>/info</code> endpoint 返回</p>
+<h4 id="Provided-Info-Sources-提供的-Info-源"><a href="#Provided-Info-Sources-提供的-Info-源" class="headerlink" title="Provided Info Sources (提供的 Info 源)"></a>Provided Info Sources (提供的 Info 源)</h4><h5 id="Configuration-Info-Source-配置-Info-源"><a href="#Configuration-Info-Source-配置-Info-源" class="headerlink" title="Configuration Info Source (配置 Info 源)"></a>Configuration Info Source (配置 Info 源)</h5><p><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/info/source/ConfigurationInfoSource.html" >ConfigurationInfoSource<i class="fas fa-external-link-alt"></i></a> 返回在 <code>info</code> key 下面的配置属性 (configuration properties)</p>
+<p>除了 string, integer 和 boolean 类型的值 ,更复杂的属性可以在 JSON 输出中作为 map 暴露 (如果配置格式支持)</p>
+<p>Example - Info Source:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># application.groovy</span><br><span class="line">info.demo.string = <span class="string">&quot;demo string&quot;</span></span><br><span class="line">info.demo.number = <span class="number">123</span></span><br><span class="line">info.demo.map = [</span><br><span class="line">    <span class="symbol">key:</span> <span class="string">&#x27;value&#x27;</span>,</span><br><span class="line">    <span class="symbol">other_key:</span> <span class="number">123</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>上面的配置在 info endpoint 中作为 JSON 响应返回:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;demo&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;string&quot;</span><span class="punctuation">:</span> <span class="string">&quot;demo string&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;number&quot;</span><span class="punctuation">:</span> <span class="number">123</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;map&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;key&quot;</span><span class="punctuation">:</span> <span class="string">&quot;value&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;other_key&quot;</span><span class="punctuation">:</span> <span class="number">123</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="Configuration-配置-2"><a href="#Configuration-配置-2" class="headerlink" title="Configuration (配置)"></a>Configuration (配置)</h6><p>configuration info source 可以使用 <code>endpoints.info.config.enabled</code>  属性来关闭</p>
+<h5 id="Git-Info-Source-Git-Info-Source"><a href="#Git-Info-Source-Git-Info-Source" class="headerlink" title="Git Info Source (Git Info Source)"></a>Git Info Source (Git Info Source)</h5><p>如果在 classpath 上存在 <code>git.properties</code> 文件, 那么 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/info/source/GitInfoSource.html" >GitInfoSource<i class="fas fa-external-link-alt"></i></a> 使用 <code>git</code> key 暴露这个文件中的值</p>
+<p>一个创建的 <code>git.properties</code> 文件必须配置为你的构建的一部分</p>
+<p>Gradle 用户的一个简单选项是使用 <a class="link"   target="_blank" rel="noopener" href="https://plugins.gradle.org/plugin/com.gorylenko.gradle-git-properties" >Gradle Git Properties Plugin<i class="fas fa-external-link-alt"></i></a></p>
+<p>Maven 用户可以使用 <a class="link"   target="_blank" rel="noopener" href="https://github.com/git-commit-id/maven-git-commit-id-plugin" >Maven Git Commit ID Plugin<i class="fas fa-external-link-alt"></i></a></p>
+<h6 id="Configuration-配置-3"><a href="#Configuration-配置-3" class="headerlink" title="Configuration (配置)"></a>Configuration (配置)</h6><p>要指定一个另外的路径或另外的属性文件名称, 在 <code>endpoints.info.git.location</code> 属性中提供一个自定义值</p>
+<h5 id="Build-Info-Source-构建-Info-Source"><a href="#Build-Info-Source-构建-Info-Source" class="headerlink" title="Build Info Source (构建 Info Source)"></a>Build Info Source (构建 Info Source)</h5><p>如果在 classpath 上存在 <code>META-INF/build-info.properties</code> 文件, 那么 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/info/source/BuildInfoSource.html" >BuildInfoSource<i class="fas fa-external-link-alt"></i></a> 使用 <code>build</code> key 暴露这个文件中的值</p>
+<p>一个创建的 <code>build-info.properties</code> 文件必须配置为你的构建的一部分</p>
+<p>Gradle 用户的一个简单选项是使用 <a class="link"   target="_blank" rel="noopener" href="https://plugins.gradle.org/plugin/com.pasam.gradle.buildinfo" >Gradle Build Info Plugin<i class="fas fa-external-link-alt"></i></a></p>
+<p>Maven 用户可以使用 <a class="link"   target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/#goals-build-info" >Spring Boot Maven Plugin<i class="fas fa-external-link-alt"></i></a></p>
+<h6 id="Configuration-配置-4"><a href="#Configuration-配置-4" class="headerlink" title="Configuration (配置)"></a>Configuration (配置)</h6><p>要指定属性文件另外的 路径&#x2F;名称, 在 <code>endpoints.info.build.location</code> 属性中提供一个自定义的值</p>
+<p>build info source 可以使用 <code>endpoints.info.build.enabled</code> 属性来关闭</p>
+<h3 id="The-Health-Endpoint-健康端点"><a href="#The-Health-Endpoint-健康端点" class="headerlink" title="The Health Endpoint (健康端点)"></a>The Health Endpoint (健康端点)</h3><p>health endpoint 返回关于应用程序的健康信息, 通过多个 “health indicators” 来指定</p>
+<p>要执行 health endpoint, 发送一个 GET 请求到 <code>/health</code></p>
+<p>除此之外, health endpoint 还暴露 <code>/health/liveness</code> 和 <code>/health/readiness</code> “health indicators”</p>
+<h4 id="Configuration-配置-5"><a href="#Configuration-配置-5" class="headerlink" title="Configuration (配置)"></a>Configuration (配置)</h4><p>要配置 health endpoint, 通过 <code>endpoints.health</code> 提供配置</p>
+<p>Example - Health Endpoint Configuration:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">health:</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="string">Boolean</span></span><br><span class="line">        <span class="attr">sensitive:</span> <span class="string">Boolean</span></span><br><span class="line">        <span class="attr">details-visible:</span> <span class="string">String</span>     <span class="comment"># 1</span></span><br><span class="line">        <span class="attr">status:</span></span><br><span class="line">            <span class="attr">http-mapping:</span> <span class="string">Map&lt;String,</span> <span class="string">HttpStatus&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>1</code> : One of <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/health/DetailsVisibility.html" >DetailsVisibility<i class="fas fa-external-link-alt"></i></a></p>
+<p><code>details-visible</code> 设置控制是否将 health 细节暴露给没有授权的用户</p>
+<p>Example - Using <code>details-visible</code>:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">health:</span></span><br><span class="line">        <span class="attr">details-visible:</span> <span class="string">ANONYMOUS</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>exposes detailed information from the various health indicators about the health status of the application to anonymous unauthenticated users.</p>
+</blockquote>
+<p>将有关应用程序健康状态的各种健康指标的细节信息暴露给未授权用户</p>
+<p><code>endpoints.health.status.http-mapping</code> 设置用来控制每个健康状态的返回状态码. 默认的状态码在下表中描述:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Status</th>
+<th align="left">HTTP Code</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/health/HealthStatus.html#UP" >UP<i class="fas fa-external-link-alt"></i></a></td>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/HttpStatus.html#OK" >OK<i class="fas fa-external-link-alt"></i></a> (200)</td>
+</tr>
+<tr>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/health/HealthStatus.html#UNKNOWN" >UNKNOWN<i class="fas fa-external-link-alt"></i></a></td>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/HttpStatus.html#OK" >OK<i class="fas fa-external-link-alt"></i></a> (200)</td>
+</tr>
+<tr>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/health/HealthStatus.html#DOWN" >DOWN<i class="fas fa-external-link-alt"></i></a></td>
+<td align="left"><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/HttpStatus.html#SERVICE_UNAVAILABLE" >SERVICE_UNAVAILABLE<i class="fas fa-external-link-alt"></i></a> (503)</td>
+</tr>
+</tbody></table>
+<p>你可以在 <code>application.yml</code> 中提供自定义映射:</p>
+<p>Example - Custom Health Status Codes:</p>
+<p>Example - Custom Health Status Codes:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">health:</span></span><br><span class="line">        <span class="attr">status:</span></span><br><span class="line">            <span class="attr">http-mapping:</span></span><br><span class="line">                <span class="string">DOWN:200</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的知道导致在 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/health/HealthStatus.html" >HealthStatus<i class="fas fa-external-link-alt"></i></a> 是 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/health/HealthStatus.html#DOWN" >DOWN<i class="fas fa-external-link-alt"></i></a> 的时候返回 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/HttpStatus.html#OK" >OK<i class="fas fa-external-link-alt"></i></a> (200)</p>
+<h4 id="Customization-自定义-2"><a href="#Customization-自定义-2" class="headerlink" title="Customization (自定义)"></a>Customization (自定义)</h4><p>health endpoint 包含一个 health aggregator 和多个 health indicators</p>
+<p>要增加一个 health indicator, 创建一个实现 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/health/indicator/HealthIndicator.html" >HealthIndicator<i class="fas fa-external-link-alt"></i></a> 的 bean 类</p>
+<p>建议还要使用 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/health/indicator/annotation/Liveness.html" >@Liveness<i class="fas fa-external-link-alt"></i></a> 或 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/health/indicator/annotation/Readiness.html" >@Readiness<i class="fas fa-external-link-alt"></i></a> 标识符</p>
+<p>如果没有使用标识符, 那么这个 health indicator 将会是 <code>/health</code> 和 <code>/health/readiness</code> endpoints 的一部分</p>
+<p>基类 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/health/indicator/AbstractHealthIndicator.html" >AbstractHealthIndicator<i class="fas fa-external-link-alt"></i></a> 可用于子类以使这个实现过程更加容易</p>
+<p>所有的 health indicator beans 都被集合到 health aggregator</p>
+<p>要提供你自己实现的 health aggregator, 创建一个实现 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/health/aggregator/HealthAggregator.html" >HealthAggregator<i class="fas fa-external-link-alt"></i></a> 接口的类并将其注册为一个 bean</p>
+<p>要确保你的实现替代了 health aggregator, 添加 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Replaces.html" >@Replaces<i class="fas fa-external-link-alt"></i></a> 注解到你的类上, 注解的值是默认的实现 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/health/aggregator/DefaultHealthAggregator.html" >DefaultHealthAggregator<i class="fas fa-external-link-alt"></i></a></p>
+<p>默认的 health aggregator 返回一个根据指标的健康状况计算的整体状况</p>
+<p>一个 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/health/HealthStatus.html" >health status<i class="fas fa-external-link-alt"></i></a> 包含多种信息:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Name</td>
+<td align="left">The name of the status</td>
+</tr>
+<tr>
+<td align="left">Description</td>
+<td align="left">The description of the status</td>
+</tr>
+<tr>
+<td align="left">Operational</td>
+<td align="left">Whether the functionality the indicator represents is functional</td>
+</tr>
+<tr>
+<td align="left">Severity</td>
+<td align="left">How severe the status. A higher number is more severe</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>The “worst” status is returned as the overall status</p>
+</blockquote>
+<p>“worst&#96; 状态作为整体状态返回</p>
+<blockquote>
+<p>A non-operational status is selected over an operational status</p>
+</blockquote>
+<p>在操作状态上选择 “非操作” 状态</p>
+<blockquote>
+<p>A higher severity is selected over a lower severity</p>
+</blockquote>
+<p>选择较高的严重性的而不是较低的严重性</p>
+<h4 id="Provided-Indicators-提供的指示器"><a href="#Provided-Indicators-提供的指示器" class="headerlink" title="Provided Indicators (提供的指示器)"></a>Provided Indicators (提供的指示器)</h4><p>所有 Micronaut 提供的 health indicators 被暴露在 <code>/health</code> 和 <code>/health/readiness</code> endpoints</p>
+<h5 id="Disk-Space-磁盘空间"><a href="#Disk-Space-磁盘空间" class="headerlink" title="Disk Space (磁盘空间)"></a>Disk Space (磁盘空间)</h5><p>一个 health indicator 被提供来指明应用程序的基于可用磁盘空间大小的健康状态</p>
+<p>可以在 <code>endpoints.health.disk-space</code> key 下面来配置磁盘空间 health indicator</p>
+<p>Example - Disk Space Indicator Configuration:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">health:</span></span><br><span class="line">        <span class="attr">disk-space:</span></span><br><span class="line">            <span class="attr">enabled:</span> <span class="string">Boolean</span></span><br><span class="line">            <span class="attr">path:</span> <span class="string">String</span> <span class="comment"># The file path used to determine the disk space</span></span><br><span class="line">            <span class="attr">threshold:</span> <span class="string">String</span> <span class="string">|</span> <span class="string">Long</span> <span class="comment"># The minimum amount of free space</span></span><br></pre></td></tr></table></figure>
+
+<p><code>threshold</code> 可以作为一个类似 “10MB”, “200KB” 的字符串来提供, 或使用字节数</p>
+<h5 id="JDBC-JDBC"><a href="#JDBC-JDBC" class="headerlink" title="JDBC (JDBC)"></a>JDBC (JDBC)</h5><blockquote>
+<p>The JDBC health indicator determines the health of your application based on the ability to successfully create connections to datasources in the application context.</p>
+</blockquote>
+<p>JDBC health indicator 指明了你的应用程序的健康状态, 基于在应用程序上下文中成功地创建数据库链接的能力</p>
+<p>唯一支持的配置选项是开启或关闭这个 indicator, 通过 <code>endpoints.health.jdbc.enabled</code> key</p>
+<h5 id="Discovery-Client-发现客户端"><a href="#Discovery-Client-发现客户端" class="headerlink" title="Discovery Client (发现客户端)"></a>Discovery Client (发现客户端)</h5><p>如果你的应用程序使用了服务发现, 那么一个 health indicator 被用来监控 discovery client 的健康</p>
+<p>返回的数据可以包含一个可用服务的列表</p>
+<h3 id="The-Metrics-Endpoint-指标端点"><a href="#The-Metrics-Endpoint-指标端点" class="headerlink" title="The Metrics Endpoint (指标端点)"></a>The Metrics Endpoint (指标端点)</h3><p>通过集成 <a class="link"   target="_blank" rel="noopener" href="https://micrometer.io/" >Micrometer<i class="fas fa-external-link-alt"></i></a> ,Micronaut 可以暴露应用程序指标</p>
+<p>如果你使用 Micronaut CLI 创建项目, 添加 micrometer 的其中一个特性来开启指标并预配置选择的 registry 到你项目中:</p>
+<p><code>mn create-app my-app --features micrometer-atlas</code></p>
+<p>metrics endpoint 返回关于应用程序的指标的信息</p>
+<p>要执行 metrics endpoint, 发送一个 GET 请求到 <code>/metrics</code></p>
+<p>这个 endpoint 返回一个可用指标名称的列表</p>
+<p>你可以通过使用 <code>/metrics/[name]</code> 来获取特定的指标, 例如 <code>/metrics/jvm.memory.used</code></p>
+<p>查看文档 <a class="link"   target="_blank" rel="noopener" href="https://micronaut-projects.github.io/micronaut-micrometer/latest/guide/" >Micronaut Micrometer<i class="fas fa-external-link-alt"></i></a> 来获取一个 registries 列表和关于如何配置, 暴露, 自定义 metrics 输出的信息</p>
+<h3 id="The-Refresh-Endpoint-刷新端点"><a href="#The-Refresh-Endpoint-刷新端点" class="headerlink" title="The Refresh Endpoint (刷新端点)"></a>The Refresh Endpoint (刷新端点)</h3><p>Refresh endpoint 刷新应用程序的状态, 导致所有上下文中的 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/runtime/context/scope/Refreshable.html" >Refreshable<i class="fas fa-external-link-alt"></i></a> beans 被销毁并重新实例化直到下次请求</p>
+<p>这通过在应用上下文中发送一个 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/runtime/context/scope/refresh/RefreshEvent.html" >RefreshEvent<i class="fas fa-external-link-alt"></i></a> 来完成</p>
+<p>要执行 refresh endpoint, 发送一个 POST 请求到 <code>/refresh</code></p>
+<p><code>curl -X POST http://localhost:8080/refresh</code></p>
+<p>在没有发送 body 的情况下执行时, endpoint 首先刷新 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/context/env/Environment.html" >Environment<i class="fas fa-external-link-alt"></i></a> 并执行 diff 以检测任何更改, 然后仅在检测到更改时执行刷新</p>
+<p>如果要不管环境变化, 跳过这个检查并刷新所有 <code>@Refreshable</code> beans (例如, 强制刷新来自第三方服务的缓存响应), 那么在 POST 请求 body 中添加一个 <code>force</code> 参数</p>
+<p><code>curl -X POST http://localhost:8080/refresh -H &#39;Content-Type: application/json&#39; -d &#39;&#123;&quot;force&quot;: true&#125;&#39;</code></p>
+<h4 id="Configuration-配置-6"><a href="#Configuration-配置-6" class="headerlink" title="Configuration (配置)"></a>Configuration (配置)</h4><p>要配置 refresh endpoint, 通过 <code>endpoints.refresh</code> 应用配置:</p>
+<p>Example - Beans Endpoint Configuration:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">refresh:</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="string">Boolean</span></span><br><span class="line">        <span class="attr">sensitive:</span> <span class="string">Boolean</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="The-Routes-Endpoint-路由端点"><a href="#The-Routes-Endpoint-路由端点" class="headerlink" title="The Routes Endpoint (路由端点)"></a>The Routes Endpoint (路由端点)</h3><p>Routes endpoint 返回关于你的应用程序中可用的可以被调用的 URIs 的信息</p>
+<p>默认情况下, 返回的数据包括 URI, 允许的方法, 允许的 method, 提供的 content types, 要被执行的方法的信息</p>
+<p>要执行 routes endpoint, 发送一个 GET 请求到 <code>/routes</code></p>
+<h4 id="Configuration-配置-7"><a href="#Configuration-配置-7" class="headerlink" title="Configuration (配置)"></a>Configuration (配置)</h4><p>要配置 routes endpoint, 通过 <code>endpoints.routes</code> 应用配置:</p>
+<p>Example - Routes Endpoint Configuration:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">routes:</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="string">Boolean</span></span><br><span class="line">        <span class="attr">sensitive:</span> <span class="string">Boolean</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Customization-自定义-3"><a href="#Customization-自定义-3" class="headerlink" title="Customization (自定义)"></a>Customization (自定义)</h4><p>routes endpoint 由一个路由数据收集者和一个路由数据实现组成</p>
+<p>路由数据收集者 (<a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/routes/RouteDataCollector.html" >RouteDataCollector<i class="fas fa-external-link-alt"></i></a>) 用来返回一个 publisher, 这个 publisher 返回在响应中使用的数据</p>
+<p>路由数据实现 (<a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/routes/RouteData.html" >RouteData<i class="fas fa-external-link-alt"></i></a>) 用来返回关于某个路由的数据</p>
+<p>要覆盖任一助手类的默认行为, 继承默认的 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/routes/impl/DefaultRouteDataCollector.html" >DefaultRouteDataCollector<i class="fas fa-external-link-alt"></i></a>, <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/routes/impl/DefaultRouteData.html" >DefaultRouteData<i class="fas fa-external-link-alt"></i></a>, 或者直接实现相关的接口</p>
+<p>要确保你的实现已经替代了默认的实现, 添加 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Replaces.html" >@Replaces<i class="fas fa-external-link-alt"></i></a> 注解到你的类上, 使用默认的实现作为注解的值</p>
+<h3 id="The-Loggers-Endpoint-日志端点"><a href="#The-Loggers-Endpoint-日志端点" class="headerlink" title="The Loggers Endpoint (日志端点)"></a>The Loggers Endpoint (日志端点)</h3><p>loggers endpoint 返回关于应用程序中可用的 loggers 的信息, 并且允许配置它们的日志级别</p>
+<p>loggers endpoint 默认是关闭的, 必须使用 <code>endpoints.loggers.enabled=true</code> 设置来显式开启</p>
+<p>要按名称获取所有 loggers 的集合以及配置和有效的日志级别, 发送一个 GET请求到 <code>/loggers</code></p>
+<p>这还提供了可用日志级别的列表:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;levels&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;ALL&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;TRACE&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;DEBUG&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;INFO&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;WARN&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;ERROR&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;OFF&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;NOT_SPECIFIED&quot;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;loggers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;ROOT&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;configuredLevel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;INFO&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;effectiveLevel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;INFO&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;io&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;configuredLevel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;NOT_SPECIFIED&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;effectiveLevel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;INFO&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;io.micronaut&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;configuredLevel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;NOT_SPECIFIED&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;effectiveLevel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;INFO&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">        <span class="comment">// etc...</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>要获取特定 logger 的日志级别, 包含 logger 名称到你的 GET 请求中: <code>curl http://localhost:8080/loggers/io.micronaut.http</code></p>
+<p>如果命名的 logger 不存在, 将会创建一个未指定 (例如, <code>NOT_SPECIFIED</code>) 配置日志级别 (它的有效日志级别通常会使用根日志级别)</p>
+<p>要更新单个 logger 的日志级别, 发送一个 POST 请求到命名的 logger  URL, 包含一个提供了日志级别配置的 body:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X POST \</span><br><span class="line">     -H <span class="string">&quot;Content-Type: application/json&quot;</span> \</span><br><span class="line">     -d <span class="string">&#x27;&#123; &quot;configuredLevel&quot;: &quot;ERROR&quot; &#125;&#x27;</span> \</span><br><span class="line">     http://localhost:8080/loggers/ROOT</span><br></pre></td></tr></table></figure>
+
+<p>默认情况下, logger endpoint 不允许通过为授权用户修改日志级别, 即使 <code>sensitive</code> 设置为 <code>false</code>. 要允许修改日志级别, 你必须设置 <code>endpoints.loggers.write-sensitive=false</code></p>
+<h4 id="Configuration-配置-8"><a href="#Configuration-配置-8" class="headerlink" title="Configuration (配置)"></a>Configuration (配置)</h4><p>Example - Loggers Endpoint Configuration:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">loggers:</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="string">Boolean</span></span><br><span class="line">        <span class="attr">sensitive:</span> <span class="string">Boolean</span></span><br><span class="line">        <span class="attr">write-sensitive:</span> <span class="string">Boolean</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Customization-自定义-4"><a href="#Customization-自定义-4" class="headerlink" title="Customization (自定义)"></a>Customization (自定义)</h4><p>loggers endpoint 包含两个自定义的部分: 一个 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/loggers/LoggersManager.html" >LoggersManager<i class="fas fa-external-link-alt"></i></a> 和一个 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/logging/LoggingSystem.html" >LoggingSystem<i class="fas fa-external-link-alt"></i></a></p>
+<p>查看 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#logging" >logging section of the documentation<i class="fas fa-external-link-alt"></i></a> 获取自定义日志系统的更多信息</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/loggers/LoggersManager.html" >LoggersManager<i class="fas fa-external-link-alt"></i></a> 负责返回和设置日志级别. 如果默认实现不能满足你的需求, 提供一个你自己的实现并使用 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Replaces.html" >@Replaces<i class="fas fa-external-link-alt"></i></a> 注解替代掉 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/loggers/impl/DefaultLoggersManager.html" >DefaultLoggersManager<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="The-Caches-Endpoint-缓存端点"><a href="#The-Caches-Endpoint-缓存端点" class="headerlink" title="The Caches Endpoint (缓存端点)"></a>The Caches Endpoint (缓存端点)</h3><p>cache endpoint 文档在 <a class="link"   target="_blank" rel="noopener" href="https://micronaut-projects.github.io/micronaut-cache/latest/guide/index.html#endpoint" >micronaut-cache project<i class="fas fa-external-link-alt"></i></a> 中</p>
+<h3 id="The-Server-Stop-Endpoint-服务停止端点"><a href="#The-Server-Stop-Endpoint-服务停止端点" class="headerlink" title="The Server Stop Endpoint (服务停止端点)"></a>The Server Stop Endpoint (服务停止端点)</h3><p>stop endpoint 关闭应用程序服务器</p>
+<p>要执行 stop endpoint, 发送一个 GET 请求到 <code>/stop</code></p>
+<h4 id="Configuration-配置-9"><a href="#Configuration-配置-9" class="headerlink" title="Configuration (配置)"></a>Configuration (配置)</h4><p>要配置 stop endpoint, 通过 <code>endpoints.stop</code> 应用配置:</p>
+<p>Example - Stop Endpoint Configuration:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">stop:</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="string">Boolean</span></span><br><span class="line">        <span class="attr">sensitive:</span> <span class="string">Boolean</span></span><br></pre></td></tr></table></figure>
+
+<p>默认情况下, stop endpoint 是关闭的, 必须明确开启才能使用</p>
+<h3 id="The-Environment-Endpoint-环境端点"><a href="#The-Environment-Endpoint-环境端点" class="headerlink" title="The Environment Endpoint (环境端点)"></a>The Environment Endpoint (环境端点)</h3><p>environment endpoint 返回关于 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/context/env/Environment.html" >Environment<i class="fas fa-external-link-alt"></i></a> 和它的 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/context/env/PropertySource.html" >PropertySource<i class="fas fa-external-link-alt"></i></a>s 的信息</p>
+<h4 id="Configuration-配置-10"><a href="#Configuration-配置-10" class="headerlink" title="Configuration (配置)"></a>Configuration (配置)</h4><p>要开启和配置 environment endpoint, 通过 <code>endpoints.env</code> 应用配置:</p>
+<p>Example -Environment Endpoint Configuration:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">env:</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="string">Boolean</span>    <span class="comment"># default: false</span></span><br><span class="line">        <span class="attr">sensitive:</span> <span class="string">Boolean</span>  <span class="comment"># default: true</span></span><br></pre></td></tr></table></figure>
+
+<p>默认情况下, environment endpoint 会屏蔽所有的值. 要自定义这个屏蔽你需要提供一个实现了 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/env/EnvironmentEndpointFilter.html" >EnvironmentEndpointFilter<i class="fas fa-external-link-alt"></i></a> 的 bean</p>
+<p>第一个例子将会屏蔽所有的值, 除了前缀为 <code>safe</code> 的值:</p>
+<p>Example - First example of environment masking:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OnlySafePrefixedEnvFilter</span> <span class="keyword">implements</span> <span class="title class_">EnvironmentEndpointFilter</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Pattern</span> <span class="variable">SAFE_PREFIX_PATTERN</span> <span class="operator">=</span> Pattern.compile(<span class="string">&quot;safe.*&quot;</span>, Pattern.CASE_INSENSITIVE);</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">specifyFiltering</span><span class="params">(<span class="meta">@NotNull</span> EnvironmentFilterSpecification specification)</span> &#123;</span><br><span class="line">        specification.maskAll()     <span class="comment">// All values will be masked apart from the supplied patterns</span></span><br><span class="line">                     .exclude(SAFE_PREFIX_PATTERN);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还可以使用 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/env/EnvironmentFilterSpecification.html#maskNone--" >maskNone–<i class="fas fa-external-link-alt"></i></a> 来允许所有的纯文本值, 然后指定将被屏蔽的名称模式:</p>
+<p>Example - Deny instead of allow:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AllPlainExceptSecretOrMatchEnvFilter</span> <span class="keyword">implements</span> <span class="title class_">EnvironmentEndpointFilter</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Mask anything starting with `sekrt`</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Pattern</span> <span class="variable">SECRET_PREFIX_PATTERN</span> <span class="operator">=</span> Pattern.compile(<span class="string">&quot;sekrt.*&quot;</span>, Pattern.CASE_INSENSITIVE);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Mask anything exactly matching `exact-match`</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">EXACT_MATCH</span> <span class="operator">=</span> <span class="string">&quot;exact-match&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Mask anything that starts with `private.`</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Predicate&lt;String&gt; PREDICATE_MATCH = name -&gt; name.startsWith(<span class="string">&quot;private.&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">specifyFiltering</span><span class="params">(<span class="meta">@NotNull</span> EnvironmentFilterSpecification specification)</span> &#123;</span><br><span class="line">        specification.maskNone()    <span class="comment">// All values will be in plain-text apart from the supplied patterns</span></span><br><span class="line">                     .exclude(SECRET_PREFIX_PATTERN)</span><br><span class="line">                     .exclude(EXACT_MATCH)</span><br><span class="line">                     .exclude(PREDICATE_MATCH);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以通过调用 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/env/EnvironmentFilterSpecification.html#legacyMasking--" >legacyMasking–<i class="fas fa-external-link-alt"></i></a> 方法应用合理的默认值. 这将会展示所有的值, 除了那些在名称中任何地方包含 <code>password</code>,<code>credential</code>,<code>certificate</code>,<code>key</code>,<code>secret</code>,<code>token</code> 的值</p>
+<h4 id="Getting-information-about-the-environment-获取关于环境的信息"><a href="#Getting-information-about-the-environment-获取关于环境的信息" class="headerlink" title="Getting information about the environment (获取关于环境的信息)"></a>Getting information about the environment (获取关于环境的信息)</h4><p>要执行 environment endpoint, 发送一个 GET 请求到 <code>/env</code></p>
+<h4 id="Getting-information-about-a-particular-PropertySource-获取特定的-PropertySource-信息"><a href="#Getting-information-about-a-particular-PropertySource-获取特定的-PropertySource-信息" class="headerlink" title="Getting information about a particular PropertySource (获取特定的 PropertySource 信息)"></a>Getting information about a particular <code>PropertySource</code> (获取特定的 <code>PropertySource</code> 信息)</h4><p>要执行 endpoint, 发送一个 GET 请求到 <code>/env/&#123;propertySourceName&#125;</code></p>
+<h3 id="The-ThreadDump-Endpoint-线程转储端点"><a href="#The-ThreadDump-Endpoint-线程转储端点" class="headerlink" title="The ThreadDump Endpoint (线程转储端点)"></a>The ThreadDump Endpoint (线程转储端点)</h3><p>threaddump endpoint 返回关于应用程序中运行线程的信息</p>
+<p>要执行 threaddump endpoint, 发送一个 GET 请求到 <code>/threaddump</code></p>
+<h4 id="Configuration-配置-11"><a href="#Configuration-配置-11" class="headerlink" title="Configuration (配置)"></a>Configuration (配置)</h4><p>要配置 threaddump endpoint, 通过 <code>endpoints.threaddump</code> 应用配置</p>
+<p>Example - Threaddump Endpoint Configuration:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">threaddump:</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="string">Boolean</span></span><br><span class="line">        <span class="attr">sensitive:</span> <span class="string">Boolean</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Customization-自定义-5"><a href="#Customization-自定义-5" class="headerlink" title="Customization (自定义)"></a>Customization (自定义)</h4><p>threaddump endpoint 委托给一个 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/management/endpoint/threads/ThreadInfoMapper.html" >ThreadInfoMapper<i class="fas fa-external-link-alt"></i></a>, 这个 Mapper 负责转换 <code>java.lang.management.ThreadInfo</code> 对象为任何其他被发送的序列化对象</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Micronaut 中文文档 Management &amp; Monitoring</li>
+        <li>本文作者：林威羽</li>
+        <li>创建时间：2022-04-29 09:49:56</li>
+        <li>
+            本文链接：https://linweiyu21.github.io/micronaut/micronaut-management-and-monitoring/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/Groovy/">#Groovy</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/Micronaut/">#Micronaut</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E4%B8%AD%E6%96%87/">#中文</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/micronaut/micronaut-micronaut-cli/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Micronaut 中文文档 Micronaut CLI</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/micronaut/micronaut-language-support/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Micronaut 中文文档 Language Support</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '8xWQ0WFbKUNN4h8ixIO12etk-gzGzoHsz',
+                    appKey: '7cLjTvkIsF6aIuIVSd0um89m',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请开始你的表演',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = '林威羽';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">林威羽</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Management-amp-Monitoring"><span class="nav-number">1.</span> <span class="nav-text">Management &amp; Monitoring</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Creating-Endpoints-%E5%88%9B%E5%BB%BA%E7%AB%AF%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">Creating Endpoints (创建端点)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Endpoints-Annotation-%E7%AB%AF%E7%82%B9%E6%B3%A8%E8%A7%A3"><span class="nav-number">1.1.1.</span> <span class="nav-text">The Endpoints Annotation (端点注解)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Example-of-custom-Endpoint-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%AB%AF%E7%82%B9%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">Example of custom Endpoint (自定义端点的例子)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Endpoint-Methods-%E7%AB%AF%E7%82%B9%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.2.</span> <span class="nav-text">Endpoint Methods (端点方法)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Read-Methods-%E8%AF%BB%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">Read Methods (读方法)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Write-Methods-%E5%86%99%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">Write Methods (写方法)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Delete-Methods-%E5%88%A0%E9%99%A4%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">Delete Methods (删除方法)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Endpoint-Sensitivity-%E7%AB%AF%E7%82%B9%E6%95%8F%E6%84%9F%E6%80%A7"><span class="nav-number">1.1.3.</span> <span class="nav-text">Endpoint Sensitivity (端点敏感性)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Endpoint-Configuration-%E7%AB%AF%E7%82%B9%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.4.</span> <span class="nav-text">Endpoint Configuration (端点配置)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Built-In-Endpoints-%E5%86%85%E7%BD%AE%E7%AB%AF%E7%82%B9"><span class="nav-number">1.2.</span> <span class="nav-text">Built-In Endpoints (内置端点)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Management-Port-%E7%AE%A1%E7%90%86%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.2.1.</span> <span class="nav-text">Management Port (管理端口)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JMX-JMX"><span class="nav-number">1.2.2.</span> <span class="nav-text">JMX (JMX)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Beans-Endpoint-Beans-%E7%AB%AF%E7%82%B9"><span class="nav-number">1.2.3.</span> <span class="nav-text">The Beans Endpoint (Beans 端点)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Configuration-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">Configuration (配置)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Customization-%E8%87%AA%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">Customization (自定义)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Info-Endpoint-Info-%E7%AB%AF%E7%82%B9"><span class="nav-number">1.2.4.</span> <span class="nav-text">The Info Endpoint (Info 端点)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Configuration-%E9%85%8D%E7%BD%AE-1"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">Configuration (配置)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Customization-%E8%87%AA%E5%AE%9A%E4%B9%89-1"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">Customization (自定义)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Provided-Info-Sources-%E6%8F%90%E4%BE%9B%E7%9A%84-Info-%E6%BA%90"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">Provided Info Sources (提供的 Info 源)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Configuration-Info-Source-%E9%85%8D%E7%BD%AE-Info-%E6%BA%90"><span class="nav-number">1.2.4.3.1.</span> <span class="nav-text">Configuration Info Source (配置 Info 源)</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Configuration-%E9%85%8D%E7%BD%AE-2"><span class="nav-number">1.2.4.3.1.1.</span> <span class="nav-text">Configuration (配置)</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Git-Info-Source-Git-Info-Source"><span class="nav-number">1.2.4.3.2.</span> <span class="nav-text">Git Info Source (Git Info Source)</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Configuration-%E9%85%8D%E7%BD%AE-3"><span class="nav-number">1.2.4.3.2.1.</span> <span class="nav-text">Configuration (配置)</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Build-Info-Source-%E6%9E%84%E5%BB%BA-Info-Source"><span class="nav-number">1.2.4.3.3.</span> <span class="nav-text">Build Info Source (构建 Info Source)</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Configuration-%E9%85%8D%E7%BD%AE-4"><span class="nav-number">1.2.4.3.3.1.</span> <span class="nav-text">Configuration (配置)</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Health-Endpoint-%E5%81%A5%E5%BA%B7%E7%AB%AF%E7%82%B9"><span class="nav-number">1.2.5.</span> <span class="nav-text">The Health Endpoint (健康端点)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Configuration-%E9%85%8D%E7%BD%AE-5"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">Configuration (配置)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Customization-%E8%87%AA%E5%AE%9A%E4%B9%89-2"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">Customization (自定义)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Provided-Indicators-%E6%8F%90%E4%BE%9B%E7%9A%84%E6%8C%87%E7%A4%BA%E5%99%A8"><span class="nav-number">1.2.5.3.</span> <span class="nav-text">Provided Indicators (提供的指示器)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Disk-Space-%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4"><span class="nav-number">1.2.5.3.1.</span> <span class="nav-text">Disk Space (磁盘空间)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#JDBC-JDBC"><span class="nav-number">1.2.5.3.2.</span> <span class="nav-text">JDBC (JDBC)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Discovery-Client-%E5%8F%91%E7%8E%B0%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">1.2.5.3.3.</span> <span class="nav-text">Discovery Client (发现客户端)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Metrics-Endpoint-%E6%8C%87%E6%A0%87%E7%AB%AF%E7%82%B9"><span class="nav-number">1.2.6.</span> <span class="nav-text">The Metrics Endpoint (指标端点)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Refresh-Endpoint-%E5%88%B7%E6%96%B0%E7%AB%AF%E7%82%B9"><span class="nav-number">1.2.7.</span> <span class="nav-text">The Refresh Endpoint (刷新端点)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Configuration-%E9%85%8D%E7%BD%AE-6"><span class="nav-number">1.2.7.1.</span> <span class="nav-text">Configuration (配置)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Routes-Endpoint-%E8%B7%AF%E7%94%B1%E7%AB%AF%E7%82%B9"><span class="nav-number">1.2.8.</span> <span class="nav-text">The Routes Endpoint (路由端点)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Configuration-%E9%85%8D%E7%BD%AE-7"><span class="nav-number">1.2.8.1.</span> <span class="nav-text">Configuration (配置)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Customization-%E8%87%AA%E5%AE%9A%E4%B9%89-3"><span class="nav-number">1.2.8.2.</span> <span class="nav-text">Customization (自定义)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Loggers-Endpoint-%E6%97%A5%E5%BF%97%E7%AB%AF%E7%82%B9"><span class="nav-number">1.2.9.</span> <span class="nav-text">The Loggers Endpoint (日志端点)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Configuration-%E9%85%8D%E7%BD%AE-8"><span class="nav-number">1.2.9.1.</span> <span class="nav-text">Configuration (配置)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Customization-%E8%87%AA%E5%AE%9A%E4%B9%89-4"><span class="nav-number">1.2.9.2.</span> <span class="nav-text">Customization (自定义)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Caches-Endpoint-%E7%BC%93%E5%AD%98%E7%AB%AF%E7%82%B9"><span class="nav-number">1.2.10.</span> <span class="nav-text">The Caches Endpoint (缓存端点)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Server-Stop-Endpoint-%E6%9C%8D%E5%8A%A1%E5%81%9C%E6%AD%A2%E7%AB%AF%E7%82%B9"><span class="nav-number">1.2.11.</span> <span class="nav-text">The Server Stop Endpoint (服务停止端点)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Configuration-%E9%85%8D%E7%BD%AE-9"><span class="nav-number">1.2.11.1.</span> <span class="nav-text">Configuration (配置)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Environment-Endpoint-%E7%8E%AF%E5%A2%83%E7%AB%AF%E7%82%B9"><span class="nav-number">1.2.12.</span> <span class="nav-text">The Environment Endpoint (环境端点)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Configuration-%E9%85%8D%E7%BD%AE-10"><span class="nav-number">1.2.12.1.</span> <span class="nav-text">Configuration (配置)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Getting-information-about-the-environment-%E8%8E%B7%E5%8F%96%E5%85%B3%E4%BA%8E%E7%8E%AF%E5%A2%83%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="nav-number">1.2.12.2.</span> <span class="nav-text">Getting information about the environment (获取关于环境的信息)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Getting-information-about-a-particular-PropertySource-%E8%8E%B7%E5%8F%96%E7%89%B9%E5%AE%9A%E7%9A%84-PropertySource-%E4%BF%A1%E6%81%AF"><span class="nav-number">1.2.12.3.</span> <span class="nav-text">Getting information about a particular PropertySource (获取特定的 PropertySource 信息)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-ThreadDump-Endpoint-%E7%BA%BF%E7%A8%8B%E8%BD%AC%E5%82%A8%E7%AB%AF%E7%82%B9"><span class="nav-number">1.2.13.</span> <span class="nav-text">The ThreadDump Endpoint (线程转储端点)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Configuration-%E9%85%8D%E7%BD%AE-11"><span class="nav-number">1.2.13.1.</span> <span class="nav-text">Configuration (配置)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Customization-%E8%87%AA%E5%AE%9A%E4%B9%89-5"><span class="nav-number">1.2.13.2.</span> <span class="nav-text">Customization (自定义)</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

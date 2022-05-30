@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Micronaut,Groovy,Gradle,Java,文档,中文">
+    <meta name="description" content="Micronaut Groovy Gradle Java 文档 中文">
+    <meta name="author" content="林威羽">
+    
+    <title>
+        
+            Elasticsearch Search your data |
+        
+        林威羽的笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(153,153,0)","avatar":"/images/avatar.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"400px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":null,"description":"def contains🚀 = ['Micronaut', 'Groovy', 'Gradle', 'etc']"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                林威羽的笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+    <a target="_blank" rel="noopener" href="https://github.com/linweiyu21/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80"
+        viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+        aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path
+          d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+          fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path
+          d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+          fill="currentColor" class="octo-body"></path>
+      </svg></a>
+    <style>
+      .github-corner:hover .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+      }
+
+      @keyframes octocat-wave {
+
+        0%,
+        100% {
+          transform: rotate(0)
+        }
+
+        20%,
+        60% {
+          transform: rotate(-25deg)
+        }
+
+        40%,
+        80% {
+          transform: rotate(10deg)
+        }
+      }
+
+      @media (max-width:500px) {
+        .github-corner:hover .octo-arm {
+          animation: none
+        }
+
+        .github-corner .octo-arm {
+          animation: octocat-wave 560ms ease-in-out
+        }
+      }
+    </style>
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Elasticsearch Search your data</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">林威羽</span>
+                        
+                            <span class="author-label">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-05-13 16:54:31</span>
+        <span class="mobile">2022-05-13 16:54</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Elasticsearch-User-Guides-Search-your-data/">Elasticsearch - User Guides - Search your data</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/User-Guides/">User Guides</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Elasticsearch/">Elasticsearch</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Search-your-data/">Search your data</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <!-- TOC -->
+
+<ul>
+<li><a href="#elasticsearch-search-your-data">Elasticsearch Search your data</a><ul>
+<li><a href="#define-fields-that-exist-only-in-a-query">Define fields that exist only in a query</a></li>
+<li><a href="#common-search-options">Common search options</a><ul>
+<li><a href="#query-dsl">Query DSL</a></li>
+<li><a href="#aggregations">Aggregations</a></li>
+<li><a href="#search-multiple-data-streams-and-indices">Search multiple data streams and indices</a></li>
+<li><a href="#paginate-search-results">Paginate search results</a></li>
+<li><a href="#retrieve-selected-fields">Retrieve selected fields</a></li>
+<li><a href="#sort-search-results">Sort search results</a></li>
+<li><a href="#run-an-async-search">Run an async search</a></li>
+</ul>
+</li>
+<li><a href="#search-timeout">Search timeout</a></li>
+<li><a href="#search-cancellation">Search cancellation</a></li>
+<li><a href="#track-total-hits">Track total hits</a></li>
+<li><a href="#quick-check-for-matching-docs">Quick check for matching docs</a></li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="Elasticsearch-Search-your-data"><a href="#Elasticsearch-Search-your-data" class="headerlink" title="Elasticsearch Search your data"></a>Elasticsearch Search your data</h1><h2 id="Define-fields-that-exist-only-in-a-query"><a href="#Define-fields-that-exist-only-in-a-query" class="headerlink" title="Define fields that exist only in a query"></a>Define fields that exist only in a query</h2><p>除了索引数据然后搜索数据, 还可以定义只作为搜索请求的一部分存在的 <code>runtime fields</code></p>
+<p>你可以在你的搜索请求中定义一个 <code>runtime_mappings</code> 块来定义 <code>runtime field</code>, <code>runtime field</code> 可选地包含一个 <code>Painless</code> 脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">GET /my-index/_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;runtime_mappings&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;day_of_week&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;type&quot;</span>: <span class="string">&quot;keyword&quot;</span>,</span><br><span class="line">            <span class="string">&quot;script&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;source&quot;</span>:</span><br><span class="line">                <span class="string">&quot;&quot;</span><span class="string">&quot;emit(doc[&#x27;@timestamp&#x27;].value.dayOfWeekEnum.getDisplayName(TextStyle.FULL, Locale.ROOT))&quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">&quot;aggs&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;day_of_week&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;terms&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;field&quot;</span>: <span class="string">&quot;day_of_week&quot;</span>      // 可以在 runtime field 上进行 terms aggregation</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Common-search-options"><a href="#Common-search-options" class="headerlink" title="Common search options"></a>Common search options</h2><p>可以使用如下选项来自定义搜索</p>
+<h3 id="Query-DSL"><a href="#Query-DSL" class="headerlink" title="Query DSL"></a>Query DSL</h3><p>Query DSL 支持各种各样的可以用来混合和匹配你想要的结果的查询类型</p>
+<p>Query 类型包括:</p>
+<ul>
+<li><code>Boolean</code> 和其他复合查询, 让你可以组合查询和基于多个条件匹配查询结果</li>
+<li><code>Term-level queries</code> 用来过滤和查找准确匹配</li>
+<li><code>Full text queries</code> 搜索引擎中常用的全文搜索</li>
+<li>地理位置和空间的查询</li>
+</ul>
+<h3 id="Aggregations"><a href="#Aggregations" class="headerlink" title="Aggregations"></a>Aggregations</h3><p>可以使用 <code>search aggregations</code>(搜索聚合) 在你的搜索结果上获取统计数据和其他分析数据</p>
+<p>聚合可以帮助你回答类似这样的问题:</p>
+<ul>
+<li>服务器的平均响应时间</li>
+<li>网络上访问量最大的 IP 地址是哪个</li>
+<li>按客户计算的总交易收入是多少</li>
+</ul>
+<h3 id="Search-multiple-data-streams-and-indices"><a href="#Search-multiple-data-streams-and-indices" class="headerlink" title="Search multiple data streams and indices"></a>Search multiple data streams and indices</h3><p>可以在同一个请求中使用逗号分隔的值或索引匹配符来搜索多个数据流和索引</p>
+<p>还可以通过指定索引来加速搜索结果</p>
+<h3 id="Paginate-search-results"><a href="#Paginate-search-results" class="headerlink" title="Paginate search results"></a>Paginate search results</h3><p>默认情况下, 搜索只返回前十个匹配的值</p>
+<p>为了获得更多或更少的文档, 可使用分页查询</p>
+<h3 id="Retrieve-selected-fields"><a href="#Retrieve-selected-fields" class="headerlink" title="Retrieve selected fields"></a>Retrieve selected fields</h3><p>获取指定要获取的字段</p>
+<h3 id="Sort-search-results"><a href="#Sort-search-results" class="headerlink" title="Sort search results"></a>Sort search results</h3><p>默认情况下, 搜索结果通过 <code>_score</code> 进行排序, 一个相关性得分用来衡量每个文档与搜索有多相关</p>
+<p>自定义计算的结果, 可以使用 <code>script_score</code> 查询</p>
+<p>可以对结果使用指定的字段值进行排序</p>
+<h3 id="Run-an-async-search"><a href="#Run-an-async-search" class="headerlink" title="Run an async search"></a>Run an async search</h3><p>一个 <code>async search</code> 让你可以在一个长时间运行的查询上马上获取部分结果和在稍后获取完整的结果</p>
+<h2 id="Search-timeout"><a href="#Search-timeout" class="headerlink" title="Search timeout"></a>Search timeout</h2><p>默认情况下, 搜索请求不会超时. 请求会在返回响应前等待每个分片上完整的结果</p>
+<p>因为 <code>async search</code> 被设计用来进行长时间运行的搜索, 你通过 <code>timeout</code> 参数来指定一个你想等待每个分片完成搜索的时间</p>
+<p>每个分片在指定的时间范围内收集匹配的结果</p>
+<p>如果收集没有在时间范围内完成, Elasticsearch 将会只收集在那时候已经匹配的结果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">GET /my-index/_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;timeout&quot;</span>: <span class="string">&quot;2s&quot;</span>,</span><br><span class="line">    <span class="string">&quot;query&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;match&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;user.id&quot;</span>: <span class="string">&quot;kimchy&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>cluster settings API</code> 中使用 <code>search.default_search_timeout</code> 来为所有搜索请求配置一个集群级别的默认超时时间</p>
+<p>这个全局超时时间配置将会在每个请求中 <code>timeout</code> 参数没有配置的时候生效</p>
+<p>如果一个请求超过了全局超时时间配置, 那么这个请求将会使用 <code>task cancellation</code> 来进行取消</p>
+<p><code>search.default_search_timeout</code> 默认设置为 <code>-1</code> (没有限制)</p>
+<h2 id="Search-cancellation"><a href="#Search-cancellation" class="headerlink" title="Search cancellation"></a>Search cancellation</h2><p>你可以使用 <code>task management API</code> 来取消一个搜索请求</p>
+<p>Elasticsearch 也会在你的客户端 HTTP 连接关闭时取消一个搜索请求</p>
+<p>建议在一个搜索请求被拒接或超时的时候关闭客户端上的 HTTP 连接</p>
+<h2 id="Track-total-hits"><a href="#Track-total-hits" class="headerlink" title="Track total hits"></a>Track total hits</h2><p>通常, 在不访问所有匹配结果的情况下无法准确计算总命中数, 因为这对于匹配大量文档的查询来说代价很高</p>
+<p><code>track_total_hits</code> 参数允许你控制总共多少个命中结果应该被跟踪</p>
+<p>考虑到通常有一个点击次数的下限就足够了, 比如 “至少10000次点击”, 默认设置为 10000</p>
+<p>这意味着请求将准确计算总命中数, 最多到 10000</p>
+<p>如果在某个阈值之后不需要准确的点击率, 那么这是一个很好的权衡去加速搜索</p>
+<p><code>track_total_hits</code> 设置为 <code>true</code> 将会告诉 Elasticsearch 计算准确的命中记录数, 同时返回的 <code>total.relation</code> 将会为 <code>eq</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">GET my-index/_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;track_total_hits&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">&quot;query&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;match&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;user.id&quot;</span>: <span class="string">&quot;elkbee&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将 <code>track_total_hits</code> 设置为一个整数, Elasticsearch 将会最多计算准确的数量到这个参数配置的值</p>
+<p>如果匹配的值大于这个参数配置的整数, 那么 <code>relation</code> 将会为 <code>gte</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;_shards&quot;</span><span class="punctuation">:</span> ...</span><br><span class="line">  <span class="attr">&quot;hits&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;max_score&quot;</span><span class="punctuation">:</span> <span class="number">1.0</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;total&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="number">100</span><span class="punctuation">,</span>         </span><br><span class="line">      <span class="attr">&quot;relation&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gte&quot;</span>     </span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;hits&quot;</span><span class="punctuation">:</span> ...</span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果不想跟踪命中数, 那么可以将 <code>track_total_hits</code> 设置为 <code>false</code></p>
+<h2 id="Quick-check-for-matching-docs"><a href="#Quick-check-for-matching-docs" class="headerlink" title="Quick check for matching docs"></a>Quick check for matching docs</h2><p>如果你只是想知道是否有文档匹配一个指定查询, 你可以设置 <code>size=0</code>来指明我们对返回的结果没有兴趣</p>
+<p>还可以设置 <code>terminate_after=1</code> 来指明查询可以在每个分片上第一个匹配的文档找到后任何时候进行中断</p>
+<p><code>terminate_after</code> 总是在后置过滤之后应用, 并在分片上收集到足够的命中时停止查询和聚合</p>
+<p>文档数量在聚合中可能无法反映命中数, 因为聚合是在后置过滤之前进行的</p>
+<p>由于 <code>size=0</code> 所以请求的相应将不会包含任何命中文档</p>
+<p><code>hits.total=0</code> 意味着没有匹配的文档</p>
+<p><code>hits.total</code> 大于 0 意味着在请求中断前有至少这么多匹配的文档</p>
+<p>如果请求被提前中断, 那么 <code>terminated_early</code> 将会被设置为 <code>true</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;took&quot;</span><span class="punctuation">:</span> <span class="number">3</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;timed_out&quot;</span><span class="punctuation">:</span> <span class="keyword">false</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;terminated_early&quot;</span><span class="punctuation">:</span> <span class="keyword">true</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;_shards&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;total&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;successful&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;skipped&quot;</span> <span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;failed&quot;</span><span class="punctuation">:</span> <span class="number">0</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;hits&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;total&quot;</span> <span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;relation&quot;</span><span class="punctuation">:</span> <span class="string">&quot;eq&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;max_score&quot;</span><span class="punctuation">:</span> <span class="keyword">null</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;hits&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>响应体中的 <code>time</code> 时间是一个毫秒值, 说明这个用来处理这个请求的时间</p>
+<p>从节点接收到这个请求开始, 直到所有请求相关的工作结束, 在响应体 JSON 返回给客户端的这段时间</p>
+<p>这意味着 <code>time</code> 包括了请求在线程池中等待的时间, 执行一个跨越整个集群的分布式搜索和获取所有结果的时间</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a class="link"   target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-your-data.html" >link<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Elasticsearch Search your data</li>
+        <li>本文作者：林威羽</li>
+        <li>创建时间：2022-05-13 16:54:31</li>
+        <li>
+            本文链接：https://linweiyu21.github.io/elasticsearch/elasticsearch-guide/search-your-data/elasticsearch-search-your-data/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/User-Guides/">#User Guides</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/Elasticsearch/">#Elasticsearch</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/Search-your-data/">#Search your data</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/elasticsearch/elasticsearch-guide/search-your-data/elasticsearch-collapse-search-results/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Elasticsearch Collapse search results</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/elasticsearch/elasticsearch-guide/ingest-pipelines/elasticsearch-ingest-processor-reference/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Elasticsearch Ingest processor reference</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '8xWQ0WFbKUNN4h8ixIO12etk-gzGzoHsz',
+                    appKey: '7cLjTvkIsF6aIuIVSd0um89m',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请开始你的表演',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = '林威羽';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">林威羽</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Elasticsearch-Search-your-data"><span class="nav-number">1.</span> <span class="nav-text">Elasticsearch Search your data</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Define-fields-that-exist-only-in-a-query"><span class="nav-number">1.1.</span> <span class="nav-text">Define fields that exist only in a query</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Common-search-options"><span class="nav-number">1.2.</span> <span class="nav-text">Common search options</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Query-DSL"><span class="nav-number">1.2.1.</span> <span class="nav-text">Query DSL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Aggregations"><span class="nav-number">1.2.2.</span> <span class="nav-text">Aggregations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Search-multiple-data-streams-and-indices"><span class="nav-number">1.2.3.</span> <span class="nav-text">Search multiple data streams and indices</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Paginate-search-results"><span class="nav-number">1.2.4.</span> <span class="nav-text">Paginate search results</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Retrieve-selected-fields"><span class="nav-number">1.2.5.</span> <span class="nav-text">Retrieve selected fields</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sort-search-results"><span class="nav-number">1.2.6.</span> <span class="nav-text">Sort search results</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-an-async-search"><span class="nav-number">1.2.7.</span> <span class="nav-text">Run an async search</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Search-timeout"><span class="nav-number">1.3.</span> <span class="nav-text">Search timeout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Search-cancellation"><span class="nav-number">1.4.</span> <span class="nav-text">Search cancellation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Track-total-hits"><span class="nav-number">1.5.</span> <span class="nav-text">Track total hits</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-check-for-matching-docs"><span class="nav-number">1.6.</span> <span class="nav-text">Quick check for matching docs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.7.</span> <span class="nav-text">参考</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

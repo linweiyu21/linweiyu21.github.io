@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Micronaut,Groovy,Gradle,Java,文档,中文">
+    <meta name="description" content="Micronaut Groovy Gradle Java 文档 中文">
+    <meta name="author" content="林威羽">
+    
+    <title>
+        
+            标签 |
+        
+        林威羽的笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(153,153,0)","avatar":"/images/avatar.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"400px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":null,"description":"def contains🚀 = ['Micronaut', 'Groovy', 'Gradle', 'etc']"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                林威羽的笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class="active"
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class="active"
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+    <a target="_blank" rel="noopener" href="https://github.com/linweiyu21/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80"
+        viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+        aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path
+          d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+          fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path
+          d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+          fill="currentColor" class="octo-body"></path>
+      </svg></a>
+    <style>
+      .github-corner:hover .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+      }
+
+      @keyframes octocat-wave {
+
+        0%,
+        100% {
+          transform: rotate(0)
+        }
+
+        20%,
+        60% {
+          transform: rotate(-25deg)
+        }
+
+        40%,
+        80% {
+          transform: rotate(10deg)
+        }
+      }
+
+      @media (max-width:500px) {
+        .github-corner:hover .octo-arm {
+          animation: none
+        }
+
+        .github-corner .octo-arm {
+          animation: octocat-wave 560ms ease-in-out
+        }
+      }
+    </style>
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    
+    <div class="fade-in-down-animation">
+        <div class="tagcloud-container">
+            <div class="tagcloud-content">
+                <a href="/tags/Advanced-SQL-operations/" style="font-size: 1.08rem;">Advanced SQL operations</a> <a href="/tags/Annotation/" style="font-size: 1.14rem;">Annotation</a> <a href="/tags/Available-AST-transformations/" style="font-size: 1.46rem;">Available AST transformations</a> <a href="/tags/Basic-CRUD-operations/" style="font-size: 1.06rem;">Basic CRUD operations</a> <a href="/tags/Class-design-annotations/" style="font-size: 1.17rem;">Class design annotations</a> <a href="/tags/Closures/" style="font-size: 1.08rem;">Closures</a> <a href="/tags/Closures-and-type-inference/" style="font-size: 1.1rem;">Closures and type inference</a> <a href="/tags/Code-generation-transformations/" style="font-size: 1.02rem;">Code generation transformations</a> <a href="/tags/Compile-time-metaprogramming/" style="font-size: 1.48rem;">Compile-time metaprogramming</a> <a href="/tags/Compiler-directives/" style="font-size: 1.08rem;">Compiler directives</a> <a href="/tags/Creating-XML/" style="font-size: 1.06rem;">Creating XML</a> <a href="/tags/Data-streams/" style="font-size: 1.06rem;">Data streams</a> <a href="/tags/Declarative-concurrency/" style="font-size: 1.12rem;">Declarative concurrency</a> <a href="/tags/Dependency-management-with-Grape/" style="font-size: 1.1rem;">Dependency management with Grape</a> <a href="/tags/Developing-AST-transformations/" style="font-size: 1rem;">Developing AST transformations</a> <a href="/tags/Differences-with-Java/" style="font-size: 1.04rem;">Differences with Java</a> <a href="/tags/Docker/" style="font-size: 1.21rem;">Docker</a> <a href="/tags/Docker-Compose/" style="font-size: 1.17rem;">Docker Compose</a> <a href="/tags/Domain-Specific-Languages/" style="font-size: 1.12rem;">Domain-Specific Languages</a> <a href="/tags/Elasticsearch/" style="font-size: 1.56rem;">Elasticsearch</a> <a href="/tags/ExpandoMetaClass/" style="font-size: 1.17rem;">ExpandoMetaClass</a> <a href="/tags/Extension-modules/" style="font-size: 1.1rem;">Extension modules</a> <a href="/tags/GPath/" style="font-size: 1.04rem;">GPath</a> <a href="/tags/Gradle/" style="font-size: 1.41rem;">Gradle</a> <a href="/tags/Groovy/" style="font-size: 1.58rem;">Groovy</a> <a href="/tags/Groovy-Development-Kit/" style="font-size: 1.45rem;">Groovy Development Kit</a> <a href="/tags/Handy-utilities/" style="font-size: 1.04rem;">Handy utilities</a> <a href="/tags/Index-templates/" style="font-size: 1.02rem;">Index templates</a> <a href="/tags/Ingest-pipelines/" style="font-size: 1.06rem;">Ingest pipelines</a> <a href="/tags/Integrating-Groovy-in-a-Java-application/" style="font-size: 1rem;">Integrating Groovy in a Java application</a> <a href="/tags/Interacting-with-a-SQL-database/" style="font-size: 1.21rem;">Interacting with a SQL database</a> <a href="/tags/Interacting-with-date-and-time-values/" style="font-size: 1.06rem;">Interacting with date and time values</a> <a href="/tags/Language-Features/" style="font-size: 1.06rem;">Language Features</a> <a href="/tags/Logging-improvements/" style="font-size: 1.1rem;">Logging improvements</a> <a href="/tags/Manipulating-XML/" style="font-size: 1.04rem;">Manipulating XML</a> <a href="/tags/Manipulating-date-and-time/" style="font-size: 1.06rem;">Manipulating date and time</a> <a href="/tags/Manipulating-lists/" style="font-size: 1.08rem;">Manipulating lists</a> <a href="/tags/Manipulating-maps/" style="font-size: 1.06rem;">Manipulating maps</a> <a href="/tags/Mapping-parameters/" style="font-size: 1.37rem;">Mapping parameters</a> <a href="/tags/Maps/" style="font-size: 1.12rem;">Maps</a> <a href="/tags/Meta-annotations/" style="font-size: 1.06rem;">Meta-annotations</a> <a href="/tags/Metaclasses/" style="font-size: 1.25rem;">Metaclasses</a> <a href="/tags/Metaprogramming/" style="font-size: 1.52rem;">Metaprogramming</a> <a href="/tags/Micronaut/" style="font-size: 1.27rem;">Micronaut</a> <a href="/tags/Notes/" style="font-size: 1.19rem;">Notes</a> <a href="/tags/Object-Orientation/" style="font-size: 1.54rem;">Object Orientation</a> <a href="/tags/Operators/" style="font-size: 1.35rem;">Operators</a> <a href="/tags/Optionality/" style="font-size: 1.06rem;">Optionality</a> <a href="/tags/Parameter-type-inference/" style="font-size: 1.06rem;">Parameter type inference</a> <a href="/tags/Parsing-XML/" style="font-size: 1.02rem;">Parsing XML</a> <a href="/tags/Processing-JSON/" style="font-size: 1.02rem;">Processing JSON</a> <a href="/tags/Processing-XML/" style="font-size: 1.19rem;">Processing XML</a> <a href="/tags/Program-Structure/" style="font-size: 1.06rem;">Program Structure</a> <a href="/tags/Promotion-and-coercion/" style="font-size: 1.08rem;">Promotion and coercion</a> <a href="/tags/Query-DSL/" style="font-size: 1.04rem;">Query DSL</a> <a href="/tags/Reference/" style="font-size: 1rem;">Reference</a> <a href="/tags/Runtime-metaprogramming/" style="font-size: 1.43rem;">Runtime metaprogramming</a> <a href="/tags/Search-your-data/" style="font-size: 1.23rem;">Search your data</a> <a href="/tags/Semantics/" style="font-size: 1.46rem;">Semantics</a> <a href="/tags/Statements/" style="font-size: 1.12rem;">Statements</a> <a href="/tags/Static-compilation/" style="font-size: 1.04rem;">Static compilation</a> <a href="/tags/Strings/" style="font-size: 1.19rem;">Strings</a> <a href="/tags/Swing-patterns/" style="font-size: 1.04rem;">Swing patterns</a> <a href="/tags/Syntax-enhancements-for-collections/" style="font-size: 1.06rem;">Syntax enhancements for collections</a> <a href="/tags/Template-engines/" style="font-size: 1.12rem;">Template engines</a> <a href="/tags/Test-assistance/" style="font-size: 1.02rem;">Test assistance</a> <a href="/tags/Testing-Guide/" style="font-size: 1.14rem;">Testing Guide</a> <a href="/tags/Testing-with-JUnit/" style="font-size: 1.04rem;">Testing with JUnit</a> <a href="/tags/Text-analysis/" style="font-size: 1.54rem;">Text analysis</a> <a href="/tags/The-Groovy-Truth/" style="font-size: 1rem;">The Groovy Truth</a> <a href="/tags/The-MarkupTemplateEngine/" style="font-size: 1rem;">The MarkupTemplateEngine</a> <a href="/tags/Token-filter-reference/" style="font-size: 1.5rem;">Token filter reference</a> <a href="/tags/Tokenizer-reference/" style="font-size: 1.31rem;">Tokenizer reference</a> <a href="/tags/Tools/" style="font-size: 1rem;">Tools</a> <a href="/tags/Traits/" style="font-size: 1.29rem;">Traits</a> <a href="/tags/Type-Inference/" style="font-size: 1.1rem;">Type Inference</a> <a href="/tags/Typing/" style="font-size: 1.33rem;">Typing</a> <a href="/tags/User-Guides/" style="font-size: 1.6rem;">User Guides</a> <a href="/tags/Working-with-Date-and-Time-types/" style="font-size: 1.15rem;">Working with Date and Time types</a> <a href="/tags/%E4%B8%AD%E6%96%87/" style="font-size: 1.27rem;">中文</a> <a href="/tags/%E5%85%83%E4%BF%A1%E6%81%AF%E5%AD%97%E6%AE%B5/" style="font-size: 1.14rem;">元信息字段</a> <a href="/tags/%E5%AD%97%E6%AE%B5%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" style="font-size: 1.39rem;">字段数据类型</a>
+            </div>
+        </div>
+    </div>
+
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">林威羽</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

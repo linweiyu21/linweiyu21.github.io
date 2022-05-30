@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Micronaut,Groovy,Gradle,Java,文档,中文">
+    <meta name="description" content="Micronaut Groovy Gradle Java 文档 中文">
+    <meta name="author" content="林威羽">
+    
+    <title>
+        
+            Micronaut 中文文档 Micronaut CLI |
+        
+        林威羽的笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(153,153,0)","avatar":"/images/avatar.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"400px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":null,"description":"def contains🚀 = ['Micronaut', 'Groovy', 'Gradle', 'etc']"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                林威羽的笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+    <a target="_blank" rel="noopener" href="https://github.com/linweiyu21/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80"
+        viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+        aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path
+          d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+          fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path
+          d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+          fill="currentColor" class="octo-body"></path>
+      </svg></a>
+    <style>
+      .github-corner:hover .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+      }
+
+      @keyframes octocat-wave {
+
+        0%,
+        100% {
+          transform: rotate(0)
+        }
+
+        20%,
+        60% {
+          transform: rotate(-25deg)
+        }
+
+        40%,
+        80% {
+          transform: rotate(10deg)
+        }
+      }
+
+      @media (max-width:500px) {
+        .github-corner:hover .octo-arm {
+          animation: none
+        }
+
+        .github-corner .octo-arm {
+          animation: octocat-wave 560ms ease-in-out
+        }
+      }
+    </style>
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Micronaut 中文文档 Micronaut CLI</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">林威羽</span>
+                        
+                            <span class="author-label">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-04-29 09:50:27</span>
+        <span class="mobile">2022-04-29 09:50</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Micronaut-%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3/">Micronaut 中文文档</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Groovy/">Groovy</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Micronaut/">Micronaut</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E4%B8%AD%E6%96%87/">中文</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <!-- TOC -->
+
+<ul>
+<li><a href="#micronaut-cli">Micronaut CLI</a><ul>
+<li><a href="#interactive-mode-%E4%BA%A4%E4%BA%92%E6%A8%A1%E5%BC%8F">Interactive Mode (交互模式)</a></li>
+<li><a href="#help-and-info-%E5%B8%AE%E5%8A%A9%E4%BF%A1%E6%81%AF">Help and Info (帮助信息)</a></li>
+<li><a href="#creating-a-project-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE">Creating a Project (创建一个项目)</a><ul>
+<li><a href="#create-command-flags-%E5%88%9B%E5%BB%BA%E5%91%BD%E4%BB%A4%E6%A0%87%E8%AE%B0">Create Command Flags (创建命令标记)</a><ul>
+<li><a href="#languagetest-features-%E8%AF%AD%E8%A8%80%E6%B5%8B%E8%AF%95%E5%8A%9F%E8%83%BD">Language&#x2F;Test Features (语言&#x2F;测试功能)</a></li>
+<li><a href="#groovy-groovy">Groovy (Groovy)</a></li>
+<li><a href="#kotlin-kotlin">Kotlin (Kotlin)</a></li>
+<li><a href="#build-tool-%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7">Build Tool (构建工具)</a></li>
+</ul>
+</li>
+<li><a href="#create-cli-app-%E5%88%9B%E5%BB%BA%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F">Create-Cli-App (创建命令行程序)</a></li>
+<li><a href="#create-function-app-%E5%88%9B%E5%BB%BA%E5%87%BD%E6%95%B0%E7%A8%8B%E5%BA%8F">Create Function App (创建函数程序)</a></li>
+<li><a href="#contribute-%E8%B4%A1%E7%8C%AE">Contribute (贡献)</a></li>
+<li><a href="#comparing-versions-%E7%89%88%E6%9C%AC%E6%AF%94%E8%BE%83">Comparing Versions (版本比较)</a></li>
+</ul>
+</li>
+<li><a href="#features-%E5%8A%9F%E8%83%BD">Features (功能)</a></li>
+<li><a href="#commands-%E5%91%BD%E4%BB%A4">Commands (命令)</a><ul>
+<li><a href="#base-commands-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4">Base Commands (基础命令)</a><ul>
+<li><a href="#create-bean-%E5%88%9B%E5%BB%BA-bean">Create-Bean (创建 Bean)</a></li>
+<li><a href="#create-job-%E5%88%9B%E5%BB%BA-job">Create-Job (创建 Job)</a></li>
+</ul>
+</li>
+<li><a href="#http-related-commands-http-%E7%9B%B8%E5%85%B3%E7%9A%84%E5%91%BD%E4%BB%A4">HTTP-Related Commands (HTTP 相关的命令)</a><ul>
+<li><a href="#create-controller-%E5%88%9B%E5%BB%BA-controller">Create-Controller (创建 Controller)</a></li>
+<li><a href="#create-client-%E5%88%9B%E5%BB%BA-client">Create-Client (创建 Client)</a></li>
+<li><a href="#create-websocket-server-%E5%88%9B%E5%BB%BA-websocket-%E6%9C%8D%E5%8A%A1%E5%99%A8">Create-Websocket-Server (创建 WebSocket 服务器)</a></li>
+<li><a href="#create-websocket-client-%E5%88%9B%E5%BB%BA-websocket-%E5%AE%A2%E6%88%B7%E7%AB%AF">Create-Websocket-Client (创建 WebSocket 客户端)</a></li>
+</ul>
+</li>
+<li><a href="#cli-project-commands-cli-%E9%A1%B9%E7%9B%AE%E5%91%BD%E4%BB%A4">CLI Project Commands (CLI 项目命令)</a><ul>
+<li><a href="#create-command-%E5%88%9B%E5%BB%BA%E5%91%BD%E4%BB%A4">Create-Command (创建命令)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#reloading-%E9%87%8D%E8%BD%BD">Reloading (重载)</a><ul>
+<li><a href="#automatic-restart-%E8%87%AA%E5%8A%A8%E9%87%8D%E5%90%AF">Automatic Restart (自动重启)</a><ul>
+<li><a href="#maven-restart-maven-%E9%87%8D%E5%90%AF">Maven Restart (Maven 重启)</a></li>
+<li><a href="#gradle-restart-gradle-%E9%87%8D%E5%90%AF">Gradle Restart (Gradle 重启)</a></li>
+</ul>
+</li>
+<li><a href="#jrebel-jrebel">JRebel (JRebel)</a><ul>
+<li><a href="#installconfigure-jrebel-agent-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE-jrebel-%E4%BB%A3%E7%90%86">Install&#x2F;configure JRebel Agent (安装&#x2F;配置 JRebel 代理)</a><ul>
+<li><a href="#gradle-gradle">Gradle (Gradle)</a></li>
+<li><a href="#maven-maven">Maven (Maven)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#recompiling-with-gradle-%E4%BD%BF%E7%94%A8-gradle-%E8%BF%9B%E8%A1%8C%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91">Recompiling with Gradle (使用 Gradle 进行重新编译)</a></li>
+<li><a href="#recompiling-with-an-ide-%E4%BD%BF%E7%94%A8-ide-%E8%BF%9B%E8%A1%8C%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91">Recompiling with an IDE (使用 IDE 进行重新编译)</a><ul>
+<li><a href="#intellij-intellij">Intellij (Intellij)</a></li>
+<li><a href="#eclipse-eclipse">Eclipse (Eclipse)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#proxy-configuration-%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE">Proxy Configuration (代理配置)</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="Micronaut-CLI"><a href="#Micronaut-CLI" class="headerlink" title="Micronaut CLI"></a>Micronaut CLI</h1><p><strong>声明</strong>:</p>
+<ul>
+<li>本文由本人翻译自<a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide" >官方文档<i class="fas fa-external-link-alt"></i></a></li>
+<li>部分内容可能会有修改或删减, 一切以官方文档为准.</li>
+<li>本文翻译时 Micronaut 版本为 3.4.2</li>
+</ul>
+<p>Micronaut CLI 是创建新 Micronaut 项目的推荐方式</p>
+<p>CLI 包含了创建特定类型项目的命令, 允许你在构建工具, 测试框架, 甚至在应用程序使用的语言中进行选择</p>
+<p>CLI 还提供了命令来创建例如 <code>controllers</code>, <code>client interfaces</code> 和 <code>serverless functions</code> 等构件</p>
+<p>有一个用来代替 CLI 创建项目的网站. 查看 <a class="link"   target="_blank" rel="noopener" href="https://micronaut.io/launch/" >Micronaut Launch<i class="fas fa-external-link-alt"></i></a> 来开始使用</p>
+<p>当 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#buildCLI" >Micronaut 已经安装到了你的电脑上<i class="fas fa-external-link-alt"></i></a>, 你可以通过 <code>mn</code> 命令来调用 CLI:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mn create-app my-app</span><br></pre></td></tr></table></figure>
+
+<p>一个 Micronaut CLI 项目可以通过 <code>micronaut-cli.yml</code> 文件来被识别, 如果项目是通过 CLI 来创建那么这个文件将会被包含到项目根目录中:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># micronaut-cli.yml</span></span><br><span class="line"><span class="attr">applicationType:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">defaultPackage:</span> <span class="string">fuck</span></span><br><span class="line"><span class="attr">testFramework:</span> <span class="string">spock</span></span><br><span class="line"><span class="attr">sourceLanguage:</span> <span class="string">groovy</span></span><br><span class="line"><span class="attr">buildTool:</span> <span class="string">gradle</span></span><br><span class="line"><span class="attr">features:</span> [<span class="string">annotation-api</span>, <span class="string">app-name</span>, <span class="string">gradle</span>, <span class="string">groovy</span>, <span class="string">groovy-application</span>, <span class="string">http-client</span>, <span class="string">jackson-databind</span>, <span class="string">logback</span>, <span class="string">management</span>, <span class="string">micronaut-build</span>, <span class="string">netty-server</span>, <span class="string">readme</span>, <span class="string">shade</span>, <span class="string">spock</span>, <span class="string">yaml</span>]</span><br></pre></td></tr></table></figure>
+
+<p><code>micronaut-cli.yml</code> 文件将会包含项目 profile (配置属性), 默认包和其他变量</p>
+<p>项目的默认包基于项目名称进行计算: <code>mn create-app my-demo-app</code>, 那么默认的包名是: <code>my.demo.app</code></p>
+<p>你可以在创建项目的使用包名来前缀化应用程序名称的方式提供默认包名:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mn create-app examle.my-demo-app</span><br></pre></td></tr></table></figure>
+
+<p>那么默认的包名是 <code>example</code></p>
+<h2 id="Interactive-Mode-交互模式"><a href="#Interactive-Mode-交互模式" class="headerlink" title="Interactive Mode (交互模式)"></a>Interactive Mode (交互模式)</h2><p>如果你不使用任何参数来运行 <code>mn</code>, 那么 Micronaut CLI 启动为交互模式</p>
+<p>这是一个类似 shell 的模式, 允许你运行多个 CLI 命令而不需要重新初始化 CLI 运行时, 这在你使用代码生成命令 (例如 <code>create-controller</code>), 创建多个项目, 或者仅仅探索 CLI 功能时非常合适</p>
+<p>Tab 补全是开启的, 允许你按下 <code>TAB</code> 键来查看对于一个给定的命令和标记 (flag) 可能的选项</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mn</span><br><span class="line">| Starting interactive mode...</span><br><span class="line">| Enter a <span class="built_in">command</span> name to run. Use TAB <span class="keyword">for</span> completion:</span><br><span class="line">mn&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Help-and-Info-帮助信息"><a href="#Help-and-Info-帮助信息" class="headerlink" title="Help and Info (帮助信息)"></a>Help and Info (帮助信息)</h2><p>一般使用信息可以通过在一个命令上使用 <code>help</code> 标记来查看</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mn&gt; create-app -h</span><br><span class="line">Usage: mn create-app [-hivVx] [--list-features] [-b=BUILD-TOOL] [--jdk=&lt;javaVersion&gt;] [-l=LANG]</span><br><span class="line">                     [-t=TEST] [-f=FEATURE[,FEATURE...]]... [NAME]</span><br><span class="line">Creates an application</span><br><span class="line">      [NAME]               The name of the application to create.</span><br><span class="line">  -b, --build=BUILD-TOOL   Which build tool to configure. Possible values: gradle, gradle_kotlin,</span><br><span class="line">                             maven.</span><br><span class="line">  -f, --features=FEATURE[,FEATURE...]</span><br><span class="line">  -h, --<span class="built_in">help</span>               Show this <span class="built_in">help</span> message and <span class="built_in">exit</span>.</span><br><span class="line">  -i, --inplace            Create a service using the current directory</span><br><span class="line">      --jdk, --java-version=&lt;javaVersion&gt;</span><br><span class="line">                           The JDK version the project should target</span><br><span class="line">  -l, --lang=LANG          Which language to use. Possible values: java, groovy, kotlin.</span><br><span class="line">      --list-features      Output the available features and their descriptions</span><br><span class="line">  -t, --<span class="built_in">test</span>=TEST          Which <span class="built_in">test</span> framework to use. Possible values: junit, spock, kotest.</span><br></pre></td></tr></table></figure>
+
+<p>在任何创建命令上使用 <code>--list-features</code> 标记来查看可用功能列表</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mn&gt; create-app --list-features</span><br><span class="line">Available Features</span><br><span class="line">(+) denotes the feature is included by default</span><br><span class="line">  Name                             Description</span><br><span class="line">  -------------------------------  ---------------</span><br><span class="line">  Cache</span><br><span class="line">  cache-caffeine                   Adds support <span class="keyword">for</span> cache using Caffeine (https://github.com/ben-manes/caffeine)</span><br><span class="line">  cache-ehcache                    Adds support <span class="keyword">for</span> cache using EHCache (https://www.ehcache.org/)</span><br><span class="line">  cache-hazelcast                  Adds support <span class="keyword">for</span> cache using Hazelcast (https://hazelcast.org/)</span><br><span class="line">  cache-infinispan                 Adds support <span class="keyword">for</span> cache using Infinispan (https://infinispan.org/)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Creating-a-Project-创建一个项目"><a href="#Creating-a-Project-创建一个项目" class="headerlink" title="Creating a Project (创建一个项目)"></a>Creating a Project (创建一个项目)</h2><p>创建项目是 CLI 最主要的用法</p>
+<p>创建一个新项目最主要的命令是 <code>create-app</code>, 这个命令创建了一个通过 HTTP 进行通信的基础服务器应用程序 (standard server application)</p>
+<p>下表中展示了其他类型的应用程序:</p>
+<p>Table - Micronaut CLI Project Creation Commands</p>
+<table>
+<thead>
+<tr>
+<th align="left">Command</th>
+<th align="left">Description</th>
+<th align="left">Options</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">create-app</td>
+<td align="left">Creates a basic Micronaut application</td>
+<td align="left">[<code>-l</code>,<code>--lang</code>] [<code>-t</code>,<code>--test</code>] [<code>-b</code>,<code>--build</code>] [<code>-f</code>,<code>--features</code>] [<code>-i</code>,<code>--inplace</code>]</td>
+<td align="left"><code>mn create-app my-project --featuers mongo-reactive,security-jwt --build maven</code></td>
+</tr>
+<tr>
+<td align="left">create-cli-app</td>
+<td align="left">Creates a command-line Micronaut application</td>
+<td align="left">[<code>-l</code>,<code>--lang</code>] [<code>-t</code>,<code>--test</code>] [<code>-b</code>,<code>--build</code>] [<code>-f</code>,<code>--features</code>] [<code>-i</code>,<code>--inplace</code>]</td>
+<td align="left"><code>mn create-cli-app my-project --features http-client,jdbc-hikari --build maven --lang kotlin --test kotest</code></td>
+</tr>
+<tr>
+<td align="left">create-function-app</td>
+<td align="left">Creates a Micronaut serverless function, using AWS by default</td>
+<td align="left">[<code>-l</code>,<code>--lang</code>] [<code>-t</code>,<code>--test</code>] [<code>-b</code>,<code>--build</code>] [<code>-f</code>,<code>--features</code>] [<code>-i</code>,<code>--inplace</code>]</td>
+<td align="left"><code>mn create-function-app my-lambda-function --lang groovy --test spock</code></td>
+</tr>
+<tr>
+<td align="left">create-messaging-app</td>
+<td align="left">Creates a Micronaut application that only communicates via a messaging protocol. Uses kafka by default but can be switched to RabbitMQ with <code>--features rabbitmq</code></td>
+<td align="left">[<code>-l</code>,<code>--lang</code>] [<code>-t</code>,<code>--test</code>] [<code>-b</code>,<code>--build</code>] [<code>-f</code>,<code>--features</code>] [<code>-i</code>,<code>--inplace</code>]</td>
+<td align="left"><code>mn create-messaging-app my-broker --lang groovy -test spock</code></td>
+</tr>
+<tr>
+<td align="left">create-grpc-app</td>
+<td align="left">Creates a Micronaut application that uses gRPC</td>
+<td align="left">[<code>-l</code>,<code>--lang</code>] [<code>-t</code>,<code>--test</code>] [<code>-b</code>,<code>--build</code>] [<code>-f</code>,<code>--features</code>] [<code>-i</code>,<code>--inplace</code>]</td>
+<td align="left"><code>mn create-grpc-app my-grpc-app --lang groovy --test spock</code></td>
+</tr>
+</tbody></table>
+<h3 id="Create-Command-Flags-创建命令标记"><a href="#Create-Command-Flags-创建命令标记" class="headerlink" title="Create Command Flags (创建命令标记)"></a>Create Command Flags (创建命令标记)</h3><p>create-* 命令生成一个基础 Micronaut 项目, 这个命令有可选的标记来指定功能, 语言, 测试框架和构建总局</p>
+<p>除了函数式项目的其他所有项目都包含一个默认的 <code>Application</code> 类来启动应用</p>
+<p>Table - Flags:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Flag</th>
+<th align="left">Description</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>-l</code>, <code>--lang</code></td>
+<td align="left">Language to use for the project (one of <code>java</code>,<code>groovy</code>,<code>kotlin</code>, 默认是 <code>java</code>)</td>
+<td align="left">–lang groovy</td>
+</tr>
+<tr>
+<td align="left"><code>-t</code>, <code>--test</code></td>
+<td align="left">Test framework to use for the project (one of <code>junit</code>,<code>spock</code>, 默认是 <code>junit</code>)</td>
+<td align="left">–test spock</td>
+</tr>
+<tr>
+<td align="left"><code>-b</code>, <code>--build</code></td>
+<td align="left">Build tool (one of <code>gradle</code>,<code>gradle_kotlin</code>,<code>maven</code>, 在语言是 <code>java</code> 和 <code>groovy</code> 的情况下默认是 <code>gradle</code>, 在语言是 <code>kotlin</code> 的情况下默认是 <code>gradle_kotlin</code> )</td>
+<td align="left">–build maven</td>
+</tr>
+<tr>
+<td align="left"><code>-f</code>, <code>--features</code></td>
+<td align="left">Features to use for the project, comma-separated</td>
+<td align="left"><code>--features security-jwt,mongo-gorm</code> or <code>-f security-jwt -f mongo-gorm</code></td>
+</tr>
+<tr>
+<td align="left"><code>-i</code>, <code>--inplace</code></td>
+<td align="left">If present, generates the project in the current directory (project name is optional if this flag is set)</td>
+<td align="left">–inplace</td>
+</tr>
+</tbody></table>
+<p>一旦创建好了, 应用程序可以使用 <code>Application</code> 类来启动, 或者通过对应的构建工具任务</p>
+<p>Example - Starting a Gradle project: <code>./gradlew run</code></p>
+<p>Example - Starting a Maven project: <code>./mvnw mn:run</code></p>
+<h4 id="Language-x2F-Test-Features-语言-x2F-测试功能"><a href="#Language-x2F-Test-Features-语言-x2F-测试功能" class="headerlink" title="Language&#x2F;Test Features (语言&#x2F;测试功能)"></a>Language&#x2F;Test Features (语言&#x2F;测试功能)</h4><p>默认情况下, 创建命令生成一个 Java 应用程序, 并使用配置的 JUnit 作为测试框架</p>
+<p>所有选择的选项和使用的功能都作为属性保存在 <code>micronaut-cli.yml</code> 文件中:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">applicationType:</span> <span class="string">default</span></span><br><span class="line"><span class="attr">defaultPackage:</span> <span class="string">com.example</span></span><br><span class="line"><span class="attr">testFramework:</span> <span class="string">junit</span></span><br><span class="line"><span class="attr">sourceLanguage:</span> <span class="string">java</span></span><br><span class="line"><span class="attr">buildTool:</span> <span class="string">gradle</span></span><br><span class="line"><span class="attr">features:</span> [<span class="string">annotation-api</span>, <span class="string">app-name</span>, <span class="string">application</span>, <span class="string">gradle</span>, <span class="string">http-client</span>, <span class="string">java</span>, <span class="string">junit</span>, <span class="string">logback</span>, <span class="string">netty-server</span>, <span class="string">shade</span>, <span class="string">yaml</span>]</span><br></pre></td></tr></table></figure>
+
+<p>有一些命令依赖这个文件中的数据来决定它们是否可以执行</p>
+<p>例如, <code>create-kafka-listener</code> 命令要求 <code>kafka</code> 要在 <code>features</code> 列表中</p>
+<p><code>micronaut-cli.yml</code> 中的值被 CLI 用来进行代码生成</p>
+<p>在项目生成之后, 你可以编辑这些值来修改项目默认值, 但是你必须提供所需的依赖项 和&#x2F;或 配置才能使用你选择的 语言&#x2F;框架</p>
+<p>例如, 你可以修改 <code>testFramework</code> 属性为 <code>spock</code> 来使得 CLI 在运行命令 (例如 <code>create-controller</code>) 时生成 Spock 测试, 但是你需要添加 Spock 依赖到你的构建中</p>
+<h4 id="Groovy-Groovy"><a href="#Groovy-Groovy" class="headerlink" title="Groovy (Groovy)"></a>Groovy (Groovy)</h4><p>要创建一个使用 Groovy 支持的应用 (默认使用 Spock), 通过 <code>lang</code> 标记使用适当的语言:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mn create-app my-groovy-app --lang groovy</span><br></pre></td></tr></table></figure>
+
+<p>这会包含 Groovy 和 Spock 依赖到你的项目中, 并写入适当的值到 <code>micronaut-cli.yml</code></p>
+<h4 id="Kotlin-Kotlin"><a href="#Kotlin-Kotlin" class="headerlink" title="Kotlin (Kotlin)"></a>Kotlin (Kotlin)</h4><p>要创建一个使用 Kotlin 支持的应用 (默认使用 Kotest), 通过 <code>lang</code> 标记使用适当的语言:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mn create-app my-groovy-app --lang kotlin</span><br></pre></td></tr></table></figure>
+
+<p>这会包含 Kotlin 和 Kotest 依赖到你的项目中, 并写入适当的值到 <code>micronaut-cli.yml</code></p>
+<h4 id="Build-Tool-构建工具"><a href="#Build-Tool-构建工具" class="headerlink" title="Build Tool (构建工具)"></a>Build Tool (构建工具)</h4><p>默认情况下, <code>create-app</code> 创建一个 Gradle 项目, 生成一个 <code>build.gradle</code> 文件到项目根目录中</p>
+<p>要创建一个使用 Maven 构架工具的应用, 通过 <code>build</code> 标记使用适当的选项:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mn create-app my-maven-app --build maven</span><br></pre></td></tr></table></figure>
+
+<h3 id="Create-Cli-App-创建命令行程序"><a href="#Create-Cli-App-创建命令行程序" class="headerlink" title="Create-Cli-App (创建命令行程序)"></a>Create-Cli-App (创建命令行程序)</h3><p><code>create-cli-app</code> 命令创建一个 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#commandLineApps" >Micronaut 命令行应用程序<i class="fas fa-external-link-alt"></i></a> 项目, 有选项标记来指定语言, 测试框架, 功能, 配置和构建工具</p>
+<p>默认情况下, 项目包含 <code>picocli</code> 功能来支持命令行选项解析</p>
+<p>项目将会包含一个 <code>*Command</code> 类 (基于项目的名称, 例如, <code>hello-world</code> 生成 <code>HelloWorldCommand</code>), 和一个关联的测试类来初始化命令和校验它可以解析命令行选项</p>
+<p>一旦创建, 应用程序可以使用 <code>*Command</code> 类来启动, 或者使用对应的构建工具任务</p>
+<p>Example - Starting a Gradle project: <code>./gradlew run</code></p>
+<p>Example - Starting a Maven project: <code>./mvnw mn:run</code></p>
+<h3 id="Create-Function-App-创建函数程序"><a href="#Create-Function-App-创建函数程序" class="headerlink" title="Create Function App (创建函数程序)"></a>Create Function App (创建函数程序)</h3><p><code>create-function-app</code> 命令生成一个 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#serverlessFunctions" >Micronaut function<i class="fas fa-external-link-alt"></i></a> 项目, 为无服务环境优化, 有选项标记来指定语言, 测试框架, 功能和构建工具</p>
+<p>项目将会包含一个 <code>*Function</code> 类 (基于项目名称, 例如, <code>hello-world</code> 生成 <code>HelloWorldFunction</code>), 和一个关联的测试类来初始化 function 和校验它是否可以接收请求</p>
+<p>当前, AWS Lambda, Microsoft Azure 和 Google Cloud 是 Micronaut 功能支持的云提供商</p>
+<p>要使用其他云提供商, 添加其中一个功能: <code>--features azure-function</code> 或 <code>--features google-cloud-function</code></p>
+<h3 id="Contribute-贡献"><a href="#Contribute-贡献" class="headerlink" title="Contribute (贡献)"></a>Contribute (贡献)</h3><p>CLI 源代码在 <a class="link"   target="_blank" rel="noopener" href="https://github.com/micronaut-projects/micronaut-starter" >https://github.com/micronaut-projects/micronaut-starter<i class="fas fa-external-link-alt"></i></a></p>
+<p>关于如何贡献或其他资源都在那儿</p>
+<h3 id="Comparing-Versions-版本比较"><a href="#Comparing-Versions-版本比较" class="headerlink" title="Comparing Versions (版本比较)"></a>Comparing Versions (版本比较)</h3><blockquote>
+<p>The easiest way to see version dependency updates and other changes for a new version of Micronaut is to produce one clean application using the older version and another using the newer version of the mn CLI, and then comparing those directories.</p>
+</blockquote>
+<p>查看新版本 Micronaut 的版本依赖关系更新和其他更改的最简单方法是使用旧版本生成一个干净的应用程序, 并使用新版本的 <code>mn</code> 命令生成另一个应用程序, 然后比较这些目录</p>
+<h2 id="Features-功能"><a href="#Features-功能" class="headerlink" title="Features (功能)"></a>Features (功能)</h2><p>Feature : 功能; 特性</p>
+<p>Feature 包含额外的依赖和配置来在你的应用程序中启用指定功能</p>
+<blockquote>
+<p>Micronaut profiles define a large number of features, including features for many of the configurations provided by Micronaut, such as the Data Access Configurations</p>
+</blockquote>
+<p>Micronaut 配置文件定义了大量功能, 包括 Micronaut 提供的许多配置的功能, 例如<a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#dataAccess" >数据访问配置<i class="fas fa-external-link-alt"></i></a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mn create-app my-demo-app --features mongo-reactive</span><br></pre></td></tr></table></figure>
+
+<p>这个命令在你的应用程序中为 <a class="link"   target="_blank" rel="noopener" href="https://mongodb.github.io/mongo-java-driver-reactivestreams" >MongoDB Reactive Driver<i class="fas fa-external-link-alt"></i></a> 添加必要的依赖和配置</p>
+<p>你可以在你使用的创建命令上使用 <code>--list-features</code> 标记来查看可用的 features:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mn create-app --list-features <span class="comment"># Output will be supported features for the create-app command</span></span><br><span class="line"></span><br><span class="line">mn create-function-app --list-features <span class="comment"># Output will be supported features for the create-function-app command, different from above</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Commands-命令"><a href="#Commands-命令" class="headerlink" title="Commands (命令)"></a>Commands (命令)</h2><p>你可以使用帮助标记查看可用命令的完整列表, 例如:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mn -h</span><br></pre></td></tr></table></figure>
+
+<p>所有的 代码生成命令 都遵循 <code>micronaut-cli.yml</code> 中编写的值. 例如, 假设有如下 <code>micronaut-cli.yml</code> 文件:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">defaultPackage:</span> <span class="string">example</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">testFramework:</span> <span class="string">spock</span></span><br><span class="line"><span class="attr">sourceLanguage:</span> <span class="string">java</span></span><br></pre></td></tr></table></figure>
+
+<p>根据上面的配置, <code>create-bean</code> 命令 (默认) 生成一个带有相关 Spock 测试类的 Java 类</p>
+<blockquote>
+<p>Commands accept arguments and these defaults can be overridden on a per-command basis</p>
+</blockquote>
+<p>命令接收参数, 并且可以在每个命令的基础上覆盖这些默认值</p>
+<h3 id="Base-Commands-基础命令"><a href="#Base-Commands-基础命令" class="headerlink" title="Base Commands (基础命令)"></a>Base Commands (基础命令)</h3><p>这些命令在 Micronaut 项目上下文中总是可使用的</p>
+<h4 id="Create-Bean-创建-Bean"><a href="#Create-Bean-创建-Bean" class="headerlink" title="Create-Bean (创建 Bean)"></a>Create-Bean (创建 Bean)</h4><p>Table - Create-Bean Flags</p>
+<table>
+<thead>
+<tr>
+<th align="left">Flag</th>
+<th align="left">Description</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>-l</code>, <code>--lang</code></td>
+<td align="left">The language used for the bean class</td>
+<td align="left">–lang groovy</td>
+</tr>
+<tr>
+<td align="left"><code>-f</code>, <code>--force</code></td>
+<td align="left">Whether to overwrite existing files</td>
+<td align="left">–force</td>
+</tr>
+</tbody></table>
+<p><code>create-bean</code> 命令创建一个简单的 <a class="link"   target="_blank" rel="noopener" href="https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html" >Singleton<i class="fas fa-external-link-alt"></i></a> 类</p>
+<p>它不会创建一个关联的测试:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mn create-bean EmailService</span><br><span class="line">| Rendered template Bean.java to destination src/main/java/example/EmailService.java</span><br></pre></td></tr></table></figure>
+
+<h4 id="Create-Job-创建-Job"><a href="#Create-Job-创建-Job" class="headerlink" title="Create-Job (创建 Job)"></a>Create-Job (创建 Job)</h4><p>Table - Create-Job Flags:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Flag</th>
+<th align="left">Description</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>-l</code>, <code>--lang</code></td>
+<td align="left">The language used for the job class</td>
+<td align="left">–lang groovy</td>
+</tr>
+<tr>
+<td align="left"><code>-f</code>, <code>--force</code></td>
+<td align="left">Whether to overwrite existing files</td>
+<td align="left">–force</td>
+</tr>
+</tbody></table>
+<p><code>create-job</code> 命令生成一个简单的 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/scheduling/annotation/Scheduled.html" >Scheduled<i class="fas fa-external-link-alt"></i></a> 类</p>
+<p>这个命令有一个 <code>*Job</code> 约定来生成类名</p>
+<p>这个命令不会创建一个关联的测试:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mn create-job UpdateFeeds --lang groovy</span><br><span class="line">| Rendered template Job.groovy to destination src/main/groovy/example/UpdateFeedsJob.groovy</span><br></pre></td></tr></table></figure>
+
+<p>会自动在 job 名称后面上添加 <code>Job</code> 后缀</p>
+<h3 id="HTTP-Related-Commands-HTTP-相关的命令"><a href="#HTTP-Related-Commands-HTTP-相关的命令" class="headerlink" title="HTTP-Related Commands (HTTP 相关的命令)"></a>HTTP-Related Commands (HTTP 相关的命令)</h3><h4 id="Create-Controller-创建-Controller"><a href="#Create-Controller-创建-Controller" class="headerlink" title="Create-Controller (创建 Controller)"></a>Create-Controller (创建 Controller)</h4><p>Table - Create-Controller Flags:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Flag</th>
+<th align="left">Description</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>-l</code>, <code>--lang</code></td>
+<td align="left">The language used for the controller</td>
+<td align="left">–lang groovy</td>
+</tr>
+<tr>
+<td align="left"><code>-f</code>, <code>--force</code></td>
+<td align="left">Whether to overwrite existing files</td>
+<td align="left">–force</td>
+</tr>
+</tbody></table>
+<p><code>creaet-controller</code> 命令生成一个 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/annotation/Controller.html" >Controller<i class="fas fa-external-link-alt"></i></a> 类</p>
+<p>这个命令有一个 <code>*Controller</code> 约定来生成类名</p>
+<p>这个命令会创建一个关联的测试来运行应用程序并初始化一个 HTTP client, 这个 client 可以发送请求给 controller:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mn create-controller Book</span><br><span class="line">| Rendered template Controller.java to destination src/main/java/example/BookController.java</span><br><span class="line">| Rendered template ControllerTest.java to destination src/test/java/example/BookControllerTest.java</span><br></pre></td></tr></table></figure>
+
+<p>会自动在 controller 名称后面上添加 <code>Controller</code> 后缀</p>
+<h4 id="Create-Client-创建-Client"><a href="#Create-Client-创建-Client" class="headerlink" title="Create-Client (创建 Client)"></a>Create-Client (创建 Client)</h4><p>Table - Create-Client Flags:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Flag</th>
+<th align="left">Description</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>-l</code>,<code>--lang</code></td>
+<td align="left">The language used for the client</td>
+<td align="left">–lang groovy</td>
+</tr>
+<tr>
+<td align="left"><code>-f</code>, <code>--force</code></td>
+<td align="left">Whether to overwrite existing files</td>
+<td align="left">–force</td>
+</tr>
+</tbody></table>
+<p><code>create-client</code> 命令生成一个简单的 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/client/annotation/Client.html" >Client<i class="fas fa-external-link-alt"></i></a> 接口</p>
+<p>这个命令有一个 <code>*Client</code> 约定来生成类名</p>
+<p>这个命令不会生成一个关联的测试类</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mn create-client Book</span><br><span class="line">| Rendered template Client.java to destination src/main/java/example/BookClient.java</span><br></pre></td></tr></table></figure>
+
+<h4 id="Create-Websocket-Server-创建-WebSocket-服务器"><a href="#Create-Websocket-Server-创建-WebSocket-服务器" class="headerlink" title="Create-Websocket-Server (创建 WebSocket 服务器)"></a>Create-Websocket-Server (创建 WebSocket 服务器)</h4><p>Table - Create-Websocket-Server Flags:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Flag</th>
+<th align="left">Description</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>-l</code>,<code>--lang</code></td>
+<td align="left">The language used for the server</td>
+<td align="left">–lang groovy</td>
+</tr>
+<tr>
+<td align="left"><code>-f</code>, <code>--force</code></td>
+<td align="left">Whether to overwrite existing files</td>
+<td align="left">–force</td>
+</tr>
+</tbody></table>
+<p><code>create-websocket-server</code> 命令生成一个简单的 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/websocket/annotation/ServerWebSocket.html" >ServerWebSocket<i class="fas fa-external-link-alt"></i></a> 类</p>
+<p>这个命令有一个 <code>*Server</code> 约定来创建类名</p>
+<p>这个命令不会生成一个关联的测试类</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mn create-websocket-server MyChat</span><br><span class="line">| Rendered template WebsocketServer.java to destination src/main/java/example/MyChatServer.java</span><br></pre></td></tr></table></figure>
+
+<h4 id="Create-Websocket-Client-创建-WebSocket-客户端"><a href="#Create-Websocket-Client-创建-WebSocket-客户端" class="headerlink" title="Create-Websocket-Client (创建 WebSocket 客户端)"></a>Create-Websocket-Client (创建 WebSocket 客户端)</h4><p>Table - Create-Websocket-Client Flags:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Flag</th>
+<th align="left">Description</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>-l</code>, <code>--lang</code></td>
+<td align="left">The language used for the client</td>
+<td align="left">–lang groovy</td>
+</tr>
+<tr>
+<td align="left"><code>-f</code>, <code>--force</code></td>
+<td align="left">Whether to overwrite existing files</td>
+<td align="left">–force</td>
+</tr>
+</tbody></table>
+<p><code>create-websocket-client</code> 命令生成一个简单的 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/websocket/WebSocketClient.html" >WebSocketClient<i class="fas fa-external-link-alt"></i></a> 抽象类</p>
+<p>这个命令有一个 <code>*Client</code> 约定来生成类名</p>
+<p>这个命令不会创建一个关联的测试类</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mn create-websocket-client MyChat</span><br><span class="line">| Rendered template WebsocketClient.java to destination src/main/java/example/MyChatClient.java</span><br></pre></td></tr></table></figure>
+
+<h3 id="CLI-Project-Commands-CLI-项目命令"><a href="#CLI-Project-Commands-CLI-项目命令" class="headerlink" title="CLI Project Commands (CLI 项目命令)"></a>CLI Project Commands (CLI 项目命令)</h3><h4 id="Create-Command-创建命令"><a href="#Create-Command-创建命令" class="headerlink" title="Create-Command (创建命令)"></a>Create-Command (创建命令)</h4><p>Table - Create-Command Flags:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Flag</th>
+<th align="left">Description</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>-l</code>, <code>--lang</code></td>
+<td align="left">The language used for the command</td>
+<td align="left">–lang groovy</td>
+</tr>
+<tr>
+<td align="left"><code>-f</code>, <code>--force</code></td>
+<td align="left">Whether to overwrite existing files</td>
+<td align="left">–force</td>
+</tr>
+</tbody></table>
+<p><code>create-command</code> 命令生成一个可以作为一个 <a class="link"   target="_blank" rel="noopener" href="https://picocli.info/" >picocli<i class="fas fa-external-link-alt"></i></a> <a class="link"   target="_blank" rel="noopener" href="https://picocli.info/apidocs/picocli/CommandLine.Command.html" >Command<i class="fas fa-external-link-alt"></i></a> 执行的独立应用</p>
+<p>这个命令有一个 <code>*Command</code> 约定来生成类名</p>
+<p>这个命令生成一个关联的测试类来运行应用程序并校验设置的命令行选项</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mn create-command <span class="built_in">print</span></span><br><span class="line">| Rendered template Command.java to destination src/main/java/example/PrintCommand.java</span><br><span class="line">| Rendered template CommandTest.java to destination src/test/java/example/PrintCommandTest.java</span><br></pre></td></tr></table></figure>
+
+<p>这个列表只是 Micronaut CLI 中代码生成命令的一小部分</p>
+<p>要查看 CLI 所有可用的上下文相关命令 (以及它们在什么情况下适用), 请查看 <a class="link"   target="_blank" rel="noopener" href="https://github.com/micronaut-projects/micronaut-starter" >micronaut-starter<i class="fas fa-external-link-alt"></i></a> 项目并找到扩展 <code>CodeGenCommand</code> 的类</p>
+<p><code>applies</code> 方法指示命令是否可用</p>
+<h2 id="Reloading-重载"><a href="#Reloading-重载" class="headerlink" title="Reloading (重载)"></a>Reloading (重载)</h2><blockquote>
+<p>Reloading (or “hot-loading”) refers to the framework reinitializing classes (and parts of the application) when changes to the source files are detected.</p>
+</blockquote>
+<p>重载 (或者热加载) 是指框架在检测到源文件发生修改时重新初始化类 (和应用程序的一部分)</p>
+<blockquote>
+<p>Since Micronaut prioritizes startup time and most Micronaut apps can start up within seconds, a productive workflow can often be had by restarting the application as changes are made</p>
+</blockquote>
+<p>因为 Micronaut 优先考虑启动事件, 并且大多数 Micronaut 应用程序可以在几秒内启动, 因此通常可以通过在进行修改时重新启动应用程序来获取高效的工作流程</p>
+<blockquote>
+<p>for example, by running a test class within an IDE</p>
+</blockquote>
+<p>例如, 通过在 IDE 中运行测试类</p>
+<blockquote>
+<p>However, to have your changes automatically reloaded, Micronaut supports automatic restart and the use of third-party reloading agents.</p>
+</blockquote>
+<p>但是, 为了让你的修改自动重载, Micronaut 支持自动重启并使用第三方重载代理</p>
+<h3 id="Automatic-Restart-自动重启"><a href="#Automatic-Restart-自动重启" class="headerlink" title="Automatic Restart (自动重启)"></a>Automatic Restart (自动重启)</h3><p>有多种方式来实现 JVM 上的类重载, 所有的方式都有它们的优点和缺点</p>
+<p>下面展示了可以不重启 JVM 实现重载的方式:</p>
+<ul>
+<li><strong>JVM Agents</strong> : 可以使用像 JRebel 这样的 JVM agent, 但是这些 JVM agent 可能会产生异常错误, 不支持所有的 JDK 版本, 还可能导致缓存或陈旧 (stale) 的类</li>
+<li><strong>ClassLoader Reloading</strong> : 基于类加载器重载是大多数框架使用的流行的解决方案. 但是这也可能会导致缓存的或陈旧的 (stale) 的类, 内存泄露, 如果使用了不正确的类加载器还会出现奇怪的错误</li>
+<li><strong>Debugger HotSwap</strong> : Java 调试器 (Java debugger) 支持在运行时热插拔, 当只能在一些场景下使用</li>
+</ul>
+<blockquote>
+<p>Given the problems with existing solutions and a lack of a way built into the JVM to reload changes, the safest and best solution to reloading, and the one recommended by the Micronaut team, is to use automatic application restart via a third-party tool.</p>
+</blockquote>
+<p>鉴于现有解决方案存在的问题以及 JVM 中缺乏重载修改的方法, 最安全和最好的重载解决方案, 也是 Micronaut 团队推荐的解决方案, 是通过第三方工具来进行应用程序自动重启</p>
+<blockquote>
+<p>Micronaut’s startup time is fast and automatic restart leads to a clean slate without potential hard to debug problems or memory leaks cropping up.</p>
+</blockquote>
+<p>Micronaut 的启动时间很快, 并且自动重启会带来一个干净的状态, 不会出现潜在的难以调试的问题或内存泄露</p>
+<h4 id="Maven-Restart-Maven-重启"><a href="#Maven-Restart-Maven-重启" class="headerlink" title="Maven Restart (Maven 重启)"></a>Maven Restart (Maven 重启)</h4><p>要在 Maven 使用自动重启应用程序, 使用 Micronaut Maven 插件 (在创建 Maven 项目时默认包含了) 并运行如下命令:</p>
+<p>Example - Using the Micronaut Maven Plugin:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./mvnw mn:run</span><br></pre></td></tr></table></figure>
+
+<p>每次你修改一个类, 插件会自动重启服务器</p>
+<h4 id="Gradle-Restart-Gradle-重启"><a href="#Gradle-Restart-Gradle-重启" class="headerlink" title="Gradle Restart (Gradle 重启)"></a>Gradle Restart (Gradle 重启)</h4><blockquote>
+<p>Gradle automatic restart can be activated when using the Micronaut Gradle plugin by activating Gradle’s support for continuous builds via the -t flag</p>
+</blockquote>
+<p>使用 Micronaut Gradle 插件时, 可以通过 <code>-t</code> 标记来激活 Gradle 对持续构建的支持来开启 Gradle 自动重启:</p>
+<p>Example - Using Gradle for Automatic Restart:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./gradlew run -t</span><br></pre></td></tr></table></figure>
+
+<p>每次你修改一个类或者资源时, Gradle 会重新编译并重启应用程序</p>
+<h3 id="JRebel-JRebel"><a href="#JRebel-JRebel" class="headerlink" title="JRebel (JRebel)"></a>JRebel (JRebel)</h3><blockquote>
+<p>JRebel is a proprietary reloading solution that involves an agent library, as well as sophisticated IDE support.</p>
+</blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://www.jrebel.com/products/jrebel" >JRebel<i class="fas fa-external-link-alt"></i></a> 是一个专用的重新加载解决方案, 它涉及代理库以及复杂的 IDE 支持</p>
+<p>JRebel 文档包含了 IDE 集成和使用的详细步骤</p>
+<p>在这一节, 我们展示怎样为 Maven 和 Gradle 项目安装和配置代理</p>
+<p>如果你使用 Micronaut CLI 创建项目, 在你项目中添加 <code>jrebel</code> 功能来预配置 JRebel 重载</p>
+<p>注意你需要安装 JRebel 并在 <code>gradle.properties</code> 文件或 <code>pom.xml</code> 文件中配置正确的代理路径</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mn create-app my-app --features jrebel</span><br></pre></td></tr></table></figure>
+
+<h4 id="Install-x2F-configure-JRebel-Agent-安装-x2F-配置-JRebel-代理"><a href="#Install-x2F-configure-JRebel-Agent-安装-x2F-配置-JRebel-代理" class="headerlink" title="Install&#x2F;configure JRebel Agent (安装&#x2F;配置 JRebel 代理)"></a>Install&#x2F;configure JRebel Agent (安装&#x2F;配置 JRebel 代理)</h4><p>安装 JRebel 最简单的方式是从 <a class="link"   target="_blank" rel="noopener" href="https://www.jrebel.com/products/jrebel/download" >JRebel download page<i class="fas fa-external-link-alt"></i></a> 下载独立安装包. 解压缩下载的文件到便利的位置, 例如 <code>~/bin/jrebel</code></p>
+<p>安装目录包含了一个有代理文件的 <code>lib</code> 目录</p>
+<p>查看下表获取基于操作系统的合适代理:</p>
+<p>Table - JRebel Agent:</p>
+<table>
+<thead>
+<tr>
+<th align="left">OS</th>
+<th align="left">Agent</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Windows 64-bit JDK</td>
+<td align="left">[jrebel directory]\lib\jrebel64.dll</td>
+</tr>
+<tr>
+<td align="left">Windows 32-bit JDK</td>
+<td align="left">[jrebel directory]\lib\jrebel32.dll</td>
+</tr>
+<tr>
+<td align="left">Mac OS X 64-bit JDK</td>
+<td align="left">[jrebel directory]&#x2F;lib&#x2F;libjrebel64.dylib</td>
+</tr>
+<tr>
+<td align="left">Mac OS X 32-bit JDK</td>
+<td align="left">[jrebel directory]&#x2F;lib&#x2F;libjrebel32.dylib</td>
+</tr>
+<tr>
+<td align="left">Linux 64-bit JDK</td>
+<td align="left">[jrebel directory]&#x2F;lib&#x2F;libjrebel64.so</td>
+</tr>
+<tr>
+<td align="left">Linux 32-bit JDK</td>
+<td align="left">[jrebel directory]&#x2F;lib&#x2F;libjrebel32.so</td>
+</tr>
+</tbody></table>
+<p>使用合适的代理路径, 并添加到你的项目构建中</p>
+<h5 id="Gradle-Gradle"><a href="#Gradle-Gradle" class="headerlink" title="Gradle (Gradle)"></a>Gradle (Gradle)</h5><p>增加路径到 <code>gradle.properties</code> 中, 作为 <code>rebelAgent</code> 属性:</p>
+<p>Example - gradle.properties:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Assuming installation path of ~/bin/jrebel/</span><br><span class="line">rebelAgent= -agentpath:~/bin/jrebel/lib/libjrebel64.dylib</span><br></pre></td></tr></table></figure>
+
+<p>添加适合的 JVM 参数到 <code>build.gradle</code> (如果使用 CLI 功能就不是必要的)</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">run.dependsOn(generateRebel)</span><br><span class="line"><span class="keyword">if</span> (project.hasProperty(<span class="string">&#x27;rebelAgent&#x27;</span>)) &#123;</span><br><span class="line">    run.jvmArgs += rebelAgent</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你可以使用 <code>./gradlew run</code> 来启动项目, 它将会包含这个代理</p>
+<p>查看 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#gradleReload" >Gradle Reloading<i class="fas fa-external-link-alt"></i></a> 或 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#ideReload" >IDE Reloading<i class="fas fa-external-link-alt"></i></a> 上的章节来设置重编译</p>
+<h5 id="Maven-Maven"><a href="#Maven-Maven" class="headerlink" title="Maven (Maven)"></a>Maven (Maven)</h5><p>相应地配置 Micronaut Maven 插件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.micronaut.build<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>micronaut-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">jvmArguments</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">jvmArgument</span>&gt;</span>-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib<span class="tag">&lt;/<span class="name">jvmArgument</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">jvmArguments</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.zeroturnaround<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jrebel-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>generate-rebel-xml<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>process-resources<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">goal</span>&gt;</span>generate<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Recompiling-with-Gradle-使用-Gradle-进行重新编译"><a href="#Recompiling-with-Gradle-使用-Gradle-进行重新编译" class="headerlink" title="Recompiling with Gradle (使用 Gradle 进行重新编译)"></a>Recompiling with Gradle (使用 Gradle 进行重新编译)</h3><p>Gradle 支持 <a class="link"   target="_blank" rel="noopener" href="https://docs.gradle.org/current/userguide/command_line_interface.html#sec:continuous_build" >持续集成<i class="fas fa-external-link-alt"></i></a>, 让你可以运行一个无论什么时候源文件修改时会被重新运行的任务</p>
+<p>要将这个和重载代理一起使用, 像平常一样运行应用程序(使用代理), 然后在另外一个终端用 持续模式(continuous mode) 来运行重编译任务</p>
+<p>Example - Run the app:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./gradlew run</span><br></pre></td></tr></table></figure>
+
+<p>Example - Run the recompilation:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./gradlew -t classes</span><br></pre></td></tr></table></figure>
+
+<p><code>classes</code> 任务会在每次一个源文件修改时重新运行, 使得重载代理获取到修改</p>
+<h3 id="Recompiling-with-an-IDE-使用-IDE-进行重新编译"><a href="#Recompiling-with-an-IDE-使用-IDE-进行重新编译" class="headerlink" title="Recompiling with an IDE (使用 IDE 进行重新编译)"></a>Recompiling with an IDE (使用 IDE 进行重新编译)</h3><p>如果你使用的构建工具, 例如 Maven, 不支持在文件修改时自动重新编译, 你可以使用你的 IDE 结合重新加载代理来重新编译类</p>
+<h4 id="Intellij-Intellij"><a href="#Intellij-Intellij" class="headerlink" title="Intellij (Intellij)"></a>Intellij (Intellij)</h4><p>很不幸 Intellij 没有一个自动重建的选项用于运行的应用程序</p>
+<p>但是, 你可以使用 <code>CMD-F9</code> 或 <code>CTRL-F9</code> 来触发项目 “rebuild”</p>
+<h4 id="Eclipse-Eclipse"><a href="#Eclipse-Eclipse" class="headerlink" title="Eclipse (Eclipse)"></a>Eclipse (Eclipse)</h4><p>在 <code>Project</code> 菜单下, 开启 <code>Build Automatically</code> 选项. 这将会触发项目重新编译, 无论什么时候文件修改保存到了磁盘上</p>
+<h2 id="Proxy-Configuration-代理配置"><a href="#Proxy-Configuration-代理配置" class="headerlink" title="Proxy Configuration (代理配置)"></a>Proxy Configuration (代理配置)</h2><p>要配置 CLI 使用 HTTP 代理需要两个步骤</p>
+<p>配置选项可以通过 <code>MN_OPTS</code> 环境变量传递给 cli</p>
+<p>例如在 *nix 系统上:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> MN_OPTS=<span class="string">&quot;-Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=3128 -Dhttp.proxyUser=test -Dhttp.proxyPassword=test&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>配置文件依赖项通过 HTTPS 解析, 因此代理端口和 Host 配置为 https</p>
+<p>但是用户名和密码使用 http 来指定</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Micronaut 中文文档 Micronaut CLI</li>
+        <li>本文作者：林威羽</li>
+        <li>创建时间：2022-04-29 09:50:27</li>
+        <li>
+            本文链接：https://linweiyu21.github.io/micronaut/micronaut-micronaut-cli/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/Groovy/">#Groovy</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/Micronaut/">#Micronaut</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E4%B8%AD%E6%96%87/">#中文</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/micronaut/micronaut-internationalization/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Micronaut 中文文档 Internationalization</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/micronaut/micronaut-management-and-monitoring/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Micronaut 中文文档 Management &amp; Monitoring</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '8xWQ0WFbKUNN4h8ixIO12etk-gzGzoHsz',
+                    appKey: '7cLjTvkIsF6aIuIVSd0um89m',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请开始你的表演',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = '林威羽';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">林威羽</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Micronaut-CLI"><span class="nav-number">1.</span> <span class="nav-text">Micronaut CLI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Interactive-Mode-%E4%BA%A4%E4%BA%92%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">Interactive Mode (交互模式)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Help-and-Info-%E5%B8%AE%E5%8A%A9%E4%BF%A1%E6%81%AF"><span class="nav-number">1.2.</span> <span class="nav-text">Help and Info (帮助信息)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Creating-a-Project-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.3.</span> <span class="nav-text">Creating a Project (创建一个项目)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-Command-Flags-%E5%88%9B%E5%BB%BA%E5%91%BD%E4%BB%A4%E6%A0%87%E8%AE%B0"><span class="nav-number">1.3.1.</span> <span class="nav-text">Create Command Flags (创建命令标记)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Language-x2F-Test-Features-%E8%AF%AD%E8%A8%80-x2F-%E6%B5%8B%E8%AF%95%E5%8A%9F%E8%83%BD"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">Language&#x2F;Test Features (语言&#x2F;测试功能)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Groovy-Groovy"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">Groovy (Groovy)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kotlin-Kotlin"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">Kotlin (Kotlin)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Build-Tool-%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">Build Tool (构建工具)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-Cli-App-%E5%88%9B%E5%BB%BA%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.3.2.</span> <span class="nav-text">Create-Cli-App (创建命令行程序)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-Function-App-%E5%88%9B%E5%BB%BA%E5%87%BD%E6%95%B0%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.3.3.</span> <span class="nav-text">Create Function App (创建函数程序)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Contribute-%E8%B4%A1%E7%8C%AE"><span class="nav-number">1.3.4.</span> <span class="nav-text">Contribute (贡献)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Comparing-Versions-%E7%89%88%E6%9C%AC%E6%AF%94%E8%BE%83"><span class="nav-number">1.3.5.</span> <span class="nav-text">Comparing Versions (版本比较)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Features-%E5%8A%9F%E8%83%BD"><span class="nav-number">1.4.</span> <span class="nav-text">Features (功能)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Commands-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.</span> <span class="nav-text">Commands (命令)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Base-Commands-%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.1.</span> <span class="nav-text">Base Commands (基础命令)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Create-Bean-%E5%88%9B%E5%BB%BA-Bean"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">Create-Bean (创建 Bean)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Create-Job-%E5%88%9B%E5%BB%BA-Job"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">Create-Job (创建 Job)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-Related-Commands-HTTP-%E7%9B%B8%E5%85%B3%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.2.</span> <span class="nav-text">HTTP-Related Commands (HTTP 相关的命令)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Create-Controller-%E5%88%9B%E5%BB%BA-Controller"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">Create-Controller (创建 Controller)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Create-Client-%E5%88%9B%E5%BB%BA-Client"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">Create-Client (创建 Client)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Create-Websocket-Server-%E5%88%9B%E5%BB%BA-WebSocket-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.5.2.3.</span> <span class="nav-text">Create-Websocket-Server (创建 WebSocket 服务器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Create-Websocket-Client-%E5%88%9B%E5%BB%BA-WebSocket-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">1.5.2.4.</span> <span class="nav-text">Create-Websocket-Client (创建 WebSocket 客户端)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CLI-Project-Commands-CLI-%E9%A1%B9%E7%9B%AE%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.3.</span> <span class="nav-text">CLI Project Commands (CLI 项目命令)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Create-Command-%E5%88%9B%E5%BB%BA%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">Create-Command (创建命令)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reloading-%E9%87%8D%E8%BD%BD"><span class="nav-number">1.6.</span> <span class="nav-text">Reloading (重载)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Automatic-Restart-%E8%87%AA%E5%8A%A8%E9%87%8D%E5%90%AF"><span class="nav-number">1.6.1.</span> <span class="nav-text">Automatic Restart (自动重启)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Maven-Restart-Maven-%E9%87%8D%E5%90%AF"><span class="nav-number">1.6.1.1.</span> <span class="nav-text">Maven Restart (Maven 重启)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Gradle-Restart-Gradle-%E9%87%8D%E5%90%AF"><span class="nav-number">1.6.1.2.</span> <span class="nav-text">Gradle Restart (Gradle 重启)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JRebel-JRebel"><span class="nav-number">1.6.2.</span> <span class="nav-text">JRebel (JRebel)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-x2F-configure-JRebel-Agent-%E5%AE%89%E8%A3%85-x2F-%E9%85%8D%E7%BD%AE-JRebel-%E4%BB%A3%E7%90%86"><span class="nav-number">1.6.2.1.</span> <span class="nav-text">Install&#x2F;configure JRebel Agent (安装&#x2F;配置 JRebel 代理)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Gradle-Gradle"><span class="nav-number">1.6.2.1.1.</span> <span class="nav-text">Gradle (Gradle)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Maven-Maven"><span class="nav-number">1.6.2.1.2.</span> <span class="nav-text">Maven (Maven)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Recompiling-with-Gradle-%E4%BD%BF%E7%94%A8-Gradle-%E8%BF%9B%E8%A1%8C%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91"><span class="nav-number">1.6.3.</span> <span class="nav-text">Recompiling with Gradle (使用 Gradle 进行重新编译)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Recompiling-with-an-IDE-%E4%BD%BF%E7%94%A8-IDE-%E8%BF%9B%E8%A1%8C%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91"><span class="nav-number">1.6.4.</span> <span class="nav-text">Recompiling with an IDE (使用 IDE 进行重新编译)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Intellij-Intellij"><span class="nav-number">1.6.4.1.</span> <span class="nav-text">Intellij (Intellij)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Eclipse-Eclipse"><span class="nav-number">1.6.4.2.</span> <span class="nav-text">Eclipse (Eclipse)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proxy-Configuration-%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE"><span class="nav-number">1.7.</span> <span class="nav-text">Proxy Configuration (代理配置)</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

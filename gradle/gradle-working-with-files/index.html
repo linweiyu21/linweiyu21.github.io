@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Micronaut,Groovy,Gradle,Java,文档,中文">
+    <meta name="description" content="Micronaut Groovy Gradle Java 文档 中文">
+    <meta name="author" content="林威羽">
+    
+    <title>
+        
+            Working With Files |
+        
+        林威羽的笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(153,153,0)","avatar":"/images/avatar.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"400px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":null,"description":"def contains🚀 = ['Micronaut', 'Groovy', 'Gradle', 'etc']"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                林威羽的笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+    <a target="_blank" rel="noopener" href="https://github.com/linweiyu21/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80"
+        viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+        aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path
+          d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+          fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path
+          d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+          fill="currentColor" class="octo-body"></path>
+      </svg></a>
+    <style>
+      .github-corner:hover .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+      }
+
+      @keyframes octocat-wave {
+
+        0%,
+        100% {
+          transform: rotate(0)
+        }
+
+        20%,
+        60% {
+          transform: rotate(-25deg)
+        }
+
+        40%,
+        80% {
+          transform: rotate(10deg)
+        }
+      }
+
+      @media (max-width:500px) {
+        .github-corner:hover .octo-arm {
+          animation: none
+        }
+
+        .github-corner .octo-arm {
+          animation: octocat-wave 560ms ease-in-out
+        }
+      }
+    </style>
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Working With Files</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">林威羽</span>
+                        
+                            <span class="author-label">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-05-05 11:34:23</span>
+        <span class="mobile">2022-05-05 11:34</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Gradle-User-Guides/">Gradle - User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Gradle/">Gradle</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/User-Guides/">User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <!-- TOC -->
+
+<ul>
+<li><a href="#working-with-files">Working With Files</a><ul>
+<li><a href="#copying-a-single-file">Copying a single file</a></li>
+<li><a href="#copying-multiple-files">Copying multiple files</a></li>
+<li><a href="#copying-directory-hierarchies">Copying directory hierarchies</a></li>
+<li><a href="#creating-archives-zip-tar-etc">Creating archives (zip, tar, etc)</a></li>
+<li><a href="#creating-uber-or-fat-jars">Creating “uber” or “fat” JARS</a></li>
+<li><a href="#creating-directories">Creating directories</a></li>
+<li><a href="#moving-files-and-directories">Moving files and directories</a></li>
+<li><a href="#renaming-files-on-copy">Renaming files on copy</a></li>
+<li><a href="#deleting-files-and-directories">Deleting files and directories</a></li>
+<li><a href="#file-paths-in-depth">File paths in depth</a><ul>
+<li><a href="#single-files-and-directories">Single files and directories</a></li>
+</ul>
+</li>
+<li><a href="#file-collections">File collections</a></li>
+<li><a href="#file-trees">File trees</a></li>
+<li><a href="#using-archives-as-file-trees">Using archives as file trees</a></li>
+<li><a href="#file-copying-in-depth">File copying in depth</a><ul>
+<li><a href="#filtering-files">Filtering files</a></li>
+<li><a href="#renaming-files">Renaming files</a></li>
+<li><a href="#filtering-file-contenttoken-substitution-templating-etc">Filtering file content(token substitution, templating, etc.)</a></li>
+<li><a href="#using-the-copyspec-class">Using the <code>CopySpec</code> class</a><ul>
+<li><a href="#sharing-copy-specs">Sharing copy specs</a></li>
+</ul>
+</li>
+<li><a href="#mirroring-directories-and-file-collections-with-the-sync-task">Mirroring directories and file collections with the <code>Sync</code> task</a></li>
+<li><a href="#deploying-single-files-into-application-servers">Deploying single files into application servers</a></li>
+<li><a href="#installing-executables">Installing executables</a></li>
+</ul>
+</li>
+<li><a href="#archive-creation-in-depth">Archive creation in depth</a><ul>
+<li><a href="#archving-naming">Archving naming</a></li>
+<li><a href="#sharing-content-between-multiple-archives">Sharing content between multiple archives</a></li>
+<li><a href="#reproducible-builds">Reproducible builds</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="Working-With-Files"><a href="#Working-With-Files" class="headerlink" title="Working With Files"></a>Working With Files</h1><p>API 有两个部分:</p>
+<ul>
+<li>指定哪个文件或目录去处理</li>
+<li>指定怎样处理文件或目录</li>
+</ul>
+<h2 id="Copying-a-single-file"><a href="#Copying-a-single-file" class="headerlink" title="Copying a single file"></a>Copying a single file</h2><p>创建一个 Gradle 内建的 <code>Copy task</code> 的实例, 为其配置目标文件位置和输出位置, 来进行文件复制</p>
+<p>Example:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;copyReport&#x27;</span>, <span class="keyword">Copy</span>) &#123;</span><br><span class="line">    <span class="keyword">from</span> layout.buildDirectory.dir(<span class="string">&quot;reports/my-report.pdf&quot;</span>)</span><br><span class="line">    <span class="keyword">into</span> layout.buildDirectory.dir(<span class="string">&quot;toArchive&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - Using implicit string paths:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;copyReport2&#x27;</span>, <span class="keyword">Copy</span>) &#123;</span><br><span class="line">    <span class="keyword">from</span> <span class="string">&quot;$buildDir/reports/my-report.pdf&quot;</span></span><br><span class="line">    <span class="keyword">into</span> <span class="string">&quot;$buildDir/toArchive&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - Prefer task&#x2F;project properties over hard-coded paths:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;copyReport3&#x27;</span>, <span class="keyword">Copy</span>) &#123;</span><br><span class="line">    <span class="keyword">from</span> myReportTask.outputFile</span><br><span class="line">    <span class="keyword">into</span> archiveReportsTask.dirToArchive</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Copying-multiple-files"><a href="#Copying-multiple-files" class="headerlink" title="Copying multiple files"></a>Copying multiple files</h2><p>Example - Using multiple arguments with <code>from()</code>:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;copyReportsForArchiving&#x27;</span>, <span class="keyword">Copy</span>) &#123;</span><br><span class="line">    <span class="keyword">from</span> layout.buildDirectory.<span class="keyword">file</span>(<span class="string">&quot;reports/my-report.pdf&quot;</span>), layout.projectDirectory.<span class="keyword">file</span>(<span class="string">&quot;src/docs/manual.pdf&quot;</span>)</span><br><span class="line">    <span class="keyword">into</span> layout.buildDirectory.dir(<span class="string">&quot;toArchive&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - Using a flat filter:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;copyPdfReportsForArchiving&#x27;</span>, <span class="keyword">Copy</span>) &#123;</span><br><span class="line">    <span class="keyword">from</span> layout.buildDirectory.dir(<span class="string">&quot;reports&quot;</span>)</span><br><span class="line">    <span class="keyword">include</span> <span class="string">&quot;*.pdf&quot;</span>     <span class="comment">// 只包含 pdf 文件</span></span><br><span class="line">    <span class="keyword">into</span> layout.buildDirectory.dir(<span class="string">&quot;toArchive&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - Using a deep filter:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;copyAllPdfReportsForArchiving&#x27;</span>, <span class="keyword">Copy</span>) &#123;</span><br><span class="line">    <span class="keyword">from</span> layout.buildDirectory.dir(<span class="string">&quot;reports&quot;</span>)</span><br><span class="line">    <span class="keyword">include</span> <span class="string">&quot;**/*.pdf&quot;</span>      <span class="comment">// 将 reports/ 目录及其子目录的 pdf 进行移动</span></span><br><span class="line">    <span class="keyword">into</span> layout.buildDirectory.dir(<span class="string">&quot;toArchive&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Copying-directory-hierarchies"><a href="#Copying-directory-hierarchies" class="headerlink" title="Copying directory hierarchies"></a>Copying directory hierarchies</h2><p>Example - Copying an entire directory, including all its subdirectories:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;copyReportsDirForArchiving&#x27;</span>, <span class="keyword">Copy</span>) &#123;</span><br><span class="line">    <span class="keyword">from</span> layout.buildDirectory.dir(<span class="string">&quot;reports&quot;</span>)</span><br><span class="line">    <span class="keyword">into</span> layout.buildDirectory.dir(<span class="string">&quot;toArchive&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - Copying an entire directory, including itself:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;copyReportsDirForArchiving2&#x27;</span>, <span class="keyword">Copy</span>) &#123;</span><br><span class="line">    <span class="keyword">from</span>(layout.buildDirectory) &#123;</span><br><span class="line">        <span class="keyword">include</span> <span class="string">&quot;reports/**&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">into</span> layout.buildDirectory.dir(<span class="string">&quot;toArchive&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Creating-archives-zip-tar-etc"><a href="#Creating-archives-zip-tar-etc" class="headerlink" title="Creating archives (zip, tar, etc)"></a>Creating archives (zip, tar, etc)</h2><p>Example - Archiving a directory as a ZIP:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;packageDistribution&#x27;</span>, Zip) &#123;</span><br><span class="line">    archiveFileName = <span class="string">&quot;my-distribution.zip&quot;</span></span><br><span class="line">    destinationDirectory = layout.buildDirectory.dir(<span class="string">&quot;dist&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">from</span> layout.buildDirectory.dir(<span class="string">&quot;toArchive&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Creating-“uber”-or-“fat”-JARS"><a href="#Creating-“uber”-or-“fat”-JARS" class="headerlink" title="Creating “uber” or “fat” JARS"></a>Creating “uber” or “fat” JARS</h2><p>使用 <code>Project.zipTree(java.lang.Object)</code> 方法和 <code>Jar task</code></p>
+<p>Example - Creating a Java uber or fat JAR:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">&#x27;java&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">version = <span class="string">&#x27;1.0.0&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">repositories</span> &#123;</span><br><span class="line">    mavenCentral()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    implementation <span class="string">&#x27;commons-io:commons-io:2.6&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;uberJar&#x27;</span>, Jar) &#123;</span><br><span class="line">    archiveClassifier = <span class="string">&#x27;uber&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">from</span> <span class="keyword">sourceSets</span>.main.output</span><br><span class="line"></span><br><span class="line">    dependsOn <span class="keyword">configurations</span>.runtimeClasspath</span><br><span class="line"></span><br><span class="line">    <span class="keyword">from</span> &#123;</span><br><span class="line">        <span class="keyword">configurations</span>.runtimeClasspath.<span class="keyword">findAll</span> &#123; </span><br><span class="line">            it.name.endsWith(<span class="string">&#x27;jar&#x27;</span>).<span class="keyword">collect</span> &#123; zipTree(it) &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Creating-directories"><a href="#Creating-directories" class="headerlink" title="Creating directories"></a>Creating directories</h2><p>在构建脚本或自定义 <code>task</code> 中使用 <code>Project.mkdir(java.lang.Object)</code> 方法来创建目录</p>
+<p>Example - Manually creating a directory:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;ensureDirectory&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">doLast</span> &#123;</span><br><span class="line">        mkdir <span class="string">&#x27;images&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Moving-files-and-directories"><a href="#Moving-files-and-directories" class="headerlink" title="Moving files and directories"></a>Moving files and directories</h2><p>Example - Moving a directory using the Ant task:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;moveReports&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">doLast</span> &#123;</span><br><span class="line">        <span class="keyword">ant</span>.move <span class="keyword">file</span>: <span class="string">&quot;$&#123;buildDir&#125;/reports&quot;</span>, <span class="keyword">todir</span>: <span class="string">&quot;$&#123;buildDir&#125;/toArchive&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>建议使用 copy 代替 move</p>
+<h2 id="Renaming-files-on-copy"><a href="#Renaming-files-on-copy" class="headerlink" title="Renaming files on copy"></a>Renaming files on copy</h2><p>使用 <code>rename()</code> 方法</p>
+<p>Example - Renaming files as they are copied:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;copyFromStaging&#x27;</span>, <span class="keyword">Copy</span>) &#123;</span><br><span class="line">    <span class="keyword">from</span> <span class="string">&quot;src/main/webapp&quot;</span></span><br><span class="line">    <span class="keyword">into</span> layout.buildDirectory.dir(<span class="string">&#x27;explodedWar&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    rename <span class="string">&#x27;(.+)-staging(.+)&#x27;</span>, <span class="string">&#x27;$1$2&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子中使用了正则表达式</p>
+<p>Example - Truncating filenames as they are copied:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;copyWithTruncate&#x27;</span>, <span class="keyword">Copy</span>) &#123;</span><br><span class="line">    <span class="keyword">from</span> layout.buildDirectory.dir(<span class="string">&quot;reports&quot;</span>)</span><br><span class="line">    rename &#123; String filename -&gt;</span><br><span class="line">        <span class="keyword">if</span> (filename.<span class="keyword">size</span>() &gt; <span class="number">10</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> filename[<span class="number">0</span>..<span class="number">7</span>] + <span class="string">&quot;~&quot;</span> + filename.<span class="keyword">size</span>()</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> filename</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">into</span> layout.buildDirectory.dir(<span class="string">&quot;toArchive&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Deleting-files-and-directories"><a href="#Deleting-files-and-directories" class="headerlink" title="Deleting files and directories"></a>Deleting files and directories</h2><p>使用 <code>Delete task</code> 或者 <code>Project.delete(org.gradle.api.Action)</code> 方法来删除</p>
+<p>可以通过 <code>Project.files(java.lang.Object...)</code> 方法来指定要删除的文件或者文件夹</p>
+<p>Example - Deleting a directory:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;myClean&#x27;</span>, <span class="keyword">Delete</span>) &#123;</span><br><span class="line">    <span class="keyword">delete</span> buildDir</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>FileCollection</code> 或 <code>FileTree</code> 机制来过滤要删除的文件</p>
+<p>Example - Deleting files matching a specific pattern:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;cleanTempFiles&#x27;</span>, <span class="keyword">Delete</span>) &#123;</span><br><span class="line">    <span class="keyword">delete</span> <span class="keyword">fileTree</span>(<span class="string">&quot;src&quot;</span>).matching &#123;</span><br><span class="line">        <span class="keyword">include</span> <span class="string">&quot;**/*.tmp&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="File-paths-in-depth"><a href="#File-paths-in-depth" class="headerlink" title="File paths in depth"></a>File paths in depth</h2><h3 id="Single-files-and-directories"><a href="#Single-files-and-directories" class="headerlink" title="Single files and directories"></a>Single files and directories</h3><p>Gradle 提供了 <code>Project.file(java.lang.Object)</code> 方法来指定一个文件或目录的路径</p>
+<p>这个方法使用的相对路径是相对于项目路径的</p>
+<p>不要使用 <code>new File(relative path)</code> 来创建文件, 这个方法创建的路径是相对于当前工作路径的</p>
+<p>Example - Locating files:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Using a relative path; 相对于项目路径</span></span><br><span class="line"><span class="keyword">File</span> configFile = <span class="keyword">file</span>(<span class="string">&#x27;src/config.xml&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Using an absolute path</span></span><br><span class="line">configFile = <span class="keyword">file</span>(configFile.absolutePath)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Using a File object with a relative path</span></span><br><span class="line">configFile = <span class="keyword">file</span>(<span class="keyword">new</span> <span class="keyword">File</span>(<span class="string">&#x27;src/config.xml&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// Using a java.nio.Path object with a relative path</span></span><br><span class="line">configFile = <span class="keyword">file</span>(Paths.get(<span class="string">&#x27;src&#x27;</span>, <span class="string">&#x27;config.xml&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// Using an absolute java.nio.file.Path object</span></span><br><span class="line">configFile = <span class="keyword">file</span>(Paths.get(System.getProperty(<span class="string">&#x27;user.home&#x27;</span>)).resolve(<span class="string">&#x27;global-config.xml&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>在多项目构建中, <code>file()</code> 方法会使用当前项目的路径, 所以可能会是一个子项目的路径</p>
+<p>如果要相对于根项目的路径, 使用 <code>Project.getRootDir()</code> 属性来构建一个绝对路径</p>
+<p>Example - Creating a path relative to a parent project:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">File</span> configFile = <span class="keyword">file</span>(<span class="string">&quot;$rootDir/shared/config.xml&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="File-collections"><a href="#File-collections" class="headerlink" title="File collections"></a>File collections</h2><p>一个 <code>file collection</code> 仅仅是一个文件路径的集合, 代表着 <code>FileCollection</code> 接口</p>
+<p><code>file collection</code> 是任何文件路径</p>
+<p>文件路径不是必须为关联的, 所以它们不需要是在同一个文件夹或者不是共享同一个父目录</p>
+<p>使用 <code>ProjectLayout.files(java.lang.Object...)</code> 方法来指定文件的集合, 该方法返回一个 <code>FileCollection</code> 实例</p>
+<p>这个方法甚至可以接受一个定义了 <code>outputs</code> 的 <code>task</code> 作为入参</p>
+<p>Example - Creating a file collection:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FileCollection collection = layout.files(<span class="string">&#x27;src/file1.txt&#x27;</span>,</span><br><span class="line">                                            <span class="keyword">new</span> <span class="keyword">File</span>(<span class="string">&#x27;src/file2.txt&#x27;</span>),</span><br><span class="line">                                            [<span class="string">&#x27;src/file3.csv&#x27;</span>, <span class="string">&#x27;src/file4.csv&#x27;</span>],</span><br><span class="line">                                            Paths.get(<span class="string">&#x27;src&#x27;</span>, <span class="string">&#x27;file5.txt&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p><code>file collection</code> 有这些总要的属性:</p>
+<ul>
+<li>created lazily : 延迟创建</li>
+<li>iterated over : 可遍历</li>
+<li>filtered : 可过滤</li>
+<li>combined : 可组合</li>
+</ul>
+<p>Example - <code>created lazily</code> - Implementing a file collection:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;list&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">doLast</span> &#123;</span><br><span class="line">        <span class="keyword">File</span> srcDir</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Create a file collection using a closure</span></span><br><span class="line">        <span class="comment">// 这里的 srcDir 还未初始化, 但 files() 是 created lazily 的</span></span><br><span class="line">        collection = layout.files &#123; srcDir.listFiles() &#125;</span><br><span class="line"></span><br><span class="line">        srcDir = <span class="keyword">file</span>(<span class="string">&#x27;src&#x27;</span>)</span><br><span class="line">        <span class="keyword">println</span> <span class="string">&quot;Contents of $srcDir.name&quot;</span></span><br><span class="line">        collection.<span class="keyword">collect</span> &#123; relativePath(it).<span class="keyword">sort</span>().<span class="keyword">each</span> &#123;<span class="keyword">println</span> it&#125; &#125;</span><br><span class="line"></span><br><span class="line">        srcDir = <span class="keyword">file</span>(<span class="string">&#x27;src2&#x27;</span>)</span><br><span class="line">        <span class="keyword">println</span> <span class="string">&quot;Contents of $srcDir.name&quot;</span></span><br><span class="line">        collection.<span class="keyword">collect</span> &#123; relativePath(it).<span class="keyword">sort</span>().<span class="keyword">each</span> &#123;<span class="keyword">println</span> it&#125; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>created lazily</code> 的关键是传一个 closure 给 <code>files()</code> 方法, 这个 closure 需要返回一个可被 <code>files()</code> 方法接受的类型的值</p>
+<p>Example - Using a file collection:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Iterate over the files in the collection</span></span><br><span class="line">collection.<span class="keyword">each</span> &#123; <span class="keyword">File</span> <span class="keyword">file</span> -&gt;</span><br><span class="line">    <span class="keyword">println</span> <span class="keyword">file</span>.name</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Convert the collection to various types</span></span><br><span class="line">Set set = collection.files</span><br><span class="line">Set set2 = collection as Set</span><br><span class="line">List list = collection as List</span><br><span class="line">String path = collection.asPath</span><br><span class="line"><span class="keyword">File</span> <span class="keyword">file</span> = collection.singleFile</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add and subtract collections</span></span><br><span class="line"><span class="keyword">def</span> union = collection + layout.files(<span class="string">&#x27;src/file2.txt&#x27;</span>)</span><br><span class="line"><span class="keyword">def</span> difference = collection - layout.files(<span class="string">&#x27;src/file2.txt&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Example - Filtering a file collection:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FileCollection textFiles = collection.filter &#123; <span class="keyword">File</span> f -&gt; f.name.endsWith(<span class="string">&quot;.txt&quot;</span>) &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="File-trees"><a href="#File-trees" class="headerlink" title="File trees"></a>File trees</h2><p>一个 <code>file collection</code> 是一个扁平的文件集合</p>
+<p>一个 <code>file tree</code> 是一个文件和目录的层级结构</p>
+<p>使用 <code>FileTree.getFiles()</code> 方法将一个 <code>file tree</code> 转换为一个扁平的文件集合</p>
+<p>传递一个文件或目录给 <code>Project.fileTree(java.lang.Object)</code> 方法来创建一个 <code>file tree</code></p>
+<p>这个方法将会使用这个基础目录的所有文件和目录来创建一个树, 但是不包括这个基础目录本身</p>
+<p>Example - Creating a file tree:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Create a file tree with a base directory</span></span><br><span class="line">ConfigurableFileTree tree = <span class="keyword">fileTree</span>(dir: <span class="string">&#x27;src/main&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add include and exclude patterns to the tree</span></span><br><span class="line">tree.<span class="keyword">include</span> <span class="string">&#x27;**/*.java&#x27;</span></span><br><span class="line">tree.<span class="keyword">exclude</span> <span class="string">&#x27;**/Abstract*&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Create a tree using closure</span></span><br><span class="line">tree = <span class="keyword">fileTree</span>(<span class="string">&#x27;src&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">include</span> <span class="string">&#x27;**/*.java&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create a tree using a map</span></span><br><span class="line">tree = <span class="keyword">fileTree</span>(dir: <span class="string">&#x27;src&#x27;</span>, <span class="keyword">include</span>: <span class="string">&#x27;**/*.java&#x27;</span>)</span><br><span class="line">tree = <span class="keyword">fileTree</span>(dir: <span class="string">&#x27;src&#x27;</span>, <span class="keyword">includes</span>: [<span class="string">&#x27;**/*.java&#x27;</span>, <span class="string">&#x27;**/*.xml&#x27;</span>])</span><br><span class="line">tree = <span class="keyword">fileTree</span>(dir: <span class="string">&#x27;src&#x27;</span>, <span class="keyword">include</span>: <span class="string">&#x27;**/*.java&#x27;</span>, <span class="keyword">exclude</span>: <span class="string">&#x27;**/*test*/**&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Example - Changing default excludes in the settings script:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// settings.gradle</span></span><br><span class="line"><span class="keyword">import</span> org.apache.tools.<span class="keyword">ant</span>.DirectoryScanner</span><br><span class="line"></span><br><span class="line">DirectoryScanner.removeDefaultExclude(<span class="string">&#x27;**/.git&#x27;</span>)</span><br><span class="line">DirectoryScanner.removeDefaultExclude(<span class="string">&#x27;**/.git/**&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Example - Using a file tree:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Iterate over the contents of a tree</span></span><br><span class="line">tree.<span class="keyword">each</span> &#123; <span class="keyword">File</span> <span class="keyword">file</span> -&gt;</span><br><span class="line">    <span class="keyword">println</span> <span class="keyword">file</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Filter a tree</span></span><br><span class="line"><span class="keyword">FileTree</span> filtered = tree.matching &#123;</span><br><span class="line">    <span class="keyword">include</span> <span class="string">&#x27;org/gradle/api/**&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add trees together</span></span><br><span class="line"><span class="keyword">FileTree</span> sum = tree + <span class="keyword">fileTree</span>(dir: <span class="string">&#x27;src/test&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Visit the elements of the tree</span></span><br><span class="line">tree.visit &#123;</span><br><span class="line">    <span class="keyword">println</span> <span class="string">&quot;$it.relativePath =&gt; $it.file&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>许多 Gradle 插件提供了它们自己的 <code>file tree</code> 实例, 例如 Java 插件的 <code>source sets</code></p>
+<h2 id="Using-archives-as-file-trees"><a href="#Using-archives-as-file-trees" class="headerlink" title="Using archives as file trees"></a>Using archives as file trees</h2><p>一个 archive 是将目录和文件层级结构打包到一起的文件</p>
+<p>换句话说, archive 是一个特殊的 <code>file tree</code>, Gradle 就是将 archive 当做 <code>file tree</code> 来看待的</p>
+<p><code>fileTree()</code> 方法工作在普通文件系统上, 所以使用 <code>Project.zipTree(java.lang.Object)</code> 和 <code>Project.tarTree(java.lang.Object)</code> 方法来封装 archive 文件</p>
+<p>注: JAR, WAR 和 EAR 文件都是 ZIP 文件</p>
+<p><code>zipTree()</code> 和 <code>tarTree()</code> 方法都会返回 <code>FileTree</code> 实例</p>
+<p>你可是使用这个实例来复制 archive 中的文件到文件系统中的某些目录中</p>
+<p>或者将一个 archive 和另一个 archive 合并到一起</p>
+<p>Example - Using an archive as a file tree:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Create a ZIP file tree using path</span></span><br><span class="line"><span class="keyword">FileTree</span> zip = zipTree(<span class="string">&#x27;someFile.zip&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create a TAR file tree using path</span></span><br><span class="line"><span class="keyword">FileTree</span> tar = tarTree(<span class="string">&#x27;someFile.tar&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// tar tree attempts to guess the compression based on the file extension</span></span><br><span class="line"><span class="comment">// however if you must specify the compression explicitly you can:</span></span><br><span class="line"><span class="keyword">FileTree</span> someTar = tarTree(resources.gzip(<span class="string">&#x27;someTar.ext&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="File-copying-in-depth"><a href="#File-copying-in-depth" class="headerlink" title="File copying in depth"></a>File copying in depth</h2><p>Gradle 中复制文件步骤</p>
+<ul>
+<li>定义一个类型为 <code>Copy</code> 的 <code>task</code></li>
+<li>指定要复制的文件或目录</li>
+<li>指定被复制的文件的目的地</li>
+</ul>
+<p><code>Copy</code> <code>task</code> 实现了 <code>CopySpec</code> 接口, 这个接口提供了如下方法:</p>
+<ul>
+<li>一个 <code>CopySpec.from(java.lang.Object...)</code> 方法用来定义要复制什么</li>
+<li>一个 <code>CopySpec.into(java.lang.Object)</code> 方法用来定义目的地</li>
+</ul>
+<p>这两个方法是唯一不可选的</p>
+<p><code>from()</code> 方法支持如下类型:</p>
+<ul>
+<li>一个 <code>String</code> 字符串</li>
+<li>一个 <code>File</code></li>
+<li>一个 <code>FileCollection</code> 或 <code>FileTree</code></li>
+<li>一个定义了 <code>outputs</code> 的 <code>task</code></li>
+</ul>
+<p><code>from()</code> 方法接受的文件路径可以是:</p>
+<ul>
+<li>一个文件</li>
+<li>一个目录; 这个目录被当做是文件树来处理, 这个目录中所有的东西都会被包含, 包括子目录; 但是这个目录本身不会被包含在复制当中</li>
+<li>一个不存在的文件; 这个路径将会被忽略</li>
+</ul>
+<p>Example - Specifying copy task source files and destination directory:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;anotherCopyTask&#x27;</span>, <span class="keyword">Copy</span>) &#123;</span><br><span class="line">    <span class="comment">// Copy everything under src/main/webapp</span></span><br><span class="line">    <span class="keyword">from</span> <span class="string">&#x27;src/main/webapp&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Copy a single file</span></span><br><span class="line">    <span class="keyword">from</span> <span class="string">&#x27;src/staging/index.html&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Copy the output of a task</span></span><br><span class="line">    <span class="keyword">from</span> copyTask</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Copy the output of a task using Task outputs explicitly</span></span><br><span class="line">    <span class="keyword">from</span> copyTaskWithPatterns.outputs</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Copy the contents of a Zip file</span></span><br><span class="line">    <span class="keyword">from</span> zipTree(<span class="string">&#x27;src/main/assets.zip&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Determine the destination directory later</span></span><br><span class="line">    <span class="keyword">into</span> &#123; getDestDir() &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Filtering-files"><a href="#Filtering-files" class="headerlink" title="Filtering files"></a>Filtering files</h3><p>使用 <code>CopySpec.include(java.lang.String...)</code> 和 <code>CopySpec.exclude(java.lang.String...)</code> 方法</p>
+<p>Example - Selecting the files to copy:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;copyTaskWithPatterns&#x27;</span>, <span class="keyword">Copy</span>) &#123;</span><br><span class="line">    <span class="keyword">from</span> <span class="string">&#x27;src/main/webapp&#x27;</span></span><br><span class="line">    <span class="keyword">into</span> layout.buildDirectory.dir(<span class="string">&quot;explodedWar&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">include</span> <span class="string">&#x27;**/*.html&#x27;</span></span><br><span class="line">    <span class="keyword">include</span> <span class="string">&#x27;**/*.jsp&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">exclude</span> &#123; FileTreeElement details -&gt;</span><br><span class="line">        details.<span class="keyword">file</span>.name.endsWith(<span class="string">&#x27;.html&#x27;</span>) &amp;&amp; details.<span class="keyword">file</span>.text.contains(<span class="string">&#x27;DRAFT&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>排除的部分和引入的部分重叠的话, 排除的规则胜出</p>
+<h3 id="Renaming-files"><a href="#Renaming-files" class="headerlink" title="Renaming files"></a>Renaming files</h3><p>使用两种方式来重命名:</p>
+<ul>
+<li>使用一个正则表达式</li>
+<li>使用一个 closure</li>
+</ul>
+<p>Example - Renaming files as they are copied:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;rename&#x27;</span>, <span class="keyword">Copy</span>) &#123;</span><br><span class="line">    <span class="keyword">from</span> <span class="string">&#x27;src/main/webapp&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">into</span> layout.buildDirectory.dir(<span class="string">&quot;explodedWar&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Use a closure to convert all file names to upper case</span></span><br><span class="line">    rename &#123; String fileName -&gt;</span><br><span class="line">        fileName.toUpperCase()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Use a regular expression to map the file name</span></span><br><span class="line">    rename <span class="string">&#x27;(.+)-staging-(.+)&#x27;</span>, <span class="string">&#x27;$1$2&#x27;</span></span><br><span class="line">    rename(<span class="regexp">/(.+)-staging-(.+)/</span>, <span class="string">&#x27;$1$2&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Filtering-file-content-token-substitution-templating-etc"><a href="#Filtering-file-content-token-substitution-templating-etc" class="headerlink" title="Filtering file content(token substitution, templating, etc.)"></a>Filtering file content(token substitution, templating, etc.)</h3><p><code>file content filtering</code> 允许你在复制文件的时候转换它们的内容</p>
+<p>Example - Filtering files as they are copied:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.tools.<span class="keyword">ant</span>.filters.FixCrLfFilter</span><br><span class="line"><span class="keyword">import</span> org.apache.tools.<span class="keyword">ant</span>.filters.ReplaceTokens</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;filter&#x27;</span>, <span class="keyword">Copy</span>) &#123;</span><br><span class="line">    <span class="keyword">from</span> <span class="string">&#x27;src/main/webapp&#x27;</span></span><br><span class="line">    <span class="keyword">into</span> layout.buildDirectory.dir(<span class="string">&quot;explodedWar&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Substitution property tokens in files</span></span><br><span class="line">    expand(copyright: <span class="string">&#x27;2009&#x27;</span>, version: <span class="string">&#x27;2.3.1&#x27;</span>)</span><br><span class="line">    expand(<span class="keyword">project</span>.properties)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Use some of the filters provided by Ant</span></span><br><span class="line">    filter(FixCrLfFilter)</span><br><span class="line">    filter(ReplaceTokens, tokens: [copyright: <span class="string">&#x27;2009&#x27;</span>, version: <span class="string">&#x27;2.3.1&#x27;</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Use a closure to filter each line</span></span><br><span class="line">    filter &#123; String line -&gt;</span><br><span class="line">        <span class="string">&quot;[$line]&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Use a closure to reomve lines</span></span><br><span class="line">    filter &#123; String line -&gt;</span><br><span class="line">        line.startsWith(<span class="string">&#x27;-&#x27;</span>) ? <span class="keyword">null</span> : line</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    filteringCharset = <span class="string">&#x27;UTF-8&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>expand()</code> 方法将源文件当做 Groovy templates, 使用 <code>$&#123;expression&#125;</code> 格式的表达式</p>
+<h3 id="Using-the-CopySpec-class"><a href="#Using-the-CopySpec-class" class="headerlink" title="Using the CopySpec class"></a>Using the <code>CopySpec</code> class</h3><p><code>copy specs</code> 有两个属性:</p>
+<ul>
+<li>它们可以独立于 <code>task</code> : 允许你在一个构建当中共享 <code>copy specs</code></li>
+<li>它们是有层级结构的 : 在整个复制定义中提供细粒度控制</li>
+</ul>
+<h4 id="Sharing-copy-specs"><a href="#Sharing-copy-specs" class="headerlink" title="Sharing copy specs"></a>Sharing copy specs</h4><p>使用 <code>Project.copySpec(org.gradle.api.Action)</code> 方法, 在 <code>task</code> 之外创建 <code>copy spec</code>, 然后使用 <code>CopySpec.with(org.gradle.api.file.CopySpec)</code> 方法将这个 <code>copy spec</code> 关联到一个适合的 <code>task</code> 中</p>
+<p>Example - Sharing copy specifications:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CopySpec webAssetsSpec = copySpec &#123;</span><br><span class="line">    <span class="keyword">from</span> <span class="string">&#x27;src/main/webapp&#x27;</span></span><br><span class="line">    <span class="keyword">include</span> <span class="string">&#x27;**/*.html&#x27;</span>, <span class="string">&#x27;**/*.png&#x27;</span>, <span class="string">&#x27;**/*.jpg&#x27;</span></span><br><span class="line">    rename <span class="string">&#x27;(.+)-staging(.+)&#x27;</span>, <span class="string">&#x27;$1$2&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;copyAssets&#x27;</span>, <span class="keyword">Copy</span>) &#123;</span><br><span class="line">    <span class="keyword">into</span> layout.buildDirectory.dir(<span class="string">&quot;inPlaceApp&quot;</span>)</span><br><span class="line">    with webAssetsSpec</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;distApp&#x27;</span>, Zip) &#123;</span><br><span class="line">    archiveFileName = <span class="string">&#x27;my-app-dist.zip&#x27;</span></span><br><span class="line">    destinationDirectory = layout.buildDirectory.dir(<span class="string">&quot;dists&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">from</span> appClasses</span><br><span class="line">    with webAssetsSpec</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - Sharing copy patterns only:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> webAssetPatterns = &#123;</span><br><span class="line">    <span class="keyword">include</span> <span class="string">&#x27;**/*.html&#x27;</span>, <span class="string">&#x27;**/*.png&#x27;</span>, <span class="string">&#x27;**/*.jpg&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;copyAppAssets&#x27;</span>, <span class="keyword">Copy</span>) &#123;</span><br><span class="line">    <span class="keyword">into</span> layout.buildDirectory.dir(<span class="string">&quot;inPlaceApp&quot;</span>)</span><br><span class="line">    <span class="keyword">from</span> <span class="string">&#x27;src/main/webapp&#x27;</span>, webAssetPatterns</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;archiveDistAssets&#x27;</span>, Zip) &#123;</span><br><span class="line">    archiveFileName = <span class="string">&#x27;distribution-assets.zip&#x27;</span></span><br><span class="line">    destinationDirectory = layout.buildDirectory.dir(<span class="string">&quot;dists&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">from</span> <span class="string">&#x27;distResources&#x27;</span>, webAssetPatterns</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Mirroring-directories-and-file-collections-with-the-Sync-task"><a href="#Mirroring-directories-and-file-collections-with-the-Sync-task" class="headerlink" title="Mirroring directories and file collections with the Sync task"></a>Mirroring directories and file collections with the <code>Sync</code> task</h3><p><code>Sync task</code> 继承了 <code>Copy task</code>, 复制源文件到目标文件夹, 然后删除目标文件夹中不是被复制而来的文件</p>
+<p>这个 <code>task</code> 同步了目标文件夹的内容</p>
+<p>Example - Using the Sync task to copy dependencies:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;libs&#x27;</span>, Sync) &#123;</span><br><span class="line">    <span class="keyword">from</span> <span class="keyword">configurations</span>.<span class="keyword">runtime</span></span><br><span class="line">    <span class="keyword">into</span> layout.buildDirectory.dir(<span class="string">&quot;libs&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还可以在 <code>task</code> 中使用 <code>Project.sync(org.gradle.api.Action)</code> 方法来完成同样的功能</p>
+<h3 id="Deploying-single-files-into-application-servers"><a href="#Deploying-single-files-into-application-servers" class="headerlink" title="Deploying single files into application servers"></a>Deploying single files into application servers</h3><p>目标文件夹可能包含不可读的文件, 导致 Gradle 在做 <code>UP-TO-DATE</code> 检查时出问题, 因此使用 <code>Task.doNotTrackState()</code> 方法来避免这个问题</p>
+<p>Example - Using Copy to deploy a WAR file:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">&#x27;war&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;deployToTomcat&#x27;</span>, <span class="keyword">Copy</span>) &#123;</span><br><span class="line">    <span class="keyword">from</span> war</span><br><span class="line">    <span class="keyword">into</span> layout.buildDirectory.dir(<span class="string">&quot;tomcat/webapps&quot;</span>)</span><br><span class="line">    doNotTrackState(<span class="string">&quot;Deployment directory contains unreadable files&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Installing-executables"><a href="#Installing-executables" class="headerlink" title="Installing executables"></a>Installing executables</h3><p>目标文件夹作为安装目录有很多其他的可执行文件, 这些文件不能被 Gradle 识别, 使用 <code>Task.doNotTrackState()</code> 方法来避免 Gradle 花时间在这个目标文件夹下进行 <code>UP-TO-DATE</code> 检查</p>
+<p>Example - Using Copy to install an executable:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;installExecutable&#x27;</span>, <span class="keyword">Copy</span>) &#123;</span><br><span class="line">    <span class="keyword">from</span> <span class="string">&#x27;build/my-binary&#x27;</span></span><br><span class="line">    <span class="keyword">into</span> <span class="string">&#x27;usr/local/bin&#x27;</span></span><br><span class="line">    doNotTrackState(<span class="string">&quot;Installation directory contains unrelated files&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Archive-creation-in-depth"><a href="#Archive-creation-in-depth" class="headerlink" title="Archive creation in depth"></a>Archive creation in depth</h2><p><code>archive</code> 是自包含的文件系统, Gradle 将其看待为文件系统</p>
+<p>处理 <code>archive</code> 就像处理普通文件和目录一样</p>
+<p>Gradle 支持创建 ZIP 和 TAR <code>archive</code>, 都是基于复制</p>
+<p>Example - Archiving a directory as a ZIP:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;packageDistribution&#x27;</span>, Zip) &#123;</span><br><span class="line">    archiveFileName = <span class="string">&#x27;my-distribution.zip&#x27;</span></span><br><span class="line">    destinationDirectory = layout.buildDirectory.dir(<span class="string">&quot;dist&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">from</span> layout.buildDirectory.dir(<span class="string">&quot;toArchive&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以使用所有的复制能力, 例如内容过滤, 文件重命名</p>
+<p>许多约定优先的插件提供了自己的 <code>archive task</code>, 例如 Java 插件提供了 <code>jar task</code> 来打包编译文件和资源文件到 JAR 文件中</p>
+<h3 id="Archving-naming"><a href="#Archving-naming" class="headerlink" title="Archving naming"></a>Archving naming</h3><p><code>Base plugin</code> 提供了主要的命名约定, 这个插件默认在 <code>$buildDir/distributions</code> 目录中创建 <code>archive</code>, 使用 <code>[projectName]-[version].[type]</code> 作为默认的命名方式</p>
+<p>Example - Creating of ZIP archive:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">&#x27;base&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">version = <span class="number">1.0</span></span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;myZip&#x27;</span>, Zip) &#123;</span><br><span class="line">    <span class="keyword">from</span> <span class="string">&#x27;somedir&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">doLast</span> &#123;</span><br><span class="line">        <span class="keyword">println</span> archiveFileName.get()</span><br><span class="line">        <span class="keyword">println</span> relativePath(destinationDirectory)</span><br><span class="line">        <span class="keyword">println</span> relativePath(archiveFile)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; gradle -q myZip</span><br><span class="line">archive-naming-1.0.zip</span><br><span class="line">build/distributions</span><br><span class="line">build/distributions/archive-naming-1.0.zip</span><br></pre></td></tr></table></figure>
+
+<p>提供 <code>archiveFileName</code> 和 <code>destinationDirectory</code> 属性来修改生成的文件名与目标目录</p>
+<p><code>AbstractArchiveTask.getArchiveFileName()</code> 提供了默认的 <code>archive</code> 名称模式: <code>[archiveBaseName]-[archiveAppendix]-[archiveVersion]-[archiveClassifier].[archiveExtension]</code></p>
+<p>可以在 <code>task</code> 中分别设置这些属性来进行定制</p>
+<p>Example - Configuration of archive task - custom archive name:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;myCustomZip&#x27;</span>, Zip) &#123;</span><br><span class="line">    archiveBaseName = <span class="string">&#x27;customName&#x27;</span></span><br><span class="line">    <span class="keyword">from</span> <span class="string">&#x27;somedir&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">doLast</span> &#123;</span><br><span class="line">        <span class="keyword">println</span> archiveFileName.get()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - Configuration of archive task - appendix &amp; classifier:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">&#x27;base&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">version = <span class="number">1.0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// tag::base-plugin-config[]</span></span><br><span class="line">base &#123;</span><br><span class="line">    archivesName = <span class="string">&quot;gradle&quot;</span></span><br><span class="line">    distsDirectory = layout.buildDirectory.dir(<span class="string">&quot;custom-dist&quot;</span>)</span><br><span class="line">    libsDirectory = layout.buildDirectory.dir(<span class="string">&quot;custom-libs&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// end::base-plugin-config[]</span></span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;myZip&#x27;</span>, Zip) &#123;</span><br><span class="line">    <span class="keyword">from</span> <span class="string">&#x27;somedir&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;myOtherZip&#x27;</span>, Zip) &#123;</span><br><span class="line">    archiveAppendix = <span class="string">&#x27;wrapper&#x27;</span></span><br><span class="line">    archiveClassifier = <span class="string">&#x27;src&#x27;</span></span><br><span class="line">    <span class="keyword">from</span> <span class="string">&#x27;somedir&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;echoNames&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">doLast</span> &#123;</span><br><span class="line">        <span class="keyword">println</span> <span class="string">&quot;Project name: $&#123;project.name&#125;&quot;</span></span><br><span class="line">        <span class="keyword">println</span> myZip.archiveFileName.get()</span><br><span class="line">        <span class="keyword">println</span> myOtherZip.archiveFileName.get()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以在 <code>AbstractArchiveTask</code> API 中看到所有可用的 <code>archive task</code> 属性</p>
+<h3 id="Sharing-content-between-multiple-archives"><a href="#Sharing-content-between-multiple-archives" class="headerlink" title="Sharing content between multiple archives"></a>Sharing content between multiple archives</h3><p>使用 <code>Project.copySpec(org.gradle.api.Action)</code> 方法来在 archives 之间共享内容</p>
+<h3 id="Reproducible-builds"><a href="#Reproducible-builds" class="headerlink" title="Reproducible builds"></a>Reproducible builds</h3><p>重新创建完全一样的 archives</p>
+<p>所有东西都一模一样, 包括字节到字节, 文件的时间戳, 文件的顺序</p>
+<p>Example - Activating reproducible archives:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tasks.withType(AbstractArchiveTask).configureEach &#123;</span><br><span class="line">    preserveFileTimestamps = <span class="keyword">false</span></span><br><span class="line">    reproducibleFileOrder = <span class="keyword">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Working With Files</li>
+        <li>本文作者：林威羽</li>
+        <li>创建时间：2022-05-05 11:34:23</li>
+        <li>
+            本文链接：https://linweiyu21.github.io/gradle/gradle-working-with-files/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/Gradle/">#Gradle</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/User-Guides/">#User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/gradle/gradle-using-gradle-plugins/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Using Gradle Plugins</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/gradle/gradle-writing-build-scripts/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Gradle Writing Build Scripts</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '8xWQ0WFbKUNN4h8ixIO12etk-gzGzoHsz',
+                    appKey: '7cLjTvkIsF6aIuIVSd0um89m',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请开始你的表演',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = '林威羽';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">林威羽</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Working-With-Files"><span class="nav-number">1.</span> <span class="nav-text">Working With Files</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Copying-a-single-file"><span class="nav-number">1.1.</span> <span class="nav-text">Copying a single file</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copying-multiple-files"><span class="nav-number">1.2.</span> <span class="nav-text">Copying multiple files</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copying-directory-hierarchies"><span class="nav-number">1.3.</span> <span class="nav-text">Copying directory hierarchies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Creating-archives-zip-tar-etc"><span class="nav-number">1.4.</span> <span class="nav-text">Creating archives (zip, tar, etc)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Creating-%E2%80%9Cuber%E2%80%9D-or-%E2%80%9Cfat%E2%80%9D-JARS"><span class="nav-number">1.5.</span> <span class="nav-text">Creating “uber” or “fat” JARS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Creating-directories"><span class="nav-number">1.6.</span> <span class="nav-text">Creating directories</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Moving-files-and-directories"><span class="nav-number">1.7.</span> <span class="nav-text">Moving files and directories</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Renaming-files-on-copy"><span class="nav-number">1.8.</span> <span class="nav-text">Renaming files on copy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deleting-files-and-directories"><span class="nav-number">1.9.</span> <span class="nav-text">Deleting files and directories</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File-paths-in-depth"><span class="nav-number">1.10.</span> <span class="nav-text">File paths in depth</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Single-files-and-directories"><span class="nav-number">1.10.1.</span> <span class="nav-text">Single files and directories</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File-collections"><span class="nav-number">1.11.</span> <span class="nav-text">File collections</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File-trees"><span class="nav-number">1.12.</span> <span class="nav-text">File trees</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-archives-as-file-trees"><span class="nav-number">1.13.</span> <span class="nav-text">Using archives as file trees</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File-copying-in-depth"><span class="nav-number">1.14.</span> <span class="nav-text">File copying in depth</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Filtering-files"><span class="nav-number">1.14.1.</span> <span class="nav-text">Filtering files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Renaming-files"><span class="nav-number">1.14.2.</span> <span class="nav-text">Renaming files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Filtering-file-content-token-substitution-templating-etc"><span class="nav-number">1.14.3.</span> <span class="nav-text">Filtering file content(token substitution, templating, etc.)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-the-CopySpec-class"><span class="nav-number">1.14.4.</span> <span class="nav-text">Using the CopySpec class</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Sharing-copy-specs"><span class="nav-number">1.14.4.1.</span> <span class="nav-text">Sharing copy specs</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mirroring-directories-and-file-collections-with-the-Sync-task"><span class="nav-number">1.14.5.</span> <span class="nav-text">Mirroring directories and file collections with the Sync task</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploying-single-files-into-application-servers"><span class="nav-number">1.14.6.</span> <span class="nav-text">Deploying single files into application servers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Installing-executables"><span class="nav-number">1.14.7.</span> <span class="nav-text">Installing executables</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Archive-creation-in-depth"><span class="nav-number">1.15.</span> <span class="nav-text">Archive creation in depth</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Archving-naming"><span class="nav-number">1.15.1.</span> <span class="nav-text">Archving naming</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sharing-content-between-multiple-archives"><span class="nav-number">1.15.2.</span> <span class="nav-text">Sharing content between multiple archives</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reproducible-builds"><span class="nav-number">1.15.3.</span> <span class="nav-text">Reproducible builds</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

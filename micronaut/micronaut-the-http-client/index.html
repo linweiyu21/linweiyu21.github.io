@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Micronaut,Groovy,Gradle,Java,文档,中文">
+    <meta name="description" content="Micronaut Groovy Gradle Java 文档 中文">
+    <meta name="author" content="林威羽">
+    
+    <title>
+        
+            Micronaut 中文文档 The HTTP Client |
+        
+        林威羽的笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(153,153,0)","avatar":"/images/avatar.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"400px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":null,"description":"def contains🚀 = ['Micronaut', 'Groovy', 'Gradle', 'etc']"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                林威羽的笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+    <a target="_blank" rel="noopener" href="https://github.com/linweiyu21/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80"
+        viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+        aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path
+          d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+          fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path
+          d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+          fill="currentColor" class="octo-body"></path>
+      </svg></a>
+    <style>
+      .github-corner:hover .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+      }
+
+      @keyframes octocat-wave {
+
+        0%,
+        100% {
+          transform: rotate(0)
+        }
+
+        20%,
+        60% {
+          transform: rotate(-25deg)
+        }
+
+        40%,
+        80% {
+          transform: rotate(10deg)
+        }
+      }
+
+      @media (max-width:500px) {
+        .github-corner:hover .octo-arm {
+          animation: none
+        }
+
+        .github-corner .octo-arm {
+          animation: octocat-wave 560ms ease-in-out
+        }
+      }
+    </style>
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Micronaut 中文文档 The HTTP Client</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">林威羽</span>
+                        
+                            <span class="author-label">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-04-29 09:43:43</span>
+        <span class="mobile">2022-04-29 09:43</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Micronaut-%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3/">Micronaut 中文文档</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Groovy/">Groovy</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Micronaut/">Micronaut</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E4%B8%AD%E6%96%87/">中文</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <!-- TOC -->
+
+<ul>
+<li><a href="#the-http-client">The HTTP Client</a><ul>
+<li><a href="#using-the-low-level-http-client-%E4%BD%BF%E7%94%A8%E4%BD%8E%E7%BA%A7%E5%88%AB-http-client">Using the Low-Level HTTP Client (使用低级别 HTTP Client)</a><ul>
+<li><a href="#sending-your-first-http-request-%E5%8F%91%E9%80%81%E4%BD%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA-http-%E8%AF%B7%E6%B1%82">Sending your first HTTP request (发送你的第一个 HTTP 请求)</a><ul>
+<li><a href="#obtaining-a-httpclient-%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA-httpclient">Obtaining a HttpClient (获取一个 HttpClient)</a></li>
+<li><a href="#performing-an-http-get-%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA-http-get-%E8%AF%B7%E6%B1%82">Performing an HTTP GET (执行一个 HTTP GET 请求)</a></li>
+<li><a href="#debugging--tracing-the-http-client-%E8%B0%83%E8%AF%95--%E8%B7%9F%E8%B8%AA-http-client">Debugging &#x2F; Tracing the HTTP Client (调试 &#x2F; 跟踪 HTTP Client)</a></li>
+<li><a href="#client-specific-debugging--tracing-%E6%8C%87%E5%AE%9A%E7%9A%84-client-%E8%B0%83%E8%AF%95--%E8%B7%9F%E8%B8%AA">Client Specific Debugging &#x2F; Tracing (指定的 Client 调试 &#x2F; 跟踪)</a></li>
+<li><a href="#customizing-the-http-request-%E8%87%AA%E5%AE%9A%E4%B9%89-http-%E8%AF%B7%E6%B1%82">Customizing the HTTP Request (自定义 HTTP 请求)</a></li>
+<li><a href="#reading-json-response-%E8%AF%BB%E5%8F%96-json-%E5%93%8D%E5%BA%94">Reading JSON Response (读取 JSON 响应)</a></li>
+<li><a href="#decoding-other-content-types-%E8%A7%A3%E7%A0%81%E5%85%B6%E4%BB%96-content-types">Decoding Other Content Types (解码其他 Content Types)</a></li>
+<li><a href="#receiving-the-full-http-response-%E6%8E%A5%E5%8F%97%E5%AE%8C%E6%95%B4%E7%9A%84-http-%E5%93%8D%E5%BA%94">Receiving the Full HTTP Response (接受完整的 HTTP 响应)</a></li>
+</ul>
+</li>
+<li><a href="#posting-a-request-body-%E5%8F%91%E9%80%81%E4%B8%80%E4%B8%AA%E8%AF%B7%E6%B1%82%E4%BD%93">Posting a Request Body (发送一个请求体)</a><ul>
+<li><a href="#sending-json-%E5%8F%91%E9%80%81-json">Sending JSON (发送 JSON)</a></li>
+<li><a href="#using-a-uri-template-%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AA-uri-%E6%A8%A1%E6%9D%BF">Using a URI Template (使用一个 URI 模板)</a></li>
+<li><a href="#sending-form-data-%E5%8F%91%E9%80%81%E8%A1%A8%E5%8D%95%E6%95%B0%E6%8D%AE">Sending Form Data (发送表单数据)</a></li>
+</ul>
+</li>
+<li><a href="#multipart-client-uploads-multipart-%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8A%E4%BC%A0">Multipart Client Uploads (Multipart 客户端上传)</a></li>
+<li><a href="#streaming-json-over-http-http-%E4%B8%8A%E7%9A%84%E6%B5%81%E5%BC%8F-json">Streaming JSON over HTTP (HTTP 上的流式 JSON)</a></li>
+<li><a href="#configuring-http-clients-%E9%85%8D%E7%BD%AE-http-clients">Configuring HTTP clients (配置 HTTP clients)</a><ul>
+<li><a href="#global-configuration-for-all-clients-%E7%94%A8%E4%BA%8E%E5%85%A8%E9%83%A8-clients-%E7%9A%84%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE">Global Configuration for All Clients (用于全部 Clients 的全局配置)</a></li>
+<li><a href="#client-specific-configuration-%E7%89%B9%E5%AE%9A-client-%E9%85%8D%E7%BD%AE">Client Specific Configuration (特定 Client 配置)</a></li>
+<li><a href="#using-http-client-connection-pooling-%E4%BD%BF%E7%94%A8-http-client-%E8%BF%9E%E6%8E%A5%E6%B1%A0%E5%8C%96">Using HTTP Client Connection Pooling (使用 HTTP Client 连接池化)</a></li>
+<li><a href="#configuring-event-loop-groups-%E9%85%8D%E7%BD%AE-event-loop-%E7%BB%84">Configuring Event Loop Groups (配置 Event Loop 组)</a></li>
+</ul>
+</li>
+<li><a href="#error-responses-%E9%94%99%E8%AF%AF%E5%93%8D%E5%BA%94">Error Responses (错误响应)</a></li>
+<li><a href="#bind-errors-%E7%BB%91%E5%AE%9A%E9%94%99%E8%AF%AF">Bind Errors (绑定错误)</a></li>
+</ul>
+</li>
+<li><a href="#proxying-requests-with-proxyhttpclient-%E4%BD%BF%E7%94%A8-proxyinghttpclient-%E6%9D%A5%E4%BB%A3%E7%90%86%E8%AF%B7%E6%B1%82">Proxying Requests with ProxyHttpClient (使用 ProxyingHttpClient 来代理请求)</a></li>
+<li><a href="#declarative-http-clients-with-client-%E4%BD%BF%E7%94%A8-client-%E7%9A%84%E5%A3%B0%E6%98%8E%E5%BC%8F-http-%E5%AE%A2%E6%88%B7%E7%AB%AF">Declarative HTTP Clients with <code>@Client</code> (使用 <code>@Client</code> 的声明式 HTTP 客户端)</a><ul>
+<li><a href="#customizing-parameters-binding-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A">Customizing Parameters Binding (自定义参数绑定)</a><ul>
+<li><a href="#query-values-formatting-%E8%AF%B7%E6%B1%82%E5%80%BC%E6%A0%BC%E5%BC%8F%E5%8C%96">Query values formatting (请求值格式化)</a><ul>
+<li><a href="#type-based-binding-parameters-%E5%9F%BA%E4%BA%8E%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A">Type-Based Binding Parameters (基于类型的参数绑定)</a></li>
+<li><a href="#custom-binding-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%91%E5%AE%9A">Custom Binding (自定义绑定)</a><ul>
+<li><a href="#binding-by-annotation-%E9%80%9A%E8%BF%87%E6%B3%A8%E8%A7%A3%E8%BF%9B%E8%A1%8C%E7%BB%91%E5%AE%9A">Binding By Annotation (通过注解进行绑定)</a></li>
+<li><a href="#binding-by-type-%E9%80%9A%E8%BF%87%E7%B1%BB%E5%9E%8B%E8%BF%9B%E8%A1%8C%E7%BB%91%E5%AE%9A">Binding By Type (通过类型进行绑定)</a></li>
+</ul>
+</li>
+<li><a href="#binding-on-method-%E5%9C%A8%E6%96%B9%E6%B3%95%E4%B8%8A%E8%BF%9B%E8%A1%8C%E7%BB%91%E5%AE%9A">Binding On Method (在方法上进行绑定)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#streaming-with-client-%E4%BD%BF%E7%94%A8-client-%E8%BF%9B%E8%A1%8C%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86">Streaming with <code>@Client</code> (使用 <code>@Client</code> 进行流式处理)</a><ul>
+<li><a href="#streaming-json-with-client-%E4%BD%BF%E7%94%A8-client-%E8%BF%9B%E8%A1%8C-json-%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86">Streaming JSON with <code>@Client</code> (使用 <code>@Client</code> 进行 JSON 流式处理)</a></li>
+<li><a href="#streaming-clients-and-response-types-%E6%B5%81%E5%BC%8F%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%92%8C%E5%93%8D%E5%BA%94%E7%B1%BB%E5%9E%8B">Streaming Clients and Response Types (流式客户端和响应类型)</a></li>
+<li><a href="#streaming-clients-and-read-timeout-%E6%B5%81%E5%BC%8F%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%92%8C%E8%AF%BB%E5%8F%96%E8%B6%85%E6%97%B6">Streaming Clients and Read Timeout (流式客户端和读取超时)</a></li>
+<li><a href="#streaming-server-sent-events-%E6%B5%81%E5%BC%8F%E6%9C%8D%E5%8A%A1%E5%8F%91%E9%80%81%E4%BA%8B%E4%BB%B6">Streaming Server Sent Events (流式服务发送事件)</a></li>
+</ul>
+</li>
+<li><a href="#error-response-%E9%94%99%E8%AF%AF%E5%93%8D%E5%BA%94">Error Response (错误响应)</a></li>
+<li><a href="#customizing-request-headers-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AF%B7%E6%B1%82%E5%A4%B4">Customizing Request Headers (自定义请求头)</a><ul>
+<li><a href="#populating-headers-using-configuration-%E4%BD%BF%E7%94%A8%E9%85%8D%E7%BD%AE%E6%9D%A5%E5%A1%AB%E5%85%85%E8%AF%B7%E6%B1%82%E5%A4%B4">Populating Headers Using Configuration (使用配置来填充请求头)</a></li>
+<li><a href="#populating-headers-using-a-client-filter-%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AA%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%87%E6%BB%A4%E5%99%A8%E6%9D%A5%E5%A1%AB%E5%85%85%E8%AF%B7%E6%B1%82%E5%A4%B4">Populating Headers using a Client Filter (使用一个客户端过滤器来填充请求头)</a></li>
+</ul>
+</li>
+<li><a href="#customizing-jackson-settings-%E8%87%AA%E5%AE%9A%E4%B9%89-jackson-%E8%AE%BE%E7%BD%AE">Customizing Jackson Settings (自定义 Jackson 设置)</a></li>
+<li><a href="#retry-and-circuit-breaker-%E9%87%8D%E8%AF%95%E4%B8%8E%E6%96%AD%E8%B7%AF%E5%99%A8">Retry and Circuit Breaker (重试与断路器)</a></li>
+<li><a href="#client-fallbacks-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%99%8D%E7%BA%A7">Client Fallbacks (客户端降级)</a></li>
+<li><a href="#netflix-hystrix-support-%E7%BD%91%E9%A3%9E-hystrix-%E7%9A%84%E6%94%AF%E6%8C%81">Netflix Hystrix Support (网飞 Hystrix 的支持)</a><ul>
+<li><a href="#using-the-hystrixcommand-annotation-%E4%BD%BF%E7%94%A8-hystrixcommand-%E6%B3%A8%E8%A7%A3">Using the <code>@HystrixCommand</code> Annotation (使用 <code>@HystrixCommand</code> 注解)</a></li>
+<li><a href="#enabling-hystrix-stream-and-dashboard-%E5%BC%80%E5%90%AF-hystrix-%E6%B5%81%E5%92%8C%E4%BB%AA%E8%A1%A8%E6%9D%BF">Enabling Hystrix Stream and Dashboard (开启 Hystrix 流和仪表板)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#http-clients-filters-http-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%87%E6%BB%A4%E5%99%A8">HTTP Clients Filters (HTTP 客户端过滤器)</a><ul>
+<li><a href="#injecting-another-client-into-a-httpclientfilter-%E6%B3%A8%E5%85%A5%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%B0%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%AD">Injecting Another Client into a HttpClientFilter (注入另一个客户端到过滤器中)</a></li>
+<li><a href="#filter-matching-by-annotation-%E9%80%9A%E8%BF%87%E6%B3%A8%E8%A7%A3%E6%9D%A5%E8%BF%9B%E8%A1%8C%E8%BF%87%E6%BB%A4%E5%8C%B9%E9%85%8D">Filter Matching By Annotation (通过注解来进行过滤匹配)</a></li>
+</ul>
+</li>
+<li><a href="#http2-support-http2-%E7%9A%84%E6%94%AF%E6%8C%81">HTTP&#x2F;2 Support (HTTP&#x2F;2 的支持)</a></li>
+<li><a href="#http-client-sample-http-%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BE%8B%E5%AD%90">HTTP Client Sample (HTTP 客户端例子)</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="The-HTTP-Client"><a href="#The-HTTP-Client" class="headerlink" title="The HTTP Client"></a>The HTTP Client</h1><p><strong>声明</strong>:</p>
+<ul>
+<li>本文由本人翻译自<a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide" >官方文档<i class="fas fa-external-link-alt"></i></a></li>
+<li>部分内容可能会有修改或删减, 一切以官方文档为准.</li>
+<li>本文翻译时 Micronaut 版本为 3.4.2</li>
+</ul>
+<p>如果你使用 Micronaut CLI 创建项目, 那么 <code>http-client</code> 依赖已经默认包含在你的项目中了</p>
+<blockquote>
+<p>Client communication between Microservices is a critical component of any Microservice architecture</p>
+</blockquote>
+<p>微服务客户端之间的通信是任何微服务架构的关键组件</p>
+<blockquote>
+<p>With that in mind, Micronaut includes an HTTP client that has both a low-level API and a higher-level AOP-driven API.</p>
+</blockquote>
+<p>考虑到这一点, Micronaut 包含了一个 HTTP client, 这个 client 同时具有低级别 API 和高级的 AOP 驱动的 API</p>
+<p>无论你是否选择使用 Micronaut 的 HTTP server, 你都可能希望在你的应用程序中使用 Micronaut HTTP client, 因为它是一个功能丰富的客户端实现</p>
+<p>要使用这个 HTTP client, 在你的构建中添加 <code>http-client</code> 依赖:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation(<span class="string">&quot;io.micronaut:micronaut-http-client&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Using-the-Low-Level-HTTP-Client-使用低级别-HTTP-Client"><a href="#Using-the-Low-Level-HTTP-Client-使用低级别-HTTP-Client" class="headerlink" title="Using the Low-Level HTTP Client (使用低级别 HTTP Client)"></a>Using the Low-Level HTTP Client (使用低级别 HTTP Client)</h2><p><code>HttpClient</code> 接口构成了低级别 API 的基础</p>
+<p><code>HttpClient</code> 接口声明了一些方法来帮助简化 HTTP 请求的执行和接收响应</p>
+<p><code>HttpClient</code> 接口中的大多数方法都返回响应式流 <code>Publisher</code> 实例, 这并不总是最有用的接口</p>
+<p>Micronaut 的 Reactor HTTP Client 依赖提供了一个名称为 <code>ReactorHttpClient</code> 的子接口. 这个子接口提供了 <code>HttpClient</code> 接口的变体来返回 <code>Project Reactor</code>,<code>Flux</code> 类型</p>
+<h3 id="Sending-your-first-HTTP-request-发送你的第一个-HTTP-请求"><a href="#Sending-your-first-HTTP-request-发送你的第一个-HTTP-请求" class="headerlink" title="Sending your first HTTP request (发送你的第一个 HTTP 请求)"></a>Sending your first HTTP request (发送你的第一个 HTTP 请求)</h3><h4 id="Obtaining-a-HttpClient-获取一个-HttpClient"><a href="#Obtaining-a-HttpClient-获取一个-HttpClient" class="headerlink" title="Obtaining a HttpClient (获取一个 HttpClient)"></a>Obtaining a HttpClient (获取一个 HttpClient)</h4><p>有多个方法可以获取一个 <code>HttpClient</code> 引用. 最常用的方法是使用 <code>@Client</code> 注解</p>
+<p>Example - Injecting an HTTP client:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Inject</span></span><br><span class="line"><span class="meta">@Client</span>(<span class="string">&quot;https://api.twitter.com/1.1&quot;</span>)</span><br><span class="line">HttpClient httpClient;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Inject</span></span><br><span class="line"><span class="meta">@Client</span>(<span class="string">&quot;$&#123;myapp.api.twitter.uri&#125;&quot;</span>)</span><br><span class="line">HttpClient httpClient</span><br></pre></td></tr></table></figure>
+
+<p><code>@Client</code> 是一个自定义作用域, 管理了 <code>HttpClient</code> 实例的创建, 并确保 <code>HttpClient</code> 在应用关闭时停止</p>
+<p><code>@Client</code> 注解的值可以是如下之一:</p>
+<ul>
+<li>一个绝对 URI, 例如 <code>https://api.twitter.com/1.1</code></li>
+<li>一个相对 URI, 指向当前 server, 在测试的时候很有用</li>
+<li>一个服务标识(service identifier), 使用服务发现</li>
+</ul>
+<p>另一种创建方式是使用 <code>HttpClient</code> 的静态方法 <code>create()</code>, 这个方式需要你自己保证 client 在应用关闭时停止, 且不会为 client 创建进行依赖注入</p>
+<h4 id="Performing-an-HTTP-GET-执行一个-HTTP-GET-请求"><a href="#Performing-an-HTTP-GET-执行一个-HTTP-GET-请求" class="headerlink" title="Performing an HTTP GET (执行一个 HTTP GET 请求)"></a>Performing an HTTP GET (执行一个 HTTP GET 请求)</h4><p>使用 <code>HttpClient</code> 时, 通常有两个可用的方法</p>
+<p>第一个是 <code>retrive()</code> 方法, 这个方法执行一个 HTTP 请求, 并将 body 以你请求的任何类型 (默认为字符串) 作为 <code>Publisher</code> 返回</p>
+<blockquote>
+<p>Perform an HTTP request for the given request object emitting the full HTTP response from returned Publisher and converting the response body to the specified type.</p>
+</blockquote>
+<p><code>retrieve</code> 方法接收一个 <code>HttpRequest</code> 或者一个 <code>String</code> URI 来指向你想要请求的端点</p>
+<p>Example - Using retrieve - Use retrieve to execute an HTTP <code>GET</code> and receive the response body as a <code>String</code>:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">when:</span></span><br><span class="line">String uri = UriBuilder.of(<span class="string">&quot;/hello/&#123;name&#125;&quot;</span>)</span><br><span class="line">                       .expand(<span class="attr">name:</span> <span class="string">&quot;John&quot;</span>)</span><br><span class="line"><span class="attr">then:</span></span><br><span class="line"><span class="string">&quot;/hello/John&quot;</span> == uri</span><br><span class="line"></span><br><span class="line"><span class="attr">when:</span></span><br><span class="line">String result = client.toBlocking()</span><br><span class="line">                      .retrieve(uri)</span><br><span class="line"><span class="attr">then:</span></span><br><span class="line"><span class="string">&quot;Hello John&quot;</span> == result</span><br></pre></td></tr></table></figure>
+
+<p>在上面的例子中, 调用了 <code>toBlocking()</code> 方法来返回一个阻塞版本的 client, 在生产代码中, 不要使用这个阻塞的 client, 应该直接使用非阻塞请求</p>
+<p>Example - Using the HTTP client without blocking:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> io.micronaut.http.HttpRequest.GET</span><br><span class="line"></span><br><span class="line"><span class="meta">@Get</span>(<span class="string">&#x27;/hello/&#123;name&#125;&#x27;</span>)</span><br><span class="line"><span class="meta">@SingleResult</span></span><br><span class="line">Publisher&lt;String&gt; hello(String name) &#123;                      <span class="comment">// 1</span></span><br><span class="line">    Mono.from(httpClient.retrieve(GET(<span class="string">&quot;/hello/&#123;name&#125;&quot;</span>)))    <span class="comment">// 2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>1</code> : The <code>hello</code> method returns a <code>Mono</code> which may or may not emit an item. If an item is not emitted, a 404 is returned</p>
+<p><code>2</code> : The <code>retrieve</code> method is called which returns a <code>Flux</code>. This has a <code>firstElement</code> method that returns the first emitted item or nothing</p>
+<p>通过使用 Reactor (或者 RxJava), 你可以很容易且高效地组合多个非阻塞 HTTP client 请求</p>
+<h4 id="Debugging-x2F-Tracing-the-HTTP-Client-调试-x2F-跟踪-HTTP-Client"><a href="#Debugging-x2F-Tracing-the-HTTP-Client-调试-x2F-跟踪-HTTP-Client" class="headerlink" title="Debugging &#x2F; Tracing the HTTP Client (调试 &#x2F; 跟踪 HTTP Client)"></a>Debugging &#x2F; Tracing the HTTP Client (调试 &#x2F; 跟踪 HTTP Client)</h4><p>要调试从 HTTP client 发送和接收的请求, 可以在 <code>logback.xml</code> 中开启日志追踪:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// logback.xml</span><br><span class="line"><span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">&quot;io.micronaut.http.client&quot;</span> <span class="attr">level</span>=<span class="string">&quot;TRACE&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Client-Specific-Debugging-x2F-Tracing-指定的-Client-调试-x2F-跟踪"><a href="#Client-Specific-Debugging-x2F-Tracing-指定的-Client-调试-x2F-跟踪" class="headerlink" title="Client Specific Debugging &#x2F; Tracing (指定的 Client 调试 &#x2F; 跟踪)"></a>Client Specific Debugging &#x2F; Tracing (指定的 Client 调试 &#x2F; 跟踪)</h4><p>要开启指定 client 的日志, 你可以为所有的 HTTP client 配置默认 logger</p>
+<p>也可以使用 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#_client_specific_configuration" >Client-Specific Configuration<i class="fas fa-external-link-alt"></i></a> 为不同 client 定义不同的 logger</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">micronaut:</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">        <span class="attr">client:</span></span><br><span class="line">            <span class="attr">logger-name:</span> <span class="string">mylogger</span></span><br><span class="line">        <span class="attr">services:</span></span><br><span class="line">            <span class="attr">otherClient:</span></span><br><span class="line">                <span class="attr">logger-name:</span> <span class="string">other.client</span></span><br></pre></td></tr></table></figure>
+
+<p>在 <code>logback.xml</code> 中开启日志记录:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">&quot;mylogger&quot;</span> <span class="attr">level</span>=<span class="string">&quot;DEBUG&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">&quot;other.client&quot;</span> <span class="attr">level</span>=<span class="string">&quot;TRACE&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Customizing-the-HTTP-Request-自定义-HTTP-请求"><a href="#Customizing-the-HTTP-Request-自定义-HTTP-请求" class="headerlink" title="Customizing the HTTP Request (自定义 HTTP 请求)"></a>Customizing the HTTP Request (自定义 HTTP 请求)</h4><p><code>HttpRequest</code> 接口的静态方法 <code>GET</code> 构建了一个 <code>MutableHttpRequest</code> 实例</p>
+<p><code>MutableHttpRequest</code> 实例是可以修改该的, 例如可以添加 headers, 自定义请求 body:</p>
+<p>Example - Passing an HttpRequest to retrieve:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> io.micronaut.http.HttpRequest.GET</span><br><span class="line"></span><br><span class="line">Flux&lt;String&gt; response = Flux.from(</span><br><span class="line">    client.retrieve(</span><br><span class="line">        GET(<span class="string">&quot;/hello/John&quot;</span>).header(<span class="string">&quot;X-My-Header&quot;</span>, <span class="string">&quot;SomeValue&quot;</span>)</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Reading-JSON-Response-读取-JSON-响应"><a href="#Reading-JSON-Response-读取-JSON-响应" class="headerlink" title="Reading JSON Response (读取 JSON 响应)"></a>Reading JSON Response (读取 JSON 响应)</h4><p>微服务通常使用 JSON 等消息编码格式</p>
+<p>Micronaut 的 HTTP client 利用 Jackson 进行 JSON 解析, 因此 Jackson 可以解码的任何类型都可以作为第二个参数传入 <code>retrieve()</code> 方法:</p>
+<p>Example - 有一个 Controller 返回一个 JSON响应:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Get</span>(<span class="string">&#x27;/greet/&#123;name&#125;&#x27;</span>)</span><br><span class="line">Message greet(String name) &#123; <span class="keyword">new</span> Message(<span class="string">&quot;Hello $name&quot;</span>) &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.annotation.JsonCreator</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.annotation.JsonProperty</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Message</span> &#123;</span><br><span class="line">    <span class="keyword">final</span> String text</span><br><span class="line"></span><br><span class="line">    <span class="meta">@JsonCreator</span></span><br><span class="line">    Message(<span class="meta">@JsonProperty</span>(<span class="string">&quot;text&quot;</span>) String text) &#123; <span class="variable language_">this</span>.text = text&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 client 中你可以调用这个 Controller 的 endpoint 并使用 <code>retrieve()</code>方法 解码 JSON 为一个 <code>Map</code></p>
+<p>Example - Decoding the response body to a Map:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Flux&lt;Map&gt; response = Flux.from(</span><br><span class="line">    client.retrieve(</span><br><span class="line">        GET(<span class="string">&#x27;/greet/John&#x27;</span>, Map)</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>可以使用 <code>Argument.of()</code> 方法来自定义 Map 的 key&#x2F;value 的类型:</p>
+<p>Example - Decoding the response body to Map:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">response = Flux.from(</span><br><span class="line">    client.retrieve(</span><br><span class="line">        GET(<span class="string">&#x27;/greet/John&#x27;</span>),</span><br><span class="line">        Argument.of(Map, String, String)    <span class="comment">// this method returns a Map where the key and value types are String</span></span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>虽然将 JSON 作为 <code>Map</code> 进行获取是可取的, 但通常希望将对象解码为 POJO:</p>
+<p>Example - Decoding the response body to a POJO:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">when:</span></span><br><span class="line">Flux&lt;Message&gt; response = Flux.from(</span><br><span class="line">    client.retrieve(</span><br><span class="line">        GET(<span class="string">&#x27;/greet/John&#x27;</span>),</span><br><span class="line">        Message</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>所以可以定义一个通用的 API 项目, 可以在这个项目中定义 定义API 的 interface 和 类</p>
+<h4 id="Decoding-Other-Content-Types-解码其他-Content-Types"><a href="#Decoding-Other-Content-Types-解码其他-Content-Types" class="headerlink" title="Decoding Other Content Types (解码其他 Content Types)"></a>Decoding Other Content Types (解码其他 Content Types)</h4><p>如果你要请求的服务使用的是自定义的 content type 而不是 JSON, 默认情况下 Micronaut 的 HTTP client 并不知道怎样去解析这样的类型</p>
+<p>通过注册一个 <code>MediaTypeCodec</code> Bean 来解决这个问题, 这个 Bean 会自动被发现并用于编解码消息</p>
+<h4 id="Receiving-the-Full-HTTP-Response-接受完整的-HTTP-响应"><a href="#Receiving-the-Full-HTTP-Response-接受完整的-HTTP-响应" class="headerlink" title="Receiving the Full HTTP Response (接受完整的 HTTP 响应)"></a>Receiving the Full HTTP Response (接受完整的 HTTP 响应)</h4><p>有时候仅仅接收响应的 body 是不够的, 因为可能还需要获取响应的其他信息, 例如 headers, cookies</p>
+<p>这时, 可以使用 <code>exchange()</code> 方法:</p>
+<p>Example - Receiving the Full HTTP Response:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">when:</span></span><br><span class="line">Flux&lt;HttpResponse&gt; call = Flux.from(</span><br><span class="line">    client.exchange(            <span class="comment">// The exchange method receieves the HttpResponse</span></span><br><span class="line">        GET(<span class="string">&#x27;/greet/John&#x27;</span>),</span><br><span class="line">        Message</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">HttpResponse&lt;Message&gt; response = call.blockFirst()</span><br><span class="line">Optional&lt;Message&gt; message = response.getBody(Message)   <span class="comment">// The body is retrieved using the getBody() method of the rsponse</span></span><br><span class="line"></span><br><span class="line"><span class="attr">then:</span></span><br><span class="line">HttpStatus.OK == response.getStatus()</span><br><span class="line">message.isPresent()</span><br><span class="line"><span class="string">&#x27;Hello John&#x27;</span> == message.get().getText()</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子中获取了完整的 <code>HttpResponse</code></p>
+<h3 id="Posting-a-Request-Body-发送一个请求体"><a href="#Posting-a-Request-Body-发送一个请求体" class="headerlink" title="Posting a Request Body (发送一个请求体)"></a>Posting a Request Body (发送一个请求体)</h3><p><code>HttpRequest</code> 接口具有适用于所有不同 HTTP method 的工厂方法</p>
+<p>Table - HttpRequest Factory Methods:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Method</th>
+<th align="left">Description</th>
+<th align="left">Allows Body</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>HttpRequest.GET(java.lang.String)</code></td>
+<td align="left">Constructs an HTTP GET request</td>
+<td align="left">false</td>
+</tr>
+<tr>
+<td align="left"><code>HttpRequest.OPTIONS(java.lang.String)</code></td>
+<td align="left">Constructs an HTTP OPTIONS request</td>
+<td align="left">false</td>
+</tr>
+<tr>
+<td align="left"><code>HttpRequest.HEAD(java.lang.String)</code></td>
+<td align="left">Constructs an HTTP HEAD request</td>
+<td align="left">false</td>
+</tr>
+<tr>
+<td align="left"><code>HttpRequest.POST(java.lang.String, T)</code></td>
+<td align="left">Constructs an HTTP POST request</td>
+<td align="left">true</td>
+</tr>
+<tr>
+<td align="left"><code>HttpRequest.PUT(java.lang.String, T)</code></td>
+<td align="left">Constructs an HTTP PUT request</td>
+<td align="left">true</td>
+</tr>
+<tr>
+<td align="left"><code>HttpRequest.PATCH(java.lang.String, T)</code></td>
+<td align="left">Constructs an HTTP PATCH request</td>
+<td align="left">true</td>
+</tr>
+<tr>
+<td align="left"><code>HttpRequest.DELETE(java.lang.String)</code></td>
+<td align="left">Constructs an HTTP DELETE request</td>
+<td align="left">true</td>
+</tr>
+</tbody></table>
+<p>存在一个 <code>create()</code> 方法来构造一个适用于任何 <code>HttpMethod</code> 类型的请求</p>
+<p>因为 <code>POST</code>,<code>PUT</code>,<code>PATCH</code> method 要求一个 body, 所以需要传入一个代表请求 body 的对象作为第二个参数</p>
+<p>Example - Sending a <code>String</code> body:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> io.micronaut.http.HttpRequest.POST</span><br><span class="line"></span><br><span class="line">Flux&lt;HttpResponse&lt;String&gt;&gt; call = Flux.from(</span><br><span class="line">    client.exchange(</span><br><span class="line">        POST(<span class="string">&#x27;/hello&#x27;</span>, <span class="string">&#x27;Hello John&#x27;</span>)                <span class="comment">// 1</span></span><br><span class="line">            .contentType(MediaType.TEXT_PLAIN_TYPE)</span><br><span class="line">            .accept(MediaType.TEXT_PLAIN_TYPE),     <span class="comment">// 2</span></span><br><span class="line">        String                                      <span class="comment">// 3</span></span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><code>1</code> : The <code>POST</code> method is used; the first argument is the URI and the second is the body</p>
+<p><code>2</code> : The content type and accepted type are set to <code>text/plain</code> (the default is <code>application/json</code>)</p>
+<p><code>3</code> : The expected response type is a <code>String</code></p>
+<h4 id="Sending-JSON-发送-JSON"><a href="#Sending-JSON-发送-JSON" class="headerlink" title="Sending JSON (发送 JSON)"></a>Sending JSON (发送 JSON)</h4><p>要发送 JSON 数据, 传入要编码为 JSON 的对象(无论是 Map 还是 POJO), 只要 Jackson 能够对其进行编码</p>
+<p>Example - Sending a JSON body:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Flux&lt;HttpResponse&lt;Message&gt;&gt; call = Flux.from(</span><br><span class="line">    client.exchange(</span><br><span class="line">        POST(<span class="string">&#x27;/greet&#x27;</span>, <span class="keyword">new</span> Message(<span class="string">&#x27;Hello John&#x27;</span>)),  <span class="comment">// 1</span></span><br><span class="line">        Message                                     <span class="comment">// 2</span></span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><code>1</code> : An instance of <code>Message</code> is created and passed to the <code>POST</code> method</p>
+<p><code>2</code> : The same class decodes the response</p>
+<p>上面的例子中, 如下的 JSON 被作为请求的 body:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Hello John&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Using-a-URI-Template-使用一个-URI-模板"><a href="#Using-a-URI-Template-使用一个-URI-模板" class="headerlink" title="Using a URI Template (使用一个 URI 模板)"></a>Using a URI Template (使用一个 URI 模板)</h4><p>如果要在 URI 中包含一些对象的属性, 可以使用一个 URI template</p>
+<p>假设, 你有一个拥有 <code>title</code> 属性的 <code>Book</code> 类. 你可以在 URI template 中包含 <code>title</code>, 然后使用一个 <code>Book</code> 实例来填充这个 template 的 <code>title</code></p>
+<p>Example - Sending a JSON body with a URI template:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Flux&lt;HttpResponse&lt;Book&gt;&gt; call = Flux.from(</span><br><span class="line">    POST(<span class="string">&#x27;/amazon/book/&#123;title&#125;&#x27;</span>, <span class="keyword">new</span> Book(<span class="string">&#x27;The Stand&#x27;</span>)),</span><br><span class="line">    Book</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Sending-Form-Data-发送表单数据"><a href="#Sending-Form-Data-发送表单数据" class="headerlink" title="Sending Form Data (发送表单数据)"></a>Sending Form Data (发送表单数据)</h4><p>可以将一个 POJO 或 Map 编码为表单数据而不是 JSON</p>
+<p>仅需要在 POST 请求中将 Content-Type 设置为 <code>application/x-www-form-urlencoded</code></p>
+<p>Example - Sending a Form Data:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Flux&lt;HttpResponse&lt;Book&gt;&gt; call = client.exchange(</span><br><span class="line">    POST(<span class="string">&#x27;/amazon/book/&#123;title&#125;&#x27;</span>, <span class="keyword">new</span> Book(<span class="string">&#x27;The Stand&#x27;</span>))</span><br><span class="line">        .contentType(MediaType.APPLICATION_FORM_URLENCODED),</span><br><span class="line">    Book</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Multipart-Client-Uploads-Multipart-客户端上传"><a href="#Multipart-Client-Uploads-Multipart-客户端上传" class="headerlink" title="Multipart Client Uploads (Multipart 客户端上传)"></a>Multipart Client Uploads (Multipart 客户端上传)</h3><p>Micronaut HTTP client 支持 multipart request</p>
+<p>要构建一个 multipart request, 将 Content-Type 设置为 <code>multipart/form-data</code>, 并设置 body 为一个 <code>MultipartBody</code> 实例</p>
+<p>Example - Creating the body:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.http.multipart.CompletedFileUpload</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.multipart.StreamingFileUpload</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.client.multipart.MultipartBody</span><br><span class="line"><span class="keyword">import</span> org.reactivestreams.Publisher</span><br><span class="line"></span><br><span class="line">File file = <span class="keyword">new</span> File(uploadDir, <span class="string">&#x27;data.txt&#x27;</span>)</span><br><span class="line">file.text = <span class="string">&#x27;test file&#x27;</span></span><br><span class="line">file.createdNewFile()</span><br><span class="line"></span><br><span class="line">MultipartBody requestBody = MultipartBody.builder()             <span class="comment">// 1</span></span><br><span class="line">                                         .addPart(              <span class="comment">// 2</span></span><br><span class="line">                                             <span class="string">&quot;data&quot;</span>,</span><br><span class="line">                                             file.name,</span><br><span class="line">                                             MediaType.TEXT_PLAIN_TYPE,</span><br><span class="line">                                             file</span><br><span class="line">                                         )</span><br><span class="line">                                         .build()               <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+
+<p><code>1</code> : Create a MultipartBody builder for adding parts to the body</p>
+<p><code>2</code> : Add a part to the body, in this cases a file. There are different variations of this method in <code>MultipartBody.Builder</code></p>
+<p><code>3</code> : The build method assembles all parts from the builder into a MultipartBody. At least one part is required</p>
+<p>Example - Creating a request:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HttpRequest.POST(<span class="string">&#x27;/multipart/upload&#x27;</span>, requestBody)</span><br><span class="line">           .contentType(MediaType.MULTIPART_FORM_DATA_TYPE)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Streaming-JSON-over-HTTP-HTTP-上的流式-JSON"><a href="#Streaming-JSON-over-HTTP-HTTP-上的流式-JSON" class="headerlink" title="Streaming JSON over HTTP (HTTP 上的流式 JSON)"></a>Streaming JSON over HTTP (HTTP 上的流式 JSON)</h3><p>Micronaut 的 HTTP client 包括通过 <code>ReactorStreamingHttpClient</code> 接口支持的 HTTP 上的流式传输数据, 这个接口包含了特定于流的方法:</p>
+<p>Table - HTTP Streaming Methods:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Method</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>dataStream(HttpRequest&lt;I&gt; request)</code></td>
+<td align="left">Returns a stream of data as a <code>Flux</code> of <code>ByteBuffer</code></td>
+</tr>
+<tr>
+<td align="left"><code>exchangeStream(HttpRequest&lt;I&gt; request)</code></td>
+<td align="left">Returns the <code>HttpResponse</code> wrapping a <code>Flux</code> of <code>ByteBuffer</code></td>
+</tr>
+<tr>
+<td align="left"><code>jsonStream(HttpResponse&lt;I&gt; request)</code></td>
+<td align="left">Returns a non-blocking stream of JSON objects</td>
+</tr>
+</tbody></table>
+<p>要使用 JSON streaming, 在 server 中声明一个 Controller 方法, 这个方法 <code>produces</code> 的 Content-Type 是 <code>application/x-json-stream</code></p>
+<p>Example - Streaming JSON on the Server:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.http.MediaType</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.annotation.Controller</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.annotation.Get</span><br><span class="line"><span class="keyword">import</span> reactor.core.publisher.Flux</span><br><span class="line"><span class="keyword">import</span> reactor.core.publisher.Mono</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.time.Duration</span><br><span class="line"><span class="keyword">import</span> java.time.ZonedDateTime</span><br><span class="line"><span class="keyword">import</span> java.time.temporal.ChronoUnit</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit</span><br><span class="line"></span><br><span class="line"><span class="meta">@Get</span>(value = <span class="string">&#x27;/headlines&#x27;</span>, processes = MediaType.APPLICATION_JSON_STREAM)           <span class="comment">// 1</span></span><br><span class="line">Flux&lt;Headline&gt; streamHeadlines() &#123;</span><br><span class="line">    Mono.fromCallable(&#123;            <span class="comment">// 2</span></span><br><span class="line">            <span class="keyword">new</span> Headline(<span class="attr">text:</span> <span class="string">&quot;Latest Headline at $&#123;ZonedDateTime.now()&#125;&quot;</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">        .repeat(<span class="number">100</span>)               <span class="comment">// 3</span></span><br><span class="line">        .delayElements(Duration.of(<span class="number">1</span>, ChronoUnit.SECONDS))  <span class="comment">// 4</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>1</code> : The <code>streamHeadlines</code> method produces <code>application/x-json-stream</code>; <code>processes</code> : Shortcut that allows setting both the consumes() and produces() settings to the same media type.</p>
+<p><code>2</code> : A <code>Flux</code> is created from a <code>Callable</code> function</p>
+<p><code>3</code> : The <code>Flux</code> repeats 100 times</p>
+<p><code>4</code> : The <code>Flux</code> emits items with a delay of one second between each</p>
+<p>在客户端, 使用 <code>jsonSteam</code> 来订阅(subscribe)这个流, 每次 server 输出一个 JSON 对象, 客户端将会解码并消费这个对象</p>
+<p>Example - Streaming JSON on the Client:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Flux&lt;Headline&gt; headlineStream = Flux.from(</span><br><span class="line">    client.jsonStream(  <span class="comment">// 1</span></span><br><span class="line">        GET(<span class="string">&#x27;streaming/headlines&#x27;</span>),</span><br><span class="line">        Headline</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">CompletableFuture&lt;Headline&gt; future = <span class="keyword">new</span> CompletableFuture&lt;&gt;()  <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">headlineStream.subscribe(</span><br><span class="line">    <span class="keyword">new</span> Subscribe&lt;Headline&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="type">void</span> onSubscribe(Subscription s) &#123; s.request(<span class="number">1</span>) &#125;   <span class="comment">//3 </span></span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="type">void</span> onNext(Headline headline) &#123; println <span class="string">&quot;Received Headline = $headline.text&quot;</span>; future.complete(headline) &#125;  <span class="comment">// 4</span></span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="type">void</span> onError(Throwable t) &#123; future.completeExceptionally(t) &#125;   <span class="comment">// 5</span></span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="type">void</span> onComplete() &#123;&#125;    <span class="comment">// 6</span></span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><code>1</code> : The <code>jsonStream</code> method returns a <code>Flux</code></p>
+<p><code>2</code> : A <code>CompletableFuture</code> is used to receive a value, but what you do with each emitted item is application-specific</p>
+<p><code>3</code> : The <code>Subscription</code> requests a single item. You can use the <code>Subscription</code> to regulate(调节) back pressure and demand</p>
+<p><code>4</code> : The <code>onNext</code> method is called when an item is emitted</p>
+<p><code>5</code> : The <code>onError</code> method is called when an error occurs</p>
+<p><code>6</code> : The <code>onComplete</code> method is called when all <code>Headine</code> instances have been emitted</p>
+<h3 id="Configuring-HTTP-clients-配置-HTTP-clients"><a href="#Configuring-HTTP-clients-配置-HTTP-clients" class="headerlink" title="Configuring HTTP clients (配置 HTTP clients)"></a>Configuring HTTP clients (配置 HTTP clients)</h3><h4 id="Global-Configuration-for-All-Clients-用于全部-Clients-的全局配置"><a href="#Global-Configuration-for-All-Clients-用于全部-Clients-的全局配置" class="headerlink" title="Global Configuration for All Clients (用于全部 Clients 的全局配置)"></a>Global Configuration for All Clients (用于全部 Clients 的全局配置)</h4><p>默认的 HTTP client 配置是 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#_client_specific_configuration" >DefaultHttpClientConfiguration<i class="fas fa-external-link-alt"></i></a></p>
+<p>允许配置所有的 HTTP client 的默认行为</p>
+<p>Example - Altering default HTTP client configuration:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">//</span> <span class="string">application.yml</span></span><br><span class="line"><span class="attr">micronaut:</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">        <span class="attr">client:</span></span><br><span class="line">            <span class="attr">read-timeout:</span> <span class="string">5s</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的例子中设置了 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/client/HttpClientConfiguration.html" >HttpClientConfiguration<i class="fas fa-external-link-alt"></i></a> 的属性</p>
+<h4 id="Client-Specific-Configuration-特定-Client-配置"><a href="#Client-Specific-Configuration-特定-Client-配置" class="headerlink" title="Client Specific Configuration (特定 Client 配置)"></a>Client Specific Configuration (特定 Client 配置)</h4><p>有多个选项来为每个 client 设定不同的配置</p>
+<p>可以在 <code>application.yml</code> 中手动配置服务发现并应用到每个 client 配置中:</p>
+<p>Example - Manually configuring HTTP services:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">micronaut:</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">        <span class="attr">services:</span></span><br><span class="line">            <span class="attr">foo:</span></span><br><span class="line">                <span class="attr">urls:</span></span><br><span class="line">                    <span class="bullet">-</span> <span class="string">https://foo1</span></span><br><span class="line">                    <span class="bullet">-</span> <span class="string">https://foo2</span></span><br><span class="line">                <span class="attr">read-timeout:</span> <span class="string">5s</span>    <span class="comment"># The read timeout is applied to the foo client</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>This client configuration can be used in conjunction with the @Client annotation, either by injecting an HttpClient directly or use on a client interface.</p>
+</blockquote>
+<p>这个客户端配置可以与 <code>@Client</code> 注解一起使用, 可以通过直接注入一个 <code>HttpClient</code> 或在一个 client 接口上使用</p>
+<blockquote>
+<p>In any case, all other attributes on the annotation will be ignored except the service id.</p>
+</blockquote>
+<p>在任何情况下, 注解上的所有属性都将被忽略, 除了 service id</p>
+<p>然后, 注入命名的 client 配置:</p>
+<p>Example - Injecting an HTTP client:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Client</span>(<span class="string">&quot;foo&quot;</span>) <span class="meta">@Inject</span> ReactorHttpClient httpClient</span><br></pre></td></tr></table></figure>
+
+<p>你还可以定义一个继承 <code>HttpClientConfiguration</code> 的 Bean, 并确保使用 <code>javax.inject.Named</code> 注解为这个 Bean 合适地命名:</p>
+<p>Example - Defining an HTTP client configuration bean:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Named</span>(<span class="string">&quot;twitter&quot;</span>)</span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TwitterHttpClientConfiguration</span> <span class="keyword">extends</span> <span class="title class_">HttpClientConfiguration</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> TwitterHttpClientConfiguration(ApplicationConfiguration configuration) &#123;</span><br><span class="line">        <span class="variable language_">super</span>(configuration)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果你通过 <code>@Client</code> 使用服务发现注入一个命名为 <code>twitter</code> 的 service, 那么这个配置将会被采用:</p>
+<p>Example - Injecting an HTTP client:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Client</span>(<span class="string">&quot;twitter&quot;</span>) <span class="meta">@Inject</span> ReactorHttpClient httpClient</span><br></pre></td></tr></table></figure>
+
+<p>或者, 如果你不使用服务发现, 你可以使用 <code>@Client</code> 注解的 <code>configuration</code> 成员属性来引用一个特定类型:</p>
+<p>Example - Injecting an HTTP client:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Client</span>(</span><br><span class="line">    value = <span class="string">&quot;https://api.twitter.com/1/1&quot;</span>,</span><br><span class="line">    configuration = TwitterHttpClientConfiguration.<span class="keyword">class</span></span><br><span class="line">)</span><br><span class="line"><span class="meta">@Inject</span></span><br><span class="line">ReactorHttpClient httpClient</span><br></pre></td></tr></table></figure>
+
+<h4 id="Using-HTTP-Client-Connection-Pooling-使用-HTTP-Client-连接池化"><a href="#Using-HTTP-Client-Connection-Pooling-使用-HTTP-Client-连接池化" class="headerlink" title="Using HTTP Client Connection Pooling (使用 HTTP Client 连接池化)"></a>Using HTTP Client Connection Pooling (使用 HTTP Client 连接池化)</h4><p>一个处理大量请求的 client 将会从开启 HTTP client 连接池化中获益</p>
+<p>如下例子中为 <code>foo</code> client 开启池化:</p>
+<p>Example - Manually configuring HTTP services:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">micronaut:</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">        <span class="attr">services:</span></span><br><span class="line">            <span class="attr">foo:</span></span><br><span class="line">                <span class="attr">urls:</span></span><br><span class="line">                    <span class="bullet">-</span> <span class="string">http://foo1</span></span><br><span class="line">                    <span class="bullet">-</span> <span class="string">http://foo2</span></span><br><span class="line">                <span class="attr">pool:</span></span><br><span class="line">                    <span class="attr">enabled:</span> <span class="literal">true</span>           <span class="comment"># Enables the pool</span></span><br><span class="line">                    <span class="attr">max-connections:</span> <span class="number">50</span>     <span class="comment"># Sets the maximum number of connections in the pool</span></span><br></pre></td></tr></table></figure>
+
+<p>查看 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/client/HttpClientConfiguration.ConnectionPoolConfiguration.html" >ConnectionPoolConfiguration<i class="fas fa-external-link-alt"></i></a> 获取可用池化配置选项细节信息</p>
+<h4 id="Configuring-Event-Loop-Groups-配置-Event-Loop-组"><a href="#Configuring-Event-Loop-Groups-配置-Event-Loop-组" class="headerlink" title="Configuring Event Loop Groups (配置 Event Loop 组)"></a>Configuring Event Loop Groups (配置 Event Loop 组)</h4><p>默认情况下, Micronaut 让 worker 线程和所有 HTTP client 线程共享一个通用 Netty <code>EventLoopGroup</code></p>
+<p>这个 <code>EventLoopGroup</code> 可以通过 <code>micronaut.netty.event-loops.default</code> 属性来进行配置:</p>
+<p>Example - Configuring The Default Event Loop:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">micronaut:</span></span><br><span class="line">    <span class="symbol">netty:</span></span><br><span class="line">        event-<span class="attr">loops:</span></span><br><span class="line">            <span class="symbol">default:</span></span><br><span class="line">                num-<span class="attr">threads:</span> <span class="number">10</span></span><br><span class="line">                prefer-native-<span class="attr">transport:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>可以使用 <code>micronaut.netty.event-loops</code> 设置来配置一个或多个额外 Event Loop</p>
+<p>下表中总结了可用的属性</p>
+<p>Table - Configuration Properties for <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/netty/channel/DefaultEventLoopGroupConfiguration.html" >DefaultEventLoopGroupConfiguration<i class="fas fa-external-link-alt"></i></a>:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Property</th>
+<th align="left">Type</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>micronaut.netty.event-loops.*.num-threads</code></td>
+<td align="left"><code>int</code></td>
+</tr>
+<tr>
+<td align="left"><code>micronaut.netty.event-loops.*.io-ratio</code></td>
+<td align="left"><code>java.lang.Integer</code></td>
+</tr>
+<tr>
+<td align="left"><code>micronaut.netty.event-loops.*.prefer-native-transport</code></td>
+<td align="left"><code>boolean</code></td>
+</tr>
+<tr>
+<td align="left"><code>micronaut.netty.event-loops.*.executor</code></td>
+<td align="left"><code>java.lang.String</code></td>
+</tr>
+<tr>
+<td align="left"><code>micronaut.netty.event-loops.*.shutdown-quiet-period</code></td>
+<td align="left"><code>java.time.Duration</code></td>
+</tr>
+<tr>
+<td align="left"><code>micronaut.netty.event-loops.*.shutdown-timeout</code></td>
+<td align="left"><code>java.time.Duration</code></td>
+</tr>
+</tbody></table>
+<p>例如, 如果你与 HTTP client 的交互涉及到 CPU 密集型工作, 为一个或所有 client 配置一个单独的 <code>EventLoopGroup</code> 可能是值得的</p>
+<p>下面的例子中配置了一个额外的 event loop group, 它的名字是 <code>other</code>, 有 10 个线程:</p>
+<p>Example - Configuring Additional Event Loops:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">micronaut:</span></span><br><span class="line">    <span class="attr">netty:</span></span><br><span class="line">        <span class="attr">event-loops:</span></span><br><span class="line">            <span class="attr">other:</span></span><br><span class="line">                <span class="attr">num-threads:</span> <span class="number">10</span></span><br><span class="line">                <span class="attr">prefer-native-transport:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>一旦额外的 event loop group 配置好了, 就可以修改一个 HTTP client 的配置来使用它:</p>
+<p>Example - Altering the Event Loop Group used by Clients:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">micronaut:</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">        <span class="attr">client:</span></span><br><span class="line">            <span class="attr">event-loop-group:</span> <span class="string">other</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Error-Responses-错误响应"><a href="#Error-Responses-错误响应" class="headerlink" title="Error Responses (错误响应)"></a>Error Responses (错误响应)</h3><p>如果一个 HTTP 响应返回一个 400 代码或更高的代码, 将会创建一个 <code>HttpClientResponseException</code></p>
+<p>这个 Exception 包含了原始的响应</p>
+<p>这个 Exception 如何抛出取决于方法的返回值</p>
+<p>对于阻塞式 client, Exception 被抛出, 调用者要捕捉并处理它</p>
+<p>对于响应式 client, Exception 作为一个 Error 并通过 <code>Publisher</code> 进行传递</p>
+<h3 id="Bind-Errors-绑定错误"><a href="#Bind-Errors-绑定错误" class="headerlink" title="Bind Errors (绑定错误)"></a>Bind Errors (绑定错误)</h3><p>通常你想消费一个 endpoint 并在请求成功时绑定到一个 POJO 中, 在出现错误时绑定到另一个 POJO 中:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;/books&#x27;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BookController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Get</span>(<span class="string">&#x27;/&#123;isbn&#125;&#x27;</span>)</span><br><span class="line">    HttpResponse find(String isbn) &#123;</span><br><span class="line">        <span class="keyword">if</span> (isbn == <span class="string">&quot;1680502395&quot;</span>) &#123;</span><br><span class="line">            Map&lt;String, Object&gt; m = [</span><br><span class="line">                <span class="attr">status  :</span> <span class="number">401</span>,</span><br><span class="line">                <span class="attr">error   :</span> <span class="string">&quot;Unauthorized&quot;</span>,</span><br><span class="line">                <span class="attr">message :</span> <span class="string">&quot;No message available&quot;</span>,</span><br><span class="line">                <span class="attr">path    :</span> <span class="string">&quot;/books/$isbn&quot;</span></span><br><span class="line">            ]</span><br><span class="line">            <span class="keyword">return</span> HttpResponse.status(HttpStatus.UNAUTHORIZED)</span><br><span class="line">                               .body(m)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> HttpResponse.ok(<span class="keyword">new</span> Book(<span class="string">&quot;1491950358&quot;</span>, <span class="string">&quot;Building Microservices&quot;</span>))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="string">&quot;after an HttpClientException the response body can be bound to a POJO&quot;</span>() &#123;</span><br><span class="line">    <span class="symbol">when:</span></span><br><span class="line">    client.toBlocking()</span><br><span class="line">          .exchange(</span><br><span class="line">              HttpRequest.GET(<span class="string">&quot;/books/1680502395&quot;</span>),</span><br><span class="line">              Argument.of(Book),        <span class="comment">// Success Type</span></span><br><span class="line">              Argument.of(CustomError)  <span class="comment">// Error Type</span></span><br><span class="line">          )</span><br><span class="line"></span><br><span class="line">    <span class="symbol">then:</span></span><br><span class="line">    <span class="keyword">def</span> e = thrown(HttpClientResponseException)</span><br><span class="line">    e.response.status == HttpStatus.UNAUTHORIZED</span><br><span class="line"></span><br><span class="line">    <span class="symbol">when:</span></span><br><span class="line">    Optional&lt;CustomError&gt; jsonError = e.response.getBody(CustomError)</span><br><span class="line"></span><br><span class="line">    <span class="symbol">then:</span></span><br><span class="line">    jsonError.get().status == <span class="number">401</span></span><br><span class="line">    jsonError.get().error == <span class="string">&#x27;Unauthorized&#x27;</span></span><br><span class="line">    jsonError.get().message == <span class="string">&#x27;No message available&#x27;</span></span><br><span class="line">    jsonError.get().path == <span class="string">&#x27;/books/1680502395&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Proxying-Requests-with-ProxyHttpClient-使用-ProxyingHttpClient-来代理请求"><a href="#Proxying-Requests-with-ProxyHttpClient-使用-ProxyingHttpClient-来代理请求" class="headerlink" title="Proxying Requests with ProxyHttpClient (使用 ProxyingHttpClient 来代理请求)"></a>Proxying Requests with ProxyHttpClient (使用 ProxyingHttpClient 来代理请求)</h2><blockquote>
+<p>A common requirement in Microservice environments is to proxy requests in a Gateway Microservice to other backend Microservices.</p>
+</blockquote>
+<p>微服务环境中一个常见要求是将网关微服务中的请求代理其他后端微服务中</p>
+<p>普通的 <code>HttpClient</code> API 被设计为围绕简化消息交换, 不是被设计为代理请求的</p>
+<blockquote>
+<p>For this case, use the ProxyHttpClient, which can be used from a HTTP Server Filter to proxy requests to backend Microservices.</p>
+</blockquote>
+<p>对于代理的情况, 使用 <code>ProxyHttpClient</code>, 它被用来从 HTTP Server 过滤器中代理请求到后端微服务</p>
+<p>Example - Proxy filter that rewrites original requests - 重写 <code>/proxy</code> URI 为 <code>/real</code> URI:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.core.async.publisher.Publishers</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.util.StringUtils</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.HttpRequest</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.MutableHttpResponse</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.annotation.Filter</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.client.ProxyHttpClient</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.filter.HttpServerFilter</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.filter.ServerFilterChain</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.uri.UriBuilder</span><br><span class="line"><span class="keyword">import</span> io.micronaut.runtime.server.EmbeddedServer</span><br><span class="line"><span class="keyword">import</span> org.reactivestreams.Publisher</span><br><span class="line"></span><br><span class="line"><span class="meta">@Filter</span>(<span class="string">&#x27;/proxy/**&#x27;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ProxyFilter</span> <span class="keyword">implements</span> <span class="title class_">HttpServerFilter</span> &#123;     <span class="comment">// The filter extends HttpServerFilter</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ProxyHttpClient client</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> EmbeddedServer embeddedServer</span><br><span class="line"></span><br><span class="line">    ProxyFilter(ProxyHttpClient client,             <span class="comment">// The ProxyHttpClient is injected into the constructor</span></span><br><span class="line">                EmbeddedServer embeddedServer) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.client = client</span><br><span class="line">        <span class="variable language_">this</span>.embeddedServer = embeddedServer</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    Publisher&lt;MutableHttpResponse&lt;?&gt;&gt; doFilter(HttpRequest&lt;?&gt; request,</span><br><span class="line">                                               ServerFilterChain chain) &#123;</span><br><span class="line">        Publisher.map(</span><br><span class="line">            client.proxy(                           <span class="comment">// The proxy method proxies the request</span></span><br><span class="line">                request.mutate()                    <span class="comment">// The request is mutated to modify the URI and include an additional header</span></span><br><span class="line">                       .uri &#123; UriBuilder b -&gt;       <span class="comment">// The UriBuilder API rewrites the URI</span></span><br><span class="line">                            b.with &#123;</span><br><span class="line">                                scheme(<span class="string">&quot;http&quot;</span>)</span><br><span class="line">                                host(embeddedServer.host)</span><br><span class="line">                                port(embeddedServer.port)</span><br><span class="line">                                replacePath(StringUtils.prependUri(</span><br><span class="line">                                    <span class="string">&quot;/real&quot;</span>,</span><br><span class="line">                                    request.path.substring(<span class="string">&quot;/proxy&quot;</span>.length())</span><br><span class="line">                                ))</span><br><span class="line">                            &#125;</span><br><span class="line">                       &#125;</span><br><span class="line">                       .header(<span class="string">&quot;X-My-Request-Header&quot;</span>, <span class="string">&quot;XXX&quot;</span>)    <span class="comment">// Additional request and response headers are included</span></span><br><span class="line">            ),</span><br><span class="line">            &#123; it.header(<span class="string">&quot;X-My-Response-Header&quot;</span>, <span class="string">&quot;YYY&quot;</span>) &#125;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>ProxyHttpClient</code> API 是一个低级别 API, 可以使用来构建一个高级别的抽象, 例如一个 API 网关</p>
+<h2 id="Declarative-HTTP-Clients-with-Client-使用-Client-的声明式-HTTP-客户端"><a href="#Declarative-HTTP-Clients-with-Client-使用-Client-的声明式-HTTP-客户端" class="headerlink" title="Declarative HTTP Clients with @Client (使用 @Client 的声明式 HTTP 客户端)"></a>Declarative HTTP Clients with <code>@Client</code> (使用 <code>@Client</code> 的声明式 HTTP 客户端)</h2><p>本质上说, <code>@Client</code> 注解可以被声明在任何接口或抽象类上, 通过使用 AOP, 在编译时实现其中的抽象方法, 极大地简化了 HTTP Client 的创建</p>
+<p>首先声明一个 POJO:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Pet</span> &#123;</span><br><span class="line">    String name</span><br><span class="line">    <span class="type">int</span> age</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后声明一个接口来保存 <code>Pet</code> 实例:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.http.annotation.Post</span><br><span class="line"><span class="keyword">import</span> io.micronaut.validation.Validated</span><br><span class="line"><span class="keyword">import</span> org.reactivestreams.Publisher</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.async.annotation.SingleResult</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.Min</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotBlank</span><br><span class="line"></span><br><span class="line"><span class="meta">@Validated</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">PetOperations</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Post</span></span><br><span class="line">    <span class="meta">@SingleResult</span></span><br><span class="line">    Publisher&lt;Pet&gt; save(<span class="meta">@NotBlank</span> String name,</span><br><span class="line">                        <span class="meta">@Min</span>(<span class="number">1</span>L) <span class="type">int</span> age)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意这个接口如何使用 Micronaut 的 HTTP 注解, 这些注解可以在服务端和客户端中使用</p>
+<p>你还可以使用 <code>javax.validation</code> 约束来校验参数</p>
+<p>注意有些注解, 例如 <code>@Produces</code> 和 <code>@Consumes</code>, 在服务端和客户端有不同的语义<br>例如, <code>@Produces</code> 在服务端作用于一个 Controller 方法上时指明这个方法的返回值是如何格式化的<br>当 <code>@Produces</code> 在客户端时指明方法参数是如何格式化后在发送给服务端</p>
+<p>除此之外, 要使用 <code>javax.validation</code> 功能, 添加 <code>validation</code> 模块到你的构建中:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation(<span class="string">&quot;io.micronaut:micronaut-validation&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在服务端的 Micronaut 中你可以使用 <code>PetOperations</code> 接口:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.http.annotation.Controller</span><br><span class="line"><span class="keyword">import</span> org.reactivestreams.Publisher</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.async.annotation.SingleResult</span><br><span class="line"><span class="keyword">import</span> reactor.core.publisher.Mono</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span>(<span class="string">&#x27;/pets&#x27;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PetController</span> <span class="keyword">implements</span> <span class="title class_">PetOperations</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@SingleResult</span></span><br><span class="line">    Publisher&lt;Pet&gt; save(String name, <span class="type">int</span> age) &#123;</span><br><span class="line">        Pet pet = <span class="keyword">new</span> Pet(<span class="attr">name:</span> name, <span class="attr">age:</span> age)</span><br><span class="line">        <span class="comment">// save to database or something</span></span><br><span class="line">        <span class="keyword">return</span> Mono.just(pet)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你可以定义一个声明式 client 在 <code>src/test/java</code> 包中, 使用 <code>@Client</code> 注解来修饰这个 client 以使其在编译时自动实现:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.http.client.annotation.Client</span><br><span class="line"><span class="keyword">import</span> org.reactivestreams.Publisher</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.async.annotation.SingleResult</span><br><span class="line"></span><br><span class="line"><span class="meta">@Client</span>(<span class="string">&#x27;/pets&#x27;</span>)    <span class="comment">// The Client annotation is used with a value relative to the current server, in this case /pets</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">PetClient</span> <span class="keyword">extends</span> <span class="title class_">PetOperations</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@SingleResult</span></span><br><span class="line">    Publisher&lt;Pet&gt; save(String name, <span class="type">int</span> age)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一旦你定义了一个 client, 你就可以在任何需要的地方使用 <code>@Inject</code> 注解来使用它</p>
+<p>下面的表格展示了 <code>@Client</code> 注解的方法的返回值类型:</p>
+<p>Table - Micronaut Response Types:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Example Signature</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>Publisher</code></td>
+<td align="left">Any type that implements the <code>Publisher</code> interface</td>
+<td align="left"><code>Flux&lt;String&gt; hello()</code></td>
+</tr>
+<tr>
+<td align="left"><code>HttpResponse</code></td>
+<td align="left">An <code>HttpResponse</code> and optional response body type</td>
+<td align="left"><code>Mono&lt;HttpResponse&lt;String&gt;&gt; hello()</code></td>
+</tr>
+<tr>
+<td align="left"><code>Publisher</code></td>
+<td align="left">A <code>Publisher</code> implementation that emits a POJO</td>
+<td align="left"><code>Mono&lt;Book&gt; hello()</code></td>
+</tr>
+<tr>
+<td align="left"><code>CompletableFuture</code></td>
+<td align="left">A Java <code>CompletableFuture</code> instance</td>
+<td align="left"><code>CompletableFuture&lt;String&gt; hello()</code></td>
+</tr>
+<tr>
+<td align="left"><code>CharSequence</code></td>
+<td align="left">A blocking native type. Such as <code>String</code></td>
+<td align="left"><code>String hello()</code></td>
+</tr>
+<tr>
+<td align="left"><code>T</code></td>
+<td align="left">Any simple POJO type</td>
+<td align="left"><code>Book show()</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Note that returning any other type results in a blocking request and is not recommended other than for testing.</p>
+</blockquote>
+<p>请注意, 返回任何其他类型会导致阻塞请求, 并且不建议用于测试以外的其他类型</p>
+<h3 id="Customizing-Parameters-Binding-自定义参数绑定"><a href="#Customizing-Parameters-Binding-自定义参数绑定" class="headerlink" title="Customizing Parameters Binding (自定义参数绑定)"></a>Customizing Parameters Binding (自定义参数绑定)</h3><p>使用方法参数来表示 <code>POST</code> 请求的 body:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Post</span></span><br><span class="line"><span class="meta">@SingleResult</span></span><br><span class="line">Publisher&lt;Pet&gt; save(<span class="meta">@NotBlank</span> String name,</span><br><span class="line">                    <span class="meta">@Min</span>(<span class="number">1</span>L) <span class="type">int</span> age)</span><br></pre></td></tr></table></figure>
+
+<p><code>save</code> 方法默认使用如下 JSON 执行一个 HTTP <code>POST</code> 请求:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Dino&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">10</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>但是, 你可能希望自定义作为正文, 参数, URI变量等发送的内容</p>
+<p><code>@Client</code> 注解在这方法非常灵活, 支持与 Micronaut 的 HTTP server 相同的 <code>io.micronaut.http.annotation</code></p>
+<p>Example - 定义一个 URI模板, <code>name</code> 参数作为 URI模板 的一部分 而 <code>@Body</code> 声明发送给 server 的内容, 有 <code>Pet</code> POJO 表示:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Post</span>(<span class="string">&#x27;/&#123;name&#125;&#x27;</span>)</span><br><span class="line">Mono&lt;Pet&gt; save(</span><br><span class="line">    <span class="meta">@NotBlank</span> String name,  <span class="comment">// 1</span></span><br><span class="line">    <span class="meta">@Body</span> <span class="meta">@Valid</span> Pet pet    <span class="comment">// 2</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><code>1</code> : The name parameter, included as part of the URI, and declared <code>@NotBlank</code></p>
+<p><code>2</code> : The <code>pet</code> parameter, used to encode the body and declared <code>@Valid</code></p>
+<p>Table - Parameter Binding Annotations:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Annotation</th>
+<th align="left">Description</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>@Body</code></td>
+<td align="left">Specific the parameter for the body of the request</td>
+<td align="left"><code>@Body String body</code></td>
+</tr>
+<tr>
+<td align="left"><code>@CookieValue</code></td>
+<td align="left">Specific parameters to be sent as cookies</td>
+<td align="left"><code>@CookieValue</code> String myCookie</td>
+</tr>
+<tr>
+<td align="left"><code>@Header</code></td>
+<td align="left">Specific parameters to be sent as HTTP headers</td>
+<td align="left"><code>@Header String requestId</code></td>
+</tr>
+<tr>
+<td align="left"><code>@QueryValue</code></td>
+<td align="left">Customizes the name of the URI parameter to bind from</td>
+<td align="left"><code>@QueryValue(&quot;userAge&quot;) Integer age</code></td>
+</tr>
+<tr>
+<td align="left"><code>@PathVariable</code></td>
+<td align="left">Binds a parameter exclusively from a <code>Path Variable</code></td>
+<td align="left"><code>@PathVariable Long id</code></td>
+</tr>
+<tr>
+<td align="left"><code>@RequestAttribute</code></td>
+<td align="left">Specific parameters to be set as request attributes</td>
+<td align="left"><code>@RequestAttribute Integer locationId</code></td>
+</tr>
+</tbody></table>
+<p>始终使用 <code>@Produces</code> 或 <code>@Consumes</code>, 而不是提供一个 <code>Content-Type</code> 或 <code>Accept</code> 的 header</p>
+<h4 id="Query-values-formatting-请求值格式化"><a href="#Query-values-formatting-请求值格式化" class="headerlink" title="Query values formatting (请求值格式化)"></a>Query values formatting (请求值格式化)</h4><p><code>@Format</code> 注解可以和 <code>@QueryValue</code> 注解一起使用来格式化 query values</p>
+<p>支持的 values 是: <code>csv</code>, <code>ssv</code>, <code>pipes</code>, <code>multi</code>, <code>deep-object</code>. 和 <a class="link"   target="_blank" rel="noopener" href="https://swagger.io/docs/specification/serialization/" >Open API v3<i class="fas fa-external-link-alt"></i></a> 请求参数的 <code>style</code> 属性相似</p>
+<p>格式化只能应用于 <code>java.lang.Iterable</code>, <code>java.util.Map</code>, 使用了 <code>@Introspected</code> 注解的 POJO</p>
+<p>Table - 不同值会怎样被格式化:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Format</th>
+<th align="left">Iterable example</th>
+<th align="left">Map or POJO example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Original value</td>
+<td align="left">[“Mike”, “Adam”, “Kate”]</td>
+<td align="left">{“name”: “Mike”, “age”: 30}</td>
+</tr>
+<tr>
+<td align="left">“CSV”</td>
+<td align="left">“param&#x3D;Mike,Adam,Kate”</td>
+<td align="left">“param&#x3D;name,Mike,age,30”</td>
+</tr>
+<tr>
+<td align="left">“SSV”</td>
+<td align="left">“param&#x3D;Mike Adam Kate”</td>
+<td align="left">“param&#x3D;name Mike age 30”</td>
+</tr>
+<tr>
+<td align="left">“PIPES”</td>
+<td align="left">“param&#x3D;Mike</td>
+<td align="left">Adam</td>
+</tr>
+<tr>
+<td align="left">“MULTI”</td>
+<td align="left">“param&#x3D;Mike&amp;param&#x3D;Adam&amp;param&#x3D;Kate”</td>
+<td align="left">“name&#x3D;Mike&amp;age&#x3D;30”</td>
+</tr>
+<tr>
+<td align="left">“DEEP_OBJECT</td>
+<td align="left">“param[0]&#x3D;Mike&amp;param[1]&#x3D;Adam&amp;param[2]&#x3D;Kate”</td>
+<td align="left">“param[name]&#x3D;Mike&amp;param[age]&#x3D;30”</td>
+</tr>
+</tbody></table>
+<h5 id="Type-Based-Binding-Parameters-基于类型的参数绑定"><a href="#Type-Based-Binding-Parameters-基于类型的参数绑定" class="headerlink" title="Type-Based Binding Parameters (基于类型的参数绑定)"></a>Type-Based Binding Parameters (基于类型的参数绑定)</h5><p>有一些参数通过它们的类型而不是它们的注解来识别</p>
+<p>Table - Parameter types and their purpose:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>BasicAuth</code></td>
+<td align="left">Sets the <code>Authorization</code> header</td>
+<td align="left"><code>BasicAuth basicAuth</code></td>
+</tr>
+<tr>
+<td align="left"><code>HttpHeaders</code></td>
+<td align="left">Adds multiple headers to the request</td>
+<td align="left"><code>HttpHeaders headers</code></td>
+</tr>
+<tr>
+<td align="left"><code>Cookies</code></td>
+<td align="left">Adds multiple cookies to the request</td>
+<td align="left"><code>Cookies cookie</code></td>
+</tr>
+<tr>
+<td align="left"><code>Cookie</code></td>
+<td align="left">Adds a cookie to the request</td>
+<td align="left"><code>Cookie cookie</code></td>
+</tr>
+<tr>
+<td align="left"><code>Locale</code></td>
+<td align="left">Sets the <code>Accept-Language</code> header. Annotate with <code>@QueryValue</code> or <code>@PathVariable</code> to populate a URI variable</td>
+<td align="left"><code>Locale locale</code></td>
+</tr>
+</tbody></table>
+<h5 id="Custom-Binding-自定义绑定"><a href="#Custom-Binding-自定义绑定" class="headerlink" title="Custom Binding (自定义绑定)"></a>Custom Binding (自定义绑定)</h5><p><code>ClientArgumentRequestBinder</code> API 绑定 client 参数到请求中</p>
+<p>在绑定处理时自动使用作为一个 Bean 进行注册的自定义绑定类</p>
+<p>将会优先搜索基于注解绑定器, 其次搜索基于类型的绑定器</p>
+<h6 id="Binding-By-Annotation-通过注解进行绑定"><a href="#Binding-By-Annotation-通过注解进行绑定" class="headerlink" title="Binding By Annotation (通过注解进行绑定)"></a>Binding By Annotation (通过注解进行绑定)</h6><p>要根据参数上的注解控制参数如何绑定到请求上, 请创建 <code>AnnotatedClientArgumentRequestBinder</code> 类型的 Bean</p>
+<p>所有的注解都必须使用 <code>@Bindable</code> 注解进行修饰</p>
+<p>Example - Client with <code>@Metadata</code> Argument:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Client</span>(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">MetadataClient</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Get</span>(<span class="string">&#x27;/client/bind&#x27;</span>)</span><br><span class="line">    String get(<span class="meta">@Metadata</span> Map metadata)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - <code>@Metadata</code> Annotation:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.core.bind.annotation.Bindable</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Documented</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.ElementType.PARAMETER</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.RetentionPolicy.RUNTIME</span><br><span class="line"></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(PARAMETER)</span><br><span class="line"><span class="meta">@Bindable</span></span><br><span class="line"><span class="meta">@interface</span> Metadata &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果没有任何额外的代码, client 将会尝试将转换 <code>metadata</code> 为字符串并将其作为一个 query parameter 进行附加</p>
+<p>在这个例子中, 这并不是我们想要的效果, 所以要自定义一个 binder</p>
+<p>下面的 binder 处理传递给 clients 的使用了 <code>@Metadata</code> 注解修饰参数, 然后修改请求来包含一个想要的 header.</p>
+<p>binder 实现可以修改为接收除 Map 之外的更多类型的数据</p>
+<p>Example - Annotation Argument Binder:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.NonNull</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.convert.ArgumentConversionContext</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.naming.NameUtils</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.util.StringUtils</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.MutableHttpRequest</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.client.bind.AnnotatedClientArgumentRequestBinder</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.client.bind.ClientRequestUriContext</span><br><span class="line"><span class="keyword">import</span> org.jetbrains.annotation.NotNull</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Singleton</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MetadataClientArgumentBinder</span> <span class="keyword">implements</span> <span class="title class_">AnnotatedClientArgumentRequestBinder</span>&lt;Metadata&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> Class&lt;Metadata&gt; annotationType = Metadata</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="type">void</span> bind(<span class="meta">@NotNull</span> ArgumentConversionContext&lt;Object&gt; context,</span><br><span class="line">              <span class="meta">@NotNull</span> ClientRequestUriContext uriContext,</span><br><span class="line">              <span class="meta">@NotNull</span> Object value,</span><br><span class="line">              <span class="meta">@NotNull</span> MutableHttpRequest&lt;?&gt; request) &#123;</span><br><span class="line">        if (value instanceof Map) &#123;</span><br><span class="line">            for (entry in value.entrySet()) &#123;</span><br><span class="line">                String key = NameUtils.hyphenate(StringUtils.capitalize(entry.key as String), false)</span><br><span class="line">                request.header(<span class="string">&quot;X-Metadata-$key&quot;</span>, entry.value as String)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="Binding-By-Type-通过类型进行绑定"><a href="#Binding-By-Type-通过类型进行绑定" class="headerlink" title="Binding By Type (通过类型进行绑定)"></a>Binding By Type (通过类型进行绑定)</h6><p>为了根据参数的类型绑定到请求, 创建一个类型为 <code>TypedClientArgumentRequestBinder</code> 的 Bean</p>
+<p>Example - Client With Metadata Argument:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Client</span>(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">MetadataClient</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Get</span>(<span class="string">&#x27;/client/bind&#x27;</span>)</span><br><span class="line">    String get(Metadata metadata)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果没有任何额外的代码, client 将会尝试将转换 <code>metadata</code> 为字符串并将其作为一个 query parameter 进行附加</p>
+<p>在这个例子中, 这并不是我们想要的效果, 所以要自定义一个 binder</p>
+<p>下面例子中的 binder 处理类型为 <code>Metadata</code> 的传递给 client 的参数, 并修改请求为包含想要的 header:</p>
+<p>Example - Typed Argument Binder:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.NonNull</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.convert.ArgumentConversionContext</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.type.Argument</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.MutableHttpRequest</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.client.bind.ClientRequestUriContext</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.client.bind.TypedClientArgumentRequestBinder</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Singleton</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MetadataClientArgumentBinder</span> <span class="keyword">implements</span> <span class="title class_">TypedClientArgumentRequestBinder</span>&lt;Metadata&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    Argument&lt;Metadata&gt; argumentType() &#123; Argument.of(Metadata) &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="type">void</span> bind(<span class="meta">@NonNull</span> ArgumentConversionContext&lt;Metadata&gt; context,</span><br><span class="line">              <span class="meta">@NonNull</span> ClientRequestUriContext uriContext,</span><br><span class="line">              <span class="meta">@NonNull</span> Metadata value,</span><br><span class="line">              <span class="meta">@NonNull</span> MutableHttpRequest&lt;?&gt; request) &#123;</span><br><span class="line">        request.header(<span class="string">&quot;X-Metadata-Version&quot;</span>, value.version.toString())</span><br><span class="line">        request.header(<span class="string">&quot;X-Metadata-Deployment-Id&quot;</span>, value.deploymentId.toString())</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="Binding-On-Method-在方法上进行绑定"><a href="#Binding-On-Method-在方法上进行绑定" class="headerlink" title="Binding On Method (在方法上进行绑定)"></a>Binding On Method (在方法上进行绑定)</h5><p>也可以创建一个 binder, 通过方法上的请求注解来更改请求</p>
+<p>Example - Client With Annotated Method:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Client</span>(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">NameAuthorizedClient</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Get</span>(<span class="string">&#x27;/client/authorized-resource&#x27;</span>)</span><br><span class="line">    <span class="meta">@NameAuthorization</span>(name = <span class="string">&#x27;Bo&#x27;</span>)</span><br><span class="line">    String get()</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - <code>@NameAuthorization</code> Annotation Definition:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(METHOD)</span><br><span class="line"><span class="meta">@Bindable</span></span><br><span class="line"><span class="meta">@interface</span> NameAuthorization &#123;</span><br><span class="line">    <span class="meta">@AliasFor</span>(member = <span class="string">&quot;name&quot;</span>)</span><br><span class="line">    String value() <span class="keyword">default</span> <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@AliasFor</span>(member = <span class="string">&quot;value&quot;</span>)</span><br><span class="line">    String name() <span class="keyword">default</span> <span class="string">&quot;&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - Specific the behaviour:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NameAuthorizationBinder</span> <span class="keyword">implements</span> <span class="title class_">AnnotatedClientRequestBinder</span>&lt;NameAuthorization&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotNull</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    Class&lt;NameAuthorization&gt; getAnnotationType() &#123; NameAuthorization.<span class="keyword">class</span> &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="type">void</span> bind(</span><br><span class="line">        <span class="meta">@NonNull</span> MethodInvocationContext&lt;Object, Object&gt; context,</span><br><span class="line">        <span class="meta">@NonNull</span> ClientResponseUriContext uriContext,</span><br><span class="line">        <span class="meta">@NonNull</span> MutableHttpRequest&lt;?&gt; request</span><br><span class="line">    ) &#123;</span><br><span class="line">        context.getValue(NameAuthorization.class)</span><br><span class="line">               .ifPresent(name -&gt; uriContext.addQueryParameter(<span class="string">&quot;name&quot;</span>, String.valueOf(name)))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Streaming-with-Client-使用-Client-进行流式处理"><a href="#Streaming-with-Client-使用-Client-进行流式处理" class="headerlink" title="Streaming with @Client (使用 @Client 进行流式处理)"></a>Streaming with <code>@Client</code> (使用 <code>@Client</code> 进行流式处理)</h3><p><code>@Client</code> 注解还可以处理流式 HTTP 响应</p>
+<h4 id="Streaming-JSON-with-Client-使用-Client-进行-JSON-流式处理"><a href="#Streaming-JSON-with-Client-使用-Client-进行-JSON-流式处理" class="headerlink" title="Streaming JSON with @Client (使用 @Client 进行 JSON 流式处理)"></a>Streaming JSON with <code>@Client</code> (使用 <code>@Client</code> 进行 JSON 流式处理)</h4><p>可以定义一个 client 来返回一个无界的 <code>Publisher</code>, 例如 Reactor 的 <code>Flux</code> 或 RxJava 的 <code>Flowable</code></p>
+<p>Example:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.http.annotation.Get</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.client.annotation.Client</span><br><span class="line"><span class="keyword">import</span> org.reactivestreams.Publisher</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> io.micronaut.http.MediaType.APPLICATION_JSON_STREAM</span><br><span class="line"></span><br><span class="line"><span class="meta">@Client</span>(<span class="string">&#x27;/streaming&#x27;</span>)</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">HeadlineClient</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Get</span>(value = <span class="string">&#x27;/headlines&#x27;</span>, processes = APPLICATION_JSON_STREAM)     <span class="comment">// 1</span></span><br><span class="line">    Publisher&lt;Headline&gt; streamHeadlines()                               <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>1</code> : The <code>@Get</code> method processes responses of type <code>APPLICATION_JSON_STREAM</code></p>
+<p><code>2</code> : The return type is <code>Publisher</code></p>
+<p>Example - Test - Streaming HeadlineClient:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="string">&quot;test client annotation streaming&quot;</span>() <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="symbol">when:</span></span><br><span class="line">    <span class="keyword">def</span> headlineClient = embeddedServer.applicationContext</span><br><span class="line">                                       .getBean(HeadlineClient)</span><br><span class="line"></span><br><span class="line">    Mono&lt;Headline&gt; firstHeadline = Mono.from(headlineClient.streamHeadlines())</span><br><span class="line"></span><br><span class="line">    Headline headline = firstHeadline.block()</span><br><span class="line"></span><br><span class="line">    <span class="symbol">then:</span></span><br><span class="line">    headline</span><br><span class="line">    headline.text.startsWith(<span class="string">&quot;Latest Headline&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Streaming-Clients-and-Response-Types-流式客户端和响应类型"><a href="#Streaming-Clients-and-Response-Types-流式客户端和响应类型" class="headerlink" title="Streaming Clients and Response Types (流式客户端和响应类型)"></a>Streaming Clients and Response Types (流式客户端和响应类型)</h4><p>在上面的例子中, 是期望 server 返回一个 JSON 对象流的, 并且 Content-Type 为 <code>applicatoin/x-json-stream</code>, 例如:</p>
+<p>Example - A JSON Stream:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;The Stand&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;The Shining&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>一系列 JSON 对象实际上不是有效的 JSON, 因此响应的 Content-Type 不能是 <code>application/json</code></p>
+<p>有效的 JSON 返回应该是返回一个数组:</p>
+<p>Example - A JSON Array:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span><span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;The Stand&quot;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span><span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;The Shining&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<p>然而, Micronuat 的客户端确实支持通过 <code>application/x-json-stream</code> 传输单个 JSON 对象以及使用 <code>application/json</code> 定义的 JSON 数组</p>
+<p>如果 server 返回 <code>application/json</code> 且返回一个 non-single <code>Publisher</code>, client 在数组元素可用时对其进行流式传输</p>
+<h4 id="Streaming-Clients-and-Read-Timeout-流式客户端和读取超时"><a href="#Streaming-Clients-and-Read-Timeout-流式客户端和读取超时" class="headerlink" title="Streaming Clients and Read Timeout (流式客户端和读取超时)"></a>Streaming Clients and Read Timeout (流式客户端和读取超时)</h4><p>当流式传输来自服务器的响应时, 底层的 HTTP client 不会应用默认的 <code>HttpClientConfiguration</code> 中的 <code>readTimeout</code> 设置, 因为流式响应的读取之间的延迟可能与正常的读取不同</p>
+<p>作为代替, <code>read-idle-timeout</code> 设置(默认为 5 分钟) 指明了在一个连接空闲之后什么时候进行关闭</p>
+<p>如果你从 server 流式传输数据, 每个数据之间定义了超过 5 分钟的延迟, 那么你可以调整 <code>readIdleTimeout</code></p>
+<p>Example - Adjusting the readIdleTimeout:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">micronaut:</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">        <span class="attr">client:</span></span><br><span class="line">            <span class="attr">read-idle-timeout:</span> <span class="string">10m</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Streaming-Server-Sent-Events-流式服务发送事件"><a href="#Streaming-Server-Sent-Events-流式服务发送事件" class="headerlink" title="Streaming Server Sent Events (流式服务发送事件)"></a>Streaming Server Sent Events (流式服务发送事件)</h4><blockquote>
+<p>Micronaut features a native client for Server Sent Events (SSE) defined by the interface SseClient.</p>
+</blockquote>
+<p>Micronaut 具有用于由 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/client/sse/SseClient.html" >SseClient<i class="fas fa-external-link-alt"></i></a> 接口定义的 Server Sent Events (SSE) 的原生客户端</p>
+<blockquote>
+<p>You can use this client to stream SSE events from any server that emits them.</p>
+</blockquote>
+<p>你可以使用这个客户端从任何输出 SSE 的 Server 中流式传输 SSE</p>
+<p>尽管 SSE 流通常被浏览器 <code>EventSource</code> 消费, 但在一些场景下你可能需要通过 <code>SseClient</code> 来消费 SSE 流, 例如在单元测试中, 或在作为请求其他服务的网关 Micronaut 中</p>
+<p><code>@Client</code> 注解也支持消费 SSE 流</p>
+<p>Example - 考虑如下输出 SSE 流的 Controller 方法:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Get</span>(value = <span class="string">&#x27;/headlines&#x27;</span>, processes = MediaType.TEXT_EVENT_STREAM) <span class="comment">// 1</span></span><br><span class="line">Flux&lt;Event&lt;Headline&gt;&gt; streamHeadlines() &#123;</span><br><span class="line"></span><br><span class="line">    Flux.&lt;Event&lt;Headline&gt;&gt;create(   <span class="comment">// 2</span></span><br><span class="line">        &#123; emitter -&gt;</span><br><span class="line">            Headline headline = <span class="keyword">new</span> Headline(<span class="attr">text:</span> <span class="string">&quot;Latest Headline at $&#123;ZonedDateTime.now()&#125;&quot;</span>)</span><br><span class="line">            emitter.next(Event.of(headline))</span><br><span class="line">            emitter.complete()</span><br><span class="line">        &#125;,</span><br><span class="line">        FluxSink.OverflowStrategy.BUFFER</span><br><span class="line">    )</span><br><span class="line">    .repeat(<span class="number">100</span>)    <span class="comment">// 3</span></span><br><span class="line">    .delayElements(Duration.of(<span class="number">1</span>, ChronoUnit.SECONDS))  <span class="comment">// 4</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>1</code> : The controller defines a <code>@Get</code> annotation that produces a <code>MediaType.TEXT_EVENT_STREAM</code></p>
+<p><code>2</code> : The method uses Reactor to emit a <code>Headline</code> object</p>
+<p><code>3</code> : The <code>repeat</code> method repeats the emission 100 times</p>
+<p><code>4</code> : With a delay of one second between each</p>
+<p>注意, 方法的返回值仍然是 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/sse/Event.html" >Event<i class="fas fa-external-link-alt"></i></a>, 且使用 <code>Event.of</code> 方法来创建流式传输给客户端的事件</p>
+<p>要定义一个客户端来消费事件, 定义一个 processes <code>MediaType.TEXT_EVENT_STREAM</code> 的方法:</p>
+<p>Example - SSE Client:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Client</span>(<span class="string">&#x27;/streaming/sse&#x27;</span>)</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">HeadlineClient</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Get</span>(value = <span class="string">&#x27;/headlines&#x27;</span>, processes = TEXT_EVENT_STREAM)</span><br><span class="line">    Publisher&lt;Event&lt;Headline&gt;&gt; streamHeadlines()</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Flux</code> 的泛型类型可以是 <code>Event</code>, 在这种情况下你将收到完整的事件对象, 也可以是 POJO, 在这种情况下你讲仅收到从 JSON 转换而来的事件中包含的数据</p>
+<h3 id="Error-Response-错误响应"><a href="#Error-Response-错误响应" class="headerlink" title="Error Response (错误响应)"></a>Error Response (错误响应)</h3><p>如果返回的 HTTP 响应的状态码是 400 或更高, 那么会创建一个 <code>HttpClientResponseException</code></p>
+<p>这个 Exception 包含了原始的响应</p>
+<p>Exception 怎样抛出取决于方法的返回值类型:</p>
+<ul>
+<li>对于响应式响应类型, Exception 作为错误通过 Publisher 传递</li>
+<li>对于阻塞式响应类型, Exception 会被抛出, 调用者应该捕获并处理这个异常</li>
+</ul>
+<blockquote>
+<p>The one exception to this rule is HTTP Not Found (404) responses. This exception only applies to the declarative client.</p>
+</blockquote>
+<p>这个规则的一个例外是 <code>HTTP Not Found</code> (404) 响应. 这个 Exception 仅适用于声明式 client</p>
+<blockquote>
+<p>HTTP Not Found (404) responses for blocking return types is not considered an error condition and the client exception will not be thrown. That behavior includes methods that return void.</p>
+</blockquote>
+<p>阻塞式响应类型的 <code>HTTP Not Found</code> (404) 响应不被认为是错误条件, 并且不会引发 client 异常. 这个行为包括返回 <code>void</code> 的方法</p>
+<p>如果方法的返回值是 <code>HttpResponse</code>, 那么原始的响应会被返回</p>
+<p>如果方法的返回值是 <code>Optional</code>, 那么一个 empty 的 Optional 会被返回</p>
+<p>对于所有其他类型, <code>null</code> 将会被返回</p>
+<h3 id="Customizing-Request-Headers-自定义请求头"><a href="#Customizing-Request-Headers-自定义请求头" class="headerlink" title="Customizing Request Headers (自定义请求头)"></a>Customizing Request Headers (自定义请求头)</h3><p>自定义请求 Header 值得特别讨论, 因为有几种方法使用</p>
+<h4 id="Populating-Headers-Using-Configuration-使用配置来填充请求头"><a href="#Populating-Headers-Using-Configuration-使用配置来填充请求头" class="headerlink" title="Populating Headers Using Configuration (使用配置来填充请求头)"></a>Populating Headers Using Configuration (使用配置来填充请求头)</h4><blockquote>
+<p>The @Header annotation can be declared at the type level and is repeatable such that it is possible to drive the request headers sent via configuration using annotation metadata.</p>
+</blockquote>
+<p><code>@Header</code> 注解可以在类级别声明且可以重复声明, 这样就可以使用注解元数据(annotation metadata)来驱动通过配置发送的请求 Header</p>
+<p>Example - Defining Headers via Configuration:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Client</span>(<span class="string">&#x27;/pets&#x27;</span>)</span><br><span class="line"><span class="meta">@Header</span>(name = <span class="string">&#x27;X-Pet-Client&#x27;</span>, value = <span class="string">&#x27;$&#123;pet.client.id&#125;&#x27;</span>)</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">PetClient</span> <span class="keyword">extends</span> <span class="title class_">PetOperations</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@SingleResult</span></span><br><span class="line">    Publisher&lt;Pet&gt; save(<span class="meta">@NotBlank</span> String name, <span class="meta">@Min</span>(<span class="number">1</span>L) <span class="type">int</span> age)</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Get</span>(<span class="string">&#x27;/&#123;name&#125;&#x27;</span>)</span><br><span class="line">    <span class="meta">@SingleResult</span></span><br><span class="line">    Publisher&lt;Pet&gt; get(String name)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子中在 <code>PetClient</code> 接口上定义了 <code>@Header</code> 注解, 这个注解使用属性占位符配置读取 <code>pet.client.id</code> 属性</p>
+<p>然后在 <code>applicaton.yml</code> 中配置这个占位符对应的值:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pet:</span></span><br><span class="line">    <span class="attr">client:</span></span><br><span class="line">        <span class="attr">id:</span> <span class="string">foo</span></span><br></pre></td></tr></table></figure>
+
+<p>或者, 可以通过一个环境变量 <code>PET_CLIENT_ID</code> 来提供占位符值</p>
+<h4 id="Populating-Headers-using-a-Client-Filter-使用一个客户端过滤器来填充请求头"><a href="#Populating-Headers-using-a-Client-Filter-使用一个客户端过滤器来填充请求头" class="headerlink" title="Populating Headers using a Client Filter (使用一个客户端过滤器来填充请求头)"></a>Populating Headers using a Client Filter (使用一个客户端过滤器来填充请求头)</h4><p>或者, 为了动态填充 header, 另一个选项是使用一个 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#clientFilter" >Client Filter<i class="fas fa-external-link-alt"></i></a></p>
+<p>查看 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#clientFilter" >Client Filter<i class="fas fa-external-link-alt"></i></a> 获取更多信息</p>
+<h3 id="Customizing-Jackson-Settings-自定义-Jackson-设置"><a href="#Customizing-Jackson-Settings-自定义-Jackson-设置" class="headerlink" title="Customizing Jackson Settings (自定义 Jackson 设置)"></a>Customizing Jackson Settings (自定义 Jackson 设置)</h3><p>正如上面提到的, Jackson 被用来将消息编码为 JSON</p>
+<p>一个默认的 Jackson <code>ObjectMapper</code> 会被配置, 然后被 Micronaut 的 HTTP clients 使用</p>
+<p>你可以使用 <code>application.yml</code> 中通过 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/jackson/JacksonConfiguration.html" >JacksonConfiguration<i class="fas fa-external-link-alt"></i></a> 类定义的属性覆盖用于构造 <code>ObjectMapper</code> 的设置</p>
+<p>Example- Enables indented output for Jackson:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">jackson:</span></span><br><span class="line">    <span class="attr">serialization:</span></span><br><span class="line">        <span class="attr">indentOutput:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>但是, 这个配置会应用到全局, 同时影响 HTTP server 怎样渲染 JSON 和 HTTP client 怎样发送 JSON</p>
+<p>因此, 有时候需要提供一个特定 client 的 Jackson 设置</p>
+<p>可以在一个 client 上使用 <code>@JacksonFeatures</code> 注解来进行特性 client 设置:</p>
+<p>Example - Jackson Features:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Client</span>(</span><br><span class="line">    id = EurekaClient.SERVICE_ID,</span><br><span class="line">    path = <span class="string">&#x27;/eureka&#x27;</span>,</span><br><span class="line">    configuration = EurekaConfiguration.<span class="keyword">class</span></span><br><span class="line">)</span><br><span class="line"><span class="meta">@JacksonFeatures</span>(</span><br><span class="line">    enabledSerializationFeatures = WRAP_ROOT_VALUE,</span><br><span class="line">    disabledSerializationFeatures = WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED,</span><br><span class="line">    enabledDeserializationFeatures = &#123;UNWRAP_ROOT_VALUE, ACCEPT_SINGLE_VALUE_AS_ARRAY&#125;</span><br><span class="line">)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">EurekaClient</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>@JacksonFeatures</code> 还不能满足自定义需求, 可以为 <code>ObjectMapper</code> 编写一个 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/context/event/BeanCreatedEventListener.html" >BeanCreatedEventListener<i class="fas fa-external-link-alt"></i></a>, 然后添加任何你需要的自定义配置</p>
+<h3 id="Retry-and-Circuit-Breaker-重试与断路器"><a href="#Retry-and-Circuit-Breaker-重试与断路器" class="headerlink" title="Retry and Circuit Breaker (重试与断路器)"></a>Retry and Circuit Breaker (重试与断路器)</h3><blockquote>
+<p>Recovering from failure is critical for HTTP clients, and that is where Micronaut’s integrated Retry Advice comes in handy.</p>
+</blockquote>
+<p>从故障中恢复对于 HTTP clients 来说至关重要, 这就是 Micronaut 集成的 重试 Advice 派上用场的地方</p>
+<p>可以在任何 <code>@Client</code> 接口上声明 <code>@Retryable</code> 和 <code>@CircuitBreaker</code> 注解, 然后就会应用重试策略</p>
+<p>Example - Declaring <code>@Retryable</code>:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Client</span>(<span class="string">&#x27;/pets&#x27;</span>)</span><br><span class="line"><span class="meta">@Retryable</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">PetClient</span> <span class="keyword">extends</span> <span class="title class_">PetOperations</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    Mono&lt;Pet&gt; save(String name, <span class="type">int</span> age)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#retry" >Retry Advice<i class="fas fa-external-link-alt"></i></a> 获取自定义重试的信息</p>
+<h3 id="Client-Fallbacks-客户端降级"><a href="#Client-Fallbacks-客户端降级" class="headerlink" title="Client Fallbacks (客户端降级)"></a>Client Fallbacks (客户端降级)</h3><p>在分布式系统中, 会发生故障, 最好做好准备并优雅的处理故障</p>
+<p>除此之外, 在开发微服务时, 在没有项目需要的 其他可用微服务的 情况下处理单个微服务是很常见的. 就是当前微服务需要依赖的服务不可用</p>
+<blockquote>
+<p>With that in mind, Micronaut features a native fallback mechanism that is integrated into Retry Advice that allows falling back to another implementation in the case of failure.</p>
+</blockquote>
+<p>考虑到这一点, Micronaut 提供了一个原生的集成到 重试Advice 的降级机制, 允许在失败的情况下降级到另外一个实现</p>
+<p>使用 <code>@Fallback</code> 注解, 你可以声明 client 在所有可能的重试都用尽时使用的降级实现</p>
+<p>实际上, 降级机制没有和重试严格绑定</p>
+<p>你可以声明任何一个类为 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/retry/annotation/Recoverable.html" >@Recoverable<i class="fas fa-external-link-alt"></i></a>, 如果一个方法调用失败(或者在响应式类型中输出了一个错误), 将会搜索使用 <code>@Fallback</code> 修饰的类</p>
+<p>Example - 定义一个 <code>PetFallback</code> 类来在调用失败的时候被调用:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Fallback</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PetFallback</span> <span class="keyword">implements</span> <span class="title class_">PetOperations</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    Mono&lt;Pet&gt; save(String name, <span class="type">int</span> age) &#123;</span><br><span class="line">        Pet pet = <span class="keyword">new</span> Pet(<span class="attr">name:</span> name, <span class="attr">age:</span> age)</span><br><span class="line">        Mono.just(pet)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果你需要使用降级来帮助测试外部微服务, 你可以在 <code>src/test/java</code> 中定义降级实现, 所以这些降级实现不会被包含到产品代码. 如果不通过 hystrix 使用降级, 你还要在声明式 client 上指定 <code>@Recoverable(api = PetOperations.class)</code></p>
+<p>正如你所看到的, 降级不会执行任何网络请求且非常简单, 因此会在一个外部系统不可用时提供成功的返回</p>
+<p>当然, 降级的实际行为取决于你的想法. 例如, 你可以实现一个降级实现来在真实数据不可用时从本地缓存中拉取数据, 向运营部门发送有关停机时间的警报电子邮件或其他通知。</p>
+<h3 id="Netflix-Hystrix-Support-网飞-Hystrix-的支持"><a href="#Netflix-Hystrix-Support-网飞-Hystrix-的支持" class="headerlink" title="Netflix Hystrix Support (网飞 Hystrix 的支持)"></a>Netflix Hystrix Support (网飞 Hystrix 的支持)</h3><p>如果你使用 Micronaut CLI 创建项目, 添加 <code>netflix-hystrix</code> 特性来配置 Hystrix 你的项目:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mn create-app my-app --features netflix-hystrix</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Netflix Hystrix is a fault tolerance library developed by the Netflix team and is designed to improve resilience of interprocess communication.</p>
+</blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/Netflix/Hystrix" >Netflix Hystrix<i class="fas fa-external-link-alt"></i></a> 是 Netflix 团队开发的容错库, 旨在提供进程间通信的弹性</p>
+<p>Micronaut 通过 <code>netflix-hystrix</code> 模块来集成 Hystrix, 这个模块可以添加到你的构建中:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation(<span class="string">&quot;io.micronaut.netflix:micronaut-netflix-hystrix&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Using-the-HystrixCommand-Annotation-使用-HystrixCommand-注解"><a href="#Using-the-HystrixCommand-Annotation-使用-HystrixCommand-注解" class="headerlink" title="Using the @HystrixCommand Annotation (使用 @HystrixCommand 注解)"></a>Using the <code>@HystrixCommand</code> Annotation (使用 <code>@HystrixCommand</code> 注解)</h4><p>声明了上面的注解之后, 你可以使用 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#proxyClient" >@HystrixCommand<i class="fas fa-external-link-alt"></i></a> 注解修饰任何方法( 包括定义在 <code>@Client</code> 接口中的方法 ), 然后方法的执行就会被包装在一个 Hystrix command 中</p>
+<p>Example - Using <code>@HystrixCommand</code>:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@HystrixCommand</span></span><br><span class="line">String hello(String name) &#123; <span class="string">&quot;Hello $name&quot;</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>还可以用于响应式返回类型, 例如 <code>Flux</code>, 响应式类型将会被包装到 <code>HystrixObservableCommand</code></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#proxyClient" >@HystrixCommand<i class="fas fa-external-link-alt"></i></a> 还和 Micronaut 支持的 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#retry" >Retry Advice<i class="fas fa-external-link-alt"></i></a> 和 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#clientFallback" >Fallbacks<i class="fas fa-external-link-alt"></i></a> 集成</p>
+<p>关于如何自定义 Hystrix 线程池, group 和 properties 的信息, 查看 <a class="link"   target="_blank" rel="noopener" href="https://micronaut-projects.github.io/micronaut-netflix/latest/api/io/micronaut/configuration/hystrix/annotation/HystrixCommand.html" >HystrixCommand<i class="fas fa-external-link-alt"></i></a> 的 Javadoc</p>
+<h4 id="Enabling-Hystrix-Stream-and-Dashboard-开启-Hystrix-流和仪表板"><a href="#Enabling-Hystrix-Stream-and-Dashboard-开启-Hystrix-流和仪表板" class="headerlink" title="Enabling Hystrix Stream and Dashboard (开启 Hystrix 流和仪表板)"></a>Enabling Hystrix Stream and Dashboard (开启 Hystrix 流和仪表板)</h4><p>可以在 <code>application.yml</code> 设置 <code>hystrix.stream.enabled</code> 为 <code>true</code> 来开启一个 Server Sent Event 流以发送到 <a class="link"   target="_blank" rel="noopener" href="https://github.com/Netflix-Skunkworks/hystrix-dashboard" >Hystrix Dashboard<i class="fas fa-external-link-alt"></i></a></p>
+<p>Example - Enabling Hystrix Stream:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">hystrix:</span></span><br><span class="line">    <span class="attr">stream:</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>这将会暴露一个 <code>/hystrix.stream</code> 使用 <a class="link"   target="_blank" rel="noopener" href="https://github.com/Netflix-Skunkworks/hystrix-dashboard" >Hystrix Dashboard<i class="fas fa-external-link-alt"></i></a>期望的格式的 端点</p>
+<h2 id="HTTP-Clients-Filters-HTTP-客户端过滤器"><a href="#HTTP-Clients-Filters-HTTP-客户端过滤器" class="headerlink" title="HTTP Clients Filters (HTTP 客户端过滤器)"></a>HTTP Clients Filters (HTTP 客户端过滤器)</h2><blockquote>
+<p>Often, you need to include the same HTTP headers or URL parameters in a set of requests against a third-party API or when calling another Microservice.</p>
+</blockquote>
+<p>通常, 你需要在针对第三方 API 或调用另一个微服务的一组请求中包含相同的 HTTP headers 或 URL 参数</p>
+<p>为了简化这个操作, 可以定义 <code>HttpClientFilter</code> 类, 用于所有匹配的 HTTP client 请求</p>
+<p>Example:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">BintraApi</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String URL = <span class="string">&#x27;https://api.bintray.com&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BintrayService</span> &#123;</span><br><span class="line">    <span class="keyword">final</span> HttpClient client</span><br><span class="line">    <span class="keyword">final</span> String org</span><br><span class="line"></span><br><span class="line">    BintrayService(</span><br><span class="line">        <span class="meta">@Client</span>(BintrayApi.URL) HttpClient client,      <span class="comment">// 1</span></span><br><span class="line">        <span class="meta">@Value</span>(<span class="string">&#x27;$&#123;bintray.organization&#125;&#x27;</span>) String org</span><br><span class="line">    ) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.client = client</span><br><span class="line">        <span class="variable language_">this</span>.org = org</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Flux&lt;HttpResponse&lt;String&gt;&gt; fetchRepositories() &#123;</span><br><span class="line">        client.exchange(HttpRequest.GET(<span class="string">&quot;/repos/$org&quot;</span>), String) <span class="comment">// 2</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Flux&lt;HttpResponse&lt;String&gt;&gt; fetchPackages(String repo) &#123;</span><br><span class="line">        client.exchange(HttpRequest.GET(<span class="string">&quot;/repos/$&#123;org&#125;/$&#123;repo&#125;/packages&quot;</span>), String)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>1</code> : An ReactorHttpClient is injected for the Bintray API</p>
+<p><code>2</code> : The organization is configurable via configuration</p>
+<p>Bintray API 是加密的. 为了验证你要在每个请求中添加一个 <code>Authorization</code> header, 通过<br>使用过滤器来完成:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Filter</span>(<span class="string">&#x27;/repos/**&#x27;</span>)    <span class="comment">// You can match only a subset of paths with a Client filter</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BintrayFilter</span> <span class="keyword">implements</span> <span class="title class_">HttpClientFilter</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> String username</span><br><span class="line">    <span class="keyword">final</span> String token</span><br><span class="line"></span><br><span class="line">    BintrayFilter(</span><br><span class="line">        <span class="meta">@Value</span>(<span class="string">&#x27;$&#123;bintray.username&#125;&#x27;</span>) String username,</span><br><span class="line">        <span class="meta">@Value</span>(<span class="string">&#x27;$&#123;bintray.token&#125;&#x27;</span>) String token</span><br><span class="line">    ) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.username = username</span><br><span class="line">        <span class="variable language_">this</span>.token = token</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    Publisher&lt;? extends HttpResponse&lt;?&gt;&gt; doFilter(</span><br><span class="line">        MutableHttpRequest&lt;?&gt; request,</span><br><span class="line">        ClientFilterChain chain</span><br><span class="line">    ) &#123;</span><br><span class="line">        chain.proceed(</span><br><span class="line">            request.basicAuth(username, token)  <span class="comment">// The basicAuth method includes HTTP Basic credentials</span></span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Injecting-Another-Client-into-a-HttpClientFilter-注入另一个客户端到过滤器中"><a href="#Injecting-Another-Client-into-a-HttpClientFilter-注入另一个客户端到过滤器中" class="headerlink" title="Injecting Another Client into a HttpClientFilter (注入另一个客户端到过滤器中)"></a>Injecting Another Client into a HttpClientFilter (注入另一个客户端到过滤器中)</h3><p>要创建 <code>ReactorHttpClient</code>, Micronaut 需要解析所有的 <code>HttpClientFilter</code> 实例, 这将会在将另一个 <code>ReactorHttpClient</code> 或 <code>@Client</code> Bean 注入 <code>HttpClientFilter</code> 实例时导致循环依赖</p>
+<p>为了解决这个问题, 使用 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/context/BeanProvider.html" >BeanProvider<i class="fas fa-external-link-alt"></i></a> 接口来注入另外一个 <code>ReactorHttpClient</code> 或 <code>@Client</code> Bean 到一个 <code>HttpClientFilter</code> 实例中</p>
+<p>Example:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.Requires</span><br><span class="line"><span class="keyword">import</span> io.micronaut.context.env.Environment</span><br><span class="line"><span class="keyword">import</span> io.micronaut.context.BeanProvider</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.HttpResponse</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.MutableHttpRequest</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.annotation.Filter</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.client.HttpClient</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.filter.ClientFilterChain</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.filter.HttpClientFilter</span><br><span class="line"><span class="keyword">import</span> org.reactivestreams.Publisher</span><br><span class="line"><span class="keyword">import</span> reactor.core.publisher.Flux</span><br><span class="line"><span class="keyword">import</span> reactor.core.publisher.Mono</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> io.micronaut.http.HttpRequest.GET</span><br><span class="line"></span><br><span class="line"><span class="meta">@Requires</span>(env = Environment.GOOGLE_COMPUTE)</span><br><span class="line"><span class="meta">@Filter</span>(patterns = <span class="string">&#x27;/google-auth/api/**&#x27;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GoogleAuthFilter</span> <span class="keyword">implements</span> <span class="title class_">HttpClientFilter</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> BeanProvider&lt;HttpClient&gt; authClientProvider</span><br><span class="line"></span><br><span class="line">    <span class="comment">// The BeanProvider interface is used to inject another client, avoiding a circular reference</span></span><br><span class="line">    <span class="comment">// The `get()` method of the `Provider` interface is used to obtain the client instance</span></span><br><span class="line">    GoogleAuthFilter(BeanProvider&lt;HttpClient&gt;) httpClientProvider) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.authClientProvider = httpClientProvider</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Filter-Matching-By-Annotation-通过注解来进行过滤匹配"><a href="#Filter-Matching-By-Annotation-通过注解来进行过滤匹配" class="headerlink" title="Filter Matching By Annotation (通过注解来进行过滤匹配)"></a>Filter Matching By Annotation (通过注解来进行过滤匹配)</h3><blockquote>
+<p>For cases where a filter should be applied to a client regardless of the URL, filters can be matched by the presence of an annotation applied to both the filter and the client.</p>
+</blockquote>
+<p>对于应该将过滤器应用于 client 而不考虑 URL 的情况, 过滤器可以通过同时应用于过滤器和客户端的注解来匹配</p>
+<p>在 client 和 filter 上使用相同的注解, 让 filter 通过注解来进行匹配</p>
+<p>Example:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.http.annotation.Get</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.client.annotation.Client</span><br><span class="line"></span><br><span class="line"><span class="meta">@BasicAuth</span>  <span class="comment">// 1</span></span><br><span class="line"><span class="meta">@Client</span>(<span class="string">&#x27;/message&#x27;</span>)</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">BasicAuthClient</span> &#123;</span><br><span class="line">    <span class="meta">@Get</span></span><br><span class="line">    String getMessage()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>1</code> : The <code>@BasicAuth</code> annotation is applied to the client</p>
+<p>Example - The following filter will filter the client requests:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.http.HttpResponse</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.MutableHttpRequest</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.filter.ClientFilterChain</span><br><span class="line"><span class="keyword">import</span> io.micronaut.http.filter.HttpClientFilter</span><br><span class="line"><span class="keyword">import</span> org.reactivestreams.Publisher</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Singleton</span><br><span class="line"></span><br><span class="line"><span class="meta">@BasicAuth</span>  <span class="comment">// 1</span></span><br><span class="line"><span class="meta">@Singleton</span>  <span class="comment">//2</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BasicAuthClientFilter</span> <span class="keyword">implements</span> <span class="title class_">HttpClientFilter</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    Publisher&lt;? extends HttpResponse&lt;?&gt;&gt; doFilter(MutableHttpRequest&lt;?&gt; request,</span><br><span class="line">                                                  ClientFilterChain chain) &#123;</span><br><span class="line">        chain.proceed(request.basicAuth(<span class="string">&quot;user&quot;</span>, <span class="string">&quot;pass&quot;</span>))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>1</code> : The same annotation, <code>@BasicAuth</code>, is applied to the filter</p>
+<p><code>2</code> : Normally the <code>@Filter</code> annotation makes filters singletons by default. Because the <code>@Filter</code> annotation is not used, the desired scope must be applied</p>
+<p>Example - <code>@BasicAuth</code> 注解是一个简单的注解:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.http.annotation.FilterMatcher</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Documented</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.ElementType.PARAMETER</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.ElementType.TYPE</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.RetentionPolicy.RUNTIME</span><br><span class="line"></span><br><span class="line"><span class="meta">@FilterMatcher</span> <span class="comment">// 1</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>([TYPE, PARAMETER])</span><br><span class="line"><span class="meta">@interface</span> BasicAuth &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>1</code> : The only requirement for custom annotations is that the <code>@FilterMatcher</code> annotation must be present</p>
+<h2 id="HTTP-x2F-2-Support-HTTP-x2F-2-的支持"><a href="#HTTP-x2F-2-Support-HTTP-x2F-2-的支持" class="headerlink" title="HTTP&#x2F;2 Support (HTTP&#x2F;2 的支持)"></a>HTTP&#x2F;2 Support (HTTP&#x2F;2 的支持)</h2><p>默认情况下, Micronaut 的 HTTP client 配置为支持 HTTP 1.1</p>
+<p>要开启 HTTP&#x2F;2 的支持, 在配置中设置支持的 HTTP 版本:</p>
+<p>Example - Enabling HTTP&#x2F;2 in Clients:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">micronaut:</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">        <span class="attr">client:</span></span><br><span class="line">            <span class="attr">http-version:</span> <span class="number">2.0</span></span><br></pre></td></tr></table></figure>
+
+<p>或者在注入 client 时指定要使用的 HTTP 版本:</p>
+<p>Example - Injecting an HTTP&#x2F;2 client:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Inject</span></span><br><span class="line"><span class="meta">@Client</span>(httpVersion = HttpVersion.HTTP_2_0)</span><br><span class="line">ReactorHttpClient client</span><br></pre></td></tr></table></figure>
+
+<h2 id="HTTP-Client-Sample-HTTP-客户端例子"><a href="#HTTP-Client-Sample-HTTP-客户端例子" class="headerlink" title="HTTP Client Sample (HTTP 客户端例子)"></a>HTTP Client Sample (HTTP 客户端例子)</h2><p>HTTP Client Guide - <a class="link"   target="_blank" rel="noopener" href="https://guides.micronaut.io/micronaut-http-client/guide/index.html" >Java<i class="fas fa-external-link-alt"></i></a></p>
+<p>HTTP Client Guide - <a class="link"   target="_blank" rel="noopener" href="https://guides.micronaut.io/micronaut-http-client-groovy/guide/index.html" >Groovy<i class="fas fa-external-link-alt"></i></a></p>
+<p>HTTP Client Guide - <a class="link"   target="_blank" rel="noopener" href="https://guides.micronaut.io/micronaut-http-client-kotlin/guide/index.html" >Kotlin<i class="fas fa-external-link-alt"></i></a></p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Micronaut 中文文档 The HTTP Client</li>
+        <li>本文作者：林威羽</li>
+        <li>创建时间：2022-04-29 09:43:43</li>
+        <li>
+            本文链接：https://linweiyu21.github.io/micronaut/micronaut-the-http-client/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/Groovy/">#Groovy</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/Micronaut/">#Micronaut</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E4%B8%AD%E6%96%87/">#中文</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/micronaut/micronaut-cloud-native-features/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Micronaut 中文文档 Cloud Native Features</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/micronaut/micronaut-the-http-server/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Micronaut 中文文档 The HTTP Server</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '8xWQ0WFbKUNN4h8ixIO12etk-gzGzoHsz',
+                    appKey: '7cLjTvkIsF6aIuIVSd0um89m',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请开始你的表演',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = '林威羽';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">林威羽</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#The-HTTP-Client"><span class="nav-number">1.</span> <span class="nav-text">The HTTP Client</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-the-Low-Level-HTTP-Client-%E4%BD%BF%E7%94%A8%E4%BD%8E%E7%BA%A7%E5%88%AB-HTTP-Client"><span class="nav-number">1.1.</span> <span class="nav-text">Using the Low-Level HTTP Client (使用低级别 HTTP Client)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sending-your-first-HTTP-request-%E5%8F%91%E9%80%81%E4%BD%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA-HTTP-%E8%AF%B7%E6%B1%82"><span class="nav-number">1.1.1.</span> <span class="nav-text">Sending your first HTTP request (发送你的第一个 HTTP 请求)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Obtaining-a-HttpClient-%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA-HttpClient"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">Obtaining a HttpClient (获取一个 HttpClient)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Performing-an-HTTP-GET-%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA-HTTP-GET-%E8%AF%B7%E6%B1%82"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">Performing an HTTP GET (执行一个 HTTP GET 请求)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Debugging-x2F-Tracing-the-HTTP-Client-%E8%B0%83%E8%AF%95-x2F-%E8%B7%9F%E8%B8%AA-HTTP-Client"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">Debugging &#x2F; Tracing the HTTP Client (调试 &#x2F; 跟踪 HTTP Client)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client-Specific-Debugging-x2F-Tracing-%E6%8C%87%E5%AE%9A%E7%9A%84-Client-%E8%B0%83%E8%AF%95-x2F-%E8%B7%9F%E8%B8%AA"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">Client Specific Debugging &#x2F; Tracing (指定的 Client 调试 &#x2F; 跟踪)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Customizing-the-HTTP-Request-%E8%87%AA%E5%AE%9A%E4%B9%89-HTTP-%E8%AF%B7%E6%B1%82"><span class="nav-number">1.1.1.5.</span> <span class="nav-text">Customizing the HTTP Request (自定义 HTTP 请求)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reading-JSON-Response-%E8%AF%BB%E5%8F%96-JSON-%E5%93%8D%E5%BA%94"><span class="nav-number">1.1.1.6.</span> <span class="nav-text">Reading JSON Response (读取 JSON 响应)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Decoding-Other-Content-Types-%E8%A7%A3%E7%A0%81%E5%85%B6%E4%BB%96-Content-Types"><span class="nav-number">1.1.1.7.</span> <span class="nav-text">Decoding Other Content Types (解码其他 Content Types)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Receiving-the-Full-HTTP-Response-%E6%8E%A5%E5%8F%97%E5%AE%8C%E6%95%B4%E7%9A%84-HTTP-%E5%93%8D%E5%BA%94"><span class="nav-number">1.1.1.8.</span> <span class="nav-text">Receiving the Full HTTP Response (接受完整的 HTTP 响应)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Posting-a-Request-Body-%E5%8F%91%E9%80%81%E4%B8%80%E4%B8%AA%E8%AF%B7%E6%B1%82%E4%BD%93"><span class="nav-number">1.1.2.</span> <span class="nav-text">Posting a Request Body (发送一个请求体)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Sending-JSON-%E5%8F%91%E9%80%81-JSON"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">Sending JSON (发送 JSON)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Using-a-URI-Template-%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AA-URI-%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">Using a URI Template (使用一个 URI 模板)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sending-Form-Data-%E5%8F%91%E9%80%81%E8%A1%A8%E5%8D%95%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">Sending Form Data (发送表单数据)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multipart-Client-Uploads-Multipart-%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8A%E4%BC%A0"><span class="nav-number">1.1.3.</span> <span class="nav-text">Multipart Client Uploads (Multipart 客户端上传)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Streaming-JSON-over-HTTP-HTTP-%E4%B8%8A%E7%9A%84%E6%B5%81%E5%BC%8F-JSON"><span class="nav-number">1.1.4.</span> <span class="nav-text">Streaming JSON over HTTP (HTTP 上的流式 JSON)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configuring-HTTP-clients-%E9%85%8D%E7%BD%AE-HTTP-clients"><span class="nav-number">1.1.5.</span> <span class="nav-text">Configuring HTTP clients (配置 HTTP clients)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Global-Configuration-for-All-Clients-%E7%94%A8%E4%BA%8E%E5%85%A8%E9%83%A8-Clients-%E7%9A%84%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">Global Configuration for All Clients (用于全部 Clients 的全局配置)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Client-Specific-Configuration-%E7%89%B9%E5%AE%9A-Client-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.5.2.</span> <span class="nav-text">Client Specific Configuration (特定 Client 配置)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Using-HTTP-Client-Connection-Pooling-%E4%BD%BF%E7%94%A8-HTTP-Client-%E8%BF%9E%E6%8E%A5%E6%B1%A0%E5%8C%96"><span class="nav-number">1.1.5.3.</span> <span class="nav-text">Using HTTP Client Connection Pooling (使用 HTTP Client 连接池化)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Configuring-Event-Loop-Groups-%E9%85%8D%E7%BD%AE-Event-Loop-%E7%BB%84"><span class="nav-number">1.1.5.4.</span> <span class="nav-text">Configuring Event Loop Groups (配置 Event Loop 组)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Error-Responses-%E9%94%99%E8%AF%AF%E5%93%8D%E5%BA%94"><span class="nav-number">1.1.6.</span> <span class="nav-text">Error Responses (错误响应)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bind-Errors-%E7%BB%91%E5%AE%9A%E9%94%99%E8%AF%AF"><span class="nav-number">1.1.7.</span> <span class="nav-text">Bind Errors (绑定错误)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proxying-Requests-with-ProxyHttpClient-%E4%BD%BF%E7%94%A8-ProxyingHttpClient-%E6%9D%A5%E4%BB%A3%E7%90%86%E8%AF%B7%E6%B1%82"><span class="nav-number">1.2.</span> <span class="nav-text">Proxying Requests with ProxyHttpClient (使用 ProxyingHttpClient 来代理请求)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Declarative-HTTP-Clients-with-Client-%E4%BD%BF%E7%94%A8-Client-%E7%9A%84%E5%A3%B0%E6%98%8E%E5%BC%8F-HTTP-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">1.3.</span> <span class="nav-text">Declarative HTTP Clients with @Client (使用 @Client 的声明式 HTTP 客户端)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Customizing-Parameters-Binding-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A"><span class="nav-number">1.3.1.</span> <span class="nav-text">Customizing Parameters Binding (自定义参数绑定)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Query-values-formatting-%E8%AF%B7%E6%B1%82%E5%80%BC%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">Query values formatting (请求值格式化)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Type-Based-Binding-Parameters-%E5%9F%BA%E4%BA%8E%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A"><span class="nav-number">1.3.1.1.1.</span> <span class="nav-text">Type-Based Binding Parameters (基于类型的参数绑定)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Custom-Binding-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%91%E5%AE%9A"><span class="nav-number">1.3.1.1.2.</span> <span class="nav-text">Custom Binding (自定义绑定)</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Binding-By-Annotation-%E9%80%9A%E8%BF%87%E6%B3%A8%E8%A7%A3%E8%BF%9B%E8%A1%8C%E7%BB%91%E5%AE%9A"><span class="nav-number">1.3.1.1.2.1.</span> <span class="nav-text">Binding By Annotation (通过注解进行绑定)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Binding-By-Type-%E9%80%9A%E8%BF%87%E7%B1%BB%E5%9E%8B%E8%BF%9B%E8%A1%8C%E7%BB%91%E5%AE%9A"><span class="nav-number">1.3.1.1.2.2.</span> <span class="nav-text">Binding By Type (通过类型进行绑定)</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Binding-On-Method-%E5%9C%A8%E6%96%B9%E6%B3%95%E4%B8%8A%E8%BF%9B%E8%A1%8C%E7%BB%91%E5%AE%9A"><span class="nav-number">1.3.1.1.3.</span> <span class="nav-text">Binding On Method (在方法上进行绑定)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Streaming-with-Client-%E4%BD%BF%E7%94%A8-Client-%E8%BF%9B%E8%A1%8C%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86"><span class="nav-number">1.3.2.</span> <span class="nav-text">Streaming with @Client (使用 @Client 进行流式处理)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Streaming-JSON-with-Client-%E4%BD%BF%E7%94%A8-Client-%E8%BF%9B%E8%A1%8C-JSON-%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">Streaming JSON with @Client (使用 @Client 进行 JSON 流式处理)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Streaming-Clients-and-Response-Types-%E6%B5%81%E5%BC%8F%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%92%8C%E5%93%8D%E5%BA%94%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">Streaming Clients and Response Types (流式客户端和响应类型)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Streaming-Clients-and-Read-Timeout-%E6%B5%81%E5%BC%8F%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%92%8C%E8%AF%BB%E5%8F%96%E8%B6%85%E6%97%B6"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">Streaming Clients and Read Timeout (流式客户端和读取超时)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Streaming-Server-Sent-Events-%E6%B5%81%E5%BC%8F%E6%9C%8D%E5%8A%A1%E5%8F%91%E9%80%81%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">Streaming Server Sent Events (流式服务发送事件)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Error-Response-%E9%94%99%E8%AF%AF%E5%93%8D%E5%BA%94"><span class="nav-number">1.3.3.</span> <span class="nav-text">Error Response (错误响应)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Customizing-Request-Headers-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AF%B7%E6%B1%82%E5%A4%B4"><span class="nav-number">1.3.4.</span> <span class="nav-text">Customizing Request Headers (自定义请求头)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Populating-Headers-Using-Configuration-%E4%BD%BF%E7%94%A8%E9%85%8D%E7%BD%AE%E6%9D%A5%E5%A1%AB%E5%85%85%E8%AF%B7%E6%B1%82%E5%A4%B4"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">Populating Headers Using Configuration (使用配置来填充请求头)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Populating-Headers-using-a-Client-Filter-%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AA%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%87%E6%BB%A4%E5%99%A8%E6%9D%A5%E5%A1%AB%E5%85%85%E8%AF%B7%E6%B1%82%E5%A4%B4"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">Populating Headers using a Client Filter (使用一个客户端过滤器来填充请求头)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Customizing-Jackson-Settings-%E8%87%AA%E5%AE%9A%E4%B9%89-Jackson-%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.3.5.</span> <span class="nav-text">Customizing Jackson Settings (自定义 Jackson 设置)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Retry-and-Circuit-Breaker-%E9%87%8D%E8%AF%95%E4%B8%8E%E6%96%AD%E8%B7%AF%E5%99%A8"><span class="nav-number">1.3.6.</span> <span class="nav-text">Retry and Circuit Breaker (重试与断路器)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Client-Fallbacks-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%99%8D%E7%BA%A7"><span class="nav-number">1.3.7.</span> <span class="nav-text">Client Fallbacks (客户端降级)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Netflix-Hystrix-Support-%E7%BD%91%E9%A3%9E-Hystrix-%E7%9A%84%E6%94%AF%E6%8C%81"><span class="nav-number">1.3.8.</span> <span class="nav-text">Netflix Hystrix Support (网飞 Hystrix 的支持)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Using-the-HystrixCommand-Annotation-%E4%BD%BF%E7%94%A8-HystrixCommand-%E6%B3%A8%E8%A7%A3"><span class="nav-number">1.3.8.1.</span> <span class="nav-text">Using the @HystrixCommand Annotation (使用 @HystrixCommand 注解)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Enabling-Hystrix-Stream-and-Dashboard-%E5%BC%80%E5%90%AF-Hystrix-%E6%B5%81%E5%92%8C%E4%BB%AA%E8%A1%A8%E6%9D%BF"><span class="nav-number">1.3.8.2.</span> <span class="nav-text">Enabling Hystrix Stream and Dashboard (开启 Hystrix 流和仪表板)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-Clients-Filters-HTTP-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="nav-number">1.4.</span> <span class="nav-text">HTTP Clients Filters (HTTP 客户端过滤器)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Injecting-Another-Client-into-a-HttpClientFilter-%E6%B3%A8%E5%85%A5%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%B0%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%AD"><span class="nav-number">1.4.1.</span> <span class="nav-text">Injecting Another Client into a HttpClientFilter (注入另一个客户端到过滤器中)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Filter-Matching-By-Annotation-%E9%80%9A%E8%BF%87%E6%B3%A8%E8%A7%A3%E6%9D%A5%E8%BF%9B%E8%A1%8C%E8%BF%87%E6%BB%A4%E5%8C%B9%E9%85%8D"><span class="nav-number">1.4.2.</span> <span class="nav-text">Filter Matching By Annotation (通过注解来进行过滤匹配)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-x2F-2-Support-HTTP-x2F-2-%E7%9A%84%E6%94%AF%E6%8C%81"><span class="nav-number">1.5.</span> <span class="nav-text">HTTP&#x2F;2 Support (HTTP&#x2F;2 的支持)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-Client-Sample-HTTP-%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BE%8B%E5%AD%90"><span class="nav-number">1.6.</span> <span class="nav-text">HTTP Client Sample (HTTP 客户端例子)</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

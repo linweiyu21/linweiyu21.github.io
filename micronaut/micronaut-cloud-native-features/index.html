@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Micronaut,Groovy,Gradle,Java,文档,中文">
+    <meta name="description" content="Micronaut Groovy Gradle Java 文档 中文">
+    <meta name="author" content="林威羽">
+    
+    <title>
+        
+            Micronaut 中文文档 Cloud Native Features |
+        
+        林威羽的笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(153,153,0)","avatar":"/images/avatar.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"400px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":null,"description":"def contains🚀 = ['Micronaut', 'Groovy', 'Gradle', 'etc']"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                林威羽的笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+    <a target="_blank" rel="noopener" href="https://github.com/linweiyu21/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80"
+        viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+        aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path
+          d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+          fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path
+          d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+          fill="currentColor" class="octo-body"></path>
+      </svg></a>
+    <style>
+      .github-corner:hover .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+      }
+
+      @keyframes octocat-wave {
+
+        0%,
+        100% {
+          transform: rotate(0)
+        }
+
+        20%,
+        60% {
+          transform: rotate(-25deg)
+        }
+
+        40%,
+        80% {
+          transform: rotate(10deg)
+        }
+      }
+
+      @media (max-width:500px) {
+        .github-corner:hover .octo-arm {
+          animation: none
+        }
+
+        .github-corner .octo-arm {
+          animation: octocat-wave 560ms ease-in-out
+        }
+      }
+    </style>
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Micronaut 中文文档 Cloud Native Features</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">林威羽</span>
+                        
+                            <span class="author-label">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-04-29 09:44:23</span>
+        <span class="mobile">2022-04-29 09:44</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Micronaut-%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3/">Micronaut 中文文档</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Groovy/">Groovy</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Micronaut/">Micronaut</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E4%B8%AD%E6%96%87/">中文</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <!-- TOC -->
+
+<ul>
+<li><a href="#cloud-native-features-%E4%BA%91%E5%8E%9F%E7%94%9F%E7%89%B9%E6%80%A7">Cloud Native Features (云原生特性)</a><ul>
+<li><a href="#cloud-configuration-%E4%BA%91%E9%85%8D%E7%BD%AE">Cloud Configuration (云配置)</a><ul>
+<li><a href="#using-cloud-instance-metadata-%E4%BD%BF%E7%94%A8%E4%BA%91%E5%AE%9E%E4%BE%8B%E5%85%83%E6%95%B0%E6%8D%AE">Using Cloud Instance Metadata (使用云实例元数据)</a></li>
+<li><a href="#distributed-configuration-%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE">Distributed Configuration (分布式配置)</a></li>
+<li><a href="#hashicorp-consul-support-hashicorp-consul-%E6%94%AF%E6%8C%81">HashiCorp Consul Support (HashiCorp Consul 支持)</a><ul>
+<li><a href="#starting-consul-%E5%BC%80%E5%90%AF-consul">Starting Consul (开启 Consul)</a></li>
+<li><a href="#enabling-distributed-configuration-with-consul-%E4%BD%BF%E7%94%A8-consul-%E5%BC%80%E5%90%AF%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE">Enabling Distributed Configuration with Consul (使用 Consul 开启分布式配置)</a></li>
+<li><a href="#storing-configuration-as-keyvalue-pairs-%E5%B0%86%E9%85%8D%E7%BD%AE%E4%BD%9C%E4%B8%BA%E9%94%AE%E5%80%BC%E5%AF%B9%E8%BF%9B%E8%A1%8C%E4%BF%9D%E5%AD%98">Storing Configuration as Key&#x2F;Value Pairs (将配置作为键值对进行保存)</a></li>
+<li><a href="#storing-configuration-in-yaml-json-etc-%E5%AD%98%E5%82%A8%E9%85%8D%E7%BD%AE%E5%9C%A8-yaml-json%E7%AD%89">Storing Configuration in YAML, JSON etc (存储配置在 YAML, JSON等)</a></li>
+<li><a href="#storing-configuration-as-file-references-%E5%B0%86%E9%85%8D%E7%BD%AE%E4%BD%9C%E4%B8%BA%E6%96%87%E4%BB%B6%E5%BC%95%E7%94%A8%E8%BF%9B%E8%A1%8C%E5%AD%98%E5%82%A8">Storing Configuration as File References (将配置作为文件引用进行存储)</a></li>
+</ul>
+</li>
+<li><a href="#hashicorp-vault-support-hashicorp-%E4%BF%9D%E9%99%A9%E5%BA%93%E6%94%AF%E6%8C%81">HashiCorp Vault Support (HashiCorp 保险库支持)</a></li>
+<li><a href="#spring-cloud-config-support-spring-cloud-%E9%85%8D%E7%BD%AE%E6%94%AF%E6%8C%81">Spring Cloud Config Support (Spring Cloud 配置支持)</a></li>
+<li><a href="#aws-parameter-store-support-aws-%E5%8F%82%E6%95%B0%E5%AD%98%E5%82%A8%E6%94%AF%E6%8C%81">AWS Parameter Store Support (AWS 参数存储支持)</a></li>
+<li><a href="#oracle-cloud-vault-support-oracle-cloud-vault-%E6%94%AF%E6%8C%81">Oracle Cloud Vault Support (Oracle Cloud Vault 支持)</a></li>
+<li><a href="#google-cloud-pubsub-support-google-cloud-pubsub-%E6%94%AF%E6%8C%81">Google Cloud Pub&#x2F;Sub Support (Google Cloud Pub&#x2F;Sub 支持)</a></li>
+<li><a href="#kubernetes-support-kubernetes-%E6%94%AF%E6%8C%81">Kubernetes Support (Kubernetes 支持)</a></li>
+</ul>
+</li>
+<li><a href="#service-discovery-%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0">Service Discovery (服务发现)</a><ul>
+<li><a href="#consul-support-consul-%E6%94%AF%E6%8C%81">Consul Support (Consul 支持)</a></li>
+<li><a href="#eureka-support-eureka-%E6%94%AF%E6%8C%81">Eureka Support (Eureka 支持)</a></li>
+<li><a href="#kubernetes-support-kubernetes-%E6%94%AF%E6%8C%81-1">Kubernetes Support (Kubernetes 支持)</a></li>
+<li><a href="#aws-route-53-support-aws-route-53-%E6%94%AF%E6%8C%81">AWS Route 53 Support (AWS Route 53 支持)</a></li>
+<li><a href="#manual-service-discovery-configuration-%E6%89%8B%E5%8A%A8%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0%E9%85%8D%E7%BD%AE">Manual Service Discovery Configuration (手动服务发现配置)</a></li>
+</ul>
+</li>
+<li><a href="#client-side-load-balancing-%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BE%A7%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1">Client Side Load Balancing (客户端侧负载均衡)</a><ul>
+<li><a href="#netflix-ribbon-support-netflix-ribbon-%E6%94%AF%E6%8C%81">Netflix Ribbon Support (Netflix Ribbon 支持)</a></li>
+</ul>
+</li>
+<li><a href="#distributed-tracing-%E5%88%86%E5%B8%83%E5%BC%8F%E8%BF%BD%E8%B8%AA">Distributed Tracing (分布式追踪)</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="Cloud-Native-Features-云原生特性"><a href="#Cloud-Native-Features-云原生特性" class="headerlink" title="Cloud Native Features (云原生特性)"></a>Cloud Native Features (云原生特性)</h1><p><strong>声明</strong>:</p>
+<ul>
+<li>本文由本人翻译自<a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide" >官方文档<i class="fas fa-external-link-alt"></i></a></li>
+<li>部分内容可能会有修改或删减, 一切以官方文档为准.</li>
+<li>本文翻译时 Micronaut 版本为 3.4.2</li>
+</ul>
+<blockquote>
+<p>The majority of JVM frameworks in use today were designed before the rise of cloud deployments and microservice architectures.</p>
+</blockquote>
+<p>今天使用的大多数 JVM 框架都是在云部署和微服务架构兴起之前设计的</p>
+<p>使用这些框架构建的应用都是为了部署在传统 Java 容器中的</p>
+<p>所以, 这些框架中的云支持通常作为附加组件而不是核心设计功能提供</p>
+<p>Micronaut 为了构建用于云的微服务而从零开始设计. 因此, 你的应用本身可以使用许多通常需要外部库或服务的关键功能</p>
+<blockquote>
+<p>To override one of the industry’s current favorite buzzwords, Micronaut applications are “natively cloud-native”.</p>
+</blockquote>
+<p>为了超越业界当前最流行的框架之一, Micronaut 应用程序是 “本地化云原生” 的</p>
+<p>下面是一些已经直接集成在 Micronaut 运行时的特定于云的功能 (cloud-specific features):</p>
+<ul>
+<li>分布式配置 (Distributed Configuration)</li>
+<li>服务发现 (Service Discovery)</li>
+<li>客户端侧的负载均衡 (Client-Side Load-Balancing)</li>
+<li>分布式追踪 (Distributed Tracing)</li>
+<li>无服务功能 (Serverless Functions)</li>
+</ul>
+<h2 id="Cloud-Configuration-云配置"><a href="#Cloud-Configuration-云配置" class="headerlink" title="Cloud Configuration (云配置)"></a>Cloud Configuration (云配置)</h2><p>为云构建的应用程序通常需要适应在云环境中运行, 以分布式方式读取和共享配置, 并在必要时将配置外部化到环境 (environment) 中</p>
+<blockquote>
+<p>Micronaut’s Environment concept is by default Cloud platform-aware and makes a best effort to detect the underlying active environment.</p>
+</blockquote>
+<p>Micronaut 的 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#environments" >Environment<i class="fas fa-external-link-alt"></i></a> 概念默认是云平台感知的, 并尽最大努力检测底层激活的环境 (environment)</p>
+<p>然后可以使用 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/context/annotation/Requires.html" >@Requires<i class="fas fa-external-link-alt"></i></a> 注解来 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#conditionalBeans" >条件化加载 bean 定义<i class="fas fa-external-link-alt"></i></a>. 即在对应的云环境中使用 <code>@Requires</code> 注解来激活对应的环境支持</p>
+<p>下表中总结了 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#environments" >Environment<i class="fas fa-external-link-alt"></i></a> 接口中的常量并提供一个例子:</p>
+<p>Table - Micronaut Environment Detection:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Constant</th>
+<th align="left">Description</th>
+<th align="left">Requires Example</th>
+<th align="left">Environment name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>ANDROID</code></td>
+<td align="left">The application is running as an Android application</td>
+<td align="left"><code>@Requires(env = Environment.ANDROID)</code></td>
+<td align="left">android</td>
+</tr>
+<tr>
+<td align="left"><code>TEST</code></td>
+<td align="left">The application is running within a JUnit or Spock test</td>
+<td align="left"><code>@Requires(env = Environment.TEST)</code></td>
+<td align="left">test</td>
+</tr>
+<tr>
+<td align="left"><code>CLOUD</code></td>
+<td align="left">The application is running in a Cloud environment (present for all other cloud platform types)</td>
+<td align="left"><code>@Requires(env = Environment.CLOUD)</code></td>
+<td align="left">cloud</td>
+</tr>
+<tr>
+<td align="left"><code>AMAZON_EC2</code></td>
+<td align="left">Running on <code>Amazon EC2</code></td>
+<td align="left"><code>@Requires(env = Environment.AMAZON_EC2)</code></td>
+<td align="left">ec2</td>
+</tr>
+<tr>
+<td align="left"><code>GOOGLE_COMPUTE</code></td>
+<td align="left">Running on <code>Google Compute</code></td>
+<td align="left"><code>@Requires(env = Environment.GOOGLE_COMPUTE)</code></td>
+<td align="left">gcp</td>
+</tr>
+<tr>
+<td align="left"><code>KUBERNETES</code></td>
+<td align="left">Running on <code>Kubernetes</code></td>
+<td align="left"><code>@Requires(env = Environment.KUBERNETES)</code></td>
+<td align="left">k8s</td>
+</tr>
+<tr>
+<td align="left"><code>HEROKU</code></td>
+<td align="left">Running on <code>Heroku</code></td>
+<td align="left"><code>@Requires(env = Environment.HEROKU)</code></td>
+<td align="left">heroku</td>
+</tr>
+<tr>
+<td align="left"><code>CLOUD_FOUNDRY</code></td>
+<td align="left">Running on <code>Cloud Foundry</code></td>
+<td align="left"><code>@Requires(env = Environment.CLOUD_FOUNDRY)</code></td>
+<td align="left">pcf</td>
+</tr>
+<tr>
+<td align="left"><code>AZURE</code></td>
+<td align="left">Running on <code>Microsoft Azure</code></td>
+<td align="left"><code>@Requires(env = Environment.AZURE)</code></td>
+<td align="left">azure</td>
+</tr>
+<tr>
+<td align="left"><code>IBM</code></td>
+<td align="left">Running on <code>IBM Cloud</code></td>
+<td align="left"><code>@Requires(env = Environment.IBM)</code></td>
+<td align="left">IBM</td>
+</tr>
+<tr>
+<td align="left"><code>DIGITAL_OCEAN</code></td>
+<td align="left">Running on <code>Digital Ocean</code></td>
+<td align="left"><code>@Requires(env = Environment.DIGITAL_OCEAN)</code></td>
+<td align="left">digitalocean</td>
+</tr>
+<tr>
+<td align="left"><code>ORACLE_CLOUD</code></td>
+<td align="left">Running on <code>Oracle Cloud</code></td>
+<td align="left"><code>@Requires(env = Environment.ORACLE_CLOUD)</code></td>
+<td align="left">oraclecloud</td>
+</tr>
+</tbody></table>
+<p>注意, 你可以激活多个环境, 例如, 运行在 AWS 上的 Kubernetes 中</p>
+<p>除此之外, 使用上表中常量名称, 你可以创建用于指定环境的配置文件, 例如, 创建了一个 <code>src/main/resources/application-gcp.yml</code> 文件, 这个文件就只会在运行于 Google Compute 时加载</p>
+<blockquote>
+<p>Any configuration property in the <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/context/env/Environment.html" >Environment<i class="fas fa-external-link-alt"></i></a> can also be set via an environment variable. For example, setting the <code>CONSUL_CLIENT_HOST</code> environment variable overrides the <code>host</code> property in <a class="link"   target="_blank" rel="noopener" href="https://micronaut-projects.github.io/micronaut-discovery-client/latest/api/io/micronaut/discovery/consul/ConsulConfiguration.html" >ConsulConfiguration<i class="fas fa-external-link-alt"></i></a>.</p>
+</blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/context/env/Environment.html" >Environment<i class="fas fa-external-link-alt"></i></a> 中的任何配置属性可以通过一个环境变量来设置. 例如, 设置 <code>CONSUL_CLIENT_HOST</code> 环境变量来覆盖 <a class="link"   target="_blank" rel="noopener" href="https://micronaut-projects.github.io/micronaut-discovery-client/latest/api/io/micronaut/discovery/consul/ConsulConfiguration.html" >ConsulConfiguration<i class="fas fa-external-link-alt"></i></a> 中的 <code>host</code> 属性</p>
+<h3 id="Using-Cloud-Instance-Metadata-使用云实例元数据"><a href="#Using-Cloud-Instance-Metadata-使用云实例元数据" class="headerlink" title="Using Cloud Instance Metadata (使用云实例元数据)"></a>Using Cloud Instance Metadata (使用云实例元数据)</h3><p>当 Micronaut 检测到它在支持的云平台上运行时, 它会在启动时填充接口 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/discovery/cloud/ComputeInstanceMetadata.html" >ComputeInstanceMetadata<i class="fas fa-external-link-alt"></i></a></p>
+<blockquote>
+<p>As of Micronaut 2.1.x this logic depends on the presence of the appropriate core Cloud module for Oracle Cloud, AWS, or GCP.</p>
+</blockquote>
+<p>从 Micronaut 2.1.x 开始, 这个逻辑取决于是否存在 用于Orcale Cloud,AWS或GCP的 适当的云模块核心</p>
+<p>所有这些数据都合并到正在运行的 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/discovery/ServiceInstance.html" >ServiceInstance<i class="fas fa-external-link-alt"></i></a> 的 <code>metadata</code> 属性中</p>
+<blockquote>
+<p>If you connect remotely via a client, the instance metadata can be referenced once you have retrieved a ServiceInstance from either the LoadBalancer or DiscoveryClient APIs.</p>
+</blockquote>
+<p>如果你通过 client 进行远程连接, 则可以在你从 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/client/LoadBalancer.html" >LoadBalancer<i class="fas fa-external-link-alt"></i></a> 或 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/discovery/DiscoveryClient.html" >DiscoveryClient<i class="fas fa-external-link-alt"></i></a> API 检索到 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/discovery/ServiceInstance.html" >ServiceInstance<i class="fas fa-external-link-alt"></i></a> 后引用实例元数据</p>
+<blockquote>
+<p>The Netflix Ribbon client-side load balancer can be configured to use the metadata to do zone-aware client-side load balancing.</p>
+</blockquote>
+<p>Netflix Ribbon 客户端负载均衡器可以配置为使用元数据进行区域感知客户端负载均衡. 参考 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#clientSideLoadBalancing" >Client-Side Load Balancing<i class="fas fa-external-link-alt"></i></a></p>
+<blockquote>
+<p>To obtain metadata for a service via Service Discovery use the LoadBalancerResolver interface to resolve a LoadBalancer and obtain a reference to a service by identifier</p>
+</blockquote>
+<p>要通过服务发现获取服务的元数据, 使用 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/client/LoadBalancerResolver.html" >LoadBalanceResolver<i class="fas fa-external-link-alt"></i></a> 接口来解析 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/client/LoadBalancer.html" >LoadBalancer<i class="fas fa-external-link-alt"></i></a> 并通过标识符获取对服务的引用:</p>
+<p>Example - Obtaining Metadata for a Service instance:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">LoadBalancer loadBalancer = loadBalancerResolver.resolve(<span class="string">&quot;some-service&quot;</span>)</span><br><span class="line">Flux.from(</span><br><span class="line">        loadBalancer.select()</span><br><span class="line">    )</span><br><span class="line">    .subscribe((instance) -&gt;</span><br><span class="line">        ConvertibleValues&lt;String&gt; metaData = instance.getMetadata()</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>The EmbeddedServerInstance is available through event listeners that listen for the ServiceReadyEvent.</p>
+</blockquote>
+<p>通过监听 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/discovery/event/ServiceReadyEvent.html" >ServiceReadyEvent<i class="fas fa-external-link-alt"></i></a> 的事件监听器可以获取 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/discovery/EmbeddedServerInstance.html" >EmbeddedServerInstance<i class="fas fa-external-link-alt"></i></a></p>
+<blockquote>
+<p>The @EventListener annotation makes it easy to listen for the event in your beans.</p>
+</blockquote>
+<p><code>@EventListener</code> 注解让你在 Bean 中监听事件更容易</p>
+<p>要获取本地运行的 server 的元数据, 使用用于 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/discovery/event/ServiceReadyEvent.html" >ServiceReadyEvent<i class="fas fa-external-link-alt"></i></a> 的 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#events" >EventListener<i class="fas fa-external-link-alt"></i></a>:</p>
+<p>Example - Obtaining Metadata for a Local Server:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EventListener</span></span><br><span class="line"><span class="type">void</span> onServiceStarted(ServiceReadyEvent event) &#123;</span><br><span class="line">    ServiceInstance serviceInstance = event.getSource()</span><br><span class="line">    ConvertibleValues&lt;String&gt; metadata = serviceInstance.getMetadata()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Distributed-Configuration-分布式配置"><a href="#Distributed-Configuration-分布式配置" class="headerlink" title="Distributed Configuration (分布式配置)"></a>Distributed Configuration (分布式配置)</h3><blockquote>
+<p>As you can see, Micronaut features a robust system for externalizing and adapting configuration to the environment inspired by similar approaches in Grails and Spring Boot.</p>
+</blockquote>
+<p>正如你所见, Micronaut 有一个强大的系统来外部化和可调整的配置</p>
+<p>如果要在多个微服务中共享配置, Micronaut 包含了分布式配置的的 APIs</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/discovery/config/ConfigurationClient.html" >ConfigurationClient<i class="fas fa-external-link-alt"></i></a> 接口有一个 <code>getPropertySources</code> 方法, 可以实现这个方法来读取解析来自分布式源的配置</p>
+<p><code>getPropertySources</code> 方法返回一个输出0个或多个 [PropertySource](<a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/context/env/PropertySource.html" >https://docs.micronaut.io/latest/api/io/micronaut/context/env/PropertySource.html<i class="fas fa-external-link-alt"></i></a> 的 <a class="link"   target="_blank" rel="noopener" href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html" >Publisher<i class="fas fa-external-link-alt"></i></a></p>
+<p>默认的实现是 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/discovery/config/DefaultCompositeConfigurationClient.html" >DefaultCompositeConfigurationClient<i class="fas fa-external-link-alt"></i></a>, 这个 client 合并所有注册的 <code>ConfigurationClient</code> beans 到单独一个 bean 中</p>
+<p>你可以实现你自己的 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/discovery/config/ConfigurationClient.html" >ConfigurationClient<i class="fas fa-external-link-alt"></i></a>, 或者使用 Micronaut 提供的实现</p>
+<h3 id="HashiCorp-Consul-Support-HashiCorp-Consul-支持"><a href="#HashiCorp-Consul-Support-HashiCorp-Consul-支持" class="headerlink" title="HashiCorp Consul Support (HashiCorp Consul 支持)"></a>HashiCorp Consul Support (HashiCorp Consul 支持)</h3><p><a class="link"   target="_blank" rel="noopener" href="https://www.consul.io/" >Consul<i class="fas fa-external-link-alt"></i></a> 是 HashiCorp 提供的一个流行的服务发现和分布式配置 server</p>
+<p>Micronaut 提供一个原生的 <a class="link"   target="_blank" rel="noopener" href="https://micronaut-projects.github.io/micronaut-discovery-client/latest/api/io/micronaut/discovery/consul/client/v1/ConsulClient.html" >ConsulClient<i class="fas fa-external-link-alt"></i></a>, 这个 client 使用 Micronaut 对 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#clientAnnotation" >Declarative HTTP Clinets<i class="fas fa-external-link-alt"></i></a> 的支持</p>
+<h4 id="Starting-Consul-开启-Consul"><a href="#Starting-Consul-开启-Consul" class="headerlink" title="Starting Consul (开启 Consul)"></a>Starting Consul (开启 Consul)</h4><p>开始使用 Consul 最快的方法是通过 Docker: <code>docker run -p 8500:8500 consul</code></p>
+<p>或者, 你可以 <a class="link"   target="_blank" rel="noopener" href="https://www.consul.io/docs/install/index.html" >安装并运行一个本地 Consul 实例<i class="fas fa-external-link-alt"></i></a></p>
+<h4 id="Enabling-Distributed-Configuration-with-Consul-使用-Consul-开启分布式配置"><a href="#Enabling-Distributed-Configuration-with-Consul-使用-Consul-开启分布式配置" class="headerlink" title="Enabling Distributed Configuration with Consul (使用 Consul 开启分布式配置)"></a>Enabling Distributed Configuration with Consul (使用 Consul 开启分布式配置)</h4><p>如果你使用 Micronaut CLI 创建你的项目, 添加 <code>config-consul</code> 特性来在你的项目中开启 Consul 的分布式配置: <code>mn create-app my-app --features config-consul</code></p>
+<p>要开启分布式配置, 创建一个 <code>src/main/resources/bootstrap.yml</code> 配置文件并开启配置客户端( configuration client ):</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">//</span> <span class="string">bootstrap.yml</span></span><br><span class="line"><span class="attr">micronaut:</span></span><br><span class="line">    <span class="attr">application:</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">hello-world</span></span><br><span class="line">    <span class="attr">config-client:</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">consul:</span></span><br><span class="line">    <span class="attr">client:</span></span><br><span class="line">        <span class="attr">defaultZone:</span> <span class="string">&quot;$&#123;CONSUL_HOST:localhost&#125;:$&#123;CONSUL_PORT:8500&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在开启分布式配置之后, 在 Consul 的键值对存储( key&#x2F;value store )中保存用来共享的配置</p>
+<h4 id="Storing-Configuration-as-Key-x2F-Value-Pairs-将配置作为键值对进行保存"><a href="#Storing-Configuration-as-Key-x2F-Value-Pairs-将配置作为键值对进行保存" class="headerlink" title="Storing Configuration as Key&#x2F;Value Pairs (将配置作为键值对进行保存)"></a>Storing Configuration as Key&#x2F;Value Pairs (将配置作为键值对进行保存)</h4><p>其中一种方式是直接在 Consul 中存储 keys 和 values. 在这个方法中, Micronaut 默认在 Consul <code>/config</code> 目录中搜索配置</p>
+<p>可以通过设置 <code>consul.client.config.path</code> 来修改搜索的路径</p>
+<p>在 <code>/config</code> 目录中, Micronaut 按优先级在如下目录中搜索值:</p>
+<p>Table - Configuration Resolution Precedence:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Directory</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">&#x2F;config&#x2F;application</td>
+<td align="left">Configuration shared by all applications</td>
+</tr>
+<tr>
+<td align="left">&#x2F;config&#x2F;application,prod</td>
+<td align="left">Configuration shared by all applications for the prod Environment</td>
+</tr>
+<tr>
+<td align="left">&#x2F;config&#x2F;[APPLICATION_NAME]</td>
+<td align="left">Application-specific configuration, example &#x2F;config&#x2F;hello-world</td>
+</tr>
+<tr>
+<td align="left">&#x2F;config&#x2F;[APPLICATION_NAME],prod</td>
+<td align="left">Application-specific configuration for an active Environment</td>
+</tr>
+</tbody></table>
+<p><code>APPLICATION_NAME</code> 的值是你在 <code>bootstrap.yml</code> 中配置的 <code>micronaut.application.name</code> 的任何值</p>
+<p>举个例子, 使用 cURL 命令来在 <code>/config/application</code> 目录中存储一个 key 为 <code>foo.bar</code>, value 为 <code>myvalue</code> 的属性:</p>
+<p>Example - Using cURL to Write a Value:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X PUT -d @- localhost:8500/v1/kv/config/application/foo.bar &lt;&lt;&lt; <span class="string">myvalue</span></span><br></pre></td></tr></table></figure>
+
+<p>然后定义 <code>@Value(&quot;$&#123;foo.bar&#125;&quot;)</code> 或者调用 <code>environment.getProperty(&#39;foo.bar&#39;)</code> 来从 Consul 中解析并获取 <code>myvalue</code> 值</p>
+<h4 id="Storing-Configuration-in-YAML-JSON-etc-存储配置在-YAML-JSON等"><a href="#Storing-Configuration-in-YAML-JSON-etc-存储配置在-YAML-JSON等" class="headerlink" title="Storing Configuration in YAML, JSON etc (存储配置在 YAML, JSON等)"></a>Storing Configuration in YAML, JSON etc (存储配置在 YAML, JSON等)</h4><p>一些 Consul 用户更喜欢将配置存储在某个格式的 blob (二进制大对象) 中, 例如 YAML</p>
+<p>Micronaut 支持这种模式并支持以 YAML, JSON, Java properties 格式存储配置</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/discovery/config/ConfigDiscoveryConfiguration.html" >ConfigDiscoveryConfiguration<i class="fas fa-external-link-alt"></i></a> 有一些配置选项用来配置怎样检测( discovered )分布式配置:</p>
+<p>可以设置 <code>consul.client.config.format</code> 选项来配置属性使用哪个格式来来读</p>
+<p>Example - 使用 JSON 格式的配置:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># applicaton.yml</span></span><br><span class="line"><span class="attr">consul:</span></span><br><span class="line">    <span class="attr">client:</span></span><br><span class="line">        <span class="attr">config:</span></span><br><span class="line">            <span class="attr">format:</span> <span class="string">JSON</span></span><br></pre></td></tr></table></figure>
+
+<p>然后就可以将 JSON 格式的配置写到 Consul 中:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -X PUT localhost:8500/v1/kv/config/application \</span><br><span class="line">-d @- &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">&#123; &quot;foo&quot;: &#123;&quot;bar&quot;: &quot;myvalue&quot;&#125; &#125;</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Storing-Configuration-as-File-References-将配置作为文件引用进行存储"><a href="#Storing-Configuration-as-File-References-将配置作为文件引用进行存储" class="headerlink" title="Storing Configuration as File References (将配置作为文件引用进行存储)"></a>Storing Configuration as File References (将配置作为文件引用进行存储)</h4><p>另一个流行的选项是 <a class="link"   target="_blank" rel="noopener" href="https://github.com/breser/git2consul" >git2consul<i class="fas fa-external-link-alt"></i></a>, 这个选项将 Git 仓库的内容镜像到 Consul 的键值存储</p>
+<p>你可以设置一个包含类似 <code>application.yml</code>, <code>hello-world-test.json</code> 等文件的 Git 仓库, 然后这些文件的内容会被拷贝到 Consul</p>
+<p>在这种情景中, Consul 中的每个 key 代表着一个有扩展名的文件, 例如 <code>/config/application.yml</code>, 并且必须配置 <code>FILE</code> 格式:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># application.yml</span></span><br><span class="line"><span class="attr">consul:</span></span><br><span class="line">    <span class="attr">client:</span></span><br><span class="line">        <span class="attr">config:</span></span><br><span class="line">            <span class="attr">format:</span> <span class="string">FILE</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="HashiCorp-Vault-Support-HashiCorp-保险库支持"><a href="#HashiCorp-Vault-Support-HashiCorp-保险库支持" class="headerlink" title="HashiCorp Vault Support (HashiCorp 保险库支持)"></a>HashiCorp Vault Support (HashiCorp 保险库支持)</h3><p>Micronaut 内置 <a class="link"   target="_blank" rel="noopener" href="https://www.vaultproject.io/" >HashiCorp Valut<i class="fas fa-external-link-alt"></i></a> 作为一个分布式配置源</p>
+<p>要开启 Vault Configuration 支持, 创建一个 <code>src/main/resources/bootstrap.yml</code> 配置文件并添加如下配置:</p>
+<p>Example - Integrating with HashiCorp Vault:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">micronaut:</span></span><br><span class="line">    <span class="attr">application:</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">hello-world</span></span><br><span class="line">    <span class="attr">config-client:</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="attr">vault:</span></span><br><span class="line">    <span class="attr">client:</span></span><br><span class="line">        <span class="attr">config:</span></span><br><span class="line">            <span class="attr">enabled:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>参看 <a class="link"   target="_blank" rel="noopener" href="https://micronaut-projects.github.io/micronaut-discovery-client/latest/guide/configurationreference.html#io.micronaut.discovery.vault.config.VaultClientConfiguration" >configuration reference<i class="fas fa-external-link-alt"></i></a> 获取所有配置选项</p>
+<p>Micronaut 为应用使用配置 <code>micronaut.application.name</code> 来从 Vault 中查找属性源</p>
+<p>Table - Configuration Resolution Precedence:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Directory</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>/application</code></td>
+<td align="left">Configuration shared by all applications</td>
+</tr>
+<tr>
+<td align="left"><code>/[APPLICATION_NAME]</code></td>
+<td align="left">Application-specific configuration</td>
+</tr>
+<tr>
+<td align="left"><code>/application/[ENV_NAME]</code></td>
+<td align="left">Configuration shared by all applications for an active environment name</td>
+</tr>
+<tr>
+<td align="left"><code>/[APPLICATION_NAME]/[ENV_NAME]</code></td>
+<td align="left">Application-specific configuration for an active environment name</td>
+</tr>
+</tbody></table>
+<p>查看 <a class="link"   target="_blank" rel="noopener" href="https://www.vaultproject.io/api/secret/kv/index.html" >Documentation for HashiCorp Vault<i class="fas fa-external-link-alt"></i></a> 获取更多关于怎样配置 server 的信息</p>
+<h3 id="Spring-Cloud-Config-Support-Spring-Cloud-配置支持"><a href="#Spring-Cloud-Config-Support-Spring-Cloud-配置支持" class="headerlink" title="Spring Cloud Config Support (Spring Cloud 配置支持)"></a>Spring Cloud Config Support (Spring Cloud 配置支持)</h3><p>从 1.1 版本开始, Micronaut 为那些没有切换到像 Consul 这样的专用的更完整的解决方案的人提供了原生 Spring Cloud 支持</p>
+<p>要开启 Spring Cloud 配置支持, 创建一个 <code>src/main/resources/bootstrap.yml</code> 配置文件并并添加如下配置:</p>
+<p>Example - Integrating with Spring Cloud Configuration:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">micronaut:</span></span><br><span class="line">    <span class="attr">application:</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">hello-world</span></span><br><span class="line">    <span class="attr">config-client:</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">    <span class="attr">cloud:</span></span><br><span class="line">        <span class="attr">config:</span></span><br><span class="line">            <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">            <span class="attr">uri:</span> <span class="string">http://localhost:8888/</span></span><br><span class="line">            <span class="attr">retry-attempts:</span> <span class="number">4</span> <span class="comment"># optional, number of times to retry</span></span><br><span class="line">            <span class="attr">retry-delay:</span> <span class="string">2s</span> <span class="comment"># optional, delay between retries</span></span><br></pre></td></tr></table></figure>
+
+<p>Micronaut 使用配置 <code>micronaut.application.name</code> 来为应用从使用 <code>spring.cloud.config.uri</code> 配置的 Spring Cloud 配置 server 中搜寻属性源</p>
+<p>查看 <a class="link"   target="_blank" rel="noopener" href="https://spring.io/projects/spring-cloud-config#learn" >Documentation for Spring Cloud Config Server<i class="fas fa-external-link-alt"></i></a> 获取有关如何设置服务器的更多信息</p>
+<h3 id="AWS-Parameter-Store-Support-AWS-参数存储支持"><a href="#AWS-Parameter-Store-Support-AWS-参数存储支持" class="headerlink" title="AWS Parameter Store Support (AWS 参数存储支持)"></a>AWS Parameter Store Support (AWS 参数存储支持)</h3><p>略</p>
+<h3 id="Oracle-Cloud-Vault-Support-Oracle-Cloud-Vault-支持"><a href="#Oracle-Cloud-Vault-Support-Oracle-Cloud-Vault-支持" class="headerlink" title="Oracle Cloud Vault Support (Oracle Cloud Vault 支持)"></a>Oracle Cloud Vault Support (Oracle Cloud Vault 支持)</h3><p><a class="link"   target="_blank" rel="noopener" href="https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#vault" >Secure Distributed Configuration with Oracle Cloud Vault<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="Google-Cloud-Pub-x2F-Sub-Support-Google-Cloud-Pub-x2F-Sub-支持"><a href="#Google-Cloud-Pub-x2F-Sub-Support-Google-Cloud-Pub-x2F-Sub-支持" class="headerlink" title="Google Cloud Pub&#x2F;Sub Support (Google Cloud Pub&#x2F;Sub 支持)"></a>Google Cloud Pub&#x2F;Sub Support (Google Cloud Pub&#x2F;Sub 支持)</h3><p><a class="link"   target="_blank" rel="noopener" href="https://micronaut-projects.github.io/micronaut-gcp/latest/guide/#distributedConfiguration" >Micronaut GCP Pub&#x2F;Sub<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="Kubernetes-Support-Kubernetes-支持"><a href="#Kubernetes-Support-Kubernetes-支持" class="headerlink" title="Kubernetes Support (Kubernetes 支持)"></a>Kubernetes Support (Kubernetes 支持)</h3><p><a class="link"   target="_blank" rel="noopener" href="https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/#config-client" >Kubernetes Configuration Client<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="Service-Discovery-服务发现"><a href="#Service-Discovery-服务发现" class="headerlink" title="Service Discovery (服务发现)"></a>Service Discovery (服务发现)</h2><p>服务发现使微服务可以发现彼此, 而不需要知道物理地址或关联的服务的 IP 地址</p>
+<p>Micronaut 集成了多个工具和库, 查看 <a class="link"   target="_blank" rel="noopener" href="https://micronaut-projects.github.io/micronaut-discovery-client/latest/guide/" >Micronaut Service Discovery documentation<i class="fas fa-external-link-alt"></i></a> 获取更多信息</p>
+<h3 id="Consul-Support-Consul-支持"><a href="#Consul-Support-Consul-支持" class="headerlink" title="Consul Support (Consul 支持)"></a>Consul Support (Consul 支持)</h3><p>查看 <a class="link"   target="_blank" rel="noopener" href="https://micronaut-projects.github.io/micronaut-discovery-client/latest/guide/index.html#serviceDiscoveryConsul" >Micronaut Consul documentation<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="Eureka-Support-Eureka-支持"><a href="#Eureka-Support-Eureka-支持" class="headerlink" title="Eureka Support (Eureka 支持)"></a>Eureka Support (Eureka 支持)</h3><p>查看 <a class="link"   target="_blank" rel="noopener" href="https://micronaut-projects.github.io/micronaut-discovery-client/latest/guide/index.html#serviceDiscoveryEureka" >Micronaut Eureka documentation<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="Kubernetes-Support-Kubernetes-支持-1"><a href="#Kubernetes-Support-Kubernetes-支持-1" class="headerlink" title="Kubernetes Support (Kubernetes 支持)"></a>Kubernetes Support (Kubernetes 支持)</h3><p>Kubernetes 是一个容器运行时 ,包含许多功能, 例如内置了服务发现和分布式配置</p>
+<blockquote>
+<p>Micronaut includes first-class integration with Kubernetes.</p>
+</blockquote>
+<p>Micronaut 包含与 Kubernetes 的一级集成</p>
+<p>查看 <a class="link"   target="_blank" rel="noopener" href="https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/index.html" >Micronaut Kubernetes documentation<i class="fas fa-external-link-alt"></i></a> 获取更多信息</p>
+<h3 id="AWS-Route-53-Support-AWS-Route-53-支持"><a href="#AWS-Route-53-Support-AWS-Route-53-支持" class="headerlink" title="AWS Route 53 Support (AWS Route 53 支持)"></a>AWS Route 53 Support (AWS Route 53 支持)</h3><p>略</p>
+<h3 id="Manual-Service-Discovery-Configuration-手动服务发现配置"><a href="#Manual-Service-Discovery-Configuration-手动服务发现配置" class="headerlink" title="Manual Service Discovery Configuration (手动服务发现配置)"></a>Manual Service Discovery Configuration (手动服务发现配置)</h3><blockquote>
+<p>If you do not wish to involve a service discovery server like Consul or you interact with a third-party service that cannot register with Consul you can instead manually configure services that are available via Service discovery.</p>
+</blockquote>
+<p>如果你不想使用一个像 Consul 这样的服务发现 server, 或者你和一个第三方服务交互, 这个第三方服务不能注册到 Consul 中, 你可以改为手动配置通过服务发现而可用的服务</p>
+<p>为了做到这个, 使用 <code>micronaut.http.services</code> 设置:</p>
+<p>Example - Manually configuring services:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">micronaut:</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">        <span class="attr">services:</span></span><br><span class="line">            <span class="attr">foo:</span></span><br><span class="line">                <span class="attr">urls:</span></span><br><span class="line">                    <span class="bullet">-</span> <span class="string">http://foo1</span></span><br><span class="line">                    <span class="bullet">-</span> <span class="string">http://foo2</span></span><br></pre></td></tr></table></figure>
+
+<p>然后使用 <code>@Client(&quot;foo&quot;)</code> 注解来注入一个 client, 这个 client 会使用上面的配置来在两个配置的 servers 之间进行负载均衡</p>
+<p>当使用 <code>@Client</code> 进行服务发现时, 在注解中必须使用 kebab-case 来指定 service id</p>
+<p>你可以在生产中通过指定一个环境变量 <code>MICRONAUT_HTTP_SERVICES_FOO_URLS=http://prod1,http://prod2</code> 来覆盖这个配置</p>
+<p>请注意, 默认情况下, 不会使用健康检查来判断服务是否可操作</p>
+<blockquote>
+<p>You can alter that by enabling health checking and optionally specifying a health check path (the default is &#x2F;health):</p>
+</blockquote>
+<p>可以通过开启健康检查并可选地指定一个健康检查路径( 默认为 <code>/health</code> ):</p>
+<p>Example - Enabling Health Checking:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">micronaut:</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">        <span class="attr">services:</span></span><br><span class="line">            <span class="attr">foo:</span></span><br><span class="line">                <span class="attr">health-check:</span> <span class="literal">true</span>      <span class="comment"># Whether to health check the service</span></span><br><span class="line">                <span class="attr">health-check-interval:</span> <span class="string">15s</span>      <span class="comment"># The interval between checks</span></span><br><span class="line">                <span class="attr">health-check-uri:</span> <span class="string">/health</span>       <span class="comment"># The URI of the health check request</span></span><br></pre></td></tr></table></figure>
+
+<p>Micronaut 启动一个后台线程来检查 service 的健康状态, 如果任何一个配置的 services 响应一个错误代码, 它们就会被从可用 services 列表中移除</p>
+<h2 id="Client-Side-Load-Balancing-客户端侧负载均衡"><a href="#Client-Side-Load-Balancing-客户端侧负载均衡" class="headerlink" title="Client Side Load Balancing (客户端侧负载均衡)"></a>Client Side Load Balancing (客户端侧负载均衡)</h2><p>当从 Consul, Eureka, 或其他服务发现 servers 中 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#serviceDiscovery" >discovering services<i class="fas fa-external-link-alt"></i></a> 时, <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/discovery/DiscoveryClient.html" >DiscoveryClient<i class="fas fa-external-link-alt"></i></a> 输出一个可用的 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/discovery/ServiceInstance.html" >ServiceInstance<i class="fas fa-external-link-alt"></i></a> 列表</p>
+<blockquote>
+<p>Micronaut by default automatically performs Round Robin client-side load balancing using the servers in this list.</p>
+</blockquote>
+<p>Micronaut 默认使用这个列表中的 servers 执行客户端侧轮询负载均衡</p>
+<blockquote>
+<p>This combined with Retry Advice adds extra resiliency to your Microservice infrastructure.</p>
+</blockquote>
+<p>这个和 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#retry" >Retry Advice<i class="fas fa-external-link-alt"></i></a> 相结合, 为你的微服务基础架构增加了额外的弹性</p>
+<p>由 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/client/LoadBalancer.html" >LoadBalancer<i class="fas fa-external-link-alt"></i></a> 接口处理负载均衡, 这个接口有一个 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/client/LoadBalancer.html#select--" >LoadBalancer.select()<i class="fas fa-external-link-alt"></i></a> 方法来返回一个 <code>Publisher</code>, 这个 <code>Publisher</code> 输出一个 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/discovery/ServiceInstance.html" >ServiceInstance<i class="fas fa-external-link-alt"></i></a></p>
+<p>返回 <a class="link"   target="_blank" rel="noopener" href="http://www.reactive-streams.org/reactive-streams-1.0.3-javadoc/org/reactivestreams/Publisher.html" >Publisher<i class="fas fa-external-link-alt"></i></a> 是因为选择一个 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/discovery/ServiceInstance.html" >ServiceInstance<i class="fas fa-external-link-alt"></i></a> 的过程可能导致一个网络操作, 取决于所采用的 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#serviceDiscovery" >Service Discovery<i class="fas fa-external-link-alt"></i></a> 策略</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/client/LoadBalancer.html" >LoadBalancer<i class="fas fa-external-link-alt"></i></a> 接口的默认实现是 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/client/loadbalance/DiscoveryClientRoundRobinLoadBalancer.html" >DiscoveryClientRoundRobinLoadBalancer<i class="fas fa-external-link-alt"></i></a>. 你可以使用另一个实现来代替这个策略, 这个实现自定义了客户端侧负载均衡在 Micronaut 中是怎样处理的, 因为有许多不同方式来优化负载均衡</p>
+<p>例如, 你可能希望在特定区域中的服务之间进行负载均衡, 或者在具有最佳整体响应时间的服务器之间进行负载均衡</p>
+<p>要代替 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/client/LoadBalancer.html" >LoadBalancer<i class="fas fa-external-link-alt"></i></a>, 定义一个 Bean 来 <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#replaces" >replaces<i class="fas fa-external-link-alt"></i></a> <a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/client/loadbalance/DiscoveryClientLoadBalancerFactory.html" >DiscoveryClientLoadBalanceFactory<i class="fas fa-external-link-alt"></i></a>. 实际上, 这正是 Netflix Ribbon 支持所做的事情</p>
+<h3 id="Netflix-Ribbon-Support-Netflix-Ribbon-支持"><a href="#Netflix-Ribbon-Support-Netflix-Ribbon-支持" class="headerlink" title="Netflix Ribbon Support (Netflix Ribbon 支持)"></a>Netflix Ribbon Support (Netflix Ribbon 支持)</h3><p>如果你使用 Micronaut CLI 创建项目, 添加 <code>netflix-ribbon</code> 特性来配置 Netflix Ribbon 到你的项目中:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mn create-app my-app --features netflix-ribbon</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Netflix Ribbon is an inter-process communication library used at Netflix with support for customizable load balancing strategies.</p>
+</blockquote>
+<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/Netflix/ribbon" >Netflix Ribbon<i class="fas fa-external-link-alt"></i></a> 是 Netflix 使用的一个进程间通信库, 支持可定制的负载均衡策略</p>
+<p>如果你在应用程序如何执行客户端负载均衡方面需要更多的灵活性, 你可以使用 Micronaut 的 Netflix Ribbon 支持</p>
+<p>要增加 Ribbon 支持到你的应用中, 添加 <code>netflix-ribbon</code> 配置到你的构建中:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation(<span class="string">&quot;io.micronaut.netflix:micronaut-netflix-ribbon&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/http/client/LoadBalancer.html" >LoadBalancer<i class="fas fa-external-link-alt"></i></a> 现在的实现将会是 <a class="link"   target="_blank" rel="noopener" href="https://micronaut-projects.github.io/micronaut-netflix/latest/api/io/micronaut/configuration/ribbon/RibbonLoadBalancer.html" >RibbonLoadBalancer<i class="fas fa-external-link-alt"></i></a> 实例</p>
+<p>Ribbon 的 <a class="link"   target="_blank" rel="noopener" href="https://netflix.github.io/ribbon/ribbon-core-javadoc/com/netflix/client/config/CommonClientConfigKey.html" >配置选项<i class="fas fa-external-link-alt"></i></a> 可以在配置中使用 <code>ribbon</code> 命名空间来进行设置:</p>
+<p>Example - Configuring Ribbon:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># application.yml</span></span><br><span class="line"><span class="attr">ribbon:</span></span><br><span class="line">    <span class="attr">VipAddress:</span> <span class="string">test</span></span><br><span class="line">    <span class="attr">ServerListRefreshInterval:</span> <span class="number">2000</span></span><br></pre></td></tr></table></figure>
+
+<p>每个被发现的 client 都可以在 <code>ribbon.clients</code> 下面进行配置. 例如给定一个 <code>@Client(id = &quot;hello-world&quot;)</code>, 你可以这样配置 Ribbon 设置:</p>
+<p>Example - Per Client Ribbon Settings:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">ribbon:</span></span><br><span class="line">    <span class="attr">clients:</span></span><br><span class="line">        <span class="attr">hello-world:</span></span><br><span class="line">            <span class="attr">VipAddress:</span> <span class="string">test</span></span><br><span class="line">            <span class="attr">ServerListRefreshInterval:</span> <span class="number">2000</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>By default Micronaut registers a DiscoveryClientServerList for each client that integrates Ribbon with Micronaut’s DiscoveryClient.</p>
+</blockquote>
+<p>默认情况下, Micronaut 为每个 将Ribbon和Micronaut的<a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/api/io/micronaut/discovery/DiscoveryClient.html" >DiscoveryClient<i class="fas fa-external-link-alt"></i></a>集成的 client注册一个<a class="link"   target="_blank" rel="noopener" href="https://micronaut-projects.github.io/micronaut-netflix/latest/api/io/micronaut/configuration/ribbon/DiscoveryClientServerList.html" >DiscoveryClientServerList<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="Distributed-Tracing-分布式追踪"><a href="#Distributed-Tracing-分布式追踪" class="headerlink" title="Distributed Tracing (分布式追踪)"></a>Distributed Tracing (分布式追踪)</h2><p>查看文档 <a class="link"   target="_blank" rel="noopener" href="https://micronaut-projects.github.io/micronaut-tracing/latest/guide/" >Micronaut Tracing<i class="fas fa-external-link-alt"></i></a> 获取更多关于添加分布式追踪到你的应用的信息</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Micronaut 中文文档 Cloud Native Features</li>
+        <li>本文作者：林威羽</li>
+        <li>创建时间：2022-04-29 09:44:23</li>
+        <li>
+            本文链接：https://linweiyu21.github.io/micronaut/micronaut-cloud-native-features/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/Groovy/">#Groovy</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/Micronaut/">#Micronaut</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E4%B8%AD%E6%96%87/">#中文</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/micronaut/micronaut-serverless-functions/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Micronaut 中文文档 Serverless Functions</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/micronaut/micronaut-the-http-client/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Micronaut 中文文档 The HTTP Client</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '8xWQ0WFbKUNN4h8ixIO12etk-gzGzoHsz',
+                    appKey: '7cLjTvkIsF6aIuIVSd0um89m',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请开始你的表演',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = '林威羽';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">林威羽</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Cloud-Native-Features-%E4%BA%91%E5%8E%9F%E7%94%9F%E7%89%B9%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">Cloud Native Features (云原生特性)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cloud-Configuration-%E4%BA%91%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">Cloud Configuration (云配置)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-Cloud-Instance-Metadata-%E4%BD%BF%E7%94%A8%E4%BA%91%E5%AE%9E%E4%BE%8B%E5%85%83%E6%95%B0%E6%8D%AE"><span class="nav-number">1.1.1.</span> <span class="nav-text">Using Cloud Instance Metadata (使用云实例元数据)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Distributed-Configuration-%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.2.</span> <span class="nav-text">Distributed Configuration (分布式配置)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashiCorp-Consul-Support-HashiCorp-Consul-%E6%94%AF%E6%8C%81"><span class="nav-number">1.1.3.</span> <span class="nav-text">HashiCorp Consul Support (HashiCorp Consul 支持)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Starting-Consul-%E5%BC%80%E5%90%AF-Consul"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">Starting Consul (开启 Consul)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Enabling-Distributed-Configuration-with-Consul-%E4%BD%BF%E7%94%A8-Consul-%E5%BC%80%E5%90%AF%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">Enabling Distributed Configuration with Consul (使用 Consul 开启分布式配置)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Storing-Configuration-as-Key-x2F-Value-Pairs-%E5%B0%86%E9%85%8D%E7%BD%AE%E4%BD%9C%E4%B8%BA%E9%94%AE%E5%80%BC%E5%AF%B9%E8%BF%9B%E8%A1%8C%E4%BF%9D%E5%AD%98"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">Storing Configuration as Key&#x2F;Value Pairs (将配置作为键值对进行保存)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Storing-Configuration-in-YAML-JSON-etc-%E5%AD%98%E5%82%A8%E9%85%8D%E7%BD%AE%E5%9C%A8-YAML-JSON%E7%AD%89"><span class="nav-number">1.1.3.4.</span> <span class="nav-text">Storing Configuration in YAML, JSON etc (存储配置在 YAML, JSON等)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Storing-Configuration-as-File-References-%E5%B0%86%E9%85%8D%E7%BD%AE%E4%BD%9C%E4%B8%BA%E6%96%87%E4%BB%B6%E5%BC%95%E7%94%A8%E8%BF%9B%E8%A1%8C%E5%AD%98%E5%82%A8"><span class="nav-number">1.1.3.5.</span> <span class="nav-text">Storing Configuration as File References (将配置作为文件引用进行存储)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HashiCorp-Vault-Support-HashiCorp-%E4%BF%9D%E9%99%A9%E5%BA%93%E6%94%AF%E6%8C%81"><span class="nav-number">1.1.4.</span> <span class="nav-text">HashiCorp Vault Support (HashiCorp 保险库支持)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Cloud-Config-Support-Spring-Cloud-%E9%85%8D%E7%BD%AE%E6%94%AF%E6%8C%81"><span class="nav-number">1.1.5.</span> <span class="nav-text">Spring Cloud Config Support (Spring Cloud 配置支持)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AWS-Parameter-Store-Support-AWS-%E5%8F%82%E6%95%B0%E5%AD%98%E5%82%A8%E6%94%AF%E6%8C%81"><span class="nav-number">1.1.6.</span> <span class="nav-text">AWS Parameter Store Support (AWS 参数存储支持)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Oracle-Cloud-Vault-Support-Oracle-Cloud-Vault-%E6%94%AF%E6%8C%81"><span class="nav-number">1.1.7.</span> <span class="nav-text">Oracle Cloud Vault Support (Oracle Cloud Vault 支持)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Google-Cloud-Pub-x2F-Sub-Support-Google-Cloud-Pub-x2F-Sub-%E6%94%AF%E6%8C%81"><span class="nav-number">1.1.8.</span> <span class="nav-text">Google Cloud Pub&#x2F;Sub Support (Google Cloud Pub&#x2F;Sub 支持)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kubernetes-Support-Kubernetes-%E6%94%AF%E6%8C%81"><span class="nav-number">1.1.9.</span> <span class="nav-text">Kubernetes Support (Kubernetes 支持)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service-Discovery-%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0"><span class="nav-number">1.2.</span> <span class="nav-text">Service Discovery (服务发现)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Consul-Support-Consul-%E6%94%AF%E6%8C%81"><span class="nav-number">1.2.1.</span> <span class="nav-text">Consul Support (Consul 支持)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Eureka-Support-Eureka-%E6%94%AF%E6%8C%81"><span class="nav-number">1.2.2.</span> <span class="nav-text">Eureka Support (Eureka 支持)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kubernetes-Support-Kubernetes-%E6%94%AF%E6%8C%81-1"><span class="nav-number">1.2.3.</span> <span class="nav-text">Kubernetes Support (Kubernetes 支持)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AWS-Route-53-Support-AWS-Route-53-%E6%94%AF%E6%8C%81"><span class="nav-number">1.2.4.</span> <span class="nav-text">AWS Route 53 Support (AWS Route 53 支持)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Manual-Service-Discovery-Configuration-%E6%89%8B%E5%8A%A8%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.5.</span> <span class="nav-text">Manual Service Discovery Configuration (手动服务发现配置)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Client-Side-Load-Balancing-%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BE%A7%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="nav-number">1.3.</span> <span class="nav-text">Client Side Load Balancing (客户端侧负载均衡)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Netflix-Ribbon-Support-Netflix-Ribbon-%E6%94%AF%E6%8C%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">Netflix Ribbon Support (Netflix Ribbon 支持)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Distributed-Tracing-%E5%88%86%E5%B8%83%E5%BC%8F%E8%BF%BD%E8%B8%AA"><span class="nav-number">1.4.</span> <span class="nav-text">Distributed Tracing (分布式追踪)</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

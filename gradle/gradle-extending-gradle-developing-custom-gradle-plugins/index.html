@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Micronaut,Groovy,Gradle,Java,文档,中文">
+    <meta name="description" content="Micronaut Groovy Gradle Java 文档 中文">
+    <meta name="author" content="林威羽">
+    
+    <title>
+        
+            Extending Gradle Developing Custom Gradle Plugins |
+        
+        林威羽的笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(153,153,0)","avatar":"/images/avatar.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"400px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":null,"description":"def contains🚀 = ['Micronaut', 'Groovy', 'Gradle', 'etc']"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                林威羽的笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+    <a target="_blank" rel="noopener" href="https://github.com/linweiyu21/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80"
+        viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+        aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path
+          d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+          fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path
+          d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+          fill="currentColor" class="octo-body"></path>
+      </svg></a>
+    <style>
+      .github-corner:hover .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+      }
+
+      @keyframes octocat-wave {
+
+        0%,
+        100% {
+          transform: rotate(0)
+        }
+
+        20%,
+        60% {
+          transform: rotate(-25deg)
+        }
+
+        40%,
+        80% {
+          transform: rotate(10deg)
+        }
+      }
+
+      @media (max-width:500px) {
+        .github-corner:hover .octo-arm {
+          animation: none
+        }
+
+        .github-corner .octo-arm {
+          animation: octocat-wave 560ms ease-in-out
+        }
+      }
+    </style>
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Extending Gradle Developing Custom Gradle Plugins</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">林威羽</span>
+                        
+                            <span class="author-label">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-05-05 11:51:32</span>
+        <span class="mobile">2022-05-05 11:51</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Gradle-User-Guides/">Gradle - User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Gradle/">Gradle</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/User-Guides/">User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <!-- TOC -->
+
+<ul>
+<li><a href="#extending-gradle-developing-custom-gradle-plugins">Extending Gradle Developing Custom Gradle Plugins</a><ul>
+<li><a href="#packaging-a-plugin">Packaging a plugin</a><ul>
+<li><a href="#build-script">Build script</a></li>
+<li><a href="#buildsrc-project"><code>buildSrc</code> project</a></li>
+<li><a href="#standalone-project">Standalone project</a></li>
+</ul>
+</li>
+<li><a href="#writing-a-simple-plugin">Writing a simple plugin</a></li>
+<li><a href="#making-the-plugin-configurable">Making the plugin configurable</a></li>
+<li><a href="#working-with-files-in-custom-tasks-and-plugins">Working with files in custom tasks and plugins</a></li>
+<li><a href="#a-standalone-project">A standalone project</a><ul>
+<li><a href="#creating-a-plugin-id">Creating a plugin id</a></li>
+<li><a href="#publishing-your-plugin">Publishing your plugin</a></li>
+<li><a href="#using-your-plugin-in-another-project">Using your plugin in another project</a></li>
+<li><a href="#note-for-plugins-published-without-java-gradle-plugin">Note for plugins published without <code>java-gradle-plugin</code></a></li>
+</ul>
+</li>
+<li><a href="#precompiled-script-plugins">Precompiled script plugins</a></li>
+<li><a href="#writing-tests-for-your-plugin">Writing tests for your plugin</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="Extending-Gradle-Developing-Custom-Gradle-Plugins"><a href="#Extending-Gradle-Developing-Custom-Gradle-Plugins" class="headerlink" title="Extending Gradle Developing Custom Gradle Plugins"></a>Extending Gradle Developing Custom Gradle Plugins</h1><h2 id="Packaging-a-plugin"><a href="#Packaging-a-plugin" class="headerlink" title="Packaging a plugin"></a>Packaging a plugin</h2><p>有多个地方可以用来放置你的 plugin 的源码</p>
+<h3 id="Build-script"><a href="#Build-script" class="headerlink" title="Build script"></a>Build script</h3><p>可以直接在构建脚本中包含 plugin 源码</p>
+<p>这样做的好处是 plugin 被自动编译并包含到构建脚本的 classpath 中, 不需要你做任何东西</p>
+<p>但是, 这个 plugin 将不能在构建脚本以外的地方可见, 因此不能在构建脚本之外进行重用</p>
+<h3 id="buildSrc-project"><a href="#buildSrc-project" class="headerlink" title="buildSrc project"></a><code>buildSrc</code> project</h3><p>可以将 plugin 源码放在 <code>rootProjectDir/buildSrc/src/main/java[groovy|kotlin]</code> 目录中</p>
+<p>Gradle 将会编译和测试 plugin, 并使 plugin 在构建脚本上是可用的</p>
+<p>plugin 对于整个构建的构建脚本都是可见的. 但是, plugin 在构建之外是不可见的, 所以你不能在定义 plugin 之外的地方重用它</p>
+<h3 id="Standalone-project"><a href="#Standalone-project" class="headerlink" title="Standalone project"></a>Standalone project</h3><p>可以为 plugin 建立一个单独的项目</p>
+<p>这个项目生成并发布一个 JAR 文件来在多个构建中共享并使用</p>
+<p>这个 JAR 文件可能包含一些插件, 或绑定一些关联的 task 类到单独一个库中, 或者结合两者</p>
+<h2 id="Writing-a-simple-plugin"><a href="#Writing-a-simple-plugin" class="headerlink" title="Writing a simple plugin"></a>Writing a simple plugin</h2><p>为了创建一个 Gradle plugin, 需要编写一个实现了 <code>Plugin</code> 接口的类</p>
+<p>当 plugin 应用到项目中时, Gradle 会创建一个这个 plugin 类的实例, 然后调用这个实例的 <code>Plugin.apply()</code> 方法</p>
+<p>项目对象会作为一个参数传递到 plugin 实例中, 可以使用这个项目对象来做一些需要的配置</p>
+<p>Example - A custom plugin:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line"><span class="keyword">class</span> GreetingPlugin <span class="keyword">implements</span> Plugin&lt;<span class="keyword">Project</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">void</span> apply(<span class="keyword">Project</span> <span class="keyword">project</span>) &#123;</span><br><span class="line">        <span class="keyword">project</span>.<span class="keyword">task</span>(<span class="string">&#x27;hello&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">doLast</span> &#123;</span><br><span class="line">                <span class="keyword">println</span> <span class="string">&#x27;Hello from the GreetingPlugin&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Apply the plugin</span></span><br><span class="line">apply plugin: GreetingPlugin</span><br></pre></td></tr></table></figure>
+
+<p>Gradle 会为每个使用了 plugin 的项目都创建一个新的 plugin 实例</p>
+<p><code>Plugin</code> 是一个泛型类, 除了可以接受 <code>Project</code> 类作为类型参数之外, 还可以接受 <code>Settings</code> 类, <code>Gradle</code> 类</p>
+<p><code>Settings</code> 类用于 settings script</p>
+<p><code>Gradle</code> 类用于 initialization script</p>
+<h2 id="Making-the-plugin-configurable"><a href="#Making-the-plugin-configurable" class="headerlink" title="Making the plugin configurable"></a>Making the plugin configurable</h2><p>大多数插件提供一些配置选项给构建脚本, 有一些插件使用配置选项来自定义插件的工作</p>
+<p>插件通过使用 <code>extension objects</code> 来完成这些</p>
+<p>Gradle <code>Project</code> 对象有一个关联的 <code>ExtensionContainer</code> 对象, 这个对象包含了项目使用的插件的所有的配置和属性</p>
+<p>你可以通过添加一个 <code>extension object</code> 到这个 container 中来为你的插件提供配置选项</p>
+<p>一个 <code>extension object</code> 是一个简单的包含 Java Bean 属性来代表配置选项的对象</p>
+<p>Example - A custom plugin extension:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> GreetingPluginExtension &#123;</span><br><span class="line">    <span class="keyword">abstract</span> Property&lt;String&gt; getMessage()</span><br><span class="line"></span><br><span class="line">    GreetingPluginExtension() &#123;</span><br><span class="line">        message.convention(<span class="string">&#x27;Hello from GreetingPlugin&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> GreetingPlugin <span class="keyword">implements</span> Plugin&lt;<span class="keyword">Project</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">void</span> apply(<span class="keyword">Project</span> <span class="keyword">project</span>) &#123;</span><br><span class="line">        <span class="comment">// Add the &#x27;greeting&#x27; extension object</span></span><br><span class="line">        <span class="keyword">def</span> extension = <span class="keyword">project</span>.extensions.create(<span class="string">&#x27;greeting&#x27;</span>, GreetingPluginExtension)</span><br><span class="line">        <span class="comment">// Add a task that uses configuration from the extension object</span></span><br><span class="line">        <span class="keyword">project</span>.<span class="keyword">task</span>(<span class="string">&#x27;hello&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">doLast</span> &#123;</span><br><span class="line">                <span class="keyword">println</span> extension.message.get()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">apply plugin: GreetingPlugin</span><br><span class="line"></span><br><span class="line"><span class="comment">// Configure the extension</span></span><br><span class="line">greeting.message = <span class="string">&#x27;Hi from Gradle&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中, <code>GreetingPluginExtension</code> 是一个拥有一个称为 <code>message</code> 属性的对象</p>
+<p>这个 <code>extension</code> 对象被添加到 project 中, 命名为 <code>greeting</code>. 然后这个对象变成一个可用的 project 属性, 使用这个 <code>greeting</code> 名字作为 extension object</p>
+<p>Example - A custom plugin with configuration block:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line"><span class="keyword">interface</span> GreetingPluginExtension &#123;</span><br><span class="line">    Property&lt;String&gt; getMessage()</span><br><span class="line">    Property&lt;String&gt; getGreeter()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> GreetingPlugin <span class="keyword">implements</span> Plugin&lt;<span class="keyword">Project</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">void</span> apply(<span class="keyword">Project</span> <span class="keyword">project</span>) &#123;</span><br><span class="line">        <span class="keyword">def</span> extension = <span class="keyword">project</span>.extensions.create(<span class="string">&#x27;greeting&#x27;</span>, GreetingPluginExtension)</span><br><span class="line">        <span class="keyword">project</span>.<span class="keyword">task</span>(<span class="string">&#x27;hello&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">doLast</span> &#123;</span><br><span class="line">                <span class="keyword">println</span> <span class="string">&quot;$&#123;extension.message.get()&#125; from $&#123;extension.greeter.get()&#125;&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">apply plugin: GreetingPlugin</span><br><span class="line"></span><br><span class="line"><span class="comment">// Configure the extension using a DSL block</span></span><br><span class="line">greeting &#123;</span><br><span class="line">    message = <span class="string">&#x27;Hi&#x27;</span></span><br><span class="line">    greeter = <span class="string">&#x27;Gradle&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中, 多个配置可以通过 <code>greeting</code> closure 组合在一起</p>
+<h2 id="Working-with-files-in-custom-tasks-and-plugins"><a href="#Working-with-files-in-custom-tasks-and-plugins" class="headerlink" title="Working with files in custom tasks and plugins"></a>Working with files in custom tasks and plugins</h2><p>在接受文件位置的输入配置时, 保持灵活是一个好主意</p>
+<p>你应该使用 Gradle 的 <code>managed properties</code> 和 <code>project.layout</code> 来选择文件或目录位置</p>
+<p>通过这个, 实际的位置将会在文件真的需要的时候被解析, 还可以在配置构建时的任何时候进行配置</p>
+<p>Example - Evaluating file properties lazily:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> GreetingToFileTask <span class="keyword">extends</span> DefaultTask &#123;</span><br><span class="line">    @OutputFile</span><br><span class="line">    <span class="keyword">abstract</span> RegularFileProperty getDestination()</span><br><span class="line"></span><br><span class="line">    @TaskAction</span><br><span class="line">    <span class="keyword">def</span> greet() &#123;</span><br><span class="line">        <span class="keyword">def</span> <span class="keyword">file</span> = getDestination.get().asFile</span><br><span class="line">        <span class="keyword">file</span>.parentFile.mkdirs()</span><br><span class="line">        <span class="keyword">file</span>.<span class="keyword">write</span> <span class="string">&#x27;Hello!&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> greetingFile = objects.fileProperty()</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;greet&#x27;</span>, GreetingToFileTask) &#123;</span><br><span class="line">    destination = greetingFile</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;sayGreeting&#x27;</span>) &#123;</span><br><span class="line">    dependsOn greet</span><br><span class="line">    <span class="keyword">doLast</span> &#123;</span><br><span class="line">        <span class="keyword">def</span> <span class="keyword">file</span> = greetingFile.get().asFile</span><br><span class="line">        <span class="keyword">println</span> <span class="string">&quot;$&#123;file.text&#125; (file: $&#123;file.name&#125;)&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">greetingFile.set(layout.buildDirectory.<span class="keyword">file</span>(<span class="string">&#x27;hello.txt&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle -q sayGreeting</span><br></pre></td></tr></table></figure>
+
+<h2 id="A-standalone-project"><a href="#A-standalone-project" class="headerlink" title="A standalone project"></a>A standalone project</h2><p>使用 <code>Java Gradle Plugin Development Plugin</code></p>
+<p>这个插件将会自动使用 <code>Java Plugin</code>, 添加 <code>gradleApi()</code> 依赖到 api configuration, 生成必选的插件描述符(plugin descriptors)到结果 JAR 文件中, 配置发布时使用的 Plugin Marker Artifact</p>
+<p>Example - A build for a custom plugin</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">&#x27;java-gradle-plugin&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">gradlePlugin &#123;</span><br><span class="line">    plugins &#123;</span><br><span class="line">        simplePlugin &#123;</span><br><span class="line">            id = <span class="string">&#x27;org.example.greeting&#x27;</span></span><br><span class="line">            implementationClass = <span class="string">&#x27;org.example.GreetingPlugin&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Creating-a-plugin-id"><a href="#Creating-a-plugin-id" class="headerlink" title="Creating a plugin id"></a>Creating a plugin id</h3><p>Plugin 的 id 和 Java 包的命名方法相似</p>
+<p>Plugin ids 要遵守如下规则:</p>
+<ul>
+<li>应该包含任意字母和数字, <code>.</code>, <code>-</code></li>
+<li>必须包含至少一个 <code>.</code> 字符来分隔插件名称的命名空间</li>
+<li>按照惯例, 命名空间使用小写的反向域约定</li>
+<li>按照惯例, 在名称中只使用小写字符</li>
+<li><code>org.gradle</code> 和 <code>com.gradleware</code> 命名空间不可以使用</li>
+<li>不可以以一个 <code>.</code> 字符作为开头或结尾</li>
+<li>不可以包含连续的 <code>.</code> 字符</li>
+</ul>
+<h3 id="Publishing-your-plugin"><a href="#Publishing-your-plugin" class="headerlink" title="Publishing your plugin"></a>Publishing your plugin</h3><p>像发布普通的 artifact 一样发布到 Ivy 或者 Maven 仓库中</p>
+<p>也可以发布到 Gradle Plugin Portal 中</p>
+<h3 id="Using-your-plugin-in-another-project"><a href="#Using-your-plugin-in-another-project" class="headerlink" title="Using your plugin in another project"></a>Using your plugin in another project</h3><p>为了在一个构建脚本中使用自定义插件, 你需要在 settings 文件的 <code>pluginManagement &#123;&#125;</code> 块中配置仓库</p>
+<p>Example - Using a custom plugin in another project:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// settings.gradle</span></span><br><span class="line">pluginManagement &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        maven &#123;</span><br><span class="line">            url = uri(repoLocation)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">&#x27;org.example.greeting&#x27;</span> version <span class="string">&#x27;1.0-SNAPSHOT&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Note-for-plugins-published-without-java-gradle-plugin"><a href="#Note-for-plugins-published-without-java-gradle-plugin" class="headerlink" title="Note for plugins published without java-gradle-plugin"></a>Note for plugins published without <code>java-gradle-plugin</code></h3><p>如果你的插件没有使用 <code>Java Gradle Plugin Development Plugin</code> 来发布, 那么发布的 JAR 就会缺少 <code>Plugin Marker Artifact</code>, 这个东西是 <code>plugins DSL</code> 用来定位插件的</p>
+<p>在这种情况下, 解析插件的建议的方式是在另外一个项目中添加 <code>resolutionStrategy</code> 到 <code>pluginManagement &#123;&#125;</code> 块中</p>
+<p>Example - Resolution strategy for plugins without Plugin Marker Artifact:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// settings.gradle</span></span><br><span class="line">resolutionStrategy &#123;</span><br><span class="line">    eachPlugin &#123;</span><br><span class="line">        <span class="keyword">if</span> (requested.id.namespace == <span class="string">&#x27;org.example&#x27;</span>) &#123;</span><br><span class="line">            useModule(<span class="string">&quot;org.example:custom-plugin:$&#123;requested.version&#125;&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Precompiled-script-plugins"><a href="#Precompiled-script-plugins" class="headerlink" title="Precompiled script plugins"></a>Precompiled script plugins</h2><p>Gradle 还允许你提供构建逻辑, 使用 Groovy 或 Kotlin DSLs 作为预编译脚本插件</p>
+<p>在 <code>src/main/groovy</code> 目录中编写 <code>*.gradle</code></p>
+<p>预编译脚本插件被编译为 classes 文件, 然后打包到一个 JAR 中</p>
+<h2 id="Writing-tests-for-your-plugin"><a href="#Writing-tests-for-your-plugin" class="headerlink" title="Writing tests for your plugin"></a>Writing tests for your plugin</h2><p><code>ProjectBuilder</code> 类创建的 <code>Project</code> 实例可以用来测试你的插件实现</p>
+<p>Example - Testing a custom plugin:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/test/java/org/example/GreetingPluginTest.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GreetingPluginTest</span> &#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">greeterPluginAddsGreetingTaskToProject</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">Project</span> <span class="variable">project</span> <span class="operator">=</span> ProjectBuilder.builder().build();</span><br><span class="line">        project.getPluginManager().apply(<span class="string">&quot;org.example.greeting&quot;</span>);</span><br><span class="line"></span><br><span class="line">        assertTrue(project.getTasks().getByName(<span class="string">&quot;hello&quot;</span>) <span class="keyword">instanceof</span> GreetingTask);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - Writing for a custom plugin:</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">//</span> <span class="string">src/main/resources/META-INF/gradle-plugins/org.example.greeting.properties</span></span><br><span class="line"><span class="attr">implementation-class</span>=<span class="string">org.example.GreetingPlugin</span></span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Extending Gradle Developing Custom Gradle Plugins</li>
+        <li>本文作者：林威羽</li>
+        <li>创建时间：2022-05-05 11:51:32</li>
+        <li>
+            本文链接：https://linweiyu21.github.io/gradle/gradle-extending-gradle-developing-custom-gradle-plugins/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/Gradle/">#Gradle</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/User-Guides/">#User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/gradle/gradle-plugin-development-plugin/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Gradle Plugin Development Plugin</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/gradle/gradle-extending-gradle-developing-custom-gradle-task-types/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Extending Gradle Developing Custom Gradle Task Types</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '8xWQ0WFbKUNN4h8ixIO12etk-gzGzoHsz',
+                    appKey: '7cLjTvkIsF6aIuIVSd0um89m',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请开始你的表演',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = '林威羽';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">林威羽</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Extending-Gradle-Developing-Custom-Gradle-Plugins"><span class="nav-number">1.</span> <span class="nav-text">Extending Gradle Developing Custom Gradle Plugins</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Packaging-a-plugin"><span class="nav-number">1.1.</span> <span class="nav-text">Packaging a plugin</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Build-script"><span class="nav-number">1.1.1.</span> <span class="nav-text">Build script</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#buildSrc-project"><span class="nav-number">1.1.2.</span> <span class="nav-text">buildSrc project</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Standalone-project"><span class="nav-number">1.1.3.</span> <span class="nav-text">Standalone project</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Writing-a-simple-plugin"><span class="nav-number">1.2.</span> <span class="nav-text">Writing a simple plugin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Making-the-plugin-configurable"><span class="nav-number">1.3.</span> <span class="nav-text">Making the plugin configurable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Working-with-files-in-custom-tasks-and-plugins"><span class="nav-number">1.4.</span> <span class="nav-text">Working with files in custom tasks and plugins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-standalone-project"><span class="nav-number">1.5.</span> <span class="nav-text">A standalone project</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Creating-a-plugin-id"><span class="nav-number">1.5.1.</span> <span class="nav-text">Creating a plugin id</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Publishing-your-plugin"><span class="nav-number">1.5.2.</span> <span class="nav-text">Publishing your plugin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-your-plugin-in-another-project"><span class="nav-number">1.5.3.</span> <span class="nav-text">Using your plugin in another project</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Note-for-plugins-published-without-java-gradle-plugin"><span class="nav-number">1.5.4.</span> <span class="nav-text">Note for plugins published without java-gradle-plugin</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Precompiled-script-plugins"><span class="nav-number">1.6.</span> <span class="nav-text">Precompiled script plugins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Writing-tests-for-your-plugin"><span class="nav-number">1.7.</span> <span class="nav-text">Writing tests for your plugin</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

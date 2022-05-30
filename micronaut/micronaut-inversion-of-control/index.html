@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Micronaut,Groovy,Gradle,Java,文档,中文">
+    <meta name="description" content="Micronaut Groovy Gradle Java 文档 中文">
+    <meta name="author" content="林威羽">
+    
+    <title>
+        
+            Micronaut 中文文档 Inversion of Control |
+        
+        林威羽的笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(153,153,0)","avatar":"/images/avatar.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"400px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":null,"description":"def contains🚀 = ['Micronaut', 'Groovy', 'Gradle', 'etc']"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                林威羽的笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+    <a target="_blank" rel="noopener" href="https://github.com/linweiyu21/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80"
+        viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+        aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path
+          d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+          fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path
+          d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+          fill="currentColor" class="octo-body"></path>
+      </svg></a>
+    <style>
+      .github-corner:hover .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+      }
+
+      @keyframes octocat-wave {
+
+        0%,
+        100% {
+          transform: rotate(0)
+        }
+
+        20%,
+        60% {
+          transform: rotate(-25deg)
+        }
+
+        40%,
+        80% {
+          transform: rotate(10deg)
+        }
+      }
+
+      @media (max-width:500px) {
+        .github-corner:hover .octo-arm {
+          animation: none
+        }
+
+        .github-corner .octo-arm {
+          animation: octocat-wave 560ms ease-in-out
+        }
+      }
+    </style>
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Micronaut 中文文档 Inversion of Control</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">林威羽</span>
+                        
+                            <span class="author-label">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-04-29 09:25:59</span>
+        <span class="mobile">2022-04-29 09:25</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Micronaut-%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3/">Micronaut 中文文档</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Groovy/">Groovy</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Micronaut/">Micronaut</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E4%B8%AD%E6%96%87/">中文</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <!-- TOC -->
+
+<ul>
+<li><a href="#inversion-of-control">Inversion of Control</a><ul>
+<li><a href="#injectable-container-types-%E5%8F%AF%E4%BB%A5%E6%B3%A8%E5%85%A5%E7%9A%84%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B">Injectable Container Types (可以注入的容器类型)</a><ul>
+<li><a href="#collection-ordering-%E5%AE%B9%E5%99%A8%E4%B8%AD-bean-%E7%9A%84%E9%A1%BA%E5%BA%8F">Collection Ordering (容器中 Bean 的顺序)</a></li>
+<li><a href="#injecting-a-bean-by-order-%E6%8C%89%E9%A1%BA%E5%BA%8F%E6%B3%A8%E5%85%A5%E4%B8%80%E4%B8%AA-bean">Injecting a Bean by Order (按顺序注入一个 Bean)</a></li>
+</ul>
+</li>
+<li><a href="#bean-qualifiers-bean-%E9%99%90%E5%AE%9A%E7%AC%A6">Bean Qualifiers Bean (限定符)</a><ul>
+<li><a href="#qualifying-by-name-%E9%80%9A%E8%BF%87%E5%90%8D%E5%AD%97%E6%9D%A5%E9%99%90%E5%AE%9A">Qualifying By Name (通过名字来限定)</a></li>
+<li><a href="#qualifying-by-annotation-%E9%80%9A%E8%BF%87%E6%B3%A8%E8%A7%A3%E6%9D%A5%E9%99%90%E5%AE%9A">Qualifying By Annotation (通过注解来限定)</a></li>
+<li><a href="#qualifier-by-annotation-members-%E9%80%9A%E8%BF%87%E6%B3%A8%E8%A7%A3%E7%9A%84%E5%B1%9E%E6%80%A7%E6%88%90%E5%91%98%E6%9D%A5%E9%99%90%E5%AE%9A">Qualifier By Annotation Members (通过注解的属性成员来限定)</a></li>
+<li><a href="#qualifying-by-generic-type-arguments-%E9%80%9A%E8%BF%87%E6%B3%9B%E5%9E%8B%E5%8F%82%E6%95%B0%E6%9D%A5%E9%99%90%E5%AE%9A">Qualifying by Generic Type Arguments (通过泛型参数来限定)</a></li>
+<li><a href="#primary-and-secondary-beans-%E4%B8%BB%E8%A6%81%E7%9A%84%E5%92%8C%E6%AC%A1%E8%A6%81%E7%9A%84-bean">Primary and Secondary Beans (主要的和次要的 Bean)</a></li>
+<li><a href="#injecting-any-bean-%E6%B3%A8%E5%85%A5%E4%BB%BB%E6%84%8F-bean">Injecting Any Bean (注入任意 Bean)</a></li>
+</ul>
+</li>
+<li><a href="#limiting-injectable-types-%E9%99%90%E5%88%B6%E6%B3%A8%E5%85%A5%E7%9A%84%E7%B1%BB%E5%9E%8B">Limiting Injectable Types (限制注入的类型)</a></li>
+<li><a href="#scopes-%E4%BD%9C%E7%94%A8%E5%9F%9F">Scopes (作用域)</a><ul>
+<li><a href="#built-in-scopes-%E5%86%85%E5%BB%BA%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F">Built-In Scopes (内建的作用域)</a><ul>
+<li><a href="#eager-initialization-of-singletons-%E5%8D%95%E4%BE%8B%E7%9A%84%E9%A5%BF%E5%BC%8F%E5%88%9D%E5%A7%8B%E5%8C%96">Eager Initialization of Singletons (单例的饿式初始化)</a></li>
+</ul>
+</li>
+<li><a href="#refreshable-scope-%E5%8F%AF%E5%88%B7%E6%96%B0%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F">Refreshable Scope (可刷新的作用域)</a></li>
+<li><a href="#scopes-on-meta-annotations-%E5%85%83%E6%B3%A8%E8%A7%A3%E4%B8%8A%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F">Scopes on Meta Annotations (元注解上的作用域)</a></li>
+</ul>
+</li>
+<li><a href="#bean-factories-bean-%E5%B7%A5%E5%8E%82">Bean Factories Bean (工厂)</a><ul>
+<li><a href="#programmatically-disabling-beans-%E7%BC%96%E7%A8%8B%E6%96%B9%E5%BC%8F%E6%9D%A5%E6%97%A0%E6%95%88%E5%8C%96-beans">Programmatically Disabling Beans (编程方式来无效化 Beans)</a></li>
+<li><a href="#injection-point-%E6%B3%A8%E5%85%A5%E7%82%B9">Injection Point (注入点)</a></li>
+<li><a href="#beans-from-fields-%E5%9C%A8%E5%AD%97%E6%AE%B5%E4%B8%AD%E5%A3%B0%E6%98%8E-beans">Beans from Fields (在字段中声明 Beans)</a></li>
+<li><a href="#primitive-beans-and-arrays-%E5%8E%9F%E5%A7%8B%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%92%8C%E6%95%B0%E7%BB%84%E7%B1%BB%E5%9E%8B%E7%9A%84-bean">Primitive Beans and Arrays (原始类型的和数组类型的 Bean)</a></li>
+</ul>
+</li>
+<li><a href="#conditional-beans-%E6%9D%A1%E4%BB%B6%E5%8C%96%E5%8A%A0%E8%BD%BD-beans">Conditional Beans (条件化加载 Beans)</a><ul>
+<li><a href="#configuration-requirements-%E9%85%8D%E7%BD%AE%E8%A6%81%E6%B1%82">Configuration Requirements (配置要求)</a><ul>
+<li><a href="#additional-notes-on-property-requirements-%E5%B1%9E%E6%80%A7%E8%A6%81%E6%B1%82%E4%B8%8A%E9%A2%9D%E5%A4%96%E7%9A%84%E4%BF%A1%E6%81%AF">Additional Notes on Property Requirements (属性要求上额外的信息)</a></li>
+<li><a href="#referencing-bean-properties-in-requires-%E5%9C%A8-requires-%E6%B3%A8%E8%A7%A3%E4%B8%AD%E5%BC%95%E7%94%A8-bean-%E5%B1%9E%E6%80%A7">Referencing bean properties in @Requires (在 @Requires 注解中引用 Bean 属性)</a></li>
+</ul>
+</li>
+<li><a href="#debugging-conditional-beans-%E8%B0%83%E8%AF%95%E6%9D%A1%E4%BB%B6%E5%8C%96%E7%9A%84-beans">Debugging Conditional Beans (调试条件化的 Beans)</a></li>
+</ul>
+</li>
+<li><a href="#bean-replacement-bean-%E6%9B%BF%E4%BB%A3">Bean Replacement (Bean 替代)</a><ul>
+<li><a href="#factory-replacement-factory-%E6%9B%BF%E4%BB%A3">Factory Replacement (Factory 替代)</a></li>
+<li><a href="#default-implementation-%E9%BB%98%E8%AE%A4%E5%AE%9E%E7%8E%B0">Default Implementation (默认实现)</a></li>
+</ul>
+</li>
+<li><a href="#bean-configurations-bean-%E9%85%8D%E7%BD%AE">Bean Configurations (Bean 配置)</a></li>
+<li><a href="#life-cycle-methods-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%96%B9%E6%B3%95">Life-Cycle Methods (生命周期方法)</a><ul>
+<li><a href="#when-the-context-starts-context-%E5%90%AF%E5%8A%A8%E6%97%B6">When The Context Starts (Context 启动时)</a></li>
+<li><a href="#when-the-context-closes-context-%E5%85%B3%E9%97%AD%E6%97%B6">When The Context Closes (Context 关闭时)</a></li>
+</ul>
+</li>
+<li><a href="#context-events-context-%E4%BA%8B%E4%BB%B6">Context Events (Context 事件)</a><ul>
+<li><a href="#publishing-events-%E5%8F%91%E5%B8%83%E4%BA%8B%E4%BB%B6">Publishing Events (发布事件)</a></li>
+<li><a href="#listening-for-events-%E7%9B%91%E5%90%AC%E4%BA%8B%E4%BB%B6">Listening for Events (监听事件)</a></li>
+</ul>
+</li>
+<li><a href="#bean-events-bean-%E4%BA%8B%E4%BB%B6">Bean Events (Bean 事件)</a></li>
+<li><a href="#bean-introspection-bean-%E5%86%85%E7%9C%81">Bean Introspection (Bean 内省)</a><ul>
+<li><a href="#making-a-bean-available-for-introspection-%E8%AE%A9%E4%B8%80%E4%B8%AA-bean-%E5%8F%AF%E7%94%A8%E4%BA%8E%E5%8F%8D%E5%B0%84">Making a Bean Available for Introspection (让一个 Bean 可用于反射)</a></li>
+<li><a href="#use-the-introspected-annotation-%E4%BD%BF%E7%94%A8-introspected-%E6%B3%A8%E8%A7%A3">Use the <code>@Introspected</code> Annotation (使用 <code>@Introspected</code> 注解)</a></li>
+<li><a href="#bean-fields-bean-%E5%AD%97%E6%AE%B5">Bean Fields (Bean 字段)</a></li>
+<li><a href="#constructor-methods-%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95">Constructor Methods (构造方法)</a></li>
+<li><a href="#static-creator-methods-%E9%9D%99%E6%80%81%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95">Static Creator Methods (静态构造方法)</a></li>
+<li><a href="#enums-%E6%9E%9A%E4%B8%BE">Enums (枚举)</a></li>
+<li><a href="#use-the-introspected-annotation-on-a-configuration-class-%E5%9C%A8%E4%B8%80%E4%B8%AA%E9%85%8D%E7%BD%AE%E7%B1%BB%E4%B8%8A%E4%BD%BF%E7%94%A8-introspected-%E6%B3%A8%E8%A7%A3">Use the <code>@Introspected</code> Annotation on a Configuration Class (在一个配置类上使用 <code>@Introspected</code> 注解)</a></li>
+<li><a href="#write-an-annotationmapper-to-introspect-existing-annotations-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA-annotationmapper-%E6%9D%A5%E5%86%85%E7%9C%81%E4%B8%80%E4%B8%AA%E5%B7%B2%E5%AD%98%E5%9C%A8%E7%9A%84%E6%B3%A8%E8%A7%A3">Write an <code>AnnotationMapper</code> to Introspect Existing Annotations (编写一个 <code>AnnotationMapper</code> 来内省一个已存在的注解)</a></li>
+<li><a href="#the-beanwrapper-api-beanwrapper-api">The BeanWrapper API (BeanWrapper API)</a></li>
+<li><a href="#jackson-and-bean-introspection-jackson-%E5%92%8C-bean-%E5%86%85%E7%9C%81">Jackson and Bean Introspection (Jackson 和 Bean 内省)</a></li>
+</ul>
+</li>
+<li><a href="#bean-validation-bean-%E6%A0%A1%E9%AA%8C">Bean Validation (Bean 校验)</a><ul>
+<li><a href="#validating-bean-methods-%E6%A3%80%E9%AA%8C-bean-%E7%9A%84%E6%96%B9%E6%B3%95">Validating Bean Methods (检验 Bean 的方法)</a></li>
+<li><a href="#validating-data-classes-%E6%A0%A1%E9%AA%8C%E6%95%B0%E6%8D%AE%E7%B1%BB">Validating Data Classes (校验数据类)</a></li>
+<li><a href="#validation-configuration-properties-%E6%A0%A1%E9%AA%8C%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE">Validation Configuration Properties (校验属性配置)</a></li>
+<li><a href="#defining-additional-constraints-%E5%AE%9A%E4%B9%89%E9%A2%9D%E5%A4%96%E7%9A%84%E7%BA%A6%E6%9D%9F">Defining Additional Constraints (定义额外的约束)</a></li>
+<li><a href="#validating-annotations-at-compile-time-%E5%9C%A8%E7%BC%96%E8%AF%91%E6%97%B6%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3">Validating Annotations at Compile Time (在编译时校验注解)</a></li>
+</ul>
+</li>
+<li><a href="#bean-annotation-metadata-bean-%E6%B3%A8%E8%A7%A3%E5%85%83%E6%95%B0%E6%8D%AE">Bean Annotation Metadata (Bean 注解元数据)</a><ul>
+<li><a href="#annotation-inheritance-%E6%B3%A8%E8%A7%A3%E7%BB%A7%E6%89%BF">Annotation Inheritance (注解继承)</a></li>
+<li><a href="#aliasing-or-mapping-annotations-%E5%8F%96%E5%88%AB%E5%90%8Dor%E6%98%A0%E5%B0%84%E6%B3%A8%E8%A7%A3">Aliasing or Mapping Annotations (取别名or映射注解)</a></li>
+</ul>
+</li>
+<li><a href="#importing-beans-from-libraries-%E4%BB%8E%E4%B8%80%E4%B8%AA%E5%BA%93%E4%B8%AD%E5%AF%BC%E5%85%A5-beans">Importing Beans from Libraries (从一个库中导入 Beans)</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="Inversion-of-Control"><a href="#Inversion-of-Control" class="headerlink" title="Inversion of Control"></a>Inversion of Control</h1><p><strong>声明</strong>:</p>
+<ul>
+<li>本文由本人翻译自<a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide" >官方文档<i class="fas fa-external-link-alt"></i></a></li>
+<li>部分内容可能会有修改或删减, 一切以官方文档为准.</li>
+<li>本文翻译时 Micronaut 版本为 3.4.2</li>
+</ul>
+<p>Micronaut 使用编译时数据来实现依赖注入</p>
+<h2 id="Injectable-Container-Types-可以注入的容器类型"><a href="#Injectable-Container-Types-可以注入的容器类型" class="headerlink" title="Injectable Container Types (可以注入的容器类型)"></a>Injectable Container Types (可以注入的容器类型)</h2><p>Table 1.Injectable Container Types - 可以注入的容器类型:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Type</th>
+<th align="left">Description</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>java.util.Optional</code></td>
+<td align="left">An <code>Optional</code> of a bean. <code>empty()</code> is injected if the bean is doesn’t exist</td>
+<td align="left"><code>Optional&lt;Engine&gt;</code></td>
+</tr>
+<tr>
+<td align="left"><code>java.lang.Collection</code></td>
+<td align="left">An <code>Collection</code> or subtype of <code>Collection</code></td>
+<td align="left"><code>Collection&lt;Engine&gt;</code></td>
+</tr>
+<tr>
+<td align="left"><code>java.util.stream.Stream</code></td>
+<td align="left">A lazy <code>Stream</code> of beans</td>
+<td align="left"><code>Stream&lt;Engine&gt;</code></td>
+</tr>
+<tr>
+<td align="left"><code>Array</code></td>
+<td align="left">A native array of beans of a given type</td>
+<td align="left"><code>Engine[]</code></td>
+</tr>
+<tr>
+<td align="left"><code>Provider</code></td>
+<td align="left">A <code>javax.inject.Provider</code> if a circular dependency requires it, or to instantiate a prototype for each <code>get</code> call</td>
+<td align="left"><code>Provider&lt;Engine&gt;</code></td>
+</tr>
+<tr>
+<td align="left"><code>Provider</code></td>
+<td align="left">A <code>jakarta.inject.Provider</code> if a circular dependency requires it or to instantiate a prototype for each <code>get</code> call</td>
+<td align="left"><code>Provider&lt;Engine&gt;</code></td>
+</tr>
+<tr>
+<td align="left"><code>BeanProvider</code></td>
+<td align="left">A <code>io.micronaut.context.BeanProvider</code> if a circular dependency requires it or to instantiate a prototype for each <code>get</code> call</td>
+<td align="left"><code>BeanProvider&lt;Engine&gt;</code></td>
+</tr>
+</tbody></table>
+<p>推荐使用 <code>BeanProvider</code></p>
+<p>当使用 <code>java.lang.Collection</code>,<code>java.util.stream.Stream</code>,<code>Array</code> 来注入 Beans 时, 当前类不会被注入到这些集合中:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AggregateEngine</span> <span class="keyword">implements</span> <span class="title class_">Engine</span> &#123;</span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    List&lt;Engine&gt; engines    <span class="comment">// engines 中不会包含当前类 AggregateEngine 的实例 Bean</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">void</span> start() &#123;</span><br><span class="line">        engines.forEach(<span class="attr">Engine:</span>:start)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>A prototype bean will have one instance created per place the bean is injected.</p>
+</blockquote>
+<p>一个 prototype bean 将会在每个注入的地方创建一个实例</p>
+<blockquote>
+<p>When a prototype bean is injected as a provider, each call to get() creates a new instance.</p>
+</blockquote>
+<p>当一个 prototype bean 作为一个 provider 来进行注入时, 每次调用 <code>get()</code> 方法会创建一个新的实例</p>
+<h3 id="Collection-Ordering-容器中-Bean-的顺序"><a href="#Collection-Ordering-容器中-Bean-的顺序" class="headerlink" title="Collection Ordering (容器中 Bean 的顺序)"></a>Collection Ordering (容器中 Bean 的顺序)</h3><p>使用集合来注入 Beans 时, 默认是没有对 Beans 进行排序的</p>
+<p>Beans 可以实现 <code>Ordered</code> 接口来进行排序注入</p>
+<p>或者使用 <code>@Order</code> 注解来声明注入顺序, 在通过 Factory 来创建 Class 位于第三方库的 Beans 时非常有用:</p>
+<p>Example - Factory with <code>@Order</code>:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.Factory</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.Order</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Singleton</span><br><span class="line"><span class="keyword">import</span> java.time.Duration</span><br><span class="line"></span><br><span class="line"><span class="meta">@Factory</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RateLimitsFactory</span> &#123;</span><br><span class="line">    <span class="meta">@Singleton</span></span><br><span class="line">    <span class="meta">@Order</span>(<span class="number">20</span>)</span><br><span class="line">    LowRateLimit rateLimit2() &#123;</span><br><span class="line">        <span class="keyword">new</span> LowRateLimit(Duration.ofMinutes(<span class="number">50</span>), <span class="number">100</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Singleton</span></span><br><span class="line">    <span class="meta">@Order</span>(<span class="number">10</span>)</span><br><span class="line">    HighRateLimit rateLimit1() &#123;</span><br><span class="line">        <span class="keyword">new</span> HighRateLimit(Duration.ofMinutes(<span class="number">50</span>), <span class="number">1000</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在注入一个 <code>RateLimit</code> 集合的 Beans 时, 将会使用 <code>@Order</code> 中的 value 值的 正序(asc) 来进行排序</p>
+<h3 id="Injecting-a-Bean-by-Order-按顺序注入一个-Bean"><a href="#Injecting-a-Bean-by-Order-按顺序注入一个-Bean" class="headerlink" title="Injecting a Bean by Order (按顺序注入一个 Bean)"></a>Injecting a Bean by Order (按顺序注入一个 Bean)</h3><p>在注入单个 Bean 实例时, <code>@Order</code> 注解可以用来声明哪个 Bean 具有更高的优先级</p>
+<h2 id="Bean-Qualifiers-Bean-限定符"><a href="#Bean-Qualifiers-Bean-限定符" class="headerlink" title="Bean Qualifiers Bean (限定符)"></a>Bean Qualifiers Bean (限定符)</h2><p>当你需要注入一个有多个实现的接口的 Bean 时, 你需要使用一个 <code>qualifier</code>(限定词, 限定语)</p>
+<h3 id="Qualifying-By-Name-通过名字来限定"><a href="#Qualifying-By-Name-通过名字来限定" class="headerlink" title="Qualifying By Name (通过名字来限定)"></a>Qualifying By Name (通过名字来限定)</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Engine</span> &#123; <span class="comment">// </span></span><br><span class="line">    <span class="type">int</span> getCylinders()</span><br><span class="line">    String start()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">V6Engine</span> <span class="keyword">implements</span> <span class="title class_">Engine</span> &#123; <span class="comment">// </span></span><br><span class="line">    <span class="type">int</span> cylinders = <span class="number">6</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    String start() &#123;</span><br><span class="line">        <span class="string">&quot;Starting V6&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">V8Engine</span> <span class="keyword">implements</span> <span class="title class_">Engine</span> &#123; <span class="comment">// </span></span><br><span class="line">    <span class="type">int</span> cylinders = <span class="number">8</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    String start() &#123;</span><br><span class="line">        <span class="string">&quot;Starting V8&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Vehicle</span> &#123;</span><br><span class="line">    <span class="keyword">final</span> Engine engine</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span> Vehicle(<span class="meta">@Named</span>(<span class="string">&#x27;v8&#x27;</span>) Engine engine) &#123; <span class="comment">// </span></span><br><span class="line">        <span class="variable language_">this</span>.engine = engine</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    String start() &#123;</span><br><span class="line">        engine.start() <span class="comment">// </span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>@Named</code> <code>qualifier</code> 的值 <code>v8</code> 加上 类<code>Engine</code> 构成 <code>v8Engine</code>, 再使用大小写不敏感的判断: <code>v8Engine</code> &#x3D;&#x3D; <code>V8Engine</code>, 所以注入的是 <code>Engine</code> 的 <code>V8Engine</code> 实现</p>
+<p>还可以在类上使用 <code>@Named</code> 来明确声明这个 Bean 的名称, 以便在注入时使用这个名称</p>
+<h3 id="Qualifying-By-Annotation-通过注解来限定"><a href="#Qualifying-By-Annotation-通过注解来限定" class="headerlink" title="Qualifying By Annotation (通过注解来限定)"></a>Qualifying By Annotation (通过注解来限定)</h3><p>通过使用 <code>@Qualifier</code> 注解来声明自定义的注解来进行 qualify</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jakarta.inject.Qualifier</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.RetentionPolicy.RUNTIME</span><br><span class="line"></span><br><span class="line"><span class="meta">@Qualifier</span></span><br><span class="line"><span class="meta">@Retention</span>(RUNTIME)</span><br><span class="line"><span class="meta">@interface</span> V8 &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Inject</span> Vehicle(<span class="meta">@V</span>8 Engine engine) &#123; <span class="variable language_">this</span>.engine = engine &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Qualifier-By-Annotation-Members-通过注解的属性成员来限定"><a href="#Qualifier-By-Annotation-Members-通过注解的属性成员来限定" class="headerlink" title="Qualifier By Annotation Members (通过注解的属性成员来限定)"></a>Qualifier By Annotation Members (通过注解的属性成员来限定)</h3><p>使用注解中的值来进行 qualify</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.NonBinding</span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Qualifier</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.RetentionPolicy.RUNTIME</span><br><span class="line"></span><br><span class="line"><span class="meta">@Qualifier</span> <span class="comment">// </span></span><br><span class="line"><span class="meta">@Retention</span>(RUNTIME)</span><br><span class="line"><span class="meta">@interface</span> Cylinders &#123;</span><br><span class="line">    <span class="type">int</span> value();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NonBinding</span> <span class="comment">// </span></span><br><span class="line">    String description() <span class="keyword">default</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Cylinders</code> 注解中声明了 <code>value</code> 和 <code>description</code> 属性</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="meta">@Cylinders</span>(value = <span class="number">6</span>, description = <span class="string">&quot;6-cylinder V6 engine&quot;</span>)  <span class="comment">// </span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">V6Engine</span> <span class="keyword">implements</span> <span class="title class_">Engine</span> &#123; <span class="comment">// </span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="type">int</span> getCylinders() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">6</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    String start() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Starting V6&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="meta">@Cylinders</span>(value = <span class="number">8</span>, description = <span class="string">&quot;8-cylinder V8 engine&quot;</span>) <span class="comment">// </span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">V8Engine</span> <span class="keyword">implements</span> <span class="title class_">Engine</span> &#123; <span class="comment">// </span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="type">int</span> getCylinders() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">8</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    String start() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Starting V8&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Inject</span> Vehicle(<span class="meta">@Cylinders</span>(<span class="number">8</span>) Engine engine) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.engine = engine</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过 <code>@Cylinders(8)</code> 中的属性值 8 来指明使用 <code>V8Engine</code> 实现</p>
+<h3 id="Qualifying-by-Generic-Type-Arguments-通过泛型参数来限定"><a href="#Qualifying-by-Generic-Type-Arguments-通过泛型参数来限定" class="headerlink" title="Qualifying by Generic Type Arguments (通过泛型参数来限定)"></a>Qualifying by Generic Type Arguments (通过泛型参数来限定)</h3><p>可以通过泛型来进行 qualify</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">CylinderProvider</span> &#123;</span><br><span class="line">    <span class="type">int</span> getCylinders()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Engine</span>&lt;T <span class="keyword">extends</span> <span class="title class_">CylinderProvider</span>&gt; &#123; <span class="comment">// </span></span><br><span class="line">    <span class="keyword">default</span> <span class="type">int</span> getCylinders() &#123; cylinderProvider.cylinders &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">default</span> String start() &#123; <span class="string">&quot;Starting $&#123;cylinderProvider.class.simpleName&#125;&quot;</span> &#125;</span><br><span class="line"></span><br><span class="line">    T getCylinderProvider()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">V8</span> <span class="keyword">implements</span> <span class="title class_">CylinderProvider</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="type">int</span> getCylinders() &#123; <span class="number">8</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">V8Engine</span> <span class="keyword">implements</span> <span class="title class_">Engine</span>&lt;V8&gt; &#123;  <span class="comment">// </span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    V8 getCylinderProvider() &#123; <span class="keyword">new</span> V8() &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Inject</span></span><br><span class="line">Vehicle(Engine&lt;V8&gt; engine) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.engine = engine</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Primary-and-Secondary-Beans-主要的和次要的-Bean"><a href="#Primary-and-Secondary-Beans-主要的和次要的-Bean" class="headerlink" title="Primary and Secondary Beans (主要的和次要的 Bean)"></a>Primary and Secondary Beans (主要的和次要的 Bean)</h3><p>在接口有多个实现 Bean 时, 使用 <code>@Primary</code> 注解来声明其中一个 Bean 是主要 Bean, 优先级最高</p>
+<p>使用 <code>@Secondary</code> 注解来声明其中一个 Bean 是次要 Bean</p>
+<h3 id="Injecting-Any-Bean-注入任意-Bean"><a href="#Injecting-Any-Bean-注入任意-Bean" class="headerlink" title="Injecting Any Bean (注入任意 Bean)"></a>Injecting Any Bean (注入任意 Bean)</h3><p>注入任意一个 Bean 实现</p>
+<p><code>@Any</code> <code>qualifier</code> 通常和 <code>BeanProvider</code> 来一起使用, 用于一些动态的判断场景</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.BeanProvider</span><br><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.Any</span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Singleton</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Vehicle</span> &#123;</span><br><span class="line">    <span class="keyword">final</span> BeanProvider&lt;Engine&gt; engineProvider</span><br><span class="line"></span><br><span class="line">    Vehicle(<span class="meta">@Any</span> BeanProvider&lt;Engine&gt; engineProvider) &#123; <span class="comment">// </span></span><br><span class="line">        <span class="variable language_">this</span>.engineProvider = engineProvider</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">void</span> start() &#123;</span><br><span class="line">        engineProvider.ifPresent(<span class="attr">Engine:</span>:start) <span class="comment">// </span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>engineProvider.ifPresent(Engine::start)</code> 会在 Bean 存在的时候才进行方法的调用</p>
+<p>还可以同时使用多个满足条件的 Bean:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> startAll() &#123;</span><br><span class="line">    <span class="keyword">if</span> (engineProvider.isPresent()) &#123;</span><br><span class="line">        engineProvider.each &#123; it.start() &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Limiting-Injectable-Types-限制注入的类型"><a href="#Limiting-Injectable-Types-限制注入的类型" class="headerlink" title="Limiting Injectable Types (限制注入的类型)"></a>Limiting Injectable Types (限制注入的类型)</h2><p>使用 <code>@Bean</code> 注解来限定允许注入的接口或类, 而不是具体的类型</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="meta">@Bean</span>(typed = Engine) <span class="comment">// </span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">V8Engine</span> <span class="keyword">implements</span> <span class="title class_">Engine</span> &#123;  <span class="comment">// </span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    String start() &#123; <span class="string">&quot;Starting V8&quot;</span> &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="type">int</span> getCylinders() &#123; <span class="number">8</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>@Bean(typed = Engine)</code> 限定了只能使用 <code>Engine</code> 接口来进行依赖注入, 而不能使用 <code>V8Engine</code> 类来进行依赖注入</p>
+<p><code>V8Engine</code> 类必须实现 <code>@Bean</code> 注解中声明的类或接口, 否则将会产生编译时异常</p>
+<h2 id="Scopes-作用域"><a href="#Scopes-作用域" class="headerlink" title="Scopes (作用域)"></a>Scopes (作用域)</h2><h3 id="Built-In-Scopes-内建的作用域"><a href="#Built-In-Scopes-内建的作用域" class="headerlink" title="Built-In Scopes (内建的作用域)"></a>Built-In Scopes (内建的作用域)</h3><p>Table - Micronaut Built-in Scopes</p>
+<table>
+<thead>
+<tr>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>@Singleton</code></td>
+<td align="left">Singleton scope indicates only one instance of the bean will exist</td>
+</tr>
+<tr>
+<td align="left"><code>@Context</code></td>
+<td align="left">Context scope indicates that the bean will be created at the same time as the ApplicationContext (eager initialization)</td>
+</tr>
+<tr>
+<td align="left"><code>@Prototype</code></td>
+<td align="left">Prototype scope indicates that a new instance of the bean is created each time it is injected</td>
+</tr>
+<tr>
+<td align="left"><code>@Infrastructure</code></td>
+<td align="left">Infrastructure scope represents a bean that cannot be override or replaced using <code>@Replaces</code> because it is critical to the functioning of the system</td>
+</tr>
+<tr>
+<td align="left"><code>@ThreadLocal</code></td>
+<td align="left"><code>@ThreadLocal</code> scope is a custom scope that associates a bean per thread via a ThreadLocal</td>
+</tr>
+<tr>
+<td align="left"><code>@Refreshable</code></td>
+<td align="left"><code>@Refreshable</code> scope is a custom scope that allows a bean’s state to be refreshed via the <code>/refresh</code> endpoint</td>
+</tr>
+<tr>
+<td align="left"><code>@RequestScope</code></td>
+<td align="left"><code>@RequestScope</code> scope is a custom scope that indicates a new instance of the bean is created and associated with each HTTP request</td>
+</tr>
+</tbody></table>
+<p><code>@Prototype</code> 注解是 <code>@Bean</code> 注解的同义词, 因为默认的 scope 是 prototype 的</p>
+<p>可以通过定义一个实现了 <code>CustomScope</code> 接口的 <code>@Singleton</code> Bean 来添加额外的 scope</p>
+<p>默认情况下, 在启动一个 <code>ApplicationContext</code> 时, 将会延迟与按需创建 <code>@Singleton</code> scope 的 Bean</p>
+<p>可以使用 <code>@Context</code> 注解来将 Bean 的生命周期绑定到 <code>ApplicationContext</code> 上, 换句话说, 就是在 <code>ApplicationContext</code> 启动的时候创建这个 Bean</p>
+<p>或者, 使用 <code>@Parallel</code> 注解来修饰一个 <code>@Singleton</code> scope 的 Bean, 允许并行初始化这个 Bean</p>
+<p>如果你的 Bean 在并行初始化的时候失败了, 那么整个 Application 将会自动关闭</p>
+<h4 id="Eager-Initialization-of-Singletons-单例的饿式初始化"><a href="#Eager-Initialization-of-Singletons-单例的饿式初始化" class="headerlink" title="Eager Initialization of Singletons (单例的饿式初始化)"></a>Eager Initialization of Singletons (单例的饿式初始化)</h4><p>通过 <code>ApplicationContextBuilder</code> 接口来进行配置</p>
+<p>Example - Enabling Eager Initialization of Singletons:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Application</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        Micronaut.build(args)</span><br><span class="line">                 .eagerInitSingletons(<span class="literal">true</span>)</span><br><span class="line">                 .mainClass(Application.class)</span><br><span class="line">                 .start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>Serverless Functions</code> 中:</p>
+<p>Example - Override of newApplicationContextBuilder():</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyFunctionHandler</span> <span class="keyword">extends</span> <span class="title class_">MicronautRequestHandler</span>&lt;APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent&gt; &#123;</span><br><span class="line">    <span class="meta">@Nonnull</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> ApplicationContextBuilder <span class="title function_">newApplicationContextBuilder</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">ApplicationContextBuilder</span> <span class="variable">builder</span> <span class="operator">=</span> <span class="built_in">super</span>.newApplicationContextBuilder();</span><br><span class="line">        builder.eagerInitSingletons(<span class="literal">true</span>);</span><br><span class="line">        <span class="keyword">return</span> builder;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>@ConfigurationReader</code> Beans 例如 <code>@EachProperty</code>,<code>@ConfigurationProperties</code> 是 Singleton Beans. 为了 饥饿地初始化(<code>eagerly init configuration</code>) 这些配置 Beans 但保持其他 Singleton Beans 延迟初始化, 使用 <code>eagerInitConfiguration</code>:</p>
+<p>Example - Enabling Initialization of Configuration:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Application</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        Micronaut.build(args)</span><br><span class="line">                 .eagerInitConfiguration(<span class="literal">true</span>)</span><br><span class="line">                 .mainClass(Application.class)</span><br><span class="line">                 .start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Refreshable-Scope-可刷新的作用域"><a href="#Refreshable-Scope-可刷新的作用域" class="headerlink" title="Refreshable Scope (可刷新的作用域)"></a>Refreshable Scope (可刷新的作用域)</h3><p><code>Refreshable</code> scope 是一个自定义的 scope, 允许 Bean 的状态通过如下方式来进行刷新:</p>
+<ul>
+<li><code>/refresh</code> endpoint</li>
+<li>发布一个 <code>RefreshEvent</code> 事件</li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Refreshable</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">WeatherService</span> &#123;</span><br><span class="line">    String forecast</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="type">void</span> init() &#123;</span><br><span class="line">        forecast = <span class="string">&quot;Scattered Clouds $&#123;new SimpleDateFormat(&#x27;dd/MMM/yy HH:mm:ss.SSS&#x27;).format(new Date())&#125;&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    String latestForecast() &#123; forecast &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当调用 <code>/refresh</code> endpoint 或者触发一个 <code>RefreshEvent</code> 事件时, 当前的 <code>WeatherService</code> 实例将会失效, 一个新的实例对象将会在下次请求这个实例时创建</p>
+<p>触发 <code>RefreshEvent</code> 事件: <code>applicationContext.publishEvent(new RefreshEvent())</code></p>
+<h3 id="Scopes-on-Meta-Annotations-元注解上的作用域"><a href="#Scopes-on-Meta-Annotations-元注解上的作用域" class="headerlink" title="Scopes on Meta Annotations (元注解上的作用域)"></a>Scopes on Meta Annotations (元注解上的作用域)</h3><p>可以在元注解上声明 Scope, 元注解上声明的 Scope 将会应用到所有被这个注解修饰的类上</p>
+<p>Example:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.Requires</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Singleton</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Documented</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.RetentionPolicy.RUNTIME</span><br><span class="line"></span><br><span class="line"><span class="meta">@Requires(classes = Car.class)</span></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention(RUNTIME)</span></span><br><span class="line"><span class="meta">@interface</span> Driver &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - 使用这个元注解:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Driver</span></span><br><span class="line"><span class="meta">@Prototype</span>      <span class="comment">// 这个例外声明的 Scope 将不会生效, Foo 类的 Scope 为 @Driver 中声明的 Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了使得 Scope 可以被覆盖, 使用 <code>@DefaultScope</code> 注解:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Requires(classes = Car.class)</span></span><br><span class="line"><span class="meta">@DefaultScope(Singleton.class)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention(RUNTIME)</span></span><br><span class="line"><span class="meta">@interface</span> Driver &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Bean-Factories-Bean-工厂"><a href="#Bean-Factories-Bean-工厂" class="headerlink" title="Bean Factories Bean (工厂)"></a>Bean Factories Bean (工厂)</h2><p>一个 Factory 是一个使用 <code>@Factory</code> 注解修饰的类, 这个类提供一个或多个使用 Scope 注解修饰的方法, 所以这个类是用来声明 Bean 的, 通常用于将第三方库中的类声明为 Bean</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Factory</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EngineFactory</span> &#123;</span><br><span class="line">    <span class="meta">@Singleton</span></span><br><span class="line">    Engine <span class="title function_">v8Engine</span><span class="params">(CrankShaft crankShaft)</span> &#123;</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">V8Engine</span>(crankShaft)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Factory 中的方法的参数被解析为 Bean 并进行了注入, 例如上面例子中的 <code>CrankShaft crankShaft</code></p>
+<p>在 Factory 中应该使用方法参数来注入这个 Factory 中的其他 Bean, 而不是调用 Factory 中的方法</p>
+<p>为了使得 Factory 中的 Bean 可以参与到应用程序上下文的关闭过程, 应该使用 <code>@Bean</code> 注解并配置 <code>@Bean</code> 注解的 <code>preDestroy</code> 参数来指明关闭时要执行的方法</p>
+<h3 id="Programmatically-Disabling-Beans-编程方式来无效化-Beans"><a href="#Programmatically-Disabling-Beans-编程方式来无效化-Beans" class="headerlink" title="Programmatically Disabling Beans (编程方式来无效化 Beans)"></a>Programmatically Disabling Beans (编程方式来无效化 Beans)</h3><p>Factory 方法可以抛出一个 <code>DisabledBeanException</code> 来有条件地无效化 Beans</p>
+<p>建议使用 <code>@Requires</code> 来条件化创建 Beans</p>
+<p>只有在 <code>@Requires</code> 无法使用的时候才通过在 Factory 方法中抛出异常的方式来条件化创建 Beans</p>
+<p>Example:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Engine</span> &#123;</span><br><span class="line">    Integer getCylinders()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@EachProperty</span>(<span class="string">&quot;engines&quot;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EngineConfiguration</span> <span class="keyword">implements</span> <span class="title class_">Toggleable</span> &#123;</span><br><span class="line">    <span class="type">boolean</span> enabled = <span class="literal">true</span></span><br><span class="line">    <span class="meta">@NotNull</span></span><br><span class="line">    Integer cylinders</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Factory</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EngineFactory</span> &#123;</span><br><span class="line">    <span class="meta">@EachBean</span>(EngineConfiguration)</span><br><span class="line">    Engine buildEngine(EngineConfiguration engineConfiguration) &#123;</span><br><span class="line">        <span class="keyword">if</span> (engineConfiguration.enabled) &#123;</span><br><span class="line">            (Engine)&#123;-&gt; engineConfiguration.cylinders&#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> DisabledBeanException(<span class="string">&quot;Engine configuration disabled&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Injection-Point-注入点"><a href="#Injection-Point-注入点" class="headerlink" title="Injection Point (注入点)"></a>Injection Point (注入点)</h3><p>在注入一个 Bean 时, 通过这个 Bean 上的注解的值来决定哪个 Bean 需要进行实例化</p>
+<p>Example - 声明一个有值的注解:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.PARAMETER)</span><br><span class="line"><span class="meta">@interface</span> Cylinders &#123;</span><br><span class="line">    <span class="type">int</span> value() <span class="keyword">default</span> <span class="number">8</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>The above annotation could be used to customize the type of engine we want to inject into a vehicle at the point at which the injection point is defined:</p>
+</blockquote>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Vehicle</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Engine engine</span><br><span class="line"></span><br><span class="line">    Vehicle(<span class="meta">@Cylinders</span>(<span class="number">6</span>) Engine engine) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.engine = engine</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    String start() &#123;</span><br><span class="line">        <span class="keyword">return</span> engine.start()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>To implement this use case, define a factory that accepts the InjectionPoint instance to analyze the defined annotation values:</p>
+</blockquote>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Factory</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EngineFactory</span> &#123;</span><br><span class="line">    <span class="meta">@Prototype</span></span><br><span class="line">    Engine v8Engine(InjectionPoint&lt;?&gt; injectPoint, CrankShaft crankShaft) &#123;</span><br><span class="line">        final int cylinders = injectPoint.getAnnotationMetadata()</span><br><span class="line">                                         .intValue(Cylinders.class)</span><br><span class="line">                                         .orElse(<span class="number">8</span>)</span><br><span class="line">        switch (cylinders) &#123;</span><br><span class="line">            case <span class="number">6</span>: <span class="keyword">return</span> <span class="keyword">new</span> V6Engine(crankShaft)</span><br><span class="line">            <span class="keyword">case</span> <span class="number">8</span>: <span class="keyword">return</span> <span class="keyword">new</span> V8Engine(crankShaft)</span><br><span class="line">            <span class="symbol">default:</span></span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">&quot;Unsupported number of cylinders specified: $cylinders&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>@Prototype</code> 注解来使得方法在每一个 注入点(<code>injection point</code>) 都会被调用; 如果 <code>V8Engine</code> 和 <code>V6Engine</code> 需要是 Singleton 的, 那么要在 Factory 中使用 Map 来保证实例只创建了一次</p>
+<h3 id="Beans-from-Fields-在字段中声明-Beans"><a href="#Beans-from-Fields-在字段中声明-Beans" class="headerlink" title="Beans from Fields (在字段中声明 Beans)"></a>Beans from Fields (在字段中声明 Beans)</h3><p>在 Micronaut 3.0 或以上版本中, 可以通过在字段(fields)上声明 <code>@Bean</code> 注解来从字段(fields)中提供 Bean</p>
+<p>更推荐的做法是使用 Factory 来创建 Bean, 但通过字段来提供 Bean 可以提供更大的灵活性来简化测试代码编写:</p>
+<p>Example - 通过 Bean 字段来提供 Mock Bean:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.*</span><br><span class="line"><span class="keyword">import</span> io.micronaut.test.extensions.spock.annotation.MicronautTest</span><br><span class="line"><span class="keyword">import</span> spock.lang.Specification</span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Inject</span><br><span class="line"></span><br><span class="line"><span class="meta">@MicronautTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">VehicleMockSpec</span> <span class="keyword">extends</span> <span class="title class_">Specification</span> &#123;</span><br><span class="line">    <span class="meta">@Requires</span>(beans = VehicleMockSpec.<span class="keyword">class</span>)</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@Replaces</span>(Engine.<span class="keyword">class</span>)</span><br><span class="line">    Engine mockEngine = &#123;-&gt; <span class="string">&quot;Mock Started&quot;</span>&#125; <span class="keyword">as</span> Engine   <span class="comment">// A bean is defined from a field that replaces the existing Engine</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    Vehicle vehicle</span><br><span class="line"></span><br><span class="line">    <span class="type">void</span> <span class="string">&quot;test start engine&quot;</span>() &#123;</span><br><span class="line">        <span class="symbol">given:</span></span><br><span class="line">            <span class="keyword">final</span> String result = vehicle.start()</span><br><span class="line">        <span class="symbol">expect:</span></span><br><span class="line">            result == <span class="string">&#x27;Mock Started&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>只支持 non-primitive 类型的 public 或者 package protected 的 fields</p>
+<h3 id="Primitive-Beans-and-Arrays-原始类型的和数组类型的-Bean"><a href="#Primitive-Beans-and-Arrays-原始类型的和数组类型的-Bean" class="headerlink" title="Primitive Beans and Arrays (原始类型的和数组类型的 Bean)"></a>Primitive Beans and Arrays (原始类型的和数组类型的 Bean)</h3><p>从 Micronaut 3.1 开始支持从 Factory 中定义和注入原始类型和数组类型</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.Bean</span><br><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.Factory</span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Named</span><br><span class="line"></span><br><span class="line"><span class="meta">@Factory</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CylinderFactory</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@Named</span>(<span class="string">&#x27;V8&#x27;</span>)</span><br><span class="line">    <span class="keyword">final</span> <span class="type">int</span> v8 = <span class="number">8</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@Named</span>(<span class="string">&#x27;V6&#x27;</span>)</span><br><span class="line">    <span class="keyword">final</span> <span class="type">int</span> v6 = <span class="number">6</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">v8Engine</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> cylinders</span><br><span class="line"></span><br><span class="line">    V8Engine(<span class="meta">@Named</span>(<span class="string">&#x27;V8&#x27;</span>) <span class="type">int</span> cylinders) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.cylinders = cylinders</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> getCylinders() &#123; cylinders &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>原始类型和数组类型 Bean 有如下限制:</p>
+<ul>
+<li>AOP advice 无法应用在原始类型或其包装类型上</li>
+<li><blockquote>
+<p>Due to the above custom scopes that proxy are not supported</p>
+</blockquote>
+</li>
+<li><blockquote>
+<p>The @Bean(preDestroy&#x3D;..) member is not supported</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="Conditional-Beans-条件化加载-Beans"><a href="#Conditional-Beans-条件化加载-Beans" class="headerlink" title="Conditional Beans (条件化加载 Beans)"></a>Conditional Beans (条件化加载 Beans)</h2><p>有时候你希望有条件地加载一个 Bean, 例如基于 classpath, configuration, bean 的优先级</p>
+<p><code>@Requires</code> 注解提供了在 Bean 上定义一个或多个条件的能力</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="meta">@Requires</span>(beans = DataSource)</span><br><span class="line"><span class="meta">@Requires</span>(property = <span class="string">&#x27;datasource.url&#x27;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">JdbcBookService</span> <span class="keyword">implements</span> <span class="title class_">BookService</span> &#123;</span><br><span class="line">    DataSource datasource</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果有多个 Bean 要求相同的条件, 可以使用元注解来声明这些条件:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Requires</span>(beans = DataSource)</span><br><span class="line"><span class="meta">@Requires</span>(property = <span class="string">&#x27;datasource.url&#x27;</span>)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>([ElementType.PACKAGE, ElementType.TYPE])</span><br><span class="line"><span class="meta">@interface</span> RequiresJdbc &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequiresJdbc</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JdbcBookService</span> <span class="keyword">implements</span> <span class="title class_">BookService</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Configuration-Requirements-配置要求"><a href="#Configuration-Requirements-配置要求" class="headerlink" title="Configuration Requirements (配置要求)"></a>Configuration Requirements (配置要求)</h3><p>Table - Using <code>@Requires</code></p>
+<table>
+<thead>
+<tr>
+<th align="left">Requirement</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Require the presence of one or more classes</td>
+<td align="left"><code>@Requires(classes=javax.servlet.Servlet)</code></td>
+</tr>
+<tr>
+<td align="left">Require the absence of one or more classes</td>
+<td align="left"><code>@Requires(missing=javax.servlet.Servlet)</code></td>
+</tr>
+<tr>
+<td align="left">Require the presence of one or more beans</td>
+<td align="left"><code>@Requires(beans=javax.servlet.DataSource)</code></td>
+</tr>
+<tr>
+<td align="left">Require the absence of one or more beans</td>
+<td align="left"><code>@Requires(missingBeans=javax.servlet.DataSource)</code></td>
+</tr>
+<tr>
+<td align="left">Require the environment to be applied</td>
+<td align="left"><code>@Requires(env=&quot;test&quot;)</code></td>
+</tr>
+<tr>
+<td align="left">Require the environment not to be applied</td>
+<td align="left"><code>@Requires(notEnv=&quot;test&quot;)</code></td>
+</tr>
+<tr>
+<td align="left">Require the presence of another configuration package</td>
+<td align="left"><code>@Requires(configuration=&quot;foo.bar&quot;)</code></td>
+</tr>
+<tr>
+<td align="left">Require the absence of another configuration package</td>
+<td align="left"><code>@Requires(missingConfiguration=&quot;foo.bar&quot;)</code></td>
+</tr>
+<tr>
+<td align="left">Require particular SDK version</td>
+<td align="left"><code>@Requires(sdk=Sdk.JAVA, value=&quot;1.8&quot;)</code></td>
+</tr>
+<tr>
+<td align="left">Requires classes annotated with the given annotations to be available to the application via package scanning</td>
+<td align="left"><code>@Requires(entities=javax.persistence.Entity)</code></td>
+</tr>
+<tr>
+<td align="left">Require a property with an optional value</td>
+<td align="left"><code>@Requires(property=&quot;data-source.url&quot;)</code></td>
+</tr>
+<tr>
+<td align="left">Require a property to not be part of the configuration</td>
+<td align="left"><code>@Requires(missingProperty=&quot;data-source.url&quot;)</code></td>
+</tr>
+<tr>
+<td align="left">Require the presence of one or more files in the file system</td>
+<td align="left"><code>@Requires(resources=&quot;file:/path/to/file&quot;)</code></td>
+</tr>
+<tr>
+<td align="left">Require the presence of one or more classpath resouces</td>
+<td align="left"><code>@Requires(resources=&quot;classpath:myFile.properties&quot;)</code></td>
+</tr>
+<tr>
+<td align="left">Require the current operating system to be in the list</td>
+<td align="left"><code>@Requires(os=&#123;Requires.Family.WINDOWS&#125;)</code></td>
+</tr>
+<tr>
+<td align="left">Require the current operating system to not be in the list</td>
+<td align="left"><code>@Requires(notOs=&#123;Requires.Family.WINDOWS&#125;)</code></td>
+</tr>
+<tr>
+<td align="left">Requires bean to be present in case no beanProperty specified</td>
+<td align="left"><code>@Requires(bean=Config.class)</code></td>
+</tr>
+<tr>
+<td align="left">Requires the specified property of bean to be present</td>
+<td align="left"><code>@Requires(bean=Config.class, beanProperty=&quot;enabled&quot;)</code></td>
+</tr>
+</tbody></table>
+<h4 id="Additional-Notes-on-Property-Requirements-属性要求上额外的信息"><a href="#Additional-Notes-on-Property-Requirements-属性要求上额外的信息" class="headerlink" title="Additional Notes on Property Requirements (属性要求上额外的信息)"></a>Additional Notes on Property Requirements (属性要求上额外的信息)</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Requires</span>(property = <span class="string">&#x27;foo&#x27;</span>)</span><br><span class="line"><span class="meta">@Requires</span>(property = <span class="string">&#x27;foo&#x27;</span>, value = <span class="string">&#x27;John&#x27;</span>)</span><br><span class="line"><span class="meta">@Requires</span>(property = <span class="string">&#x27;foo&#x27;</span>, value = <span class="string">&#x27;John&#x27;</span>, defaultValue = <span class="string">&#x27;John&#x27;</span>)</span><br><span class="line"><span class="meta">@Requires</span>(property = <span class="string">&#x27;foo&#x27;</span>, notEquals=<span class="string">&#x27;Sally&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Referencing-bean-properties-in-Requires-在-Requires-注解中引用-Bean-属性"><a href="#Referencing-bean-properties-in-Requires-在-Requires-注解中引用-Bean-属性" class="headerlink" title="Referencing bean properties in @Requires (在 @Requires 注解中引用 Bean 属性)"></a>Referencing bean properties in @Requires (在 @Requires 注解中引用 Bean 属性)</h4><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Requires</span>(bean=Config.<span class="keyword">class</span>, beanProperty=<span class="string">&#x27;foo&#x27;</span>)</span><br><span class="line"><span class="meta">@Requires</span>(bean=Config.<span class="keyword">class</span>, beanProperty=<span class="string">&#x27;foo&#x27;</span>, value = <span class="string">&#x27;John&#x27;</span>)</span><br><span class="line"><span class="meta">@Requires</span>(bean=Config.<span class="keyword">class</span>, beanProperty=<span class="string">&#x27;foo&#x27;</span>, notEquals = <span class="string">&#x27;Sally&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>通过 getter 方法来读取 Bean 属性</p>
+<p>在编译时进行检查</p>
+<p>会检查 Bean 属性是否为 null</p>
+<h3 id="Debugging-Conditional-Beans-调试条件化的-Beans"><a href="#Debugging-Conditional-Beans-调试条件化的-Beans" class="headerlink" title="Debugging Conditional Beans (调试条件化的 Beans)"></a>Debugging Conditional Beans (调试条件化的 Beans)</h3><p>开启 <code>io.micronaut.context.condition</code> 包的日志 DEBUG 输出来观察 Beans 因为什么原因而没有被加载</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// logback.xml</span><br><span class="line"><span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">&quot;io.micronaut.context.condition&quot;</span> <span class="attr">level</span>=<span class="string">&quot;DEBUG /&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Bean-Replacement-Bean-替代"><a href="#Bean-Replacement-Bean-替代" class="headerlink" title="Bean Replacement (Bean 替代)"></a>Bean Replacement (Bean 替代)</h2><p>Micronaut 的依赖注入没有 Bean名称 和 加载顺序 的概念</p>
+<p>Micronaut 的 Bean 有一个 类型 和 Qualifier</p>
+<p>你不能使用一个完全不同类型的 Bean 来覆盖一个 Bean</p>
+<p>Micronaut 提供 <code>@Replaces</code> 注解来进行 Bean 覆盖</p>
+<p>Example - 通过在一个 Bean 上声明 <code>@Replaces</code> 注解来覆盖一个已存在的 Bean:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 要被 replace 的类</span></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="meta">@Requires</span>(beans = DataSource)</span><br><span class="line"><span class="meta">@Requires</span>(property = <span class="string">&quot;datasource.url&quot;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">JdbcBookService</span> <span class="keyword">implements</span> <span class="title class_">BookService</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 为了进行测试, 在 src/test/groovy 中这个 JdbcBookService 类</span></span><br><span class="line"><span class="meta">@Replaces</span>(JdbcBookService.<span class="keyword">class</span>)</span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MockBookService</span> <span class="keyword">implements</span> <span class="title class_">BookService</span> &#123;</span><br><span class="line">    Map&lt;String, Book&gt; bookMap = [:]</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    Book findBook(String title) &#123; bookMap[title] &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Factory-Replacement-Factory-替代"><a href="#Factory-Replacement-Factory-替代" class="headerlink" title="Factory Replacement (Factory 替代)"></a>Factory Replacement (Factory 替代)</h3><p>覆盖 Factory 中生成的 Bean</p>
+<p>Example - 要被覆盖的 Factory:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Factory</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BookFactory</span> &#123;</span><br><span class="line">    <span class="meta">@Singleton</span></span><br><span class="line">    Book novel() &#123; <span class="keyword">new</span> Book(<span class="string">&#x27;A Great Novel&#x27;</span>) &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Singleton</span></span><br><span class="line">    TextBook textBook() &#123; <span class="keyword">new</span> TextBook(<span class="string">&#x27;Learning 101&#x27;</span>) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - 覆盖 Factory 中的 Bean:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Factory</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TextBookFactory</span> &#123;</span><br><span class="line">    <span class="meta">@Singleton</span></span><br><span class="line">    <span class="meta">@Replaces</span>(value = TextBook, factory = BookFactory)</span><br><span class="line">    TextBook textBook() &#123; <span class="keyword">new</span> TextBook(<span class="string">&#x27;Learning 305&#x27;</span>) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>BookFactory</code> 中的 <code>novel()</code> 方法没有被覆盖</p>
+<h3 id="Default-Implementation-默认实现"><a href="#Default-Implementation-默认实现" class="headerlink" title="Default Implementation (默认实现)"></a>Default Implementation (默认实现)</h3><p>当暴露一个 API 时, 可能不希望将一个 interface 的默认实现作为公开 API 的一部分. 这样做可以防止用户去替换默认的实现类, 因为用户不能引用到这个类</p>
+<p>解决方法是使用 <code>@DefaultImplementation</code> 注解修饰一个接口, 指明用户使用 <code>@Replaces(YourInterface.class)</code> 时覆盖了哪个接口实现</p>
+<p>Example:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.DefaultImplementation</span><br><span class="line"></span><br><span class="line"><span class="meta">@DefaultImplementation</span>(DefaultResponseStrategy)</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">ResponseStrategy</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The default implementation</span></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DefaultResponseStrategy</span> <span class="keyword">implements</span> <span class="title class_">ResponseStrategy</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - The custom implementation:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.Replaces</span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Singleton</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="meta">@Replaces</span>(ResponseStrategy)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CustomResponseStrategy</span> <span class="keyword">implements</span> <span class="title class_">ResponseStrategy</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Bean-Configurations-Bean-配置"><a href="#Bean-Configurations-Bean-配置" class="headerlink" title="Bean Configurations (Bean 配置)"></a>Bean Configurations (Bean 配置)</h2><p>在包级别上进行配置, 使得配置作用于包中所有的 Bean</p>
+<p>Example:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// package-info.groovy</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@Requires</span>(beans = javax.sql.Datasource)</span><br><span class="line"><span class="keyword">package</span> my.<span class="keyword">package</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面的例子中, 指明了 <code>my.package</code> 中的所有的 Bean 只有在 <code>javax.sql.DataSource</code> 类存在时才进行加载</p>
+<h2 id="Life-Cycle-Methods-生命周期方法"><a href="#Life-Cycle-Methods-生命周期方法" class="headerlink" title="Life-Cycle Methods (生命周期方法)"></a>Life-Cycle Methods (生命周期方法)</h2><h3 id="When-The-Context-Starts-Context-启动时"><a href="#When-The-Context-Starts-Context-启动时" class="headerlink" title="When The Context Starts (Context 启动时)"></a>When The Context Starts (Context 启动时)</h3><p>使用 <code>jakarta.annotation.PostConstruct</code> 注解来在 Bean 构造之后调用一个方法:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jakarta.annotation.PostConstruct</span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Singleton</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">V8Engine</span> <span class="keyword">implements</span> <span class="title class_">Engine</span> &#123;</span><br><span class="line">    <span class="type">int</span> cylinders = <span class="number">8</span></span><br><span class="line">    <span class="type">boolean</span> initialized = <span class="literal">false</span> <span class="comment">// </span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    String start() &#123;</span><br><span class="line">        <span class="keyword">if</span> (!initialized) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">&quot;Engine not initialized!&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Starting V8&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="type">void</span> initialize() &#123;</span><br><span class="line">        initialized = <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>A method is annotated with @PostConstruct and will be invoked once the object is constructed and fully injected.</p>
+</blockquote>
+<h3 id="When-The-Context-Closes-Context-关闭时"><a href="#When-The-Context-Closes-Context-关闭时" class="headerlink" title="When The Context Closes (Context 关闭时)"></a>When The Context Closes (Context 关闭时)</h3><p>使用 <code>javax.annotation.PreDestroy</code> 注解来在一个 Context 关闭之后调用一个方法</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jakarta.annotation.PreDestroy</span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Singleton</span><br><span class="line"><span class="keyword">import</span>. java.util.concurrent.atomic.AtomicBoolean</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PreDestroyBean</span> <span class="keyword">implements</span> <span class="title class_">AutoCloseable</span> &#123;</span><br><span class="line"></span><br><span class="line">    AtomicBoolean stopped = <span class="keyword">new</span> AtomicBoolean(<span class="literal">false</span>)</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PreDestroy</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="type">void</span> close() <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        stopped.compareAndSet(<span class="literal">false</span>, <span class="literal">true</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>A method is annotated with @PreDestroy and will be invoked when the context is closed.</p>
+</blockquote>
+<p>在 Factory 类中, <code>@Bean</code> 注解中的 <code>preDestroy</code> 值告诉 Micronaut 去执行哪个方法:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.Bean</span><br><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.Factory</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Singleton</span><br><span class="line"></span><br><span class="line"><span class="meta">@Factory</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConnectionFactory</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span>(preDestroy = <span class="string">&#x27;stop&#x27;</span>)</span><br><span class="line">    <span class="meta">@Singleton</span></span><br><span class="line">    Connection connection() &#123; <span class="keyword">new</span> Connection() &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The Connection Bean</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Connection</span> &#123;</span><br><span class="line"></span><br><span class="line">    AtomicBoolean stopped = <span class="keyword">new</span> AtomicBoolean(<span class="literal">false</span>)</span><br><span class="line"></span><br><span class="line">    <span class="type">void</span> stop() &#123; </span><br><span class="line">        stopped.compareAndSet(<span class="literal">false</span>, <span class="literal">true</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过 Context 来关闭一个 Bean, 简单地实现 <code>Closeable</code> 或 <code>AutoCloseable</code> 接口是不够的, 必须使用上面提到的其中一个方法</p>
+<h2 id="Context-Events-Context-事件"><a href="#Context-Events-Context-事件" class="headerlink" title="Context Events (Context 事件)"></a>Context Events (Context 事件)</h2><p>Micronaut 通过 Context 来提供一个通用事件系统</p>
+<p><code>ApplicationEventPublisher</code> API 用来发布事件</p>
+<p><code>ApplicationEventListener</code> API 用来监听事件</p>
+<p>用户可以自定义事件</p>
+<h3 id="Publishing-Events-发布事件"><a href="#Publishing-Events-发布事件" class="headerlink" title="Publishing Events (发布事件)"></a>Publishing Events (发布事件)</h3><p>Example - Publishing an Event:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">SampleEvent</span> &#123;</span><br><span class="line">    String message = <span class="string">&#x27;Something happened&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.micronaut.context.event.ApplicationEventPublisher</span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Inject</span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Singleton</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SampleEventEmitterBean</span> &#123;</span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    ApplicationEventPublisher&lt;SampleEvent&gt; eventPublisher</span><br><span class="line"></span><br><span class="line">    <span class="type">void</span> publishSampleEvent() &#123;</span><br><span class="line">        eventPublisher.publishEvent(<span class="keyword">new</span> SampleEvent())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注入一个 <code>ApplicationEventPublisher</code> Bean 来进行事件发布</p>
+<p><code>ApplicationEventPublisher</code> 的泛型代表了要发布的事件类型</p>
+<p>使用 <code>ApplicationEventPublisher.#publishEvent</code> 方法来发布对应类型的事件</p>
+<p>发布事件默认是同步的(<code>synchronous</code>)</p>
+<blockquote>
+<p>The <code>publishEvent</code> method will not return until all listeners have been executed. Move this work off to a thread pool if it is time-intensive</p>
+</blockquote>
+<p><code>publishEvent</code> 方法在所有监听器执行完之前不会返回. 如果这个工作是时间敏感型的, 将这个工作移到一个线程池中执行</p>
+<h3 id="Listening-for-Events-监听事件"><a href="#Listening-for-Events-监听事件" class="headerlink" title="Listening for Events (监听事件)"></a>Listening for Events (监听事件)</h3><p>要监听一个事件, 注册一个实现了 <code>ApplicationEventListener</code> 接口的 Bean, <code>ApplicatoinEventListener</code> 的泛型代表了要监听的事件类型</p>
+<p>Example - Listening for Events with <code>ApplicationEventListener</code>:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.event.ApplicationEventListener</span><br><span class="line"><span class="keyword">import</span> io.micronaut.docs.context.events.SampleEvent <span class="comment">// 自定义的事件</span></span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Singleton</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SampleEventListener</span> <span class="keyword">implements</span> <span class="title class_">ApplicationEventListener</span>&lt;SampleEvent&gt; &#123;</span><br><span class="line">    <span class="type">int</span> invocationCounter = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="type">void</span> onApplicationEvent(SampleEvent event) &#123;</span><br><span class="line">        invocationCounter++</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - 测试事件发布接收:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.ApplicationContext</span><br><span class="line"><span class="keyword">import</span> io.micronaut.docs.context.events.SampleEventEmitterBean</span><br><span class="line"><span class="keyword">import</span> io.micronaut.docs.context.events.SampleEventListener</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> spock.lang.Specification</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SampleEventListenerSpec</span> <span class="keyword">extends</span> <span class="title class_">Specification</span> &#123;</span><br><span class="line">    <span class="type">void</span> <span class="string">&#x27;test event listener is notified&#x27;</span>() &#123;</span><br><span class="line">        <span class="symbol">given:</span></span><br><span class="line">            ApplicationContext context = ApplicationContext.run()</span><br><span class="line">            SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean)</span><br><span class="line">            SampleEventListener listener = context.getBean(SampleEventListener)</span><br><span class="line">        </span><br><span class="line">        <span class="symbol">expect:</span></span><br><span class="line">            listener.invocationCounter == <span class="number">0</span></span><br><span class="line">        </span><br><span class="line">        <span class="symbol">when:</span></span><br><span class="line">            emitter.publishSampleEvent()</span><br><span class="line"></span><br><span class="line">        <span class="symbol">then:</span></span><br><span class="line">            listener.invocationCounter == <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="symbol">cleanup:</span></span><br><span class="line">            context.close()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以使用 <code>ApplicationEventListener.#supports</code> 方法来判断一个事件是否可以处理</p>
+<p>如果你不想实现一个接口, 或者利用其中一个内建事件如 <code>StartupEvent</code> 和 <code>ShutdownEvent</code> , 那么使用 <code>@EventListener</code> 注解</p>
+<p>Example - Listening for Events with <code>@EventListener</code>:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.docs.context.events.SampleEvent</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.micronaut.context.event.StartupEvent</span><br><span class="line"><span class="keyword">import</span> io.micronaut.context.event.ShutdownEvent</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.micronaut.runtime.event.annotation.EventListener</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SampleEventListener</span> &#123;</span><br><span class="line">    <span class="type">int</span> invocationCounter = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@EventListener</span></span><br><span class="line">    <span class="type">void</span> onSampleEvent(SampleEvent event) &#123;</span><br><span class="line">        invocationCounter++</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@EventListener</span></span><br><span class="line">    <span class="type">void</span> onStartupEvent(StartupEvent event) &#123;</span><br><span class="line">        <span class="comment">// startup logic here</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@EventListener</span></span><br><span class="line">    <span class="type">void</span> onShutdownEvent(ShutdownEvent event) &#123;</span><br><span class="line">        <span class="comment">// shutdown logic here</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果事件监听器需要执行一段时间, 可以使用 <code>@Async</code> 注解来将操作运行在一个不同的线程上面:</p>
+<p>Example - Asynchronously listening for Events with <code>@EventListener</code>:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.docs.context.events.SampleEvent</span><br><span class="line"><span class="keyword">import</span> io.micronaut.runtime.event.annotation.EventListener</span><br><span class="line"><span class="keyword">import</span> io.micronaut.scheduling.annotation.Async</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SampleEventListener</span> &#123;</span><br><span class="line">    AtomicInteger invocationCounter = <span class="keyword">new</span> AtomicInteger(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="meta">@EventListener</span></span><br><span class="line">    <span class="meta">@Async</span></span><br><span class="line">    <span class="type">void</span> onSampleEvent(SampleEvent event) &#123; invocationCounter.getAndIncrement() &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.micronaut.context.ApplicationContext</span><br><span class="line"><span class="keyword">import</span> io.micronaut.docs.context.events.SampleEventEmitterBean</span><br><span class="line"><span class="keyword">import</span> spock.lang.Specification</span><br><span class="line"><span class="keyword">import</span> spock.util.concurrent.PollingConditions</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SampleEventListenerSpec</span> <span class="keyword">extends</span> <span class="title class_">Specification</span> &#123;</span><br><span class="line">    <span class="type">void</span> <span class="string">&#x27;test event listener is notified&#x27;</span>() &#123;</span><br><span class="line">        <span class="symbol">given:</span></span><br><span class="line">            <span class="keyword">def</span> context = ApplicationContext.run()</span><br><span class="line">            <span class="keyword">def</span> emitter = context.getBean(SampleEventEmitterBean)</span><br><span class="line">            <span class="keyword">def</span> listener = context.getBean(SampleEventListener)</span><br><span class="line"></span><br><span class="line">        <span class="symbol">expect:</span></span><br><span class="line">            listener.invocationCounter.get() == <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="symbol">when:</span></span><br><span class="line">            emitter.publishSampleEvent()</span><br><span class="line">        </span><br><span class="line">        <span class="symbol">then:</span></span><br><span class="line">            <span class="keyword">new</span> PollingConditions(<span class="attr">timeout:</span> <span class="number">5</span>).eventually &#123;</span><br><span class="line">                listener.invocationCounter.get() == <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        <span class="symbol">cleanup:</span></span><br><span class="line">            context.close()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>事件监听器默认运行在 <code>scheduled executor</code> 上, 可以在 <code>application.yml</code> 上配置这个线程池:</p>
+<p>Example - Configuring Scheduled Task Thread Pool:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">micronaut:</span></span><br><span class="line">    <span class="attr">executors:</span></span><br><span class="line">        <span class="attr">scheduled:</span></span><br><span class="line">            <span class="attr">type:</span> <span class="string">scheduled</span></span><br><span class="line">            <span class="attr">core-pool-size:</span> <span class="number">30</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Bean-Events-Bean-事件"><a href="#Bean-Events-Bean-事件" class="headerlink" title="Bean Events (Bean 事件)"></a>Bean Events (Bean 事件)</h2><p>你可以使用如下接口来挂接(<code>hook</code>)到 Beans 的创建中:</p>
+<ul>
+<li><code>BeanInitializedEventListener</code> : 允许属性都设置后之后, 在 <code>@PostConstruct</code> 事件 hooks 之前修改和替代一个 Bean</li>
+<li><code>BeanCreatedEventListener</code> : 允许在 Bean 完全初始化了与所有的 <code>@PostConstruct</code> hooks 都执行了之后修改和替代一个 Bean</li>
+</ul>
+<p><code>BeanInitializedEventListener</code> 接口通常和 <code>Factory Bean</code> 结合使用</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">V8Engine</span> <span class="keyword">implements</span> <span class="title class_">Engine</span> &#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">int</span> cylinders = <span class="number">8</span></span><br><span class="line">    <span class="type">double</span> rodLength </span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    String start() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Starting V$cylinders [rodLength=$rodLength]&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Factory</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EngineFactory</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> V8Engine engine</span><br><span class="line">    <span class="type">double</span> rodLength = <span class="number">5.7</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="type">void</span> initialize() &#123;</span><br><span class="line">        engine = <span class="keyword">new</span> V8Engine(<span class="attr">rodLength:</span> rodLength)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Singleton</span></span><br><span class="line">    Engine v8Engine() &#123; engine &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EngineInitializer</span> <span class="keyword">implements</span> <span class="title class_">BeanInitializedEventListener</span>&lt;EngineFactory&gt; &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    EngineFactory onInitialized(BeanInitializingEvent&lt;EngineFactory&gt; event) &#123;</span><br><span class="line">        EngineFactory engineFactory = event.bean</span><br><span class="line">        engineFactory.rodLength = <span class="number">6.6</span></span><br><span class="line">        engineFactory</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>BeanCreatedEventListener</code> 接口更典型的使用是用来装饰或增强一个完全初始化好的 Bean, 例如创建一个 Proxy</p>
+<p>Bean 事件监听器在 类型转换器(<code>type converters</code>) 之前进行初始化. 如果你的监听器依赖类型转换, 或者依赖配置属性Bean, 或其他任何机制, 你可能会得到一个关于类型转换的异常</p>
+<h2 id="Bean-Introspection-Bean-内省"><a href="#Bean-Introspection-Bean-内省" class="headerlink" title="Bean Introspection (Bean 内省)"></a>Bean Introspection (Bean 内省)</h2><p>从 Micronaut 1.1 开始, 包含了一个关于 JDK 的 <code>Introspector</code> 的编译时替代品</p>
+<p><code>BeanIntrospector</code> 和 <code>BeanIntrospection</code> 接口允许不使用反射或缓存的反射元数据来查找 Bean 的内省信息来实例化 Bean 和读写 Bean 的属性, 反射或缓存的反射元数据会在大型 Beans 中消耗大量的内存</p>
+<h3 id="Making-a-Bean-Available-for-Introspection-让一个-Bean-可用于反射"><a href="#Making-a-Bean-Available-for-Introspection-让一个-Bean-可用于反射" class="headerlink" title="Making a Bean Available for Introspection (让一个 Bean 可用于反射)"></a>Making a Bean Available for Introspection (让一个 Bean 可用于反射)</h3><p>不像 JDK 的 <code>Introspector</code>, 每个类不是自动地可用于反射的</p>
+<p>为了让一个类可用于反射, 你必须至少要在你的构建中开启 Micronaut 的注解处理器(<code>micronaut-inject-java</code>&#x2F;<code>micronaut-inject-groovy</code>), 并确保运行时有一个 <code>micronaut-core</code> 的依赖</p>
+<p>Example - For Java:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">annotationProcessor(<span class="string">&quot;io.micronaut:micronaut-inject-java:3.4.0&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Example - For Groovy:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compileOnly(<span class="string">&quot;io.micronaut:micronaut-inject-groovy:3.4.0&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Example - <code>micronaut-core</code> 依赖:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">runtimeOnly(<span class="string">&quot;io.micronaut:micronaut-core:3.4.0&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Use-the-Introspected-Annotation-使用-Introspected-注解"><a href="#Use-the-Introspected-Annotation-使用-Introspected-注解" class="headerlink" title="Use the @Introspected Annotation (使用 @Introspected 注解)"></a>Use the <code>@Introspected</code> Annotation (使用 <code>@Introspected</code> 注解)</h3><p><code>@Introspected</code> 注解可以在任何类上, 使得这个类可用于内省(<code>introspection</code>)</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> groovy.transform.Canonical</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.Introspected</span><br><span class="line"></span><br><span class="line"><span class="meta">@Introspected</span></span><br><span class="line"><span class="meta">@Canonical</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">    String name</span><br><span class="line">    <span class="type">int</span> age = <span class="number">18</span></span><br><span class="line"></span><br><span class="line">    Person(String name) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.name = name</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一旦在编译时提供了内省数据, 就可以使用 <code>BeanIntrospection</code> API 来进行获取:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> introspection = BeanIntrospection.getIntrospection(Person)</span><br><span class="line">Person person = introspection.instantiate(<span class="string">&quot;John&quot;</span>)</span><br><span class="line">println(<span class="string">&quot;Hello $person.name&quot;</span>)</span><br><span class="line"></span><br><span class="line">BeanProperty&lt;Person, String&gt; property = introspection.getRequiredProperty(<span class="string">&quot;name&quot;</span>, String)</span><br><span class="line">property.set(person, <span class="string">&quot;Fred&quot;</span>)</span><br><span class="line">String name = property.get(person)</span><br><span class="line">println(<span class="string">&quot;Hello $person.name&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>可以搭配 <code>io.micronaut.core.annotation.AccessorsStyle</code> 注解来修改属性的读写方法前缀: <code>@AccessorsStyle(readPrefixes = &quot;&quot;, writePrefixes = &quot;&quot;)</code></p>
+<h3 id="Bean-Fields-Bean-字段"><a href="#Bean-Fields-Bean-字段" class="headerlink" title="Bean Fields (Bean 字段)"></a>Bean Fields (Bean 字段)</h3><p>默认情况下 Java 内省只会将 JavaBean 的 getter&#x2F;setter 或 Java 16 record components 看作是 Bean 属性</p>
+<p>可以在类中使用 <code>@Introspected</code> 注解的 <code>accessKind</code> 成员来定义 public 或 package protected fields:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.Introspected</span><br><span class="line"></span><br><span class="line"><span class="meta">@Introspected</span>(accesskind = Introspected.AccessKind.FIELD)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> String name    <span class="comment">// Final fields are treated like read-only properties</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> age = <span class="number">18</span>         <span class="comment">// Mutable fields are treated like read-write properties</span></span><br><span class="line"></span><br><span class="line">    User(String name) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.name = name</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Constructor-Methods-构造方法"><a href="#Constructor-Methods-构造方法" class="headerlink" title="Constructor Methods (构造方法)"></a>Constructor Methods (构造方法)</h3><p>对于有多个构造方法的类来说, 在要使用的构造方法上添加 <code>@Creator</code> 注解</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.Creator</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.Introspected</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.annotation.concurrent.Immutable</span><br><span class="line"></span><br><span class="line"><span class="meta">@Introspected</span></span><br><span class="line"><span class="meta">@Immutable</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Vehicle</span> &#123;</span><br><span class="line">    <span class="keyword">final</span> String name</span><br><span class="line">    <span class="keyword">final</span> String model</span><br><span class="line">    <span class="keyword">final</span> <span class="type">int</span> axles</span><br><span class="line"></span><br><span class="line">    Vehicle(String make, String model) &#123;</span><br><span class="line">        <span class="variable language_">this</span>(make, model, <span class="number">2</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Creator</span>        <span class="comment">// The @Creator annotation denotes which constructor to use</span></span><br><span class="line">    Vehicle(String make, String model, <span class="type">int</span> axles) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.make = make</span><br><span class="line">        <span class="variable language_">this</span>.model = model</span><br><span class="line">        <span class="variable language_">this</span>.axles = axles</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个类没有默认的构造方法, 所以不使用参数调用 <code>instantiate</code> 方法将会抛出 <code>InstantiationException</code></p>
+<h3 id="Static-Creator-Methods-静态构造方法"><a href="#Static-Creator-Methods-静态构造方法" class="headerlink" title="Static Creator Methods (静态构造方法)"></a>Static Creator Methods (静态构造方法)</h3><p><code>@Creator</code> 注解可以用在静态方法上来创建类实例</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.Creator</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.Introspected</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.annotation.concurrent.Immutable</span><br><span class="line"></span><br><span class="line"><span class="meta">@Introspected</span></span><br><span class="line"><span class="meta">@Immutable</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Business</span> &#123;</span><br><span class="line">    <span class="keyword">final</span> String name</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Business(String name) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.name = name</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Creator</span>        <span class="comment">// The @Creator annotation is applied to the static method which instantiates the class</span></span><br><span class="line">    <span class="keyword">static</span> Business forName(String name) &#123;</span><br><span class="line">        <span class="keyword">new</span> Business(name)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Enums-枚举"><a href="#Enums-枚举" class="headerlink" title="Enums (枚举)"></a>Enums (枚举)</h3><p>内省一个枚举也是可以的</p>
+<p>添加 <code>@Introspected</code> 注解到枚举类上, 然后这个枚举类就可以通过标准的 <code>valueOf()</code> 方法来进行构造</p>
+<h3 id="Use-the-Introspected-Annotation-on-a-Configuration-Class-在一个配置类上使用-Introspected-注解"><a href="#Use-the-Introspected-Annotation-on-a-Configuration-Class-在一个配置类上使用-Introspected-注解" class="headerlink" title="Use the @Introspected Annotation on a Configuration Class (在一个配置类上使用 @Introspected 注解)"></a>Use the <code>@Introspected</code> Annotation on a Configuration Class (在一个配置类上使用 <code>@Introspected</code> 注解)</h3><p>如果你想要内省的类是已经编译好的, 或者是一个第三方库的类, 一个替代的选项是定义一个配置类, 并使用 <code>@Introspected</code> 注解的 <code>classes</code> 成员属性</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.Introspected</span><br><span class="line"></span><br><span class="line"><span class="meta">@Introspected</span>(classes = Person)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PersonConfiguration</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>PersonConfiguration</code> 类为 <code>Person</code> 类生成了内省信息</p>
+<p>还可以使用 <code>@Introspected</code> 注解的 <code>packages</code> 属性来为某个包下所有的类生成内省信息, 注意这还是一个实验特性</p>
+<h3 id="Write-an-AnnotationMapper-to-Introspect-Existing-Annotations-编写一个-AnnotationMapper-来内省一个已存在的注解"><a href="#Write-an-AnnotationMapper-to-Introspect-Existing-Annotations-编写一个-AnnotationMapper-来内省一个已存在的注解" class="headerlink" title="Write an AnnotationMapper to Introspect Existing Annotations (编写一个 AnnotationMapper 来内省一个已存在的注解)"></a>Write an <code>AnnotationMapper</code> to Introspect Existing Annotations (编写一个 <code>AnnotationMapper</code> 来内省一个已存在的注解)</h3><p>如果你想默认为一个已存在的注解进行内省, 你可以编写一个 <code>AnnotationMapper</code></p>
+<p>一个例子是 <code>EntityIntrospectedAnnotationMapper</code>, 这个 Mapper 确保了所有使用 <code>@javax.persistence.Entity</code> 注解的 Beans 都默认被内省了</p>
+<p><code>AnnotationMapper</code> 必须存在于 annotation processor classpath</p>
+<h3 id="The-BeanWrapper-API-BeanWrapper-API"><a href="#The-BeanWrapper-API-BeanWrapper-API" class="headerlink" title="The BeanWrapper API (BeanWrapper API)"></a>The BeanWrapper API (BeanWrapper API)</h3><p>一个 <code>BeanProperty</code> 提供了读写类中一个属性值的原始访问方式, 没有提供任何自动类型转换</p>
+<p>传递给 set&#x2F;get 方法的值应该与底层属性类型相匹配, 否则会发生异常</p>
+<p>为了提供额外的类型转换智能, <code>BeanWrapper</code> 接口允许包装现有的 Bean 实例, 读写 Bean 属性, 并在必要时执行类型转换</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> BeanWrapper&lt;Person&gt; wrapper = BeanWrapper.getWrapper(<span class="keyword">new</span> Person(<span class="string">&quot;Fred&quot;</span>))</span><br><span class="line"></span><br><span class="line">wrapper.setProperty(<span class="string">&quot;age&quot;</span>, <span class="string">&quot;20&quot;</span>)</span><br><span class="line"><span class="type">int</span> newAge = wrapper.getRequiredProperty(<span class="string">&quot;age&quot;</span>, Integer)</span><br><span class="line"></span><br><span class="line">println(<span class="string">&quot;Person&#x27;s age now $newAge&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Jackson-and-Bean-Introspection-Jackson-和-Bean-内省"><a href="#Jackson-and-Bean-Introspection-Jackson-和-Bean-内省" class="headerlink" title="Jackson and Bean Introspection (Jackson 和 Bean 内省)"></a>Jackson and Bean Introspection (Jackson 和 Bean 内省)</h3><p>Jackson 被配置为使用 <code>BeanIntrospection</code> API 来读写属性值与构造对象, 结果就是无反射的序列化&#x2F;反序列化</p>
+<p>从性能的角度来看, 这是有益的, 并且需要更少的配置来正确地与运行时操作, 例如 GraalVM native</p>
+<h2 id="Bean-Validation-Bean-校验"><a href="#Bean-Validation-Bean-校验" class="headerlink" title="Bean Validation (Bean 校验)"></a>Bean Validation (Bean 校验)</h2><p>从 Micronaut 1.2 开始, Micronaut 内置了校验那些使用了 <code>javax.validation</code> 注解修饰的 Beans 的支持</p>
+<p>最小化的配置是包含 <code>micronaut-validation</code> 模块作为编译时依赖:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation(<span class="string">&quot;io.micronaut:micronaut-validation&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Micronaut 现在的实现不是完全遵循 Bean Validator 规范的, 因为这个规范重度依赖基于反射的 APIs</p>
+<p>现在还不支持如下特性:</p>
+<ul>
+<li>泛型参数类型上的注解, 因为现在只有 Java 支持这个特性</li>
+<li>任何与 <code>constraint metadata API</code> 的交互, 因为 Micronaut 使用编译时生成的元数据</li>
+<li>基于 XML 的配置</li>
+<li>使用 <code>io.micronaut.validation.validator.constraints.ConstraintValidator</code> 来代替 <code>javax.validation.ConstraintValidator</code>, Micronaut 的 <code>ConstraintValidator</code> 支持编译时的校验注解</li>
+</ul>
+<p>如果需要完全的 Bean Validator 2.0 规范, 添加 <code>micronaut-hibernate-validator</code> 模块到你的构建中, 代替 Micronaut 的实现:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation(<span class="string">&quot;io.micronaut.beanvalidation:micronaut-hibernate-validator&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Validating-Bean-Methods-检验-Bean-的方法"><a href="#Validating-Bean-Methods-检验-Bean-的方法" class="headerlink" title="Validating Bean Methods (检验 Bean 的方法)"></a>Validating Bean Methods (检验 Bean 的方法)</h3><p>在方法参数上使用 <code>javax.validation</code> 注解, 可以检验任何声明为 Micronaut Bean 的类的方法</p>
+<p>Example - Validating Methods:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jakarta.inject.Singleton</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotBlank</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PersonService</span> &#123;</span><br><span class="line">    <span class="type">void</span> sayHello(<span class="meta">@NotBlank</span> String name) &#123;</span><br><span class="line">        println <span class="string">&quot;Hello $name&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果一个校验错误产生, 将会抛出一个 <code>javax.validation.ConstraintViolationException</code></p>
+<h3 id="Validating-Data-Classes-校验数据类"><a href="#Validating-Data-Classes-校验数据类" class="headerlink" title="Validating Data Classes (校验数据类)"></a>Validating Data Classes (校验数据类)</h3><p>为了校验数据类, 例如 POJOs (通常用于 JSON 交换), 这个类必须使用 <code>@Introspected</code> 注解进行修饰</p>
+<p>如果这个类是外部的, 则通过 <code>@Introspected</code> 注解进行 import</p>
+<p>Example - POJO Validation:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.Introspected</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.Min</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotBlank</span><br><span class="line"></span><br><span class="line"><span class="meta">@Introspected</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">    <span class="meta">@NotBlank</span></span><br><span class="line">    String name</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Min</span>(<span class="number">19</span>L)</span><br><span class="line">    <span class="type">int</span> age</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果要手动校验这个类, 使用注入的 <code>Validator</code> 实例:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Inject</span> Validator validator</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="string">&#x27;test person is validated with validator&#x27;</span>() &#123;</span><br><span class="line">    <span class="symbol">when:</span> <span class="string">&#x27;The person is validated&#x27;</span></span><br><span class="line">        <span class="keyword">def</span> constraintViolation = validator.validate(<span class="keyword">new</span> Person(<span class="attr">name:</span> <span class="string">&#x27;&#x27;</span>, <span class="attr">age:</span> <span class="number">10</span>))</span><br><span class="line">    <span class="symbol">then:</span> <span class="string">&#x27;A validation error occurs&#x27;</span></span><br><span class="line">        constraintViolations.size() == <span class="number">2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者在 Bean 方法上, 使用 <code>javax.validation.Valid</code> 来触发级联校验:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PersonService</span> &#123;</span><br><span class="line">    <span class="type">void</span> sayHello(<span class="meta">@Valid</span> Person person) &#123;</span><br><span class="line">        println <span class="string">&quot;Hello $person.name&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Validation-Configuration-Properties-校验属性配置"><a href="#Validation-Configuration-Properties-校验属性配置" class="headerlink" title="Validation Configuration Properties (校验属性配置)"></a>Validation Configuration Properties (校验属性配置)</h3><p>还可以校验使用了 <code>@ConfigurationProperties</code> 注解修饰的类的属性来确保配置正确</p>
+<p>推荐将 <code>@ConfigurationProperties</code> 注解和 <code>@Context</code> 注解一起使用来确保校验在启动时进行</p>
+<h3 id="Defining-Additional-Constraints-定义额外的约束"><a href="#Defining-Additional-Constraints-定义额外的约束" class="headerlink" title="Defining Additional Constraints (定义额外的约束)"></a>Defining Additional Constraints (定义额外的约束)</h3><p>为了定义额外的约束, 创建一个新的注解:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.validation.Constraint</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.RetentionPolicy.RUNTIME</span><br><span class="line"></span><br><span class="line"><span class="meta">@Retention</span>(RUNTIME)</span><br><span class="line"><span class="meta">@Constraint</span>(validatedBy = [])   <span class="comment">// 这个注解要使用 `javax.validation.Constraint` 类修饰</span></span><br><span class="line"><span class="meta">@interface</span> DurationPattern &#123;</span><br><span class="line">    String message() <span class="keyword">default</span> <span class="string">&quot;invalid duration (&#123;validatedValue&#125;)&quot;</span>  <span class="comment">// 2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>2</code> : A message template can be provided in a hard-coded manner as above. If none is specified, Micronaut tries to find a message using ClassName.message using the MessageSource interface (optional)</p>
+<p>一旦你定义了一个注解, 那么实现一个 <code>ConstraintValidator</code> 来校验这个注解</p>
+<p>你可以直接创建一个 Bean 来直接实现这个接口, 或者创建一个 Factory 来返回一个或多个校验器</p>
+<p>推荐使用 Factory 的方式来定义多个校验器:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.Factory</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.AnnotationValue</span><br><span class="line"><span class="keyword">import</span> io.micronaut.validation.validator.constraints.ConstraintValidator</span><br><span class="line"><span class="keyword">import</span> io.micronaut.validation.validator.constraints.ConstraintValidatorContext</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Singleton</span><br><span class="line"></span><br><span class="line"><span class="meta">@Factory</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyValidatorFactory</span> &#123;</span><br><span class="line">    <span class="meta">@Singleton</span></span><br><span class="line">    ConstraintValidator&lt;DurationPattern, CharSequence&gt; durationPatternValidator() &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123; CharSequence value,</span><br><span class="line">                 AnnotationValue&lt;DurationPattern&gt; annotation,</span><br><span class="line">                 ConstraintValidatorContext context -&gt;</span><br><span class="line">            context.messageTemplate(<span class="string">&quot;invalid duration (&#123;validatedValue&#125;), additional custom message&quot;</span>)   <span class="comment">// 1</span></span><br><span class="line">            <span class="keyword">return</span> value == <span class="literal">null</span> || value.toString() ==~ <span class="regexp">/^PT?[\d]+[SMHD]&#123;1&#125;$/</span></span><br><span class="line">        &#125; <span class="keyword">as</span> ConstraintValidator&lt;DurationPattern, CharSequence&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>1</code> : Override the default message template with an inline call for more control over the validation error message. (Since 2.5.0)</p>
+<p>使用这个注解:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">HolidayService</span> &#123;</span><br><span class="line"></span><br><span class="line">    String startHoliday(<span class="meta">@NotBlank</span> String person,</span><br><span class="line">                        <span class="meta">@DurationPattern</span> String duration) &#123;</span><br><span class="line">        <span class="keyword">final</span> Duration d = Duration.parse(duration)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Person $person is off on holiday for $&#123;d.toMinutes()&#125; minutes&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Validating-Annotations-at-Compile-Time-在编译时校验注解"><a href="#Validating-Annotations-at-Compile-Time-在编译时校验注解" class="headerlink" title="Validating Annotations at Compile Time (在编译时校验注解)"></a>Validating Annotations at Compile Time (在编译时校验注解)</h3><p>通过添加 <code>micronaut-validation</code> 到注解处理器类路径上 ,你可以使用 Micronaut 的校验器来在编译时校验注解元素</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">annotationProcessor(<span class="string">&quot;io.micronaut:micronaut-validation&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Micronaut 会在编译时校验使用了 <code>javax.validation</code> 修饰的注解值:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.RetentionPolicy.RUNTIME</span><br><span class="line"></span><br><span class="line"><span class="meta">@Retention</span>(RUNTIME)</span><br><span class="line"><span class="meta">@interface</span> TimeOff &#123;</span><br><span class="line">    <span class="meta">@DurationPattern</span></span><br><span class="line">    String duration()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>duration</code> 是一个属性占位符, 例如  <code>@TimeOff(duration=&quot;$&#123;my.value&#125;&quot;)</code>, 校验将会在运行时进行</p>
+<p>为了在编译时使用一个自定义的 <code>ConstraintValidator</code>, 你必须将校验器定义为一个类:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.NonNull</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.Nullable</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.AnnotationValue</span><br><span class="line"><span class="keyword">import</span> io.micronaut.validation.validator.constraints.ConstraintValidator</span><br><span class="line"><span class="keyword">import</span> io.micronaut.validation.validator.constraints.ConstraintValidatorContext</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DurationPatternValidator</span> <span class="keyword">implements</span> <span class="title class_">ConstraintValidator</span>&lt;DurationPattern, CharSequence&gt; &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="type">boolean</span> isValid(</span><br><span class="line">            <span class="meta">@Nullable</span> CharSequence value,</span><br><span class="line">            <span class="meta">@NonNull</span> AnnotationValue&lt;DurationPattern&gt; annotationMetadata,</span><br><span class="line">            <span class="meta">@NonNull</span> ConstraintValidatorContext context) &#123;</span><br><span class="line">        <span class="keyword">return</span> value == <span class="literal">null</span> || value.toString() ==~ <span class="regexp">/^PT?[\d]+[SMHD]&#123;1&#125;$/</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>除此之外:</p>
+<ul>
+<li>Define a META-INF&#x2F;services&#x2F;io.micronaut.validation.validator.constraints.ConstraintValidator file that references the class.</li>
+<li>The class must be public and have a public no-argument constructor</li>
+<li>The class must be on the annotation processor classpath of the project to be validated.</li>
+</ul>
+<h2 id="Bean-Annotation-Metadata-Bean-注解元数据"><a href="#Bean-Annotation-Metadata-Bean-注解元数据" class="headerlink" title="Bean Annotation Metadata (Bean 注解元数据)"></a>Bean Annotation Metadata (Bean 注解元数据)</h2><p><code>BeanContext</code> API 可以用来获取一个实现了 <code>AnnotationMetadata</code> 接口的 <code>BeanDefinition</code> 的引用</p>
+<p>Example - 获取所有使用了一个特定注解修饰的 Bean 定义 - Lookup Bean Definitions by Stereotype:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">BeanContext beanContext = ... <span class="comment">// obtain the bean context</span></span><br><span class="line">Collection&lt;BeanDefinition&gt; definitions = beanContext.getBeanDefinitions(Qualifiers.byStereotype(Controller.<span class="keyword">class</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (BeanDefinition <span class="attr">definition :</span> definitions) &#123;</span><br><span class="line">    AnnotationValue&lt;Controller&gt; controllerAnn = definition.getAnnotation(Controller.<span class="keyword">class</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子获取到了所有直接或间接使用 <code>@Controller</code> 注解修饰的 <code>BeanDefinition</code> 实例</p>
+<h3 id="Annotation-Inheritance-注解继承"><a href="#Annotation-Inheritance-注解继承" class="headerlink" title="Annotation Inheritance (注解继承)"></a>Annotation Inheritance (注解继承)</h3><p>Example - Defining Inherited Meta Annotations:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.AliasFor</span><br><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.Requires</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.AnnotationMeta</span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Named</span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Singleton</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Inherited</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy</span><br><span class="line"></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Requires</span>(property = <span class="string">&quot;datasource.url&quot;</span>)</span><br><span class="line"><span class="meta">@Named</span></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="meta">@interface</span> SqlRepository &#123;</span><br><span class="line">    <span class="meta">@AliasFor</span>(annotation = Named.<span class="keyword">class</span>, member = AnnotationMetadata.VALUE_MEMBER)</span><br><span class="line">    String value() <span class="keyword">default</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - Using Inherited Meta Annotations on a Super Class:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SqlRepository</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">BaseSqlRepository</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - Inheriting Annotations in s Child Class:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jakarta.inject.Named</span><br><span class="line"><span class="keyword">import</span> javax.sql.DataSource</span><br><span class="line"></span><br><span class="line"><span class="meta">@Named</span>(<span class="string">&quot;bookRepository&quot;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BookRepository</span> <span class="keyword">extends</span> <span class="title class_">BaseSqlRepository</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> DataSource dataSource</span><br><span class="line"></span><br><span class="line">    BookRepository(DataSource dataSource) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.dataSource = dataSource</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>A child class must at least have one bean definition annotation such as a scope or qualifier.</p>
+</blockquote>
+<h3 id="Aliasing-or-Mapping-Annotations-取别名or映射注解"><a href="#Aliasing-or-Mapping-Annotations-取别名or映射注解" class="headerlink" title="Aliasing or Mapping Annotations (取别名or映射注解)"></a>Aliasing or Mapping Annotations (取别名or映射注解)</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Client &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * @return The URL or service ID of the remote service</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AliasFor</span>(member = <span class="string">&quot;id&quot;</span>) </span><br><span class="line">    String value() <span class="keyword">default</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * @return The ID of the client</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@AliasFor</span>(member = <span class="string">&quot;value&quot;</span>) </span><br><span class="line">    String id() <span class="keyword">default</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>With these aliases in place, whether you define @Client(“foo”) or @Client(id&#x3D;”foo”), both the value and id members will be set, making it easier to parse and work with the annotation.</p>
+</blockquote>
+<h2 id="Importing-Beans-from-Libraries-从一个库中导入-Beans"><a href="#Importing-Beans-from-Libraries-从一个库中导入-Beans" class="headerlink" title="Importing Beans from Libraries (从一个库中导入 Beans)"></a>Importing Beans from Libraries (从一个库中导入 Beans)</h2><p>可以使用 <code>@Import</code> 注解来导入外部库中,已编译的使用了 JSR-330 注解的 Bean</p>
+<p>Bean 导入现在只支持 Java 语言</p>
+<p>例如, 为了导入 JSR-330 TCK 到应用中, 添加 TCK 的依赖:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation(<span class="string">&quot;io.micronaut:jakarta.inject&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>然后在 <code>Applicatoin</code> 类上定义 <code>@Import</code> 注解:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.Import;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Import(</span></span><br><span class="line"><span class="meta">    packages = &#123;</span></span><br><span class="line"><span class="meta">        &quot;org.atinject.tck.auto&quot;,</span></span><br><span class="line"><span class="meta">        &quot;org.atinject.tck.auto.accessories&quot;</span></span><br><span class="line"><span class="meta">    &#125;,</span></span><br><span class="line"><span class="meta">    annotated = &quot;*&quot;</span></span><br><span class="line"><span class="meta">)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Applicatoin</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>packages</code> 不会进行递归扫描, 因此需要手动指定子包</p>
+<p>默认情况下, Micronaut 只会导入一个 scope 或 qulifier 的类, 所以要在 <code>annotated</code> 上使用 <code>*</code> 来导入所有类型的 Bean</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Micronaut 中文文档 Inversion of Control</li>
+        <li>本文作者：林威羽</li>
+        <li>创建时间：2022-04-29 09:25:59</li>
+        <li>
+            本文链接：https://linweiyu21.github.io/micronaut/micronaut-inversion-of-control/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/Groovy/">#Groovy</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/Micronaut/">#Micronaut</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E4%B8%AD%E6%96%87/">#中文</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/micronaut/micronaut-application-configuration/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Micronaut 中文文档 Application Configuration</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/micronaut/micronaut-quick-start/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Micronaut 中文文档 Quick Start</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '8xWQ0WFbKUNN4h8ixIO12etk-gzGzoHsz',
+                    appKey: '7cLjTvkIsF6aIuIVSd0um89m',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请开始你的表演',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = '林威羽';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">林威羽</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Inversion-of-Control"><span class="nav-number">1.</span> <span class="nav-text">Inversion of Control</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Injectable-Container-Types-%E5%8F%AF%E4%BB%A5%E6%B3%A8%E5%85%A5%E7%9A%84%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">Injectable Container Types (可以注入的容器类型)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Collection-Ordering-%E5%AE%B9%E5%99%A8%E4%B8%AD-Bean-%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="nav-number">1.1.1.</span> <span class="nav-text">Collection Ordering (容器中 Bean 的顺序)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Injecting-a-Bean-by-Order-%E6%8C%89%E9%A1%BA%E5%BA%8F%E6%B3%A8%E5%85%A5%E4%B8%80%E4%B8%AA-Bean"><span class="nav-number">1.1.2.</span> <span class="nav-text">Injecting a Bean by Order (按顺序注入一个 Bean)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bean-Qualifiers-Bean-%E9%99%90%E5%AE%9A%E7%AC%A6"><span class="nav-number">1.2.</span> <span class="nav-text">Bean Qualifiers Bean (限定符)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Qualifying-By-Name-%E9%80%9A%E8%BF%87%E5%90%8D%E5%AD%97%E6%9D%A5%E9%99%90%E5%AE%9A"><span class="nav-number">1.2.1.</span> <span class="nav-text">Qualifying By Name (通过名字来限定)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Qualifying-By-Annotation-%E9%80%9A%E8%BF%87%E6%B3%A8%E8%A7%A3%E6%9D%A5%E9%99%90%E5%AE%9A"><span class="nav-number">1.2.2.</span> <span class="nav-text">Qualifying By Annotation (通过注解来限定)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Qualifier-By-Annotation-Members-%E9%80%9A%E8%BF%87%E6%B3%A8%E8%A7%A3%E7%9A%84%E5%B1%9E%E6%80%A7%E6%88%90%E5%91%98%E6%9D%A5%E9%99%90%E5%AE%9A"><span class="nav-number">1.2.3.</span> <span class="nav-text">Qualifier By Annotation Members (通过注解的属性成员来限定)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Qualifying-by-Generic-Type-Arguments-%E9%80%9A%E8%BF%87%E6%B3%9B%E5%9E%8B%E5%8F%82%E6%95%B0%E6%9D%A5%E9%99%90%E5%AE%9A"><span class="nav-number">1.2.4.</span> <span class="nav-text">Qualifying by Generic Type Arguments (通过泛型参数来限定)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Primary-and-Secondary-Beans-%E4%B8%BB%E8%A6%81%E7%9A%84%E5%92%8C%E6%AC%A1%E8%A6%81%E7%9A%84-Bean"><span class="nav-number">1.2.5.</span> <span class="nav-text">Primary and Secondary Beans (主要的和次要的 Bean)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Injecting-Any-Bean-%E6%B3%A8%E5%85%A5%E4%BB%BB%E6%84%8F-Bean"><span class="nav-number">1.2.6.</span> <span class="nav-text">Injecting Any Bean (注入任意 Bean)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Limiting-Injectable-Types-%E9%99%90%E5%88%B6%E6%B3%A8%E5%85%A5%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">Limiting Injectable Types (限制注入的类型)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scopes-%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">1.4.</span> <span class="nav-text">Scopes (作用域)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Built-In-Scopes-%E5%86%85%E5%BB%BA%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">1.4.1.</span> <span class="nav-text">Built-In Scopes (内建的作用域)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Eager-Initialization-of-Singletons-%E5%8D%95%E4%BE%8B%E7%9A%84%E9%A5%BF%E5%BC%8F%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">Eager Initialization of Singletons (单例的饿式初始化)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Refreshable-Scope-%E5%8F%AF%E5%88%B7%E6%96%B0%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">1.4.2.</span> <span class="nav-text">Refreshable Scope (可刷新的作用域)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Scopes-on-Meta-Annotations-%E5%85%83%E6%B3%A8%E8%A7%A3%E4%B8%8A%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">1.4.3.</span> <span class="nav-text">Scopes on Meta Annotations (元注解上的作用域)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bean-Factories-Bean-%E5%B7%A5%E5%8E%82"><span class="nav-number">1.5.</span> <span class="nav-text">Bean Factories Bean (工厂)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Programmatically-Disabling-Beans-%E7%BC%96%E7%A8%8B%E6%96%B9%E5%BC%8F%E6%9D%A5%E6%97%A0%E6%95%88%E5%8C%96-Beans"><span class="nav-number">1.5.1.</span> <span class="nav-text">Programmatically Disabling Beans (编程方式来无效化 Beans)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Injection-Point-%E6%B3%A8%E5%85%A5%E7%82%B9"><span class="nav-number">1.5.2.</span> <span class="nav-text">Injection Point (注入点)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Beans-from-Fields-%E5%9C%A8%E5%AD%97%E6%AE%B5%E4%B8%AD%E5%A3%B0%E6%98%8E-Beans"><span class="nav-number">1.5.3.</span> <span class="nav-text">Beans from Fields (在字段中声明 Beans)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Primitive-Beans-and-Arrays-%E5%8E%9F%E5%A7%8B%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%92%8C%E6%95%B0%E7%BB%84%E7%B1%BB%E5%9E%8B%E7%9A%84-Bean"><span class="nav-number">1.5.4.</span> <span class="nav-text">Primitive Beans and Arrays (原始类型的和数组类型的 Bean)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conditional-Beans-%E6%9D%A1%E4%BB%B6%E5%8C%96%E5%8A%A0%E8%BD%BD-Beans"><span class="nav-number">1.6.</span> <span class="nav-text">Conditional Beans (条件化加载 Beans)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Configuration-Requirements-%E9%85%8D%E7%BD%AE%E8%A6%81%E6%B1%82"><span class="nav-number">1.6.1.</span> <span class="nav-text">Configuration Requirements (配置要求)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Additional-Notes-on-Property-Requirements-%E5%B1%9E%E6%80%A7%E8%A6%81%E6%B1%82%E4%B8%8A%E9%A2%9D%E5%A4%96%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="nav-number">1.6.1.1.</span> <span class="nav-text">Additional Notes on Property Requirements (属性要求上额外的信息)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Referencing-bean-properties-in-Requires-%E5%9C%A8-Requires-%E6%B3%A8%E8%A7%A3%E4%B8%AD%E5%BC%95%E7%94%A8-Bean-%E5%B1%9E%E6%80%A7"><span class="nav-number">1.6.1.2.</span> <span class="nav-text">Referencing bean properties in @Requires (在 @Requires 注解中引用 Bean 属性)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Debugging-Conditional-Beans-%E8%B0%83%E8%AF%95%E6%9D%A1%E4%BB%B6%E5%8C%96%E7%9A%84-Beans"><span class="nav-number">1.6.2.</span> <span class="nav-text">Debugging Conditional Beans (调试条件化的 Beans)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bean-Replacement-Bean-%E6%9B%BF%E4%BB%A3"><span class="nav-number">1.7.</span> <span class="nav-text">Bean Replacement (Bean 替代)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Factory-Replacement-Factory-%E6%9B%BF%E4%BB%A3"><span class="nav-number">1.7.1.</span> <span class="nav-text">Factory Replacement (Factory 替代)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Default-Implementation-%E9%BB%98%E8%AE%A4%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.7.2.</span> <span class="nav-text">Default Implementation (默认实现)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bean-Configurations-Bean-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.8.</span> <span class="nav-text">Bean Configurations (Bean 配置)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Life-Cycle-Methods-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%96%B9%E6%B3%95"><span class="nav-number">1.9.</span> <span class="nav-text">Life-Cycle Methods (生命周期方法)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#When-The-Context-Starts-Context-%E5%90%AF%E5%8A%A8%E6%97%B6"><span class="nav-number">1.9.1.</span> <span class="nav-text">When The Context Starts (Context 启动时)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#When-The-Context-Closes-Context-%E5%85%B3%E9%97%AD%E6%97%B6"><span class="nav-number">1.9.2.</span> <span class="nav-text">When The Context Closes (Context 关闭时)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Context-Events-Context-%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.10.</span> <span class="nav-text">Context Events (Context 事件)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Publishing-Events-%E5%8F%91%E5%B8%83%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.10.1.</span> <span class="nav-text">Publishing Events (发布事件)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Listening-for-Events-%E7%9B%91%E5%90%AC%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.10.2.</span> <span class="nav-text">Listening for Events (监听事件)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bean-Events-Bean-%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.11.</span> <span class="nav-text">Bean Events (Bean 事件)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bean-Introspection-Bean-%E5%86%85%E7%9C%81"><span class="nav-number">1.12.</span> <span class="nav-text">Bean Introspection (Bean 内省)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Making-a-Bean-Available-for-Introspection-%E8%AE%A9%E4%B8%80%E4%B8%AA-Bean-%E5%8F%AF%E7%94%A8%E4%BA%8E%E5%8F%8D%E5%B0%84"><span class="nav-number">1.12.1.</span> <span class="nav-text">Making a Bean Available for Introspection (让一个 Bean 可用于反射)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Use-the-Introspected-Annotation-%E4%BD%BF%E7%94%A8-Introspected-%E6%B3%A8%E8%A7%A3"><span class="nav-number">1.12.2.</span> <span class="nav-text">Use the @Introspected Annotation (使用 @Introspected 注解)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bean-Fields-Bean-%E5%AD%97%E6%AE%B5"><span class="nav-number">1.12.3.</span> <span class="nav-text">Bean Fields (Bean 字段)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Constructor-Methods-%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="nav-number">1.12.4.</span> <span class="nav-text">Constructor Methods (构造方法)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Static-Creator-Methods-%E9%9D%99%E6%80%81%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="nav-number">1.12.5.</span> <span class="nav-text">Static Creator Methods (静态构造方法)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Enums-%E6%9E%9A%E4%B8%BE"><span class="nav-number">1.12.6.</span> <span class="nav-text">Enums (枚举)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Use-the-Introspected-Annotation-on-a-Configuration-Class-%E5%9C%A8%E4%B8%80%E4%B8%AA%E9%85%8D%E7%BD%AE%E7%B1%BB%E4%B8%8A%E4%BD%BF%E7%94%A8-Introspected-%E6%B3%A8%E8%A7%A3"><span class="nav-number">1.12.7.</span> <span class="nav-text">Use the @Introspected Annotation on a Configuration Class (在一个配置类上使用 @Introspected 注解)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Write-an-AnnotationMapper-to-Introspect-Existing-Annotations-%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA-AnnotationMapper-%E6%9D%A5%E5%86%85%E7%9C%81%E4%B8%80%E4%B8%AA%E5%B7%B2%E5%AD%98%E5%9C%A8%E7%9A%84%E6%B3%A8%E8%A7%A3"><span class="nav-number">1.12.8.</span> <span class="nav-text">Write an AnnotationMapper to Introspect Existing Annotations (编写一个 AnnotationMapper 来内省一个已存在的注解)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-BeanWrapper-API-BeanWrapper-API"><span class="nav-number">1.12.9.</span> <span class="nav-text">The BeanWrapper API (BeanWrapper API)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jackson-and-Bean-Introspection-Jackson-%E5%92%8C-Bean-%E5%86%85%E7%9C%81"><span class="nav-number">1.12.10.</span> <span class="nav-text">Jackson and Bean Introspection (Jackson 和 Bean 内省)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bean-Validation-Bean-%E6%A0%A1%E9%AA%8C"><span class="nav-number">1.13.</span> <span class="nav-text">Bean Validation (Bean 校验)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Validating-Bean-Methods-%E6%A3%80%E9%AA%8C-Bean-%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">1.13.1.</span> <span class="nav-text">Validating Bean Methods (检验 Bean 的方法)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Validating-Data-Classes-%E6%A0%A1%E9%AA%8C%E6%95%B0%E6%8D%AE%E7%B1%BB"><span class="nav-number">1.13.2.</span> <span class="nav-text">Validating Data Classes (校验数据类)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Validation-Configuration-Properties-%E6%A0%A1%E9%AA%8C%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE"><span class="nav-number">1.13.3.</span> <span class="nav-text">Validation Configuration Properties (校验属性配置)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Defining-Additional-Constraints-%E5%AE%9A%E4%B9%89%E9%A2%9D%E5%A4%96%E7%9A%84%E7%BA%A6%E6%9D%9F"><span class="nav-number">1.13.4.</span> <span class="nav-text">Defining Additional Constraints (定义额外的约束)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Validating-Annotations-at-Compile-Time-%E5%9C%A8%E7%BC%96%E8%AF%91%E6%97%B6%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3"><span class="nav-number">1.13.5.</span> <span class="nav-text">Validating Annotations at Compile Time (在编译时校验注解)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bean-Annotation-Metadata-Bean-%E6%B3%A8%E8%A7%A3%E5%85%83%E6%95%B0%E6%8D%AE"><span class="nav-number">1.14.</span> <span class="nav-text">Bean Annotation Metadata (Bean 注解元数据)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Annotation-Inheritance-%E6%B3%A8%E8%A7%A3%E7%BB%A7%E6%89%BF"><span class="nav-number">1.14.1.</span> <span class="nav-text">Annotation Inheritance (注解继承)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Aliasing-or-Mapping-Annotations-%E5%8F%96%E5%88%AB%E5%90%8Dor%E6%98%A0%E5%B0%84%E6%B3%A8%E8%A7%A3"><span class="nav-number">1.14.2.</span> <span class="nav-text">Aliasing or Mapping Annotations (取别名or映射注解)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Importing-Beans-from-Libraries-%E4%BB%8E%E4%B8%80%E4%B8%AA%E5%BA%93%E4%B8%AD%E5%AF%BC%E5%85%A5-Beans"><span class="nav-number">1.15.</span> <span class="nav-text">Importing Beans from Libraries (从一个库中导入 Beans)</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Micronaut,Groovy,Gradle,Java,文档,中文">
+    <meta name="description" content="Micronaut Groovy Gradle Java 文档 中文">
+    <meta name="author" content="林威羽">
+    
+    <title>
+        
+            Micronaut 中文文档 Application Configuration |
+        
+        林威羽的笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(153,153,0)","avatar":"/images/avatar.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"400px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":null,"description":"def contains🚀 = ['Micronaut', 'Groovy', 'Gradle', 'etc']"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                林威羽的笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+    <a target="_blank" rel="noopener" href="https://github.com/linweiyu21/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80"
+        viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+        aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path
+          d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+          fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path
+          d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+          fill="currentColor" class="octo-body"></path>
+      </svg></a>
+    <style>
+      .github-corner:hover .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+      }
+
+      @keyframes octocat-wave {
+
+        0%,
+        100% {
+          transform: rotate(0)
+        }
+
+        20%,
+        60% {
+          transform: rotate(-25deg)
+        }
+
+        40%,
+        80% {
+          transform: rotate(10deg)
+        }
+      }
+
+      @media (max-width:500px) {
+        .github-corner:hover .octo-arm {
+          animation: none
+        }
+
+        .github-corner .octo-arm {
+          animation: octocat-wave 560ms ease-in-out
+        }
+      }
+    </style>
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Micronaut 中文文档 Application Configuration</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">林威羽</span>
+                        
+                            <span class="author-label">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-04-29 09:33:11</span>
+        <span class="mobile">2022-04-29 09:33</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Micronaut-%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3/">Micronaut 中文文档</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Groovy/">Groovy</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Micronaut/">Micronaut</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E4%B8%AD%E6%96%87/">中文</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <!-- TOC -->
+
+<ul>
+<li><a href="#application-configuration">Application Configuration</a><ul>
+<li><a href="#the-environment-%E7%8E%AF%E5%A2%83">The Environment (环境)</a><ul>
+<li><a href="#environment-priority-%E7%8E%AF%E5%A2%83%E4%BC%98%E5%85%88%E7%BA%A7">Environment Priority (环境优先级)</a></li>
+<li><a href="#disabling-environment-detection-%E5%85%B3%E9%97%AD%E7%8E%AF%E5%A2%83%E6%A3%80%E6%B5%8B">Disabling Environment Detection (关闭环境检测)</a></li>
+<li><a href="#default-environment-%E9%BB%98%E8%AE%A4%E7%8E%AF%E5%A2%83">Default Environment (默认环境)</a></li>
+<li><a href="#micronaut-banner-micronaut-banner">Micronaut Banner (Micronaut Banner)</a></li>
+</ul>
+</li>
+<li><a href="#externalized-configuration-with-propertysources-%E4%BD%BF%E7%94%A8-propertysource-%E7%9A%84%E5%A4%96%E9%83%A8%E5%8C%96%E9%85%8D%E7%BD%AE">Externalized Configuration with PropertySources (使用 PropertySource 的外部化配置)</a><ul>
+<li><a href="#included-propertysource-loaders-%E5%B7%B2%E7%BB%8F%E5%8C%85%E5%90%AB%E7%9A%84-propertysource-%E5%8A%A0%E8%BD%BD%E5%99%A8">Included PropertySource Loaders (已经包含的 PropertySource 加载器)</a></li>
+<li><a href="#supplying-configuration-via-command-line-%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%BF%9B%E8%A1%8C%E9%85%8D%E7%BD%AE">Supplying Configuration via Command Line (从命令行进行配置)</a></li>
+<li><a href="#secrets-and-sensitive-configuration-%E5%AE%89%E5%85%A8%E4%B8%8E%E6%95%8F%E6%84%9F%E9%85%8D%E7%BD%AE">Secrets and Sensitive Configuration (安全与敏感配置)</a></li>
+<li><a href="#property-value-placeholders-%E5%B1%9E%E6%80%A7%E5%80%BC%E5%8D%A0%E4%BD%8D%E7%AC%A6">Property Value Placeholders (属性值占位符)</a></li>
+<li><a href="#property-value-binding-%E5%B1%9E%E6%80%A7%E5%80%BC%E7%BB%91%E5%AE%9A">Property Value Binding (属性值绑定)</a></li>
+<li><a href="#using-random-properties-%E4%BD%BF%E7%94%A8%E9%9A%8F%E6%9C%BA%E5%B1%9E%E6%80%A7%E5%80%BC">Using Random Properties (使用随机属性值)</a></li>
+<li><a href="#fail-fast-property-injection-%E5%BF%AB%E9%80%9F%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5">Fail Fast Property Injection (快速失败的属性注入)</a></li>
+</ul>
+</li>
+<li><a href="#configuration-injection-%E9%85%8D%E7%BD%AE%E6%B3%A8%E5%85%A5">Configuration Injection (配置注入)</a><ul>
+<li><a href="#using-the-value-annotation-%E4%BD%BF%E7%94%A8-value-%E6%B3%A8%E8%A7%A3">Using the <code>@Value</code> Annotation (使用 <code>@Value</code> 注解)</a></li>
+<li><a href="#using-the-property-annotation-%E4%BD%BF%E7%94%A8-property-%E6%B3%A8%E8%A7%A3">Using the <code>@Property</code> Annotation (使用 <code>@Property</code> 注解)</a></li>
+</ul>
+</li>
+<li><a href="#configuration-properties-%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7">Configuration Properties (配置属性)</a><ul>
+<li><a href="#includes-excludes-%E5%8C%85%E5%90%AB%E4%B8%8E%E6%8E%92%E9%99%A4">Includes Excludes (包含与排除)</a></li>
+<li><a href="#change-accessors-style-%E6%94%B9%E5%8F%98%E8%AE%BF%E9%97%AE%E9%A3%8E%E6%A0%BC">Change accessors style (改变访问风格)</a></li>
+<li><a href="#property-type-conversion-%E5%B1%9E%E6%80%A7%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">Property Type Conversion (属性类型转换)</a><ul>
+<li><a href="#duration-conversion-%E6%8C%81%E7%BB%AD%E6%97%B6%E9%97%B4%E8%BD%AC%E6%8D%A2">Duration Conversion (持续时间转换)</a></li>
+<li><a href="#list-or-array-conversion-%E5%88%97%E8%A1%A8%E5%92%8C%E6%95%B0%E7%BB%84%E7%9A%84%E8%BD%AC%E6%8D%A2">List or Array Conversion (列表和数组的转换)</a></li>
+<li><a href="#readable-bytes-%E5%8F%AF%E8%AF%BB%E7%9A%84%E5%AD%97%E8%8A%82">Readable Bytes (可读的字节)</a></li>
+<li><a href="#formatting-dates-%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%9A%84%E6%97%A5%E6%9C%9F">Formatting Dates (格式化的日期)</a></li>
+</ul>
+</li>
+<li><a href="#configuration-builder-%E9%85%8D%E7%BD%AE%E6%9E%84%E5%BB%BA%E5%99%A8">Configuration Builder (配置构建器)</a></li>
+<li><a href="#mapformat-map-%E6%A0%BC%E5%BC%8F">MapFormat (Map 格式)</a></li>
+</ul>
+</li>
+<li><a href="#custom-type-converters-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E5%99%A8">Custom Type Converters (自定义类型转换器)</a></li>
+<li><a href="#using-eachproperty-to-drive-configuration-%E4%BD%BF%E7%94%A8-eachproperty-%E6%9D%A5%E9%A9%B1%E5%8A%A8%E9%85%8D%E7%BD%AE">Using <code>@EachProperty</code> to Drive Configuration (使用 <code>@EachProperty</code> 来驱动配置)</a><ul>
+<li><a href="#list-based-binding-%E5%9F%BA%E4%BA%8E%E5%88%97%E8%A1%A8%E7%9A%84%E7%BB%91%E5%AE%9A">List-Based Binding (基于列表的绑定)</a></li>
+</ul>
+</li>
+<li><a href="#using-eachbean-to-drive-configuration-%E4%BD%BF%E7%94%A8-eachbean-%E6%9D%A5%E9%A9%B1%E5%8A%A8%E9%85%8D%E7%BD%AE">Using <code>@EachBean</code> to Drive Configuration (使用 <code>@EachBean</code> 来驱动配置)</a></li>
+<li><a href="#immutable-configuration-%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%85%8D%E7%BD%AE">Immutable Configuration (不可变配置)</a><ul>
+<li><a href="#customizing-accessors-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BF%E9%97%AE%E5%99%A8">Customizing accessors (自定义访问器)</a></li>
+</ul>
+</li>
+<li><a href="#bootstrap-configuration-%E5%90%AF%E5%8A%A8%E9%85%8D%E7%BD%AE">Bootstrap Configuration (启动配置)</a><ul>
+<li><a href="#bootstrap-context-beans-bootstrap-%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%AD%E7%9A%84-bean">Bootstrap Context Beans (Bootstrap 上下文中的 Bean)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="Application-Configuration"><a href="#Application-Configuration" class="headerlink" title="Application Configuration"></a>Application Configuration</h1><p><strong>声明</strong>:</p>
+<ul>
+<li>本文由本人翻译自<a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide" >官方文档<i class="fas fa-external-link-alt"></i></a></li>
+<li>部分内容可能会有修改或删减, 一切以官方文档为准.</li>
+<li>本文翻译时 Micronaut 版本为 3.4.2</li>
+</ul>
+<p>默认情况下, 可以在 Java properties, YAML, JSON 或者 Groovy files 中提供配置</p>
+<p>约定是搜索名称为 <code>application.yml</code>, <code>application.properties</code>, <code>application.json</code> 或者 <code>application.groovy</code> 的文件</p>
+<p>还可以通过系统属性或环境变量来覆盖任何配置属性</p>
+<p>每个配置源都使用 <code>PropertySource</code> 接口来建模, 并且这个机制是可以扩展的, 允许实现额外的 <code>PropertySourceLoader</code> 实现</p>
+<h2 id="The-Environment-环境"><a href="#The-Environment-环境" class="headerlink" title="The Environment (环境)"></a>The Environment (环境)</h2><p>应用程序环境被建模为 <code>Environment</code> 接口, 这个接口允许在创建一个 <code>ApplicationContext</code> 时定义一个或多个唯一环境名称</p>
+<p>Example - Initialing the Environment:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">when:</span></span><br><span class="line">ApplicationContext applicationContext = ApplicationContext.run(<span class="string">&quot;test&quot;</span>, <span class="string">&quot;android&quot;</span>)</span><br><span class="line">Environment environment = applicationContext.getEnvironment()</span><br><span class="line"></span><br><span class="line"><span class="attr">then:</span></span><br><span class="line">environment.activeNames.contains(<span class="string">&quot;test&quot;</span>)        <span class="comment">// 定义了多个环境名称</span></span><br><span class="line">environment.activeNames.contains(<span class="string">&quot;android&quot;</span>)     <span class="comment">// 定义了多个环境名称</span></span><br></pre></td></tr></table></figure>
+
+<p>激活的环境名允许根据环境加载不同的配置文件, 还可以使用 <code>@Requires</code> 注解来条件化加载 Beans 或 Bean <code>@Configuration</code> 包</p>
+<p>除此之外, Micronaut 还会尝试检测当前的环境, 例如在 Spock 和 JUnit 测试中, <code>io.micronaut.context.env.Environment.TEST</code> 是自动激活的环境</p>
+<p><code>io.micronaut.context.env.Environment</code> 接口定义了一些预定义好的环境名称</p>
+<p>可以通过 <code>micronaut.environments</code> 系统属性或者 <code>MICRONAUT_ENVIRONMENTS</code> 环境变量来指定激活的环境, 多个环境名称使用逗号进行分隔:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Dmicronaut.environments=foo,bar -jar myapp.jar</span><br></pre></td></tr></table></figure>
+
+<h3 id="Environment-Priority-环境优先级"><a href="#Environment-Priority-环境优先级" class="headerlink" title="Environment Priority (环境优先级)"></a>Environment Priority (环境优先级)</h3><p>Micronaut 基于指定的环境来加载属性源, 不同环境的属性源可能多个相同的属性名称, 使用环境的顺序来指明使用哪个属性值</p>
+<p>Micronaut 使用如下优先级来处理(越下面优先级越高):</p>
+<ul>
+<li>推断的环境</li>
+<li>系统属性 <code>micronaut.environments</code> 设置的环境</li>
+<li>环境变量 <code>MICRONAUT_ENVIRONMENTS</code> 设置的环境</li>
+<li>通过应用程序上下文 Builder 明确指定的环境</li>
+</ul>
+<h3 id="Disabling-Environment-Detection-关闭环境检测"><a href="#Disabling-Environment-Detection-关闭环境检测" class="headerlink" title="Disabling Environment Detection (关闭环境检测)"></a>Disabling Environment Detection (关闭环境检测)</h3><p>可以通过将 系统属性<code>micronaut.env.deduction</code> 和 环境变量<code>MICRONAUT_ENV_DEDUCTION</code> 设置为 <code>false</code> 来关闭环境自动检测</p>
+<p>关闭了环境自动检测, 但是还是会使用手动指定的环境</p>
+<p>Example - 通过系统属性来关闭环境自动检测:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Dmicronaut.env.deduction=<span class="literal">false</span> -jar myapp.jar</span><br></pre></td></tr></table></figure>
+
+<p>还可以通过使用 <code>ApplicationContextBuilder.#deduceEnvironment</code> 方法来设置你的应用程序:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="string">&#x27;test disable environment deduction via builder&#x27;</span>() &#123;</span><br><span class="line">    <span class="symbol">when:</span></span><br><span class="line">    ApplicationContext ctx = ApplicationContext.builder().deduceEnvironment(<span class="literal">false</span>).start()</span><br><span class="line"></span><br><span class="line">    <span class="symbol">then:</span></span><br><span class="line">    !ctx.environment.activeNames.contains(Environment.TEST)</span><br><span class="line"></span><br><span class="line">    <span class="symbol">cleanup:</span></span><br><span class="line">    ctx.close()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Default-Environment-默认环境"><a href="#Default-Environment-默认环境" class="headerlink" title="Default Environment (默认环境)"></a>Default Environment (默认环境)</h3><p>Micronaut 支持一个或多个默认环境</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">void</span> main(String[] args) &#123;</span><br><span class="line">    Micronaut.build(args)</span><br><span class="line">             .mainClass(Application.<span class="keyword">class</span>)</span><br><span class="line">             .defaultEnvironments(<span class="string">&quot;dev&quot;</span>)</span><br><span class="line">             .start()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Micronaut-Banner-Micronaut-Banner"><a href="#Micronaut-Banner-Micronaut-Banner" class="headerlink" title="Micronaut Banner (Micronaut Banner)"></a>Micronaut Banner (Micronaut Banner)</h3><p>如果要使用自定义的 Manner, 将自定义的 ASCII Art 放置到 <code>src/main/resources/micronaut-banner.txt</code> 文件中</p>
+<p>关闭 Banner:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Application</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        Micronaut.build(args)</span><br><span class="line">                 .banner(<span class="literal">false</span>)</span><br><span class="line">                 .start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Externalized-Configuration-with-PropertySources-使用-PropertySource-的外部化配置"><a href="#Externalized-Configuration-with-PropertySources-使用-PropertySource-的外部化配置" class="headerlink" title="Externalized Configuration with PropertySources (使用 PropertySource 的外部化配置)"></a>Externalized Configuration with PropertySources (使用 PropertySource 的外部化配置)</h2><p>额外的 <code>PropertySource</code> 实例可以在初始化 <code>ApplicationContext</code> 之前被添加到环境中</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">when:</span></span><br><span class="line">ApplicationContext applicationContext = ApplicationContext.run(</span><br><span class="line">                                            PropertySource.of(</span><br><span class="line">                                                <span class="string">&quot;test&quot;</span>,</span><br><span class="line">                                                [</span><br><span class="line">                                                    <span class="string">&quot;micronaut.server.host&quot;</span>: <span class="string">&quot;foo&quot;</span>,</span><br><span class="line">                                                    <span class="string">&quot;micronaut.server.port&quot;</span>: <span class="number">8080</span></span><br><span class="line">                                                ]</span><br><span class="line">                                            ),</span><br><span class="line">                                            <span class="string">&quot;test&quot;</span>,</span><br><span class="line">                                            <span class="string">&quot;android&quot;</span></span><br><span class="line">                                        )</span><br><span class="line">Environment environment = applicationContext.getEnvironment()</span><br><span class="line"></span><br><span class="line"><span class="attr">then:</span></span><br><span class="line"><span class="string">&quot;foo&quot;</span> == environment.getProperty(<span class="string">&quot;micronaut.server.host&quot;</span>, String.<span class="keyword">class</span>).orElse(<span class="string">&quot;localhost&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Alternatively one can register a PropertySourceLoader by creating a META-INF&#x2F;services&#x2F;io.micronaut.context.env.PropertySourceLoader file containing a reference to the class name of the PropertySourceLoader.</p>
+</blockquote>
+<h3 id="Included-PropertySource-Loaders-已经包含的-PropertySource-加载器"><a href="#Included-PropertySource-Loaders-已经包含的-PropertySource-加载器" class="headerlink" title="Included PropertySource Loaders (已经包含的 PropertySource 加载器)"></a>Included PropertySource Loaders (已经包含的 PropertySource 加载器)</h3><p>Micronaut 默认已经包含了一些从给定的位置和优先级加载属性的 <code>PropertySourceLoader</code> 实现</p>
+<ol>
+<li>命令行参数</li>
+<li>来自 <code>SPRING_APPLICATION_JSON</code> 的属性</li>
+<li>来自 <code>MICRONAUT_APPLICATION_JSON</code> 的属性</li>
+<li>Java 系统属性</li>
+<li>操作系统环境变量</li>
+<li>按顺序从系统属性 <code>micronaut.config.files</code> 或者 环境变量 <code>MICRONAUT_CONFIG_FILES</code> 指定的配置文件中加载. 文件路径可以使用逗号来分隔多个, 按文件声明的先后顺序明确优先级. 文件可以从文件系统中获取, 也可以使用 <code>classpath:</code> 前缀从类路径中获取</li>
+<li>从 <code>application-&#123;environment&#125;.&#123;extension&#125;</code> 中获取环境指定属性</li>
+<li>从 <code>application.&#123;extension&#125;</code> 获取应用程序指定属性</li>
+</ol>
+<p>默认支持 <code>.properties</code>,<code>.json</code>,<code>yml</code>, 还支持 <code>.groovy</code></p>
+<h3 id="Supplying-Configuration-via-Command-Line-从命令行进行配置"><a href="#Supplying-Configuration-via-Command-Line-从命令行进行配置" class="headerlink" title="Supplying Configuration via Command Line (从命令行进行配置)"></a>Supplying Configuration via Command Line (从命令行进行配置)</h3><p>使用 Gradle&#x2F;Maven 时可以在命令行中进行配置</p>
+<p>Gradle: <code>./gradlew run --args=&quot;-endpoints.health.enabled=true -config.property=test&quot;</code></p>
+<p>Maven: <code>./mvnw mn:run -Dmn.appArgs=&quot;-endpoints.health.enabled=true -config.property=test&quot;</code></p>
+<p>必须要在 <code>main</code> 方法将这些参数传递到 Context Builder 中, 才能使得这些配置生效:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.runtime.Micronaut;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Application</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">void</span> main(String[] args) &#123;</span><br><span class="line">        Micronaut.run(Application.<span class="keyword">class</span>, args);<span class="comment">// passing args</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Secrets-and-Sensitive-Configuration-安全与敏感配置"><a href="#Secrets-and-Sensitive-Configuration-安全与敏感配置" class="headerlink" title="Secrets and Sensitive Configuration (安全与敏感配置)"></a>Secrets and Sensitive Configuration (安全与敏感配置)</h3><p>不要将敏感信息例如密码直接存放到配置文件中</p>
+<p>要将敏感信息外部化到密码管理系统中(there are many options here, many provided by Cloud providers)</p>
+<p>可以使用属性占位符, 来自定义一个环境变量的名称并提供默认值:</p>
+<p>Example - Using Property Value Placeholders to Define Secure Configuration:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">default:</span></span><br><span class="line">        <span class="attr">url:</span> <span class="string">$&#123;JDBC_URL:`jdbc:mysql://localhost:3306/db`&#125;</span></span><br><span class="line">        <span class="attr">username:</span> <span class="string">$&#123;JDBC_USER:root&#125;</span></span><br><span class="line">        <span class="attr">password:</span> <span class="string">$&#123;JDBC_PASSWORD:&#125;</span></span><br><span class="line">        <span class="attr">dailetc:</span> <span class="string">MYSQL</span></span><br><span class="line">        <span class="attr">driverClassName:</span> <span class="string">$&#123;JDBC_DRIVER:com.mysql.cj.jdbc.Driver&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>为了安全外部化配置，可以考虑使用microaut支持的安全管理系统:</p>
+<ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://docs.micronaut.io/latest/guide/#distributedConfigurationVault" >HashiCorp Vault<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/index.html#config-client" >Kubernetes Secrets<i class="fas fa-external-link-alt"></i></a></li>
+</ul>
+<h3 id="Property-Value-Placeholders-属性值占位符"><a href="#Property-Value-Placeholders-属性值占位符" class="headerlink" title="Property Value Placeholders (属性值占位符)"></a>Property Value Placeholders (属性值占位符)</h3><p>可以在 配置值(configuration values) 和 任何Micronaut注解 中使用 属性占位符语法 来引用 配置属性(configuration properties)</p>
+<p>可以使用 <code>PropertyPlaceholderResolver</code> 接口来编码式地获取配置属性</p>
+<p>基础语法是: <code>$&#123;...&#125;</code>:</p>
+<p>Example - Defining Property Placeholders:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">myapp:</span></span><br><span class="line">    <span class="attr">endpoint:</span> <span class="string">http://$&#123;micronaut.server.host&#125;:$&#123;micronaut.server.port&#125;/foo</span></span><br></pre></td></tr></table></figure>
+
+<p>Example - 在 <code>:</code> 字符后面定义默认值:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">myapp:</span></span><br><span class="line">    <span class="attr">endpoint:</span> <span class="string">http://$&#123;micronaut.server.host:localhost&#125;:$&#123;micronaut.server.port:8080&#125;/foo</span></span><br></pre></td></tr></table></figure>
+
+<p>在寻找不到指定的配置属性时, 将会会用 <code>:</code> 字符后面的默认值, 而不是抛出一个异常</p>
+<p>如果 <code>:</code> 字符后面的属性值包含了 <code>:</code> 字符, 那么需要进行转义:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">myapp:</span></span><br><span class="line">    <span class="attr">endpoint:</span> <span class="string">$&#123;server.address:`http://localhost:8080`&#125;/foo</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Property-Value-Binding-属性值绑定"><a href="#Property-Value-Binding-属性值绑定" class="headerlink" title="Property Value Binding (属性值绑定)"></a>Property Value Binding (属性值绑定)</h3><p>在代码中放置引用或在占位符值中应该使用 <code>kebab case(lowercase and hyphen-separated)</code> 小写加横线来指明属性引用</p>
+<p>例如, 使用 <code>micronaut.server.default-charset</code> 而不是 <code>micronaut.server.defaultCharset</code></p>
+<p>Micronaut 仍然允许在配置中指定 <code>micronaut.server.defaultCharset</code>, 因为 Micronaut 会自动将这样的配置进行转换来优化内存使用和减少解析配置的复杂度:</p>
+<p>Table - Property Value Normalization:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Configuration Value</th>
+<th align="left">Resulting Properties</th>
+<th align="left">Property Source</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">myApp.myStuff</td>
+<td align="left">my-app.my-stuff</td>
+<td align="left">Properties, YAML etc.</td>
+</tr>
+<tr>
+<td align="left">my-app.myStuff</td>
+<td align="left">my-app.my-stuff</td>
+<td align="left">Properties, YAML etc.</td>
+</tr>
+<tr>
+<td align="left">myApp.my-stuff</td>
+<td align="left">my-app.my-stuff</td>
+<td align="left">Properties, YAML etc.</td>
+</tr>
+<tr>
+<td align="left">MYAPP_MYSTUFF</td>
+<td align="left">myapp.mystuff, my-app.my-stuff</td>
+<td align="left">Environment Variable</td>
+</tr>
+<tr>
+<td align="left">MY_APP_MY_STUFF</td>
+<td align="left"><code>my.app.my.stuff</code>, <code>my.app.my-stuff</code>, <code>my.app-my.stuff</code>, <code>my.app-my-stuff</code>, <code>my-app.my.stuff</code>, <code>my-app.my-stuff</code>, <code>my-app-my.stuff</code>, <code>my-app-my-stuff</code></td>
+<td align="left">Environment Variable</td>
+</tr>
+</tbody></table>
+<p>不可以通过驼峰命名来引用一个环境变量</p>
+<p>可以在 <code>Micronaut</code> Builder 中调用方法来控制环境属性怎么样参与到配置中:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.runtime.Micronaut</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Application</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        Micronaut.build()</span><br><span class="line">                 .mainClass(Application)</span><br><span class="line">                 .environmentPropertySource(<span class="literal">false</span>)</span><br><span class="line">                 <span class="comment">//or</span></span><br><span class="line">                 .environmentVariableIncludes(<span class="string">&quot;THIS_ENV_ONLY&quot;</span>)</span><br><span class="line">                 <span class="comment">//or</span></span><br><span class="line">                 .environmentVariableExcludes(<span class="string">&quot;EXCLUDED_ENV&quot;</span>)</span><br><span class="line">                 .start()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的配置对于属性占位符没有任何影响, 所以还是可以通过属性占位符来获取一个环境变量</p>
+<h3 id="Using-Random-Properties-使用随机属性值"><a href="#Using-Random-Properties-使用随机属性值" class="headerlink" title="Using Random Properties (使用随机属性值)"></a>Using Random Properties (使用随机属性值)</h3><p>Example:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">micronaut:</span></span><br><span class="line">    <span class="attr">application:</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">myapplication</span></span><br><span class="line">        <span class="attr">instance:</span></span><br><span class="line">            <span class="attr">id:</span> <span class="string">$&#123;random.shortuuid&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>Table - Random Values:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Property</th>
+<th align="left">Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">random.port</td>
+<td align="left">An available random port number</td>
+</tr>
+<tr>
+<td align="left">random.int</td>
+<td align="left">Random int</td>
+</tr>
+<tr>
+<td align="left">random.integer</td>
+<td align="left">Random int</td>
+</tr>
+<tr>
+<td align="left">random.long</td>
+<td align="left">Random long</td>
+</tr>
+<tr>
+<td align="left">random.float</td>
+<td align="left">Random float</td>
+</tr>
+<tr>
+<td align="left">random.shortuuid</td>
+<td align="left">Random UUID of only 10 chars in length(Note: As this isn’t full UUID, collision COULD occur)</td>
+</tr>
+<tr>
+<td align="left">random.uuid</td>
+<td align="left">Random UUID with dashes</td>
+</tr>
+<tr>
+<td align="left">random.uuid2</td>
+<td align="left">Random UUID without dashes</td>
+</tr>
+</tbody></table>
+<p>数值随机还支持范围和最大值</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">instance:</span></span><br><span class="line">    <span class="attr">id:</span> <span class="string">$&#123;random.int[-5,</span> <span class="number">10</span><span class="string">]&#125;</span></span><br><span class="line">    <span class="attr">count:</span> <span class="string">$&#123;random.int(5)&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>$&#123;random.int[-5, 10]&#125;</code>: 包含 <code>-5</code> 到 <code>9</code> 的整数</p>
+<p><code>$&#123;random.int(5)</code> : 最大值是 5 的随机整数</p>
+<h3 id="Fail-Fast-Property-Injection-快速失败的属性注入"><a href="#Fail-Fast-Property-Injection-快速失败的属性注入" class="headerlink" title="Fail Fast Property Injection (快速失败的属性注入)"></a>Fail Fast Property Injection (快速失败的属性注入)</h3><p>对于需要注入属性的 Bean 来说, 注入和潜在的异常会在 Bean 被请求的时候才会发生</p>
+<p>为了在应用启动的时候检查 Bean 中的属性是否存在或是否可以转换或是否可以注入, 可以将 Bean 使用 <code>@Context</code> 进行修饰, 将 Bean 的生命周期绑定到 Context 启动时</p>
+<h2 id="Configuration-Injection-配置注入"><a href="#Configuration-Injection-配置注入" class="headerlink" title="Configuration Injection (配置注入)"></a>Configuration Injection (配置注入)</h2><p>使用 <code>@Value</code> 注解将配置值注入到 Bean 中</p>
+<h3 id="Using-the-Value-Annotation-使用-Value-注解"><a href="#Using-the-Value-Annotation-使用-Value-注解" class="headerlink" title="Using the @Value Annotation (使用 @Value 注解)"></a>Using the <code>@Value</code> Annotation (使用 <code>@Value</code> 注解)</h3><p>Example:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.Value</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> jakarta.inject.Singleton</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EngineImpl</span> <span class="keyword">implements</span> <span class="title class_">Engine</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">&#x27;$&#123;my.engine.cylinders:6&#125;&#x27;</span>)</span><br><span class="line">    <span class="keyword">protected</span> <span class="type">int</span> cylinders</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="type">int</span> getCylinders() &#123;</span><br><span class="line">        cylinders</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    String start() &#123;</span><br><span class="line">        <span class="string">&quot;Starting V$cylinders Engine&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>必须使用 <code>$&#123;...&#125;</code> 的语法</p>
+<p>在 <code>:</code> 字符后面添加默认值</p>
+<p><code>@Value</code> 的注解还可以用来注入一个静态值: <code>@Value(&quot;10&quot;) int number</code></p>
+<p>这在注入一个包含静态内容和占位符的属性时非常有用: <code>@Value(&quot;http://$&#123;my.host&#125;:$&#123;my.host&#125;&quot;) URL url</code></p>
+<p>如果默认值中包含了 <code>:</code> 字符, 则必须进行转义: <code>@Value(&quot;$&#123;my.url:</code><a class="link"   target="_blank" rel="noopener" href="http://foo.com/" >http://foo.com<i class="fas fa-external-link-alt"></i></a><code>&#125;&quot;) URL url</code></p>
+<p>得益于 Micronaut 对注解元数据的广泛支持, 你可以在任何注解上使用占位符表达式:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span>(<span class="string">&quot;$&#123;hello.controller.path:/hello&#125;&quot;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">HelloController</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Client</span>(<span class="string">&quot;$&#123;my.server.url:`http://localhost:8080`&#125;&quot;</span>)</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">HelloClient</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Using-the-Property-Annotation-使用-Property-注解"><a href="#Using-the-Property-Annotation-使用-Property-注解" class="headerlink" title="Using the @Property Annotation (使用 @Property 注解)"></a>Using the <code>@Property</code> Annotation (使用 <code>@Property</code> 注解)</h3><blockquote>
+<p>This is because <code>@Value</code> only resolves placeholders within the value specified to it.</p>
+</blockquote>
+<p><code>@Value</code> 注解必须使用 <code>$&#123;...&#125;</code> 语法来引用配置值, 如果传入普通字符串, 就只会将这个字符串注入到 Bean 属性中</p>
+<p>可以使用 <code>@Property</code> 注解来直接使用属性名称来引用属性值: <code>@Property(name = &quot;my.engine.manufacturer&quot;) String manufacturer</code></p>
+<p>但是 <code>@Property</code> 不能指定默认值, 如果指定的属性名称没有对应的属性值, Bean 将会实例化失败, 可以使用 <code>@Nullable</code> 注解来说明属性值是可选的, 来防止注入失败</p>
+<p><code>@Property</code> 注解还可以用来解析 <code>sub maps</code>:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">datasources:</span></span><br><span class="line">  <span class="attr">default:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">&#x27;mydb&#x27;</span></span><br><span class="line"><span class="attr">jpa:</span></span><br><span class="line">  <span class="attr">default:</span></span><br><span class="line">    <span class="attr">properties:</span></span><br><span class="line">      <span class="attr">hibernate:</span></span><br><span class="line">        <span class="attr">hbm2ddl:</span></span><br><span class="line">          <span class="attr">auto:</span> <span class="string">update</span></span><br><span class="line">        <span class="attr">show_sql:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>为了使用 <code>hibernate</code> 开头的属性, 这样使用 <code>@Property</code> 注解:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Property(name = &quot;jpa.default.properties&quot;)</span></span><br><span class="line">Map&lt;String, String&gt; jpaProperties;</span><br></pre></td></tr></table></figure>
+
+<p>将会将 key 为 <code>hibernate.hbm2dll.auto</code> 和 <code>hibernate.show_sql</code> 的键值对放到 Map 中</p>
+<p>可以使用 <code>@MapFormat</code> 来指定 key 的形式</p>
+<h2 id="Configuration-Properties-配置属性"><a href="#Configuration-Properties-配置属性" class="headerlink" title="Configuration Properties (配置属性)"></a>Configuration Properties (配置属性)</h2><p>通过创建一个使用 <code>@ConfigurationProperties</code> 注解修饰的类来创建类型安全的配置</p>
+<p>Micronaut 将会提供一个无反射的 <code>@ConfigurationProperties</code> Bean, 还会在编译时计算属性路径来进行评估, 极大地提高了加载效率</p>
+<p>Example:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.ConfigurationProperties</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.Min</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotBlank</span><br><span class="line"></span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(<span class="string">&quot;my.engine&quot;</span>)   <span class="comment">// @ConfigurationPropertis 注解使用配置前缀</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EngineConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotBlank</span>                           <span class="comment">// 可以使用 javax.validation 注解来校验配置</span></span><br><span class="line">    String manufacturer = <span class="string">&quot;Ford&quot;</span>        <span class="comment">// 可以设置默认值到属性中</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Min</span>(<span class="number">1</span>L)</span><br><span class="line">    <span class="type">int</span> cylinders</span><br><span class="line"></span><br><span class="line">    CrankShaft crankShaft = <span class="keyword">new</span> CrankShaft()</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ConfigurationProperties</span>(<span class="string">&#x27;crank-shaft&#x27;</span>)             <span class="comment">// 静态内部类提供嵌入式的配置</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">CrankShaft</span> &#123;</span><br><span class="line">        </span><br><span class="line">        Optional&lt;Double&gt; rodLength = Optional.empty()   <span class="comment">// 可以使用 java.util.Optional 包装可选的配置值</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一旦你准备好了一个 类型安全的 配置, 这个配置就可以像其他 Bean 被注入到 Bean 中</p>
+<p>属性值可以从其中一个 <code>PropertySource</code> 实例中提供:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext applicationContext = ApplicationContext.run(</span><br><span class="line">    [<span class="string">&#x27;my.engine.cylinders&#x27;</span>: <span class="string">&#x27;8&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;test&#x27;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> vehicle = applicationContext.getBean(Vehicle)</span><br><span class="line">println(vehicle.start())</span><br></pre></td></tr></table></figure>
+
+<p>可以直接在 <code>@Requires</code> 中引用这个配置 Bean 来进行条件化加载: <code>@Requires(bean=Config.class, beanProperty=&quot;propertyName&quot;, value=&quot;true&quot;)</code></p>
+<p>可以通过继承 <code>@ConfigurationProperties</code> Bean 来进行更复杂的配置</p>
+<p>例如, 一个使用 <code>@ConfigurationProperties(&#39;bar&#39;)</code> 修饰的子类 <code>EngineConfig</code> 将会解析所有在 <code>my.engine.bar</code> 下的属性</p>
+<h3 id="Includes-Excludes-包含与排除"><a href="#Includes-Excludes-包含与排除" class="headerlink" title="Includes Excludes (包含与排除)"></a>Includes Excludes (包含与排除)</h3><p>可以在 <code>@ConfigurationProperties</code> 中指定要包含或排除的属性, 在子类中也可以排除父类中的属性</p>
+<p>属性名称必须一一对应</p>
+<h3 id="Change-accessors-style-改变访问风格"><a href="#Change-accessors-style-改变访问风格" class="headerlink" title="Change accessors style (改变访问风格)"></a>Change accessors style (改变访问风格)</h3><p>可以使用 <code>@AccessorsStyle</code> 注解来修改属性的访问方式</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.ConfigurationPropertis;</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.AccessorsStyle;</span><br><span class="line"></span><br><span class="line"><span class="meta">@AccessorsStyle</span>(readPrefixes = <span class="string">&quot;&quot;</span>, writePrefixes = <span class="string">&quot;&quot;</span>)</span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(<span class="string">&quot;my.engie&quot;</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EngineConfig</span> &#123;</span><br><span class="line">    String manufacturer</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String manufacturer() &#123; manufacturer &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Property-Type-Conversion-属性类型转换"><a href="#Property-Type-Conversion-属性类型转换" class="headerlink" title="Property Type Conversion (属性类型转换)"></a>Property Type Conversion (属性类型转换)</h3><p>Micronaut 使用 <code>ConversionService</code> Bean 来在解析配置属性时进行转换</p>
+<p>你可以通过实现 <code>TypeConverter</code> 接口来注册额外的转换器</p>
+<p>Micronaut 提供了一些内置的转换器</p>
+<h4 id="Duration-Conversion-持续时间转换"><a href="#Duration-Conversion-持续时间转换" class="headerlink" title="Duration Conversion (持续时间转换)"></a>Duration Conversion (持续时间转换)</h4><p>持续时间可以通过添加一个单位来进行指定</p>
+<p>Table - Duration Conversion:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Configuration Value</th>
+<th align="left">Resulting Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">10ms</td>
+<td align="left">Duration of 10 milliseconds</td>
+</tr>
+<tr>
+<td align="left">10m</td>
+<td align="left">Duration of 10 minutes</td>
+</tr>
+<tr>
+<td align="left">10s</td>
+<td align="left">Duration of 10 seconds</td>
+</tr>
+<tr>
+<td align="left">10d</td>
+<td align="left">Duration of 10 days</td>
+</tr>
+<tr>
+<td align="left">10h</td>
+<td align="left">Duration of 10 hours</td>
+</tr>
+<tr>
+<td align="left">10ns</td>
+<td align="left">Duration of 10 nanoseconds</td>
+</tr>
+<tr>
+<td align="left">PT15M</td>
+<td align="left">Duration of 15 minutes using ISO-8601 format</td>
+</tr>
+</tbody></table>
+<p>Example - Configure the default HTTP Client read timeout:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">micronaut:</span></span><br><span class="line">    <span class="attr">http:</span></span><br><span class="line">        <span class="attr">client:</span></span><br><span class="line">            <span class="attr">read-timeout:</span> <span class="string">15s</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="List-or-Array-Conversion-列表和数组的转换"><a href="#List-or-Array-Conversion-列表和数组的转换" class="headerlink" title="List or Array Conversion (列表和数组的转换)"></a>List or Array Conversion (列表和数组的转换)</h4><p>使用泛型来转换配置</p>
+<p>Example - Specifying lists or arrays in YAML:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">my:</span></span><br><span class="line">    <span class="attr">app:</span></span><br><span class="line">        <span class="attr">integers:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="number">1</span></span><br><span class="line">            <span class="bullet">-</span> <span class="number">2</span></span><br><span class="line">        <span class="attr">urls:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">http://foo.com</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">http://bar.com</span></span><br></pre></td></tr></table></figure>
+
+<p>Example - Java properties file format:</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">my.app.integers</span>=<span class="string">1,2</span></span><br><span class="line"><span class="attr">my.app.urls</span>=<span class="string">http://foo.com,http://bar.com</span></span><br></pre></td></tr></table></figure>
+
+<p>Example - Specifying lists or arrays in Java properties using index:</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">my.app.integers[0]</span>=<span class="string">1</span></span><br><span class="line"><span class="attr">my.app.integers[1]</span>=<span class="string">2</span></span><br></pre></td></tr></table></figure>
+
+<p>Example - Defining properties to bind to with the target type supplied via generics:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; integers;</span><br><span class="line">List&lt;URL&gt; urls;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Readable-Bytes-可读的字节"><a href="#Readable-Bytes-可读的字节" class="headerlink" title="Readable Bytes (可读的字节)"></a>Readable Bytes (可读的字节)</h4><p>在 setter 方法参数上使用 <code>@ReadableBytes</code> 注解来允许使用可读性的字节语法来声明属性值:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">void</span> setMaxContentLength(<span class="meta">@ReadableBytes</span> <span class="type">int</span> maxContentLength) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.maxContentLength = maxContentLength</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以这样配置 <code>micronaut.http.client.max-content-length</code> 的属性值:</p>
+<p>Table - <code>@ReadableBytes</code> Conversion:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Configuration Value</th>
+<th align="left">Resulting Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">10mb</td>
+<td align="left">10 megabytes</td>
+</tr>
+<tr>
+<td align="left">10kb</td>
+<td align="left">10 kilobytes</td>
+</tr>
+<tr>
+<td align="left">10gb</td>
+<td align="left">10 gigabytes</td>
+</tr>
+<tr>
+<td align="left">1024</td>
+<td align="left">A raw byte length</td>
+</tr>
+</tbody></table>
+<h4 id="Formatting-Dates-格式化的日期"><a href="#Formatting-Dates-格式化的日期" class="headerlink" title="Formatting Dates (格式化的日期)"></a>Formatting Dates (格式化的日期)</h4><p><code>@Format</code> 注解可以用在 setter 方法参数来将指定格式的日期绑定到 <code>java.time</code> 类型对象上:</p>
+<p>Example - Using <code>@Format</code> for Dates:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setMyDate</span><span class="params">(<span class="meta">@Format(&quot;yyyy-MM-dd&quot;)</span> LocalDate date)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.myDate = date;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Configuration-Builder-配置构建器"><a href="#Configuration-Builder-配置构建器" class="headerlink" title="Configuration Builder (配置构建器)"></a>Configuration Builder (配置构建器)</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.ConfigurationBuilder</span><br><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.ConfigurationProperties</span><br><span class="line"></span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(<span class="string">&#x27;my.engine&#x27;</span>) <span class="comment">// </span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EngineConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ConfigurationBuilder</span>(prefixes = <span class="string">&quot;with&quot;</span>) <span class="comment">// </span></span><br><span class="line">    EngineImpl.Builder builder = EngineImpl.builder()</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ConfigurationBuilder</span>(prefixes = <span class="string">&quot;with&quot;</span>, configurationPrefix = <span class="string">&quot;crank-shaft&quot;</span>) <span class="comment">// </span></span><br><span class="line">    CrankShaft.Builder crankShaft = CrankShaft.builder()</span><br><span class="line"></span><br><span class="line">    SparkPlug.Builder sparkPlug = SparkPlug.builder()</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ConfigurationBuilder</span>(prefixes = <span class="string">&quot;with&quot;</span>, configurationPrefix = <span class="string">&quot;spark-plug&quot;</span>) <span class="comment">// </span></span><br><span class="line">    <span class="type">void</span> setSparkPlug(SparkPlug.Builder sparkPlug) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.sparkPlug = sparkPlug</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="MapFormat-Map-格式"><a href="#MapFormat-Map-格式" class="headerlink" title="MapFormat (Map 格式)"></a>MapFormat (Map 格式)</h3><p>将配置以 <code>flat map</code> 或者 <code>nested map</code> 的形式应用到一个 Bean 中</p>
+<p>因为有些第三方库可以接收 Map 作为配置参数</p>
+<p>使用 <code>@MapFormat</code> 注解来绑定一个 Map 到单独一个配置属性中, 然后指定是否接受为一个 <code>flat map</code> 还是一个 <code>nested map</code></p>
+<p>Example:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.ConfigurationProperties</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.convert.format.MapFormat</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.Min</span><br><span class="line"></span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(<span class="string">&#x27;my.engine&#x27;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EngineConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Min</span>(<span class="number">1</span>L)</span><br><span class="line">    <span class="type">int</span> cylinders</span><br><span class="line"></span><br><span class="line">    <span class="meta">@MapFormat</span>(transformation = MapFormat.MapTransformation.FLAT)</span><br><span class="line">    Map&lt;Integer, String&gt; sensors</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EngineImpl</span> <span class="keyword">implements</span> <span class="title class_">Engine</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    EngineConfig config</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    Map getSensors() &#123;</span><br><span class="line">        config.sensors</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    String start() &#123;</span><br><span class="line">        <span class="string">&quot;Engine Starting V$config.cylinders [sensors=$&#123;sensors.size()&#125;]&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ApplicationContext applicationContext = ApplicationContext.run(</span><br><span class="line">    [<span class="string">&#x27;my.engine.cylinders&#x27;</span>: <span class="string">&#x27;8&#x27;</span>,</span><br><span class="line">     <span class="string">&#x27;my.engine.sensors&#x27;</span>  : [</span><br><span class="line">                                <span class="symbol">0:</span> <span class="string">&#x27;thermostat&#x27;</span>,</span><br><span class="line">                                <span class="symbol">1:</span> <span class="string">&#x27;fuel pressure&#x27;</span></span><br><span class="line">                            ]</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&#x27;test&#x27;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> vehicle = applicationContext.getBean(Vehicle)</span><br><span class="line">println(vehicle.start())</span><br></pre></td></tr></table></figure>
+
+<h2 id="Custom-Type-Converters-自定义类型转换器"><a href="#Custom-Type-Converters-自定义类型转换器" class="headerlink" title="Custom Type Converters (自定义类型转换器)"></a>Custom Type Converters (自定义类型转换器)</h2><p>注册一个实现 <code>TypeConverter</code> 接口的 Bean, 实现 <code>convert()</code> 方法</p>
+<h2 id="Using-EachProperty-to-Drive-Configuration-使用-EachProperty-来驱动配置"><a href="#Using-EachProperty-to-Drive-Configuration-使用-EachProperty-来驱动配置" class="headerlink" title="Using @EachProperty to Drive Configuration (使用 @EachProperty 来驱动配置)"></a>Using <code>@EachProperty</code> to Drive Configuration (使用 <code>@EachProperty</code> 来驱动配置)</h2><p>使用 <code>@EachProperty</code> 注解来为一个配置属性中的每个子属性创建一个 <code>ConfigurationProperties</code> Bean:</p>
+<p>Example - Using <code>@EachProperty</code>:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.EachProperty</span><br><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.Parameter</span><br><span class="line"></span><br><span class="line"><span class="meta">@EachProperty</span>(<span class="string">&quot;test.datasource&quot;</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DataSourceConfiguration</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> String name</span><br><span class="line"></span><br><span class="line">    URI url = <span class="keyword">new</span> URI(<span class="string">&quot;localhost&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// The @Parameter annotation can be used to inject the name of the sub-property that defines the name of the bean (which is also the bean qualifier)</span></span><br><span class="line">    DataSourceConfiguration(<span class="meta">@Parameter</span> String name) <span class="keyword">throws</span> URISyntaxException &#123;</span><br><span class="line">        <span class="variable language_">this</span>.name = name</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ApplicationContext applicationContext = ApplicationContext.run(</span><br><span class="line">    PropertySource.of(</span><br><span class="line">        <span class="string">&#x27;test&#x27;</span>,</span><br><span class="line">        [</span><br><span class="line">            <span class="string">&#x27;test.datasource.one.url&#x27;</span>: <span class="string">&#x27;jdbc:mysql://localhost/one&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;test.datasource.two.url&#x27;</span>: <span class="string">&#x27;jdbc:mysql://localhost/two&#x27;</span>,</span><br><span class="line">        ]</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="attr">when:</span></span><br><span class="line">Collection&lt;DataSourceConfiguration&gt; beansOfType = applicationContext.getBeansOfType(DataSourceConfiguration.<span class="keyword">class</span>)</span><br><span class="line">assertEquals(<span class="number">2</span>, beansOfType.size())</span><br><span class="line"></span><br><span class="line">DataSourceConfiguration firstConfig = applicationContext.getBean(</span><br><span class="line">        DataSourceConfiguration.<span class="keyword">class</span>,</span><br><span class="line">        Qualifiers.byName(<span class="string">&quot;one&quot;</span>) <span class="comment">// Individual beans can be retrieved by using the byName qualifier</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="attr">then:</span></span><br><span class="line"><span class="keyword">new</span> URI(<span class="string">&quot;jdbc:mysql://localhost/one&quot;</span>) == firstConfig.getUrl()</span><br></pre></td></tr></table></figure>
+
+<h3 id="List-Based-Binding-基于列表的绑定"><a href="#List-Based-Binding-基于列表的绑定" class="headerlink" title="List-Based Binding (基于列表的绑定)"></a>List-Based Binding (基于列表的绑定)</h3><p><code>@EachProperty</code> 默认是绑定一个 Map 风格的配置, Key 是 Bean 的命名 qualifier</p>
+<p>如果要从一个 List 来进行绑定:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.EachProperty</span><br><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.Parameter</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.order.Ordered</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.time.Duration</span><br><span class="line"></span><br><span class="line"><span class="meta">@EachProperty</span>(value = <span class="string">&quot;ratelimits&quot;</span>, list = <span class="literal">true</span>)</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RateLimitsConfiguration</span> <span class="keyword">implements</span> <span class="title class_">Ordered</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Integer index</span><br><span class="line"></span><br><span class="line">    Duration period</span><br><span class="line"></span><br><span class="line">    Integer limit</span><br><span class="line"></span><br><span class="line">    RateLimitsConfiguration(<span class="meta">@Parameter</span> Integer index) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.index = index</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="type">int</span> getOrder() &#123; index &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Using-EachBean-to-Drive-Configuration-使用-EachBean-来驱动配置"><a href="#Using-EachBean-to-Drive-Configuration-使用-EachBean-来驱动配置" class="headerlink" title="Using @EachBean to Drive Configuration (使用 @EachBean 来驱动配置)"></a>Using <code>@EachBean</code> to Drive Configuration (使用 <code>@EachBean</code> 来驱动配置)</h2><p>将 <code>@EachProperty</code> 注解和 <code>@EachBean</code> 注解搭配使用, 来将 <code>@EachProperty</code> 注解生成的多个配置 Bean 来生成多个 Bean</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Factory</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DataSourceFactory</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@EachBean</span>(DataSourceConfiguration)  <span class="comment">// 2</span></span><br><span class="line">    DataSource dataSource(DataSourceConfiguration configuration) &#123;  <span class="comment">// 3</span></span><br><span class="line">        URI url = configuration.url</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DataSource(url)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>2</code> : <code>@EachBean</code> 注解指明了将会为每个 <code>DataSourceConfiguration</code> Bean 创建一个新的 <code>DataSource</code> Bean</p>
+<p><code>3</code> : <code>DataSourceConfiguration</code> 实例作为一个方法参数注入, 用来驱动每个 <code>javax.sql.DataSource</code> 的配置</p>
+<p><code>@BeanProperty</code> 要求 父Bean 要有一个 <code>@Named</code> qualifier, 因为这个 qualifier 由 <code>@EachBean</code> 创建的每个 Bean 继承</p>
+<h2 id="Immutable-Configuration-不可变配置"><a href="#Immutable-Configuration-不可变配置" class="headerlink" title="Immutable Configuration (不可变配置)"></a>Immutable Configuration (不可变配置)</h2><p>有两种方式来定义不可变配置, 推荐定义一个使用 <code>@ConfigurationProperties</code> 注解修饰的接口:</p>
+<p>Example - <code>@ConfigurationProperties</code> 注解:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.ConfigurationProperties</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.bind.annotation.Bindable</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.Min</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotBlank</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotNull</span><br><span class="line"></span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(<span class="string">&quot;my.engine&quot;</span>)       <span class="comment">// 这个注解接收一个前缀并声明在一个接口上</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">EngineConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bindable</span>(defaultValue = <span class="string">&#x27;Ford&#x27;</span>)        <span class="comment">// 使用 @Bindable 注解来设置一个默认值</span></span><br><span class="line">    <span class="meta">@NotBlank</span>                               <span class="comment">// 校验注解也是可以使用的</span></span><br><span class="line">    String getManufacturer()</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Min</span>(<span class="number">1</span>L)</span><br><span class="line">    <span class="type">int</span> getCylinders()</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotNull</span></span><br><span class="line">    CrankShaft getCrankShaft()              <span class="comment">// 指定一个引用到另一个 @ConfigurationProperties Bean</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@ConfigurationProperties</span>(<span class="string">&quot;crank-shaft&quot;</span>)</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">interface</span> <span class="title class_">CrankShaft</span> &#123;           <span class="comment">// 可以内嵌一个不可变配置</span></span><br><span class="line">        Optional&lt;Double&gt; getRodLength()     <span class="comment">// 可以将配置值包装为一个 Optional, 或者使用 @Nullable 注解来修饰</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Micronaut 将会为这个接口创建一个编译时的实现, 将所有的 getter 方法调用委托给 <code>Environment</code> 接口的 <code>getProperty(..)</code> 方法</p>
+<p>这样做的好处是如果应用的配置是可以变的话(例如请求 <code>/refresh</code> 端点), 注入的接口将会自动获取到最新的值</p>
+<p>如果尝试声明任何其他不是 getter 方法的抽象方法, 将会导致编译时异常抛出(支持<code>default methods</code>)</p>
+<p>另一个方法来实现不可变配置是定义一个类并使用 <code>@ConfigurationInject</code> 注解在一个 <code>@ConfigurationProperties</code> 或 <code>@EachProperty</code> 注解修饰的 Bean 的构造方法上. 略</p>
+<h3 id="Customizing-accessors-自定义访问器"><a href="#Customizing-accessors-自定义访问器" class="headerlink" title="Customizing accessors (自定义访问器)"></a>Customizing accessors (自定义访问器)</h3><p>使用 <code>@AccessorsStyle</code> 注解来定义属性的访问前缀</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> io.micronaut.context.annotation.ConfigurationProperties;</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.annotation.AccessorsStyle;</span><br><span class="line"><span class="keyword">import</span> io.micronaut.core.bind.annotation.Bindable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.Min;</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotBlank;</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotNull;</span><br><span class="line"><span class="keyword">import</span> java.util.Optional;</span><br><span class="line"></span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(<span class="string">&quot;my.engine&quot;</span>) </span><br><span class="line"><span class="meta">@AccessorsStyle</span>(readPrefixes = <span class="string">&quot;read&quot;</span>) </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">EngineConfigAccessors</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bindable</span>(defaultValue = <span class="string">&quot;Ford&quot;</span>)</span><br><span class="line">    <span class="meta">@NotBlank</span></span><br><span class="line">    String readManufacturer(); </span><br><span class="line"></span><br><span class="line">    <span class="meta">@Min</span>(<span class="number">1</span>L)</span><br><span class="line">    <span class="type">int</span> readCylinders(); </span><br><span class="line"></span><br><span class="line">    <span class="meta">@NotNull</span></span><br><span class="line">    CrankShaft readCrankShaft(); </span><br><span class="line"></span><br><span class="line">    <span class="meta">@ConfigurationProperties</span>(<span class="string">&quot;crank-shaft&quot;</span>)</span><br><span class="line">    <span class="meta">@AccessorsStyle</span>(readPrefixes = <span class="string">&quot;read&quot;</span>) </span><br><span class="line">    <span class="keyword">interface</span> <span class="title class_">CrankShaft</span> &#123;</span><br><span class="line">        Optional&lt;Double&gt; readRodLength(); </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Bootstrap-Configuration-启动配置"><a href="#Bootstrap-Configuration-启动配置" class="headerlink" title="Bootstrap Configuration (启动配置)"></a>Bootstrap Configuration (启动配置)</h2><p>在一个 Application context 创建之前, 一个 <code>bootstrap</code> context 将会被创建, 用来存储必要的配置, 用来获取关于主 Context 的额外的配置</p>
+<p>通常这些额外配置在一些远程源上</p>
+<p><code>bootstrap</code> context 是否开启取决于以下条件, 以下条件按顺序进行检查:</p>
+<ul>
+<li><code>BOOTSTRAP_CONTEXT_PROPERTY</code> 系统属性是否配置了</li>
+<li>application context builder 选项 <code>bootstrapEnvironment</code> 是否有设置</li>
+<li><code>BootstrapPropertySourceLoader</code> Bean 是否存在, 通常这个 Bean 来自 <code>micronaut-discovery-client</code> 依赖</li>
+</ul>
+<p>配置属性必须在 application context 配置文件解析之前提供, 例如在使用分布式配置时, 配置属性被保存在一个 bootstrap configuration file 中</p>
+<p>一旦明确了 bootstrap context 是开启的, bootstrap 配置文件将会使用普通 application 配置的规则进行读取, 唯一的不同是前缀(<code>bootstrap</code> 代替 <code>application</code>)</p>
+<p>文件名称前缀 <code>bootstrap</code> 使用系统属性 <code>micronaut.bootstrap.name</code> 来配置</p>
+<p>bootstrap context configuration 自动被带到 main context, 所以没有必要在 main context 中重复这些配置属性</p>
+<p>bootstrap context configuration 比 main context configuration 有更高的优先级, 这意味着如果一个配置属性要在两个 context 出现, 将这个属性配置放到 bootstrap context configuration 中</p>
+<h3 id="Bootstrap-Context-Beans-Bootstrap-上下文中的-Bean"><a href="#Bootstrap-Context-Beans-Bootstrap-上下文中的-Bean" class="headerlink" title="Bootstrap Context Beans (Bootstrap 上下文中的 Bean)"></a>Bootstrap Context Beans (Bootstrap 上下文中的 Bean)</h3><p>一个 Bean 要被解析在 bootstrap context 中, 这个 Bean 必须使用 <code>@BootstrapContextCompatible</code> 注解来修饰</p>
+<p>特别是任何参与到获取分布式配置的 Bean 必须要使用这个注解</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Micronaut 中文文档 Application Configuration</li>
+        <li>本文作者：林威羽</li>
+        <li>创建时间：2022-04-29 09:33:11</li>
+        <li>
+            本文链接：https://linweiyu21.github.io/micronaut/micronaut-application-configuration/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/Groovy/">#Groovy</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/Micronaut/">#Micronaut</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/%E4%B8%AD%E6%96%87/">#中文</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/micronaut/micronaut-aspect-oriented-programming/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Micronaut 中文文档 Aspect Oriented Programming</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/micronaut/micronaut-inversion-of-control/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Micronaut 中文文档 Inversion of Control</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '8xWQ0WFbKUNN4h8ixIO12etk-gzGzoHsz',
+                    appKey: '7cLjTvkIsF6aIuIVSd0um89m',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请开始你的表演',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = '林威羽';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">林威羽</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Application-Configuration"><span class="nav-number">1.</span> <span class="nav-text">Application Configuration</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Environment-%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.</span> <span class="nav-text">The Environment (环境)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Environment-Priority-%E7%8E%AF%E5%A2%83%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">1.1.1.</span> <span class="nav-text">Environment Priority (环境优先级)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Disabling-Environment-Detection-%E5%85%B3%E9%97%AD%E7%8E%AF%E5%A2%83%E6%A3%80%E6%B5%8B"><span class="nav-number">1.1.2.</span> <span class="nav-text">Disabling Environment Detection (关闭环境检测)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Default-Environment-%E9%BB%98%E8%AE%A4%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.3.</span> <span class="nav-text">Default Environment (默认环境)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Micronaut-Banner-Micronaut-Banner"><span class="nav-number">1.1.4.</span> <span class="nav-text">Micronaut Banner (Micronaut Banner)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Externalized-Configuration-with-PropertySources-%E4%BD%BF%E7%94%A8-PropertySource-%E7%9A%84%E5%A4%96%E9%83%A8%E5%8C%96%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.</span> <span class="nav-text">Externalized Configuration with PropertySources (使用 PropertySource 的外部化配置)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Included-PropertySource-Loaders-%E5%B7%B2%E7%BB%8F%E5%8C%85%E5%90%AB%E7%9A%84-PropertySource-%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">Included PropertySource Loaders (已经包含的 PropertySource 加载器)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Supplying-Configuration-via-Command-Line-%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%BF%9B%E8%A1%8C%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.2.</span> <span class="nav-text">Supplying Configuration via Command Line (从命令行进行配置)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Secrets-and-Sensitive-Configuration-%E5%AE%89%E5%85%A8%E4%B8%8E%E6%95%8F%E6%84%9F%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.3.</span> <span class="nav-text">Secrets and Sensitive Configuration (安全与敏感配置)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Property-Value-Placeholders-%E5%B1%9E%E6%80%A7%E5%80%BC%E5%8D%A0%E4%BD%8D%E7%AC%A6"><span class="nav-number">1.2.4.</span> <span class="nav-text">Property Value Placeholders (属性值占位符)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Property-Value-Binding-%E5%B1%9E%E6%80%A7%E5%80%BC%E7%BB%91%E5%AE%9A"><span class="nav-number">1.2.5.</span> <span class="nav-text">Property Value Binding (属性值绑定)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-Random-Properties-%E4%BD%BF%E7%94%A8%E9%9A%8F%E6%9C%BA%E5%B1%9E%E6%80%A7%E5%80%BC"><span class="nav-number">1.2.6.</span> <span class="nav-text">Using Random Properties (使用随机属性值)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fail-Fast-Property-Injection-%E5%BF%AB%E9%80%9F%E5%A4%B1%E8%B4%A5%E7%9A%84%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5"><span class="nav-number">1.2.7.</span> <span class="nav-text">Fail Fast Property Injection (快速失败的属性注入)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configuration-Injection-%E9%85%8D%E7%BD%AE%E6%B3%A8%E5%85%A5"><span class="nav-number">1.3.</span> <span class="nav-text">Configuration Injection (配置注入)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-the-Value-Annotation-%E4%BD%BF%E7%94%A8-Value-%E6%B3%A8%E8%A7%A3"><span class="nav-number">1.3.1.</span> <span class="nav-text">Using the @Value Annotation (使用 @Value 注解)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-the-Property-Annotation-%E4%BD%BF%E7%94%A8-Property-%E6%B3%A8%E8%A7%A3"><span class="nav-number">1.3.2.</span> <span class="nav-text">Using the @Property Annotation (使用 @Property 注解)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configuration-Properties-%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7"><span class="nav-number">1.4.</span> <span class="nav-text">Configuration Properties (配置属性)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Includes-Excludes-%E5%8C%85%E5%90%AB%E4%B8%8E%E6%8E%92%E9%99%A4"><span class="nav-number">1.4.1.</span> <span class="nav-text">Includes Excludes (包含与排除)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Change-accessors-style-%E6%94%B9%E5%8F%98%E8%AE%BF%E9%97%AE%E9%A3%8E%E6%A0%BC"><span class="nav-number">1.4.2.</span> <span class="nav-text">Change accessors style (改变访问风格)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Property-Type-Conversion-%E5%B1%9E%E6%80%A7%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.4.3.</span> <span class="nav-text">Property Type Conversion (属性类型转换)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Duration-Conversion-%E6%8C%81%E7%BB%AD%E6%97%B6%E9%97%B4%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">Duration Conversion (持续时间转换)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#List-or-Array-Conversion-%E5%88%97%E8%A1%A8%E5%92%8C%E6%95%B0%E7%BB%84%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">List or Array Conversion (列表和数组的转换)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Readable-Bytes-%E5%8F%AF%E8%AF%BB%E7%9A%84%E5%AD%97%E8%8A%82"><span class="nav-number">1.4.3.3.</span> <span class="nav-text">Readable Bytes (可读的字节)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Formatting-Dates-%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%9A%84%E6%97%A5%E6%9C%9F"><span class="nav-number">1.4.3.4.</span> <span class="nav-text">Formatting Dates (格式化的日期)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configuration-Builder-%E9%85%8D%E7%BD%AE%E6%9E%84%E5%BB%BA%E5%99%A8"><span class="nav-number">1.4.4.</span> <span class="nav-text">Configuration Builder (配置构建器)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MapFormat-Map-%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.4.5.</span> <span class="nav-text">MapFormat (Map 格式)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Custom-Type-Converters-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="nav-number">1.5.</span> <span class="nav-text">Custom Type Converters (自定义类型转换器)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-EachProperty-to-Drive-Configuration-%E4%BD%BF%E7%94%A8-EachProperty-%E6%9D%A5%E9%A9%B1%E5%8A%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.6.</span> <span class="nav-text">Using @EachProperty to Drive Configuration (使用 @EachProperty 来驱动配置)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#List-Based-Binding-%E5%9F%BA%E4%BA%8E%E5%88%97%E8%A1%A8%E7%9A%84%E7%BB%91%E5%AE%9A"><span class="nav-number">1.6.1.</span> <span class="nav-text">List-Based Binding (基于列表的绑定)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-EachBean-to-Drive-Configuration-%E4%BD%BF%E7%94%A8-EachBean-%E6%9D%A5%E9%A9%B1%E5%8A%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.7.</span> <span class="nav-text">Using @EachBean to Drive Configuration (使用 @EachBean 来驱动配置)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Immutable-Configuration-%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%85%8D%E7%BD%AE"><span class="nav-number">1.8.</span> <span class="nav-text">Immutable Configuration (不可变配置)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Customizing-accessors-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BF%E9%97%AE%E5%99%A8"><span class="nav-number">1.8.1.</span> <span class="nav-text">Customizing accessors (自定义访问器)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bootstrap-Configuration-%E5%90%AF%E5%8A%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.9.</span> <span class="nav-text">Bootstrap Configuration (启动配置)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bootstrap-Context-Beans-Bootstrap-%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%AD%E7%9A%84-Bean"><span class="nav-number">1.9.1.</span> <span class="nav-text">Bootstrap Context Beans (Bootstrap 上下文中的 Bean)</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

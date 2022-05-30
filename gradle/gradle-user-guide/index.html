@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Micronaut,Groovy,Gradle,Java,文档,中文">
+    <meta name="description" content="Micronaut Groovy Gradle Java 文档 中文">
+    <meta name="author" content="林威羽">
+    
+    <title>
+        
+            Gradle User Guide |
+        
+        林威羽的笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(153,153,0)","avatar":"/images/avatar.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"400px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":null,"description":"def contains🚀 = ['Micronaut', 'Groovy', 'Gradle', 'etc']"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                林威羽的笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+    <a target="_blank" rel="noopener" href="https://github.com/linweiyu21/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80"
+        viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+        aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path
+          d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+          fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path
+          d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+          fill="currentColor" class="octo-body"></path>
+      </svg></a>
+    <style>
+      .github-corner:hover .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+      }
+
+      @keyframes octocat-wave {
+
+        0%,
+        100% {
+          transform: rotate(0)
+        }
+
+        20%,
+        60% {
+          transform: rotate(-25deg)
+        }
+
+        40%,
+        80% {
+          transform: rotate(10deg)
+        }
+      }
+
+      @media (max-width:500px) {
+        .github-corner:hover .octo-arm {
+          animation: none
+        }
+
+        .github-corner .octo-arm {
+          animation: octocat-wave 560ms ease-in-out
+        }
+      }
+    </style>
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Gradle User Guide</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">林威羽</span>
+                        
+                            <span class="author-label">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-05-05 11:30:18</span>
+        <span class="mobile">2022-05-05 11:30</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Gradle-User-Guides/">Gradle - User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Gradle/">Gradle</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/User-Guides/">User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <!-- TOC -->
+
+<ul>
+<li><a href="#gradle-user-guide">Gradle User Guide</a><ul>
+<li><a href="#executing-gradle-builds">Executing Gradle builds</a></li>
+<li><a href="#attaching-a-debugger-to-your-build">Attaching a debugger to your build</a></li>
+<li><a href="#adding-and-changing-logging">Adding and changing logging</a></li>
+<li><a href="#understanding-the-build-lifecycle">Understanding the build lifecycle</a></li>
+<li><a href="#the-gradle-daemon">The Gradle Daemon</a><ul>
+<li><a href="#why-the-gradle-daemon-is-important-for-performance">Why the Gradle Daemon is important for performance</a></li>
+<li><a href="#running-daemon-status">Running Daemon Status</a></li>
+<li><a href="#disabling-the-daemon">Disabling the Daemon</a></li>
+<li><a href="#enabling-the-daemon">Enabling the Daemon</a></li>
+<li><a href="#stopping-an-existing-daemon">Stopping an existing Daemon</a></li>
+</ul>
+</li>
+<li><a href="#initialization-scripts">Initialization Scripts</a><ul>
+<li><a href="#using-an-init-script">Using an init script</a></li>
+<li><a href="#writing-an-init-script">Writing an init script</a><ul>
+<li><a href="#configuring-projects-from-an-init-script">Configuring projects from an init script</a></li>
+</ul>
+</li>
+<li><a href="#external-dependencies-for-the-init-script">External dependencies for the init script</a></li>
+<li><a href="#init-script-plugins">Init script plugins</a></li>
+</ul>
+</li>
+<li><a href="#executing-multi-project-builds">Executing Multi-Project Builds</a><ul>
+<li><a href="#identifying-project-structure">Identifying project structure</a></li>
+<li><a href="#executing-tasks-by-name">Executing tasks by name</a></li>
+<li><a href="#executing-tasks-by-fully-qualified-name">Executing tasks by fully qualified name</a></li>
+<li><a href="#multi-project-building-and-testing">Multi-Project Building and Testing</a></li>
+</ul>
+</li>
+<li><a href="#build-cache">Build Cache</a><ul>
+<li><a href="#enable-the-build-cache">Enable the Build Cache</a></li>
+<li><a href="#built-in-cacheable-tasks">Built-in cacheable tasks</a></li>
+<li><a href="#configure-the-build-cache">Configure the Build Cache</a><ul>
+<li><a href="#built-in-local-build-cache">Built-in local build cache</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#build-script-basics">Build Script Basics</a></li>
+<li><a href="#task-dependencies">Task dependencies</a></li>
+<li><a href="#manipulating-existing-tasks">Manipulating existing tasks</a><ul>
+<li><a href="#%E9%80%9A%E8%BF%87-api-%E8%AE%BF%E9%97%AE-task">通过 API 访问 <code>task</code></a></li>
+<li><a href="#%E4%B8%BA%E5%B7%B2%E5%AD%98%E5%9C%A8%E7%9A%84-task-%E6%B7%BB%E5%8A%A0%E8%A1%8C%E4%B8%BA">为已存在的 <code>task</code> 添加行为</a></li>
+</ul>
+</li>
+<li><a href="#default-tasks">Default tasks</a></li>
+<li><a href="#external-dependencies-for-the-build-script">External dependencies for the build script</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="Gradle-User-Guide"><a href="#Gradle-User-Guide" class="headerlink" title="Gradle User Guide"></a>Gradle User Guide</h1><h2 id="Executing-Gradle-builds"><a href="#Executing-Gradle-builds" class="headerlink" title="Executing Gradle builds"></a>Executing Gradle builds</h2><ol>
+<li>优先使用 <code>gradlew</code></li>
+<li><code>gradle projects</code></li>
+<li><code>gradle tasks</code></li>
+<li><code>gradle help --task &lt;taskName&gt;</code></li>
+<li><code>gradle &lt;taskName&gt;</code></li>
+</ol>
+<h2 id="Attaching-a-debugger-to-your-build"><a href="#Attaching-a-debugger-to-your-build" class="headerlink" title="Attaching a debugger to your build"></a>Attaching a debugger to your build</h2><p><code>gradle help -Dorg.gradle.debug=true</code></p>
+<p>端口 <code>5005</code></p>
+<h2 id="Adding-and-changing-logging"><a href="#Adding-and-changing-logging" class="headerlink" title="Adding and changing logging"></a>Adding and changing logging</h2><p><code>--console=verbose</code></p>
+<h2 id="Understanding-the-build-lifecycle"><a href="#Understanding-the-build-lifecycle" class="headerlink" title="Understanding the build lifecycle"></a>Understanding the build lifecycle</h2><table>
+<thead>
+<tr>
+<th align="left">Maven phases</th>
+<th align="left">Gradle tasks</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>clean</code></td>
+<td align="left"><code>clean</code>; provided by the Base Plugin</td>
+</tr>
+<tr>
+<td align="left"><code>compile</code></td>
+<td align="left"><code>classes</code>; provided by the Java Plugin and other JVM language plugins</td>
+</tr>
+<tr>
+<td align="left"><code>test</code></td>
+<td align="left"><code>test</code>; provided by the Java Plugin and other JVM language plugins</td>
+</tr>
+<tr>
+<td align="left"><code>package</code></td>
+<td align="left"><code>assemble</code>; provided by Base Plugin</td>
+</tr>
+<tr>
+<td align="left"><code>verify</code></td>
+<td align="left"><code>check</code>; provided by Base Plugin</td>
+</tr>
+<tr>
+<td align="left"><code>install</code></td>
+<td align="left"><code>publishToMavenLocal</code>; provided by the Maven Publish Plugin</td>
+</tr>
+<tr>
+<td align="left"><code>deploy</code></td>
+<td align="left"><code>publish</code>; provided by the Maven Publish Plugin</td>
+</tr>
+</tbody></table>
+<h2 id="The-Gradle-Daemon"><a href="#The-Gradle-Daemon" class="headerlink" title="The Gradle Daemon"></a>The Gradle Daemon</h2><h3 id="Why-the-Gradle-Daemon-is-important-for-performance"><a href="#Why-the-Gradle-Daemon-is-important-for-performance" class="headerlink" title="Why the Gradle Daemon is important for performance"></a>Why the Gradle Daemon is important for performance</h3><p>不仅避免了每次构建时启动 JVM 的开销, 还在内存中缓存了项目结构, 文件, 任务等信息</p>
+<p>使用 <code>--profile</code> 来分析 Gradle Daemon 的影响</p>
+<p>Gradle Daemon 从 Gradle 3.0 开始默认开启</p>
+<h3 id="Running-Daemon-Status"><a href="#Running-Daemon-Status" class="headerlink" title="Running Daemon Status"></a>Running Daemon Status</h3><p>使用 <code>--status</code> 命令来查看 Gradle Daemon 的状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">╭─daisy at thinkpad <span class="keyword">in</span> ~/IdeaProjects/RF/data-api on master✔</span><br><span class="line">╰─± ./gradlew --status</span><br><span class="line">   PID STATUS   INFO</span><br><span class="line"> 14633 IDLE     6.1.1</span><br><span class="line"></span><br><span class="line">Only Daemons <span class="keyword">for</span> the current Gradle version are displayed. See https://docs.gradle.org/6.1.1/userguide/gradle_daemon.html<span class="comment">#sec:status</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Disabling-the-Daemon"><a href="#Disabling-the-Daemon" class="headerlink" title="Disabling the Daemon"></a>Disabling the Daemon</h3><p>使用 <code>--no-daemon</code> 选项来停止启用 Gradle Daemon</p>
+<p>或者在 <code>gradle.properties</code> 文件中添加 <code>org.gradle.daemon=false</code> 配置</p>
+<p>在 CI 构建中可以不启用 Gradle Daemon, 来保证每次构建的独立</p>
+<h3 id="Enabling-the-Daemon"><a href="#Enabling-the-Daemon" class="headerlink" title="Enabling the Daemon"></a>Enabling the Daemon</h3><p>使用 <code>--daemon</code> 选项</p>
+<h3 id="Stopping-an-existing-Daemon"><a href="#Stopping-an-existing-Daemon" class="headerlink" title="Stopping an existing Daemon"></a>Stopping an existing Daemon</h3><p>Gradle Daemon 会监控内存使用, 在系统内存可用内存不足时停止自己</p>
+<p>使用 <code>--stop</code> 选项来手动停止 Gradle Daemon</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">╭─daisy at thinkpad <span class="keyword">in</span> ~/IdeaProjects/RF/data-api on master✔</span><br><span class="line">╰─± ./gradlew --stop</span><br><span class="line">Stopping Daemon(s)</span><br><span class="line">1 Daemon stopped</span><br></pre></td></tr></table></figure>
+
+<p>这个选项只会停止当前 Gradle 版本的 Daemon 的运行</p>
+<h2 id="Initialization-Scripts"><a href="#Initialization-Scripts" class="headerlink" title="Initialization Scripts"></a>Initialization Scripts</h2><p>这些 <code>init script</code> 在构建开始之前执行</p>
+<h3 id="Using-an-init-script"><a href="#Using-an-init-script" class="headerlink" title="Using an init script"></a>Using an init script</h3><ul>
+<li>在命令行使用 <code>-I</code> 或者 <code>--init-script</code> 选项; 在选项后附加脚本的路径; 可以多次使用选项来添加多个脚本</li>
+<li>在 <code>USER_HOME/.gradle/</code> 目录中放置一个 <code>init.gradle</code> 文件</li>
+<li>在 <code>USER_HOME/.gradle/init.d</code> 目录中放置 <code>.gradle</code> 结尾的文件</li>
+<li>在 <code>GRADLE_HOME/init.d/</code> 目录中放置 <code>.gradle</code> 结尾的文件</li>
+</ul>
+<p>如果有多个脚本文件需要执行, 根据上面的说明的顺序来执行</p>
+<p>同一文件夹中的脚本文件按照文件名字母顺序来执行</p>
+<h3 id="Writing-an-init-script"><a href="#Writing-an-init-script" class="headerlink" title="Writing an init script"></a>Writing an init script</h3><p>一个 <code>init script</code> 是一个 Groovy 或者 Kotlin 脚本</p>
+<p>每个 <code>init script</code> 有一个 Gradle 实例关联</p>
+<p>任何 <code>init script</code> 中的属性引用或方法调用都会委托给这个 Gradle 实例</p>
+<p>每个 <code>init script</code> 都实现了 <code>Script</code> 接口</p>
+<h4 id="Configuring-projects-from-an-init-script"><a href="#Configuring-projects-from-an-init-script" class="headerlink" title="Configuring projects from an init script"></a>Configuring projects from an init script</h4><p>在构建中使用 <code>init script</code> 来配置项目</p>
+<p>Example - <code>init.gradle</code>:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">allprojects</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        mavenLocal()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - <code>build.gradle</code>:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">repositories</span> &#123;</span><br><span class="line">    mavenCentral()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;showRepos&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">doLast</span> &#123;</span><br><span class="line">        <span class="keyword">println</span> <span class="string">&#x27;All repos:&#x27;</span></span><br><span class="line">        <span class="keyword">println</span> <span class="keyword">repositories</span>.<span class="keyword">collect</span> &#123;it.name&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - 使用 <code>init script</code> 来运行 <code>showRepos task</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">╭─daisy at thinkpad <span class="keyword">in</span> ~/Desktop/Gradle_test_2</span><br><span class="line">╰─○ gradle --init-script init.gradle -q showRepos</span><br><span class="line">All repos:</span><br><span class="line">[MavenLocal, MavenRepo]</span><br></pre></td></tr></table></figure>
+
+<h3 id="External-dependencies-for-the-init-script"><a href="#External-dependencies-for-the-init-script" class="headerlink" title="External dependencies for the init script"></a>External dependencies for the init script</h3><p><code>init script</code> 也可以声明自己的依赖</p>
+<p>使用 <code>initscript()</code> 方法, 传递一个声明 <code>init script</code> 的 classpath 的 Closure</p>
+<p>Example - Declaring external dependencies for an init script - <code>init.gradle</code>:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.commons.math.fraction.Fraction</span><br><span class="line"></span><br><span class="line">initscript &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        maven &#123;</span><br><span class="line">            url <span class="string">&quot;https://maven.aliyun.com/nexus/content/groups/public/&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">&#x27;org.apache.commons:commons-math:2.0&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">println</span> Fraction.ONE_FIFTH.<span class="keyword">multiply</span>(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>传递给 <code>initscript()</code> 方法的 Closure 配置了一个 <code>ScriptHandler</code> 实例</p>
+<p>使用了 <code>classpath</code> 配置来为 <code>init script</code> 的 classpath 添加了依赖</p>
+<p><code>init script</code> 不能使用项目的依赖</p>
+<p>配置了依赖之后, 就可以在 <code>init script</code> 中使用这些 classpath 中的类</p>
+<p>Example - <code>build.gradle</code>:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&quot;doNothing&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Example - 使用 <code>init script</code> 来运行 <code>doNothing task</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">╭─daisy at thinkpad <span class="keyword">in</span> ~/Desktop/Gradle_test_2</span><br><span class="line">╰─○ gradle --init-script init.gradle -q doNothing</span><br><span class="line">2 / 5</span><br></pre></td></tr></table></figure>
+
+<h3 id="Init-script-plugins"><a href="#Init-script-plugins" class="headerlink" title="Init script plugins"></a>Init script plugins</h3><p>可以在 <code>init script</code> 里面使用插件</p>
+<p>Example - <code>init script</code>:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: EnterpriseRepositoryPlugin</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> EnterpriseRepositoryPlugin <span class="keyword">implements</span> Plugin&lt;Gradle&gt; &#123;</span><br><span class="line">    <span class="keyword">void</span> apply(Gradle gradle) &#123;</span><br><span class="line">        ....</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Gradle 会实例化 <code>init script</code> 中的插件, 然后调用插件的 <code>Plugin.apply()</code> 方法, 传入 <code>Gradle</code> 实例作为参数</p>
+<h2 id="Executing-Multi-Project-Builds"><a href="#Executing-Multi-Project-Builds" class="headerlink" title="Executing Multi-Project Builds"></a>Executing Multi-Project Builds</h2><h3 id="Identifying-project-structure"><a href="#Identifying-project-structure" class="headerlink" title="Identifying project structure"></a>Identifying project structure</h3><p><code>gradle projects</code></p>
+<h3 id="Executing-tasks-by-name"><a href="#Executing-tasks-by-name" class="headerlink" title="Executing tasks by name"></a>Executing tasks by name</h3><p><code>gradle test</code> 会执行当前工作目录下所有的子项目的 <code>test task</code></p>
+<p>Gradle 总是会计算多项目构建中的每个项目与创建所有存在的 <code>task</code> 对象</p>
+<p>然后再根据 <code>task</code> 名称参数和当前工作目录, Gradle 过滤出那些需要被执行的 <code>task</code></p>
+<h3 id="Executing-tasks-by-fully-qualified-name"><a href="#Executing-tasks-by-fully-qualified-name" class="headerlink" title="Executing tasks by fully qualified name"></a>Executing tasks by fully qualified name</h3><p>Example: <code>gradle :services:webservice:build</code></p>
+<p>将会执行子项目 <code>webservice</code> 中的 <code>build task</code></p>
+<p>一个 <code>project path</code> 以一个可选的 <code>:</code> 作为开始, 代表着根项目</p>
+<p>在一个 <code>project path</code> 中, 根项目是唯一一个不使用名字来标识的项目</p>
+<p>在 <code>project path</code> 后面是以 <code>:</code> 分隔的项目名序列</p>
+<h3 id="Multi-Project-Building-and-Testing"><a href="#Multi-Project-Building-and-Testing" class="headerlink" title="Multi-Project Building and Testing"></a>Multi-Project Building and Testing</h3><p>构建所有依赖项目, 但只在修改了的项目上执行代码质量测试和单元测试: <code>build task</code></p>
+<p>构建所有依赖项目, 同时在所有依赖项目上执行单元测试: <code>buildNeeded task</code></p>
+<p>不仅测试修改了的项目, 还在依赖于++这个修改了的项目++的项目上执行测试: <code>buildDependents task</code></p>
+<p>构建并测试所有项目, 在项目根目录执行: <code>build task</code></p>
+<h2 id="Build-Cache"><a href="#Build-Cache" class="headerlink" title="Build Cache"></a>Build Cache</h2><p>通过重用缓存起来的 <code>task</code> 的 <code>outputs</code> 来节省构建时间</p>
+<p>如果 <code>task</code> 的 <code>inputs</code> 没有改变则认为其 <code>outputs</code> 没有改变, 因此这个 <code>outputs</code> 可以缓存起来并重用</p>
+<p>Gradle 不仅可以重用同一个工作空间中上一次的构建结果, 还可以重用本地机器上之前任何时间, 任何地方的构建结果</p>
+<h3 id="Enable-the-Build-Cache"><a href="#Enable-the-Build-Cache" class="headerlink" title="Enable the Build Cache"></a>Enable the Build Cache</h3><p>构建缓存默认不开启</p>
+<p>使用命令行选项 <code>--build-cache</code> 开启; Gradle 只会在这次的构建中使用构建缓存</p>
+<p>在 <code>gradle.properties</code> 中增加 <code>org.gradle.caching=true</code> 配置; Gradle 会在所有的构建中使用构建缓存, 除非明确指定了 <code>--no-build-cache</code> 参数</p>
+<p>当启用了构建缓存时, Gradle 会将构建 <code>outputs</code> 保存在 <code>Gradle user home</code></p>
+<h3 id="Built-in-cacheable-tasks"><a href="#Built-in-cacheable-tasks" class="headerlink" title="Built-in cacheable tasks"></a>Built-in cacheable tasks</h3><ul>
+<li>Java toolchain: <code>JavaCompile</code>, <code>Javadoc</code></li>
+<li>Groovy toolchain: <code>GroovyCompile</code>, <code>Groovydoc</code></li>
+<li>Scala toolchain: <code>ScalaCompile</code>, <code>PlatformScalaCompile</code>, <code>ScalaDoc</code></li>
+<li>Native toolchain: <code>CppCompile</code>, <code>CCompile</code>, <code>SwiftCompile</code></li>
+<li>Testing: <code>Test</code></li>
+<li>Code quality tasks: <code>Checkstyle</code>, <code>CodeNarc</code>, <code>Pmd</code></li>
+<li>JaCoco: <code>JacocoMerge</code>, <code>JacocoReport</code></li>
+<li>Other tasks: <code>AntlrTask</code>, <code>ValidatePlugins</code>, <code>WriteProperties</code></li>
+</ul>
+<h3 id="Configure-the-Build-Cache"><a href="#Configure-the-Build-Cache" class="headerlink" title="Configure the Build Cache"></a>Configure the Build Cache</h3><p>在 <code>settings.gradle</code> 配置文件中使用 <code>Settings.buildCache(org.gradle.api.Action)</code> 块来配置构建缓存</p>
+<p>Gradle 支持 本地缓存 和 远程缓存</p>
+<h4 id="Built-in-local-build-cache"><a href="#Built-in-local-build-cache" class="headerlink" title="Built-in local build cache"></a>Built-in local build cache</h4><p>内置的本地构建缓存 <code>DirectoryBuildCache</code> 使用一个目录来保存构建缓存</p>
+<p>默认情况下, 这个目录位于 <code>Gradle user home</code> 目录下</p>
+<p>Gradle 会定期清理本地缓存目录中最近未使用过的缓存</p>
+<p>通过 <code>DirectoryBuildCache</code> 中的配置选项来进行缓存配置</p>
+<p>Example - 配置本地缓存 - <code>settings.gradle</code>:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">buildCache &#123;</span><br><span class="line">    local &#123;</span><br><span class="line">        directory = <span class="keyword">new</span> <span class="keyword">File</span>(rootDir, <span class="string">&#x27;build-cache&#x27;</span>)</span><br><span class="line">        removeUnusedEntriesAfterDays = <span class="number">30</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Build-Script-Basics"><a href="#Build-Script-Basics" class="headerlink" title="Build Script Basics"></a>Build Script Basics</h2><p>自定义的 <code>task</code> 使用 <code>tasks.register()</code> 方法来进行声明:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;hello&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">doLast</span> &#123;</span><br><span class="line">        <span class="keyword">println</span> <span class="string">&#x27;Hello world!&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Task-dependencies"><a href="#Task-dependencies" class="headerlink" title="Task dependencies"></a>Task dependencies</h2><p>Example - <code>build.gradle</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">tasks.register(<span class="string">&#x27;hello&#x27;</span>) &#123;</span><br><span class="line">    doLast &#123;</span><br><span class="line">        println <span class="string">&quot;[task hello]&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;intro&#x27;</span>) &#123;</span><br><span class="line">    dependsOn tasks.hello</span><br><span class="line">    doLast &#123;</span><br><span class="line">        println <span class="string">&quot;[task intro]&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;taskX&#x27;</span>) &#123;</span><br><span class="line">    dependsOn <span class="string">&#x27;taskY&#x27;</span>       // Lazy dependsOn, the other task does not exist(yet)</span><br><span class="line">    doLast &#123;</span><br><span class="line">        println <span class="string">&#x27;taskX&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;taskY&#x27;</span>) &#123;</span><br><span class="line">    doLast &#123;</span><br><span class="line">        println <span class="string">&#x27;taskY&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">╭─daisy at thinkpad <span class="keyword">in</span> ~/Desktop/Gradle_test_3</span><br><span class="line">╰─○ gradle -q taskX</span><br><span class="line">taskY</span><br><span class="line">taskX</span><br><span class="line">╭─daisy at thinkpad <span class="keyword">in</span> ~/Desktop/Gradle_test_3</span><br><span class="line">╰─○ gradle -q intro</span><br><span class="line">[task hello]</span><br><span class="line">[task intro]</span><br></pre></td></tr></table></figure>
+
+<h2 id="Manipulating-existing-tasks"><a href="#Manipulating-existing-tasks" class="headerlink" title="Manipulating existing tasks"></a>Manipulating existing tasks</h2><h3 id="通过-API-访问-task"><a href="#通过-API-访问-task" class="headerlink" title="通过 API 访问 task"></a>通过 API 访问 <code>task</code></h3><p>Exmaple - 通过 API 访问 <code>task</code> 来添加依赖:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4</span>.<span class="keyword">times</span> &#123;</span><br><span class="line">    tasks.register(<span class="string">&quot;task$it&quot;</span>) &#123;</span><br><span class="line">        <span class="keyword">doLast</span> &#123;</span><br><span class="line">            <span class="keyword">println</span> <span class="string">&quot;I&#x27;m task number $it&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.named(<span class="string">&#x27;task0&#x27;</span>) &#123; dependsOn(<span class="string">&#x27;task2&#x27;</span>, <span class="string">&#x27;task3&#x27;</span>) &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">╭─daisy at thinkpad <span class="keyword">in</span> ~/Desktop/Gradle_test_3</span><br><span class="line">╰─○ gradle -q task0</span><br><span class="line">I<span class="string">&#x27;m task number task &#x27;</span>:task2<span class="string">&#x27;</span></span><br><span class="line"><span class="string">I&#x27;</span>m task number task <span class="string">&#x27;:task3&#x27;</span></span><br><span class="line">I<span class="string">&#x27;m task number task &#x27;</span>:task0<span class="string">&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="为已存在的-task-添加行为"><a href="#为已存在的-task-添加行为" class="headerlink" title="为已存在的 task 添加行为"></a>为已存在的 <code>task</code> 添加行为</h3><p>可以多次调用 <code>doFirst</code> 或 <code>doLast</code> 方法来为 <code>task</code> 添加动作</p>
+<h2 id="Default-tasks"><a href="#Default-tasks" class="headerlink" title="Default tasks"></a>Default tasks</h2><p>可以定义一个或多个 <code>default tasks</code></p>
+<p><code>default tasks</code> 在没有指定要运行的 <code>task</code> 时被运行</p>
+<p>Example - <code>build.gradle</code>:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">defaultTasks <span class="string">&#x27;clean&#x27;</span>, <span class="string">&#x27;run&#x27;</span></span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;clean&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">doLast</span> &#123;</span><br><span class="line">        <span class="keyword">println</span> <span class="string">&#x27;Default Cleaning!&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;run&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">doLast</span> &#123;</span><br><span class="line">        <span class="keyword">println</span> <span class="string">&#x27;Default Running!&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;other&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">doLast</span> &#123;</span><br><span class="line">        <span class="keyword">println</span> <span class="string">&quot;I&#x27;m not a default task!&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">╭─daisy at thinkpad <span class="keyword">in</span> ~/Desktop/Gradle_test_3</span><br><span class="line">╰─○ gradle -q      </span><br><span class="line">Default Cleaning!</span><br><span class="line">Default Running!</span><br></pre></td></tr></table></figure>
+
+<h2 id="External-dependencies-for-the-build-script"><a href="#External-dependencies-for-the-build-script" class="headerlink" title="External dependencies for the build script"></a>External dependencies for the build script</h2><p>如果你的构建脚本需要使用外部类库, 你可以在构建脚本中将它们添加到脚本的 classpath 中</p>
+<p>使用 <code>buildscript()</code> 方法, 传入一个声明了构建脚本 classpath 的代码块</p>
+<p>Example - <code>build.gradle</code>:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.commons.codec.binary.Base64</span><br><span class="line"></span><br><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        maven &#123;</span><br><span class="line">            url <span class="string">&quot;https://maven.aliyun.com/nexus/content/groups/public/&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="keyword">group</span>: <span class="string">&#x27;commons-codec&#x27;</span>, name: <span class="string">&#x27;commons-codec&#x27;</span>, version: <span class="string">&#x27;1.2&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;encode&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">doLast</span> &#123;</span><br><span class="line">        <span class="keyword">def</span> <span class="keyword">byte</span>[] encodedString = <span class="keyword">new</span> Base64().encode(<span class="string">&#x27;hello world\n&#x27;</span>.getBytes())</span><br><span class="line">        <span class="keyword">println</span> <span class="keyword">new</span> String(encodedString)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>传递给 <code>buildscript()</code> 方法的代码块配置了一个 <code>ScriptHandler</code> 实例</p>
+<p>在代码块中使用配置 <code>dependencies</code> 来添加依赖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">╭─daisy at thinkpad <span class="keyword">in</span> ~/Desktop/Gradle_test_3</span><br><span class="line">╰─○ gradle -q encode</span><br><span class="line">aGVsbG8gd29ybGQK</span><br></pre></td></tr></table></figure>
+
+<p>对于多项目构建, 在一个项目的 <code>buildscript()</code> 方法中定义的依赖可用于所有子项目的构建脚本中</p>
+<p>每个项目自动集成一个 <code>BuildEnvironmentReportTask</code> 类型的 <code>buildEnvironment task</code> 报告构建脚本的依赖处理:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">╭─daisy at thinkpad <span class="keyword">in</span> ~/Desktop/Gradle_test_3</span><br><span class="line">╰─○ gradle -q buildEnvironment</span><br><span class="line"></span><br><span class="line">------------------------------------------------------------</span><br><span class="line">Root project <span class="string">&#x27;Gradle_test_3&#x27;</span></span><br><span class="line">------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">classpath</span><br><span class="line">\--- commons-codec:commons-codec:1.2</span><br><span class="line"></span><br><span class="line">A web-based, searchable dependency report is available by adding the --scan option.</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Gradle User Guide</li>
+        <li>本文作者：林威羽</li>
+        <li>创建时间：2022-05-05 11:30:18</li>
+        <li>
+            本文链接：https://linweiyu21.github.io/gradle/gradle-user-guide/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/Gradle/">#Gradle</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/User-Guides/">#User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/gradle/gradle-authoring-tasks/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Gradle Authoring Tasks</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/groovy/user-guides/domain-specific-languages/groovy-filetreebuilder/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Groovy FileTreeBuilder</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '8xWQ0WFbKUNN4h8ixIO12etk-gzGzoHsz',
+                    appKey: '7cLjTvkIsF6aIuIVSd0um89m',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请开始你的表演',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = '林威羽';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">林威羽</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Gradle-User-Guide"><span class="nav-number">1.</span> <span class="nav-text">Gradle User Guide</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Executing-Gradle-builds"><span class="nav-number">1.1.</span> <span class="nav-text">Executing Gradle builds</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attaching-a-debugger-to-your-build"><span class="nav-number">1.2.</span> <span class="nav-text">Attaching a debugger to your build</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Adding-and-changing-logging"><span class="nav-number">1.3.</span> <span class="nav-text">Adding and changing logging</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Understanding-the-build-lifecycle"><span class="nav-number">1.4.</span> <span class="nav-text">Understanding the build lifecycle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Gradle-Daemon"><span class="nav-number">1.5.</span> <span class="nav-text">The Gradle Daemon</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-the-Gradle-Daemon-is-important-for-performance"><span class="nav-number">1.5.1.</span> <span class="nav-text">Why the Gradle Daemon is important for performance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Running-Daemon-Status"><span class="nav-number">1.5.2.</span> <span class="nav-text">Running Daemon Status</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Disabling-the-Daemon"><span class="nav-number">1.5.3.</span> <span class="nav-text">Disabling the Daemon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Enabling-the-Daemon"><span class="nav-number">1.5.4.</span> <span class="nav-text">Enabling the Daemon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stopping-an-existing-Daemon"><span class="nav-number">1.5.5.</span> <span class="nav-text">Stopping an existing Daemon</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Initialization-Scripts"><span class="nav-number">1.6.</span> <span class="nav-text">Initialization Scripts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-an-init-script"><span class="nav-number">1.6.1.</span> <span class="nav-text">Using an init script</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Writing-an-init-script"><span class="nav-number">1.6.2.</span> <span class="nav-text">Writing an init script</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Configuring-projects-from-an-init-script"><span class="nav-number">1.6.2.1.</span> <span class="nav-text">Configuring projects from an init script</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#External-dependencies-for-the-init-script"><span class="nav-number">1.6.3.</span> <span class="nav-text">External dependencies for the init script</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Init-script-plugins"><span class="nav-number">1.6.4.</span> <span class="nav-text">Init script plugins</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Executing-Multi-Project-Builds"><span class="nav-number">1.7.</span> <span class="nav-text">Executing Multi-Project Builds</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Identifying-project-structure"><span class="nav-number">1.7.1.</span> <span class="nav-text">Identifying project structure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Executing-tasks-by-name"><span class="nav-number">1.7.2.</span> <span class="nav-text">Executing tasks by name</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Executing-tasks-by-fully-qualified-name"><span class="nav-number">1.7.3.</span> <span class="nav-text">Executing tasks by fully qualified name</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multi-Project-Building-and-Testing"><span class="nav-number">1.7.4.</span> <span class="nav-text">Multi-Project Building and Testing</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Build-Cache"><span class="nav-number">1.8.</span> <span class="nav-text">Build Cache</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Enable-the-Build-Cache"><span class="nav-number">1.8.1.</span> <span class="nav-text">Enable the Build Cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Built-in-cacheable-tasks"><span class="nav-number">1.8.2.</span> <span class="nav-text">Built-in cacheable tasks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configure-the-Build-Cache"><span class="nav-number">1.8.3.</span> <span class="nav-text">Configure the Build Cache</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Built-in-local-build-cache"><span class="nav-number">1.8.3.1.</span> <span class="nav-text">Built-in local build cache</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Build-Script-Basics"><span class="nav-number">1.9.</span> <span class="nav-text">Build Script Basics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Task-dependencies"><span class="nav-number">1.10.</span> <span class="nav-text">Task dependencies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Manipulating-existing-tasks"><span class="nav-number">1.11.</span> <span class="nav-text">Manipulating existing tasks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87-API-%E8%AE%BF%E9%97%AE-task"><span class="nav-number">1.11.1.</span> <span class="nav-text">通过 API 访问 task</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E5%B7%B2%E5%AD%98%E5%9C%A8%E7%9A%84-task-%E6%B7%BB%E5%8A%A0%E8%A1%8C%E4%B8%BA"><span class="nav-number">1.11.2.</span> <span class="nav-text">为已存在的 task 添加行为</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Default-tasks"><span class="nav-number">1.12.</span> <span class="nav-text">Default tasks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#External-dependencies-for-the-build-script"><span class="nav-number">1.13.</span> <span class="nav-text">External dependencies for the build script</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

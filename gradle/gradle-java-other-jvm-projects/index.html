@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Micronaut,Groovy,Gradle,Java,文档,中文">
+    <meta name="description" content="Micronaut Groovy Gradle Java 文档 中文">
+    <meta name="author" content="林威羽">
+    
+    <title>
+        
+            Java &amp; Other JVM Projects |
+        
+        林威羽的笔记
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/css/font-awesome.min.css">
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"zh-CN","path":"search.json"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"rgb(153,153,0)","avatar":"/images/avatar.jpg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"400px","content_max_width":"920px","hover":{"shadow":true,"scale":true},"first_screen":{"enable":true,"background_img":null,"description":"def contains🚀 = ['Micronaut', 'Groovy', 'Gradle', 'etc']"},"scroll":{"progress_bar":{"enable":true},"percent":{"enable":true}}},"local_search":{"enable":true,"preload":true},"code_copy":{"enable":true,"style":"mac"},"pjax":{"enable":true},"lazyload":{"enable":true},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fas fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                林威羽的笔记
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+    <a target="_blank" rel="noopener" href="https://github.com/linweiyu21/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80"
+        viewBox="0 0 250 250" style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+        aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path
+          d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+          fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path
+          d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+          fill="currentColor" class="octo-body"></path>
+      </svg></a>
+    <style>
+      .github-corner:hover .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+      }
+
+      @keyframes octocat-wave {
+
+        0%,
+        100% {
+          transform: rotate(0)
+        }
+
+        20%,
+        60% {
+          transform: rotate(-25deg)
+        }
+
+        40%,
+        80% {
+          transform: rotate(10deg)
+        }
+      }
+
+      @media (max-width:500px) {
+        .github-corner:hover .octo-arm {
+          animation: none
+        }
+
+        .github-corner .octo-arm {
+          animation: octocat-wave 560ms ease-in-out
+        }
+      }
+    </style>
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">Java &amp; Other JVM Projects</span>
+        </div>
+
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">林威羽</span>
+                        
+                            <span class="author-label">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;
+        <span class="pc">2022-05-05 11:48:23</span>
+        <span class="mobile">2022-05-05 11:48</span>
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Gradle-User-Guides/">Gradle - User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Gradle/">Gradle</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/User-Guides/">User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fas fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        <div class="article-content markdown-body">
+            <!-- TOC -->
+
+<ul>
+<li><a href="#java--other-jvm-projects">Java &amp; Other JVM Projects</a><ul>
+<li><a href="#building-java--jvm-projects">Building Java &amp; JVM projects</a></li>
+<li><a href="#declaring-your-source-files-via-source-sets">Declaring your source files via source sets</a><ul>
+<li><a href="#the-main-source-set">The <code>main</code> source set</a></li>
+<li><a href="#resources-process">Resources process</a></li>
+<li><a href="#test-source-set"><code>test</code> source set</a></li>
+</ul>
+</li>
+<li><a href="#managing-your-dependencies">Managing your dependencies</a></li>
+<li><a href="#compiling-your-code">Compiling your code</a><ul>
+<li><a href="#customizing-file-and-directory-locations">Customizing file and directory locations</a></li>
+<li><a href="#changing-compiler-options">Changing compiler options</a></li>
+<li><a href="#targeting-a-specific-java-version">Targeting a specific Java version</a></li>
+<li><a href="#compiling-and-testing-java-6-and-7">Compiling and testing Java 6 and 7</a></li>
+<li><a href="#compiling-independent-sources-separately">Compiling independent sources separately</a></li>
+</ul>
+</li>
+<li><a href="#managing-resources">Managing resources</a><ul>
+<li><a href="#java-properties-files-and-reproducible-builds">Java properties files and reproducible builds</a></li>
+</ul>
+</li>
+<li><a href="#running-tasks">Running tasks</a></li>
+<li><a href="#packaging-and-publishing">Packaging and publishing</a><ul>
+<li><a href="#modifying-the-jar-manifest">Modifying the JAR manifest</a></li>
+</ul>
+</li>
+<li><a href="#generating-api-documentation">Generating API documentation</a></li>
+<li><a href="#cleaning-the-build">Cleaning the build</a></li>
+<li><a href="#building-jvm-components">Building JVM components</a></li>
+<li><a href="#building-java-libraries">Building Java libraries</a></li>
+<li><a href="#building-java-applications">Building Java applications</a></li>
+<li><a href="#building-java-web-applications">Building Java web applications</a></li>
+<li><a href="#building-java-ee-applications">Building Java EE applications</a></li>
+<li><a href="#building-java-platforms">Building Java Platforms</a></li>
+<li><a href="#enabling-java-preview-features">Enabling Java preview features</a></li>
+<li><a href="#building-other-jvm-language-projects">Building other JVM language projects</a><ul>
+<li><a href="#compilation-dependency-between-languages">Compilation dependency between languages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="Java-amp-Other-JVM-Projects"><a href="#Java-amp-Other-JVM-Projects" class="headerlink" title="Java &amp; Other JVM Projects"></a>Java &amp; Other JVM Projects</h1><h2 id="Building-Java-amp-JVM-projects"><a href="#Building-Java-amp-JVM-projects" class="headerlink" title="Building Java &amp; JVM projects"></a>Building Java &amp; JVM projects</h2><p>Java 项目的最简单的构建脚本是使用 Java Library Plugin</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">plugins &#123;</span><br><span class="line">    <span class="comment">// 声明使用 Java Library Plugin</span></span><br><span class="line">    id <span class="string">&#x27;java-library&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">java &#123;</span><br><span class="line">    <span class="comment">// 设置使用的 Java toolchain</span></span><br><span class="line">    toolchain &#123;</span><br><span class="line">        languageVersion = JavaLanguageVersion.of(<span class="number">17</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置项目版本</span></span><br><span class="line">version = <span class="string">&#x27;1.2.1&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>通过使用 Java Library Plugin, 获得了如下的特性:</p>
+<ul>
+<li>一个 <code>compileJava task</code>, 用来编译所有位于 <code>src/main/java</code> 的 Java 源文件</li>
+<li>一个 <code>compileTestJava task</code>, 用来编译所有位于 <code>src/test/java</code> 的 Java 源文件</li>
+<li>一个 <code>test task</code>, 运行位于 <code>src/test/java</code> 的测试</li>
+<li>一个 <code>jar task</code>, 打包编译好的 <code>main</code> 类文件与 <code>src/main/resources</code> 中的资源文件到一个单独的 JAR 文件中, 名称为 <code>&lt;project&gt;-&lt;version&gt;.jar</code></li>
+<li>一个 <code>javadoc task</code>, 为 <code>main</code> 类文件生成 Javadoc</li>
+</ul>
+<p><code>toolchain</code> 选项防止了使用不同的 Java 版本来进行构建</p>
+<p>Java Library Plugin 还将上面的 <code>task</code> 集成到了基础的 Base Plugin lifecycle tasks:</p>
+<ul>
+<li><code>jar</code> 关联到 <code>assemble</code></li>
+<li><code>test</code> 关联到 <code>check</code></li>
+</ul>
+<h2 id="Declaring-your-source-files-via-source-sets"><a href="#Declaring-your-source-files-via-source-sets" class="headerlink" title="Declaring your source files via source sets"></a>Declaring your source files via source sets</h2><p>source sets 是一个强大的概念, 将编译的几个方面联系起来:</p>
+<ul>
+<li>源文件与源文件的位置</li>
+<li>编译类路径(<code>compilation classpath</code>), 包括任何需要的依赖</li>
+<li>编译后的文件的位置</li>
+</ul>
+<p>Java Library Plugin 自动为所有你创建的或者插件创建的 source set 创建了一个编译 <code>task</code>, 名字为 <code>compileSourceSetJava task</code>, 还创建了一些依赖配置(<code>dependency configurations</code>)</p>
+<h3 id="The-main-source-set"><a href="#The-main-source-set" class="headerlink" title="The main source set"></a>The <code>main</code> source set</h3><p>大多数语言插件, 包括 Java, 自动创建了一个 source set, 名称为 <code>main</code></p>
+<p>用于项目的产品代码(<code>production code</code>)</p>
+<p>这个 <code>main</code> source set 特别的地方在于它的名字没有包含在 配置(<code>configurations</code>) 和 <code>task</code> 的名称中, 因此这就是为什么你拥有 <code>compileJava task</code> 和 <code>compileOnly configurations</code> 和 <code>implementation configurations</code> 而不是 <code>compileMainJava task</code> 和 <code>mainCompileOnly configurations</code> 和 <code>mainImplementation configurations</code> 的原因</p>
+<h3 id="Resources-process"><a href="#Resources-process" class="headerlink" title="Resources process"></a>Resources process</h3><p>Java 项目通常还包含源文件以外资源文件, 例如 properties 文件, 这些文件可能需要进行处理, 例如替换文件中的 tokens, 还需要将这些文件打包到最终的 JAR 包中</p>
+<p>Java Library Plugin 通过自动为每个定义好的 source set 创建一个指定的称为 <code>processSourceSetResources</code> 的 <code>task</code> 来处理这些文件. 如果是 <code>main</code> source set 的话, 这是创建名称为 <code>processResources</code> 的 <code>task</code></p>
+<h3 id="test-source-set"><a href="#test-source-set" class="headerlink" title="test source set"></a><code>test</code> source set</h3><p>Java Library Plugin 还提供了一个 <code>test</code> source set 来代表项目的测试</p>
+<p><code>test</code> source set 被 <code>test task</code> 所使用</p>
+<p>项目通常使用这个 source set 来进行单元测试, 或集成测试, 或者验收测试</p>
+<p>还可以为你其他类型的测试创建一个新的 source set, 因为其他类型的测试要求不同的编译或运行时 classpath, 或者其他不同的设置</p>
+<h2 id="Managing-your-dependencies"><a href="#Managing-your-dependencies" class="headerlink" title="Managing your dependencies"></a>Managing your dependencies</h2><p>为你的 Java 项目定义依赖只需要三种信息:</p>
+<ul>
+<li>你需要哪个依赖, 例如名字和版本</li>
+<li>这个依赖有什么用, 用于 <code>compilation</code> 还是 <code>running</code></li>
+<li>在哪里寻找这个依赖</li>
+</ul>
+<p>前两个通过 <code>dependencies &#123;&#125;</code> 块来指定</p>
+<p>第三个通过 <code>repositories &#123;&#125;</code> 块来执行</p>
+<p>例如, 告诉 Gradle 你的项目需要版本为 3.6.7 的 Hibernate Core 来编译与运行你的代码, 同时从 Maven Central 仓库进行下载:</p>
+<p>Example - Declaring dependencies:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line"><span class="keyword">repositories</span> &#123;</span><br><span class="line">    mavenCentral()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    implementation <span class="string">&#x27;org.hibernate:hibernate-core:3.6.7.Final&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Repository(ex: <code>mavenCentral()</code>) - 从哪里寻找你声明的依赖</li>
+<li>Configuration(ex: <code>implementation</code>) - 一个命名的依赖集合, 为了一个特别的目标组合在一起, 例如编译或运行一个 module, 一个比 Maven scopes 更灵活的形式</li>
+<li>Module coordinate(ex: <code>org.hibernate:hibernate-core-3.6.7.Final</code>)</li>
+</ul>
+<p>就 configurations 而言, 主要感兴趣的是:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>compileOnly</code></td>
+<td align="left">对于编译你的产品代码来说是必须, 但不是运行时 classpath 的一部分的依赖</td>
+</tr>
+<tr>
+<td align="left"><code>implementation</code></td>
+<td align="left">代替 <code>compile</code>; 用于编译时和运行时</td>
+</tr>
+<tr>
+<td align="left"><code>runtimeOnly</code></td>
+<td align="left">代替 <code>runtime</code>; 只用于运行时, 不用于编译时</td>
+</tr>
+<tr>
+<td align="left"><code>testCompileOnly</code></td>
+<td align="left">和 <code>compileOnly</code> 一样, 但是是用于测试</td>
+</tr>
+<tr>
+<td align="left"><code>testImplementation</code></td>
+<td align="left"><code>implementation</code> 的测试版本</td>
+</tr>
+<tr>
+<td align="left"><code>testRuntimeOnly</code></td>
+<td align="left"><code>runtimeOnly</code> 的测试版本</td>
+</tr>
+</tbody></table>
+<p>Java Library Plugin 还提供了两个额外的 configurations: <code>api</code> 和 <code>compileOnlyApi</code>, 用来声明传递给 consumers 的依赖, 在编译时和运行时, 或只在编译时</p>
+<blockquote>
+<p>Why no <code>compile</code> configuration?</p>
+</blockquote>
+<p>因为它不区分那些影响 Java library 项目的公共 API 的依赖和不影响的依赖</p>
+<h2 id="Compiling-your-code"><a href="#Compiling-your-code" class="headerlink" title="Compiling your code"></a>Compiling your code</h2><p>运行 <code>compileJava task</code> 来编译产品代码</p>
+<p>运行 <code>compileTestJava task</code> 来编译测试代码</p>
+<h3 id="Customizing-file-and-directory-locations"><a href="#Customizing-file-and-directory-locations" class="headerlink" title="Customizing file and directory locations"></a>Customizing file and directory locations</h3><p>使用 source set 配置来声明源码位置</p>
+<p>每一个 source set 定义了它的源码存在的位置, 连同资源文件目录和类文件输出目录</p>
+<p>可以通过如下的语法来覆盖约定:</p>
+<p>Example - Declaring custom source directories:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line"><span class="keyword">sourceSets</span> &#123;</span><br><span class="line">    main &#123;</span><br><span class="line">        java &#123;</span><br><span class="line">            srcDirs = [<span class="string">&#x27;src&#x27;</span>]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    test &#123;</span><br><span class="line">        java &#123;</span><br><span class="line">            srcDirs = [<span class="string">&#x27;test&#x27;</span>]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过上面的配置, Gradle 会直接从 <code>src</code> 和 <code>test</code> 目录分别查找源码</p>
+<p>如果你不想覆盖约定值, 只是想添加额外的源代码目录:</p>
+<p>Example - Declaring custom source directories additively:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line"><span class="keyword">sourceSets</span> &#123;</span><br><span class="line">    main &#123;</span><br><span class="line">        java &#123;</span><br><span class="line">            srcDir <span class="string">&#x27;thirdParty/src/main/java&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>关键的地方是, 使用 <code>srcDir()</code> 方法来添加一个目录路径, 使用 <code>srcDirs</code> 属性来替换任何已存在的值</p>
+<p>这在 Gradle 中是一个常用的约定: 通过设置属性值来覆盖, 通过调用对应的方法来添加值</p>
+<p>在 <a class="link"   target="_blank" rel="noopener" href="https://docs.gradle.org/7.3.3/dsl/org.gradle.api.tasks.SourceSet.html" >SourceSet<i class="fas fa-external-link-alt"></i></a> 和 <a class="link"   target="_blank" rel="noopener" href="https://docs.gradle.org/7.3.3/dsl/org.gradle.api.file.SourceDirectorySet.html" >SourceDirectorySet<i class="fas fa-external-link-alt"></i></a> DSL 文档中查看所有可用的属性和方法</p>
+<h3 id="Changing-compiler-options"><a href="#Changing-compiler-options" class="headerlink" title="Changing compiler options"></a>Changing compiler options</h3><p>通过对应的 <code>task</code>, 大部分的编译选项是可访问的, 例如 <code>compileJava task</code> 和 <code>compileTestJava task</code>. 这些 <code>task</code> 是 <code>JavaCompile</code> 类型的</p>
+<p>查看 <code>JavaCompile</code> 手册获取所有的选项</p>
+<p>例如, 你想使用为编译器使用单独的 JVM 进程, 与防止编译失败导致构建失败, 可以这样进行配置:</p>
+<p>Example - Setting Java compiler options:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">compileJava &#123;</span><br><span class="line">    <span class="keyword">options</span>.incremental = <span class="keyword">true</span></span><br><span class="line">    <span class="keyword">options</span>.fork = <span class="keyword">true</span></span><br><span class="line">    <span class="keyword">options</span>.failOnError = <span class="keyword">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Targeting-a-specific-Java-version"><a href="#Targeting-a-specific-Java-version" class="headerlink" title="Targeting a specific Java version"></a>Targeting a specific Java version</h3><p>默认情况下, Gradle 会使用运行 Gradle 的 JVM 的版本来编译 Java 代码</p>
+<p>通过使用 Java toolchain, 你可以确保使用一个指定 Java 版本, 在构建中定义, 可用于编译时, 运行时和文档</p>
+<p>还可以在 <code>task</code> 级别重写一些编译器和执行选项</p>
+<p>从 Java 9 开始, 可以将 Java 编译器配置为 为旧 Java 版本代码生成字节码, 同时确保代码不使用任何来自新版本的 API. Gradle 现在在编译 Java 时直接支持 <code>CompileOptions</code> 上的 <code>release</code> 标志. 这个选项的优先级比下面描述的属性要高</p>
+<blockquote>
+<p>Due to a bug in Java 9 that was fixed in Java 10, Gradle cannot leverage the release flag when compiling with Java 9.</p>
+</blockquote>
+<p>Example - Setting Java release flag:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">compileJava &#123;</span><br><span class="line">    <span class="keyword">options</span>.release = <span class="number">7</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Java 编译器的历史选项仍然可用:</p>
+<ul>
+<li><code>sourceCompatibility</code> : 声明 Java 源代码的版本</li>
+<li><code>targetCompatibility</code> : 声明代码可运行的最小的 JVM 版本</li>
+</ul>
+<p>这两个选项可以在每个 <code>JavaCompile task</code> 中设置, 或者在 <code>java &#123;&#125;</code> 扩展中为所有的编译 <code>task</code> 设置</p>
+<p>使用 toolchain 使得在 <code>java &#123;&#125;</code> 扩展级别上配置 <code>sourceCompatibility</code> 和 <code>targetCompatibility</code> 是不行的</p>
+<h3 id="Compiling-and-testing-Java-6-and-7"><a href="#Compiling-and-testing-Java-6-and-7" class="headerlink" title="Compiling and testing Java 6 and 7"></a>Compiling and testing Java 6 and 7</h3><p>Gradle 只能运行在 Java 8 或者更新的版本上</p>
+<p>Gradle 还是支持为 Java 6&#x2F;7 编译, 测试, 生成 Javadoc, 执行代码</p>
+<p>Java 5和更旧的版本是不支持的</p>
+<p>使用 Java 6&#x2F;7, 配置如下的 <code>task</code>:</p>
+<ul>
+<li><code>JavaCompile task</code> to fork and use the correct Java home</li>
+<li><code>Javadoc task</code> to use the correct <code>javadoc</code> executable</li>
+<li><code>Test task</code> and the <code>JavaExec task</code> to use the correct <code>java</code> executable</li>
+</ul>
+<h3 id="Compiling-independent-sources-separately"><a href="#Compiling-independent-sources-separately" class="headerlink" title="Compiling independent sources separately"></a>Compiling independent sources separately</h3><p>Java 约定中已经将生产代码和测试代码分开进行编译了</p>
+<p>如果你有其他类型的源码, 例如集成测试之类的, 要进行分开独立编译</p>
+<p>可以使用 custom source set</p>
+<p>在什么时候需要定义一个 custom source set:</p>
+<ul>
+<li>需要使用一个独一无二的 classpath 来编译代码</li>
+<li>从不是被 <code>main</code> 和 <code>test</code> 目录保管的代码中生成 class</li>
+<li>Form a natural part of the project(形成项目的自然组成部分?)</li>
+</ul>
+<p>例如, 集成测试是项目的一部分, 因为集成测试要测试 <code>main</code> 中的代码, 除此之外, 集成测试通常有它们自己的独立于 <code>test</code> sources set 的依赖, 或者因为集成测试需要通过一个自定义的 <code>Test task</code> 来运行</p>
+<h2 id="Managing-resources"><a href="#Managing-resources" class="headerlink" title="Managing resources"></a>Managing resources</h2><p>Java Library Plugin 为每个处理其关联资源的 source set 添加一个特定的 <code>Copy task</code></p>
+<p><code>task</code> 名称遵循 <code>process[SourceSet]Resources</code> 的约定</p>
+<p>如果是 <code>main</code> source set 的话, 就是 <code>processResources</code> 的 <code>task</code> 名称</p>
+<p><code>task</code> 将会自动拷贝任何在 <code>src/[sourceSet]/resources</code> 中的文件到一个目录中, 这个目录将会被包含在打包后的 JAR 文件中; 这个目标目录还会被包含到测试的运行时 classpath</p>
+<h3 id="Java-properties-files-and-reproducible-builds"><a href="#Java-properties-files-and-reproducible-builds" class="headerlink" title="Java properties files and reproducible builds"></a>Java properties files and reproducible builds</h3><p>使用 <code>WriteProperties task</code> 来创建 Java properties 文件</p>
+<p>Gradle 的 <code>WriteProperties task</code> 在 properties 没有改变时, 将生成字节级别的完全一样的输出</p>
+<h2 id="Running-tasks"><a href="#Running-tasks" class="headerlink" title="Running tasks"></a>Running tasks</h2><p>Java Library Plugin 不仅提供了 <code>src/test/java</code> 中的单元测试自动编译, 还原生支持了使用 JUnit 3&#x2F;4&#x2F;5 和 TestNG 来运行测试</p>
+<ul>
+<li>一个自动化的 <code>Test</code> 类型的 <code>test task</code>, 使用 <code>test</code> source set</li>
+<li>一个 HTML 测试报告, 包含所有 <code>Test task</code> 的执行结果</li>
+<li>易于控制哪个 test 进行执行</li>
+<li>细粒度控制 test 怎样进行运行</li>
+<li>可以自定义执行测试与测试报告 <code>test</code></li>
+</ul>
+<p>你没有可以用于所有 source set 的 <code>Test task</code>, 因为不是所有 source set 都是用来测试的. 所以这就是为什么你需要创建自定义的 <code>Test task</code> 来进行集成测试和验收测试, 如果这两个测试没有被包含在 <code>test</code> source set 中的话</p>
+<h2 id="Packaging-and-publishing"><a href="#Packaging-and-publishing" class="headerlink" title="Packaging and publishing"></a>Packaging and publishing</h2><p>默认情况下, Java Library Plugin 提供了 <code>jar task</code> 来打包所有编译好的类和资源文件到一个单独的 JAR 文件中</p>
+<p>这个 JAR 文件也会被 <code>assemble task</code> 构建</p>
+<p>除此之外, Java Library Plugin 还可以通过配置来提供 <code>javadocJar task</code> 和 <code>sourcesJar task</code> 来打包 Javadoc 和 源码</p>
+<p>如果使用了发布插件, 那么可以通过 <code>task</code> 来进行发布</p>
+<p>Example - Configure a project to publish Javadoc and sources:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">java &#123;</span><br><span class="line">    withJavadocJar()</span><br><span class="line">    withSourcesJar()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - Creating a Java uber or fat JAR - 创建一个包含依赖的包:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">&#x27;java&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">version = <span class="string">&#x27;1.0.0&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">repositories</span> &#123;</span><br><span class="line">    mavenCentral()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    implementation <span class="string">&#x27;commons-io:commons-io:2.6&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;uberJar&#x27;</span>, Jar) &#123;</span><br><span class="line">    archiveClassifier = <span class="string">&#x27;uber&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">from</span> <span class="keyword">sourceSets</span>.main.output</span><br><span class="line"></span><br><span class="line">    dependsOn <span class="keyword">configurations</span>.runtimeClasspath</span><br><span class="line"></span><br><span class="line">    <span class="keyword">from</span> &#123;</span><br><span class="line">        <span class="keyword">configurations</span>.runtimeClasspath.<span class="keyword">findAll</span> &#123; it.name.endsWith(<span class="string">&#x27;jar&#x27;</span>).<span class="keyword">collect</span> &#123; zipTree(it) &#125; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看 <a class="link"   target="_blank" rel="noopener" href="https://docs.gradle.org/7.3.3/dsl/org.gradle.api.tasks.bundling.Jar.html" >Jar<i class="fas fa-external-link-alt"></i></a> 来获取更多配置选项信息</p>
+<h3 id="Modifying-the-JAR-manifest"><a href="#Modifying-the-JAR-manifest" class="headerlink" title="Modifying the JAR manifest"></a>Modifying the JAR manifest</h3><p>每个 <code>Jar task</code>, <code>War task</code>, <code>Ear task</code> 的实例都有一个 <code>manifest</code> 属性来允许你自定义 archive 中的 <code>MANIFEST.MF</code> 文件</p>
+<p>Example - Customization of MANIFEST.MF:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">jar &#123;</span><br><span class="line">    manifest &#123;</span><br><span class="line">        attributes(<span class="string">&quot;Implementation-Title&quot;</span>: <span class="string">&quot;Gradle&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;Implementation-Version&quot;</span>: archiveVersion)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - Creating a manifest object:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">ext.sharedManifest = manifest &#123;</span><br><span class="line">    attributes(<span class="string">&quot;Implementation-Title&quot;</span>: <span class="string">&quot;Gradle&quot;</span>,</span><br><span class="line">                <span class="string">&quot;Implementation-Version&quot;</span>: version)</span><br><span class="line">&#125;</span><br><span class="line">tasks.register(<span class="string">&#x27;fooJar&#x27;</span>, Jar) &#123;</span><br><span class="line">    manifest = <span class="keyword">project</span>.manifest &#123;</span><br><span class="line">        <span class="keyword">from</span> sharedManifest</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - Separate MANIFEST.MF for a particular archive:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">tasks.register(<span class="string">&#x27;barJar&#x27;</span>, Jar) &#123;</span><br><span class="line">    manifest &#123;</span><br><span class="line">        attributes key1: <span class="string">&#x27;value1&#x27;</span></span><br><span class="line">        <span class="keyword">from</span> sharedManifest, <span class="string">&#x27;src/config/basemanifest.txt&#x27;</span></span><br><span class="line">        <span class="keyword">from</span>([<span class="string">&#x27;src/config/javabasemanifest.txt&#x27;</span>, <span class="string">&#x27;src/config/libbasemanifest.txt&#x27;</span>]) &#123;</span><br><span class="line">            eachEntry &#123; details -&gt;</span><br><span class="line">                <span class="keyword">if</span> (details.baseValue != details.mergeValue) &#123;</span><br><span class="line">                    details.value = baseValue</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (details.key == <span class="string">&#x27;foo&#x27;</span>) &#123;</span><br><span class="line">                    details.<span class="keyword">exclude</span>()</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - Saving a MANIFEST.MF to disk:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">tasks.named(<span class="string">&#x27;jar&#x27;</span>) &#123;</span><br><span class="line">    manifest.writeTo(layout.buildDirectory.<span class="keyword">file</span>(<span class="string">&#x27;mymanifest.mf&#x27;</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Generating-API-documentation"><a href="#Generating-API-documentation" class="headerlink" title="Generating API documentation"></a>Generating API documentation</h2><p>Java Library Plugin 提供了一个类型为 <code>Javadoc</code> 的 <code>javadoc task</code>, 用来为你的产品代码生成标准的 Javadocs, 例如, 无论任何在 <code>main</code> source set 中的源码</p>
+<p>Example - Using a custom doclet with Javadoc - 使用其他类型的 Javadoc:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line"><span class="keyword">configurations</span> &#123;</span><br><span class="line">    asciidoclet</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    asciidoclet <span class="string">&#x27;org.asciidoclet:asciidoclet:1.+&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.register(<span class="string">&#x27;configureJavadoc&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">doLast</span> &#123;</span><br><span class="line">        javadoc &#123;</span><br><span class="line">            <span class="keyword">options</span>.doclet = <span class="string">&#x27;org.asciidoclet.Asciidoclet&#x27;</span></span><br><span class="line">            <span class="keyword">options</span>.docletpath = <span class="keyword">configurations</span>.asciidoclet.files.<span class="keyword">toList</span>()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">javadoc &#123;</span><br><span class="line">    dependsOn configureJavadoc</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Example - Defining a custom Javadoc task:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">tasks.register(<span class="string">&#x27;testJavadoc&#x27;</span>, Javadoc) &#123;</span><br><span class="line">    <span class="keyword">source</span> = <span class="keyword">sourceSets</span>.test.allJava</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Cleaning-the-build"><a href="#Cleaning-the-build" class="headerlink" title="Cleaning the build"></a>Cleaning the build</h2><p>Java Library Plugin 通过使用 Base Plugin 添加了一个 <code>clean task</code></p>
+<p>这个 <code>clean task</code> 删除所有在 <code>$buildDir</code> 目录中的东西</p>
+<p>这个 <code>task</code> 是一个 <code>Delete</code> 类型的实例, 可以通过修改 <code>dir</code> 属性来指定要删除的目录</p>
+<h2 id="Building-JVM-components"><a href="#Building-JVM-components" class="headerlink" title="Building JVM components"></a>Building JVM components</h2><p>所有具体的 JVM 插件都是基于 Java Plugin</p>
+<p>上面的示例仅说明了这个基本插件提供的概念, 并与所有 JVM 插件共享这些</p>
+<p>建议使用具体的插件而不是直接使用 Java Plugin</p>
+<h2 id="Building-Java-libraries"><a href="#Building-Java-libraries" class="headerlink" title="Building Java libraries"></a>Building Java libraries</h2><p>通过 Java Library Plugin, 提供了一个 <code>api</code> 配置</p>
+<p>如果来自依赖的类出现在你的库的公共字段或方法中, 那么这个依赖将通过你的库的公共 API 公开出去, 因此这个依赖应该添加到 <code>api</code> 配置项中</p>
+<p>否则, 这个依赖是一个内部实现细节, 需要添加到 <code>implementation</code> 配置项中</p>
+<h2 id="Building-Java-applications"><a href="#Building-Java-applications" class="headerlink" title="Building Java applications"></a>Building Java applications</h2><p>打包为 JAR 的 Java 应用程序并不能方便地从命令行或桌面环境启动</p>
+<p>Application Plugin 通过创建一个发行版解决了命令行方面的问题, 这个发行版包含了 JAR 文件, 所有依赖, 启动脚本</p>
+<ul>
+<li><code>assemble task</code> 创建包含应用运行需要的所有东西的 ZIP 和 TAR 发行版</li>
+<li>一个 <code>run task</code> 来从构建中启动程序</li>
+<li>Shell 和 Windows 脚本来启动程序</li>
+</ul>
+<h2 id="Building-Java-web-applications"><a href="#Building-Java-web-applications" class="headerlink" title="Building Java web applications"></a>Building Java web applications</h2><p>Gradle 核心仅仅直接支持打包成 WAR 文件的传统的 Servlet-based Web 应用程序</p>
+<p>通过 War Plugin 来支持, 这个插件自动使用 Java Plugin 和添加一个额外的打包步骤:</p>
+<ul>
+<li>从 <code>src/main/webapp</code> 复制静态文件到 WAR 文件中的根路径上</li>
+<li>复制编译好的类文件到 WAR 文件的 <code>WEB-INF/classes</code> 子目录中</li>
+<li>复制依赖的库到 WAR 文件的 <code>WEB-INF/lib</code> 子目录中</li>
+</ul>
+<p>这些都是通过 <code>war task</code> 来完成的, 这个 <code>task</code> 实际上替代了 <code>jar task</code></p>
+<p>Gradle 核心没有支持在构建中运行 Web 项目, 可以尝试使用 <code>Gretty</code> 插件提供的内嵌式 Servlet 容器来进行运行</p>
+<h2 id="Building-Java-EE-applications"><a href="#Building-Java-EE-applications" class="headerlink" title="Building Java EE applications"></a>Building Java EE applications</h2><p>使用 Ear Plugin 来创建 EAR 文件</p>
+<h2 id="Building-Java-Platforms"><a href="#Building-Java-Platforms" class="headerlink" title="Building Java Platforms"></a>Building Java Platforms</h2><p>一个 Java Platform 表示一组依赖声明和约束, 它们来自一个内聚单元, 将应用于消费者项目</p>
+<p>Platform 没有源代码, 也没有自己的工件</p>
+<p>Platform 就是 Maven 世界中的 BOM</p>
+<p>通过 Java Platform plugin 来实现, 这个常见配置了不同的配置和发布组件</p>
+<p>这个插件不使用 Java Plugin</p>
+<h2 id="Enabling-Java-preview-features"><a href="#Enabling-Java-preview-features" class="headerlink" title="Enabling Java preview features"></a>Enabling Java preview features</h2><p>Example - Enabling Java feature preview:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">tasks.withType(JavaCompile) &#123;</span><br><span class="line">    <span class="keyword">options</span>.compilerArgs += <span class="string">&quot;--enable-preview&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">tasks.withType(Test) &#123;</span><br><span class="line">    jvmArgs += <span class="string">&quot;--enable-preview&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">tasks.withType(JavaExec) &#123;</span><br><span class="line">    jvmArgs += <span class="string">&quot;--enable-preview&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Building-other-JVM-language-projects"><a href="#Building-other-JVM-language-projects" class="headerlink" title="Building other JVM language projects"></a>Building other JVM language projects</h2><p>Gradle 本身提供了 Groovy 和 Scala 插件</p>
+<p>这些插件会自动应用对编译 Java 代码的支持, 并可以通过将它们与 java-library 插件结合来进一步增强</p>
+<h3 id="Compilation-dependency-between-languages"><a href="#Compilation-dependency-between-languages" class="headerlink" title="Compilation dependency between languages"></a>Compilation dependency between languages</h3><p>这些插件创建了 Groovy&#x2F;Scala 编译和 Java 编译之间的依赖关系</p>
+<p>你可以改变这个默认行为, 通过调整所涉及的编译任务的类路径:</p>
+<p>Example - Changing the classpath of compile tasks:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build.gradle</span></span><br><span class="line">tasks.named(<span class="string">&#x27;compileGroovy&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// Groovy only needs the declared dependencies(and not longer the output of compileJava)</span></span><br><span class="line">    <span class="keyword">classpath</span> = <span class="keyword">sourceSets</span>.main.compileClasspath</span><br><span class="line">&#125;</span><br><span class="line">tasks.named(<span class="string">&#x27;compileJava&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// Java also depends on the result of Groovy compilation(which automatically makes it depend of compileGroogy)</span></span><br><span class="line">    <span class="keyword">classpath</span> += files(<span class="keyword">sourceSets</span>.main.groovy.classesDirectory)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li>本文标题：Java &amp; Other JVM Projects</li>
+        <li>本文作者：林威羽</li>
+        <li>创建时间：2022-05-05 11:48:23</li>
+        <li>
+            本文链接：https://linweiyu21.github.io/gradle/gradle-java-other-jvm-projects/
+        </li>
+        <li>
+            版权声明：本博客所有文章除特别声明外，均采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">BY-NC-SA</a> 许可协议。转载请注明出处！
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/Gradle/">#Gradle</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/User-Guides/">#User Guides</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/gradle/gradle-testing-in-java-jvm-projects/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Testing in Java &amp; JVM projects</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/gradle/gradle-dependency-management/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">Dependency Management</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+        
+            <div class="comment-container">
+                <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fas fa-comments">&nbsp;评论</i>
+    </div>
+    
+
+        
+            
+    <div class="valine-container">
+        <script data-pjax
+                src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+        <div id="vcomments"></div>
+        <script data-pjax>
+            function loadValine() {
+                new Valine({
+                    el: '#vcomments',
+                    appId: '8xWQ0WFbKUNN4h8ixIO12etk-gzGzoHsz',
+                    appKey: '7cLjTvkIsF6aIuIVSd0um89m',
+                    meta: ['nick', 'mail', 'link'],
+                    avatar: 'wavatar',
+                    enableQQ: true,
+                    placeholder: '请开始你的表演',
+                    lang: 'zh-CN'.toLowerCase()
+                });
+
+                function getAuthor(language) {
+                    switch (language) {
+                        case 'en':
+                            return 'Author';
+                        case 'zh-CN':
+                            return '博主';
+                        default:
+                            return 'Master';
+                    }
+                }
+
+                // Add "Author" identify
+                const getValineDomTimer = setInterval(() => {
+                    const vcards = document.querySelectorAll('#vcomments .vcards .vcard');
+                    if (vcards.length > 0) {
+                        let author = '林威羽';
+
+                        if (author) {
+                            for (let vcard of vcards) {
+                                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                                const vnick = vnick_dom.innerHTML;
+                                if (vnick === author) {
+                                    vnick_dom.innerHTML = `${vnick} <span class="author">${getAuthor(KEEP.hexo_config.language)}</span>`
+                                }
+                            }
+                        }
+                        clearInterval(getValineDomTimer);
+                    } else {
+                        clearInterval(getValineDomTimer);
+                    }
+                }, 2000);
+            }
+
+            if ('true') {
+                const loadValineTimeout = setTimeout(() => {
+                    loadValine();
+                    clearTimeout(loadValineTimeout);
+                }, 1000);
+            } else {
+                window.addEventListener('DOMContentLoaded', loadValine);
+            }
+        </script>
+    </div>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">林威羽</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv">
+                        访问人数&nbsp;<span id="busuanzi_value_site_uv"></span>&ensp;
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv">
+                        总访问量&nbsp;<span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="tools-item page-aside-toggle">
+                <i class="fas fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fas fa-comment"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+        <aside class="page-aside">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-amp-Other-JVM-Projects"><span class="nav-number">1.</span> <span class="nav-text">Java &amp; Other JVM Projects</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Building-Java-amp-JVM-projects"><span class="nav-number">1.1.</span> <span class="nav-text">Building Java &amp; JVM projects</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Declaring-your-source-files-via-source-sets"><span class="nav-number">1.2.</span> <span class="nav-text">Declaring your source files via source sets</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-main-source-set"><span class="nav-number">1.2.1.</span> <span class="nav-text">The main source set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Resources-process"><span class="nav-number">1.2.2.</span> <span class="nav-text">Resources process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#test-source-set"><span class="nav-number">1.2.3.</span> <span class="nav-text">test source set</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Managing-your-dependencies"><span class="nav-number">1.3.</span> <span class="nav-text">Managing your dependencies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Compiling-your-code"><span class="nav-number">1.4.</span> <span class="nav-text">Compiling your code</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Customizing-file-and-directory-locations"><span class="nav-number">1.4.1.</span> <span class="nav-text">Customizing file and directory locations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Changing-compiler-options"><span class="nav-number">1.4.2.</span> <span class="nav-text">Changing compiler options</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Targeting-a-specific-Java-version"><span class="nav-number">1.4.3.</span> <span class="nav-text">Targeting a specific Java version</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compiling-and-testing-Java-6-and-7"><span class="nav-number">1.4.4.</span> <span class="nav-text">Compiling and testing Java 6 and 7</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compiling-independent-sources-separately"><span class="nav-number">1.4.5.</span> <span class="nav-text">Compiling independent sources separately</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Managing-resources"><span class="nav-number">1.5.</span> <span class="nav-text">Managing resources</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-properties-files-and-reproducible-builds"><span class="nav-number">1.5.1.</span> <span class="nav-text">Java properties files and reproducible builds</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Running-tasks"><span class="nav-number">1.6.</span> <span class="nav-text">Running tasks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Packaging-and-publishing"><span class="nav-number">1.7.</span> <span class="nav-text">Packaging and publishing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Modifying-the-JAR-manifest"><span class="nav-number">1.7.1.</span> <span class="nav-text">Modifying the JAR manifest</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generating-API-documentation"><span class="nav-number">1.8.</span> <span class="nav-text">Generating API documentation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cleaning-the-build"><span class="nav-number">1.9.</span> <span class="nav-text">Cleaning the build</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Building-JVM-components"><span class="nav-number">1.10.</span> <span class="nav-text">Building JVM components</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Building-Java-libraries"><span class="nav-number">1.11.</span> <span class="nav-text">Building Java libraries</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Building-Java-applications"><span class="nav-number">1.12.</span> <span class="nav-text">Building Java applications</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Building-Java-web-applications"><span class="nav-number">1.13.</span> <span class="nav-text">Building Java web applications</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Building-Java-EE-applications"><span class="nav-number">1.14.</span> <span class="nav-text">Building Java EE applications</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Building-Java-Platforms"><span class="nav-number">1.15.</span> <span class="nav-text">Building Java Platforms</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Enabling-Java-preview-features"><span class="nav-number">1.16.</span> <span class="nav-text">Enabling Java preview features</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Building-other-JVM-language-projects"><span class="nav-number">1.17.</span> <span class="nav-text">Building other JVM language projects</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Compilation-dependency-between-languages"><span class="nav-number">1.17.1.</span> <span class="nav-text">Compilation dependency between languages</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        </aside>
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/utils.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/main.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/header-shrink.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/back2top.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/dark-light-toggle.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/local-search.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/code-copy.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/lazyload.js"></script>
+
+
+<div class="post-scripts pjax">
+    
+        <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/left-side-toggle.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/anime.min.js"></script><script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/toc.js"></script>
+    
+</div>
+
+
+    <script src="//cdn.jsdelivr.net/npm/hexo-theme-keep@3.4.5/source/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            KEEP.refresh();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
